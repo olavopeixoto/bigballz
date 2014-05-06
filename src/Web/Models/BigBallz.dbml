@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BigBallz-Dev" EntityNamespace="BigBallz.Models" Class="BigBallzDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=www.bigballz.com.br;Initial Catalog=BigBallz-Dev;Persist Security Info=True;User ID=site" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="BigBallzConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Bet" Member="Bets">
+    <Type Name="Bet">
+      <Column Name="BetId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="[User]" Member="User" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Match" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Score1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="true" />
+      <Column Name="Score2" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="true" />
+      <Association Name="Match_Bet" Member="Match1" ThisKey="Match" OtherKey="MatchId" Type="Match" IsForeignKey="true" />
+      <Association Name="User_Bet" Member="User1" ThisKey="User" OtherKey="UserId" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BetRule" Member="BetRules">
+    <Type Name="BetRule">
+      <Column Name="BetRuleId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="Match" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Value" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Match_BetRule" Member="Match1" ThisKey="Match" OtherKey="MatchId" Type="Match" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Group]" Member="Groups">
+    <Type Name="Group">
+      <Column Name="GroupId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Group_MatchRule" Member="MatchRules" ThisKey="GroupId" OtherKey="SourceGroupWinner" Type="MatchRule" />
+      <Association Name="Group_MatchRule1" Member="MatchRules1" ThisKey="GroupId" OtherKey="SourceGroupVice" Type="MatchRule" />
+      <Association Name="Group_Bonus" Member="Bonus" ThisKey="GroupId" OtherKey="Group" Type="Bonus" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Log]" Member="Logs">
+    <Type Name="Log">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Thread" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="[Level]" Member="Level" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Logger" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="VarChar(4000) NOT NULL" CanBeNull="false" />
+      <Column Name="Exception" Type="System.String" DbType="VarChar(2000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Match" Member="Matches">
+    <Type Name="Match">
+      <Column Name="MatchId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Stage" Member="StageId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StartTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Team1" Member="Team1Id" Type="System.String" DbType="Char(3)" CanBeNull="true" />
+      <Column Name="Team2" Member="Team2Id" Type="System.String" DbType="Char(3)" CanBeNull="true" />
+      <Column Name="Score1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Score2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Match_Bet" Member="Bets" ThisKey="MatchId" OtherKey="Match" Type="Bet" />
+      <Association Name="Match_BetRule" Member="BetRules" ThisKey="MatchId" OtherKey="Match" Type="BetRule" />
+      <Association Name="Match_MatchRule" Member="MatchRules" ThisKey="MatchId" OtherKey="DestinationMatch" Type="MatchRule" />
+      <Association Name="Match_MatchRule1" Member="MatchRules1" ThisKey="MatchId" OtherKey="SourceMatch1" Type="MatchRule" />
+      <Association Name="Match_MatchRule2" Member="MatchRules2" ThisKey="MatchId" OtherKey="SourceMatch2" Type="MatchRule" />
+      <Association Name="Stage_Match" Member="Stage" ThisKey="StageId" OtherKey="StageId" Type="Stage" IsForeignKey="true" />
+      <Association Name="Team_Match" Member="Team1" ThisKey="Team1Id" OtherKey="TeamId" Type="Team" IsForeignKey="true" />
+      <Association Name="Team_Match1" Member="Team2" ThisKey="Team2Id" OtherKey="TeamId" Type="Team" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MatchRule" Member="MatchRules">
+    <Type Name="MatchRule">
+      <Column Name="MatchRuleId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DestinationMatch" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SourceMatch1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SourceMatch2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SourceGroupWinner" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SourceGroupVice" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Group_MatchRule" Member="Group" ThisKey="SourceGroupWinner" OtherKey="GroupId" Type="Group" IsForeignKey="true" />
+      <Association Name="Group_MatchRule1" Member="Group1" ThisKey="SourceGroupVice" OtherKey="GroupId" Type="Group" IsForeignKey="true" />
+      <Association Name="Match_MatchRule" Member="Match" ThisKey="DestinationMatch" OtherKey="MatchId" Type="Match" IsForeignKey="true" />
+      <Association Name="Match_MatchRule1" Member="Match1" ThisKey="SourceMatch1" OtherKey="MatchId" Type="Match" IsForeignKey="true" />
+      <Association Name="Match_MatchRule2" Member="Match2" ThisKey="SourceMatch2" OtherKey="MatchId" Type="Match" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Role" Member="Roles">
+    <Type Name="Role">
+      <Column Name="RoleId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Role_UserRole" Member="UserRoles" ThisKey="RoleId" OtherKey="RoleId" Type="UserRole" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Stage" Member="Stages">
+    <Type Name="Stage">
+      <Column Name="StageId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Stage_Match" Member="Matches" ThisKey="StageId" OtherKey="StageId" Type="Match" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Team" Member="Teams">
+    <Type Name="Team">
+      <Column Name="TeamId" Type="System.String" DbType="Char(3) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FifaId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="[Group]" Member="GroupId" Storage="_Group" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Team_Match" Member="Matches1" ThisKey="TeamId" OtherKey="Team1Id" Type="Match" />
+      <Association Name="Team_Match1" Member="Matches2" ThisKey="TeamId" OtherKey="Team2Id" Type="Match" />
+      <Association Name="Team_BonusBet" Member="BonusBets" ThisKey="TeamId" OtherKey="Team" Type="BonusBet" />
+      <Association Name="Team_Bonus" Member="Bonus" ThisKey="TeamId" OtherKey="Team" Type="Bonus" />
+      <Association Name="Group_Team" Member="Group" Storage="_Group1" ThisKey="GroupId" OtherKey="GroupId" Type="Group" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserRole" Member="UserRoles">
+    <Type Name="UserRole">
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RoleId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Role_UserRole" Member="Role" ThisKey="RoleId" OtherKey="RoleId" Type="Role" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="User_UserRole" Member="User" ThisKey="UserId" OtherKey="UserId" Type="User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserMapping" Member="UserMappings">
+    <Type Name="UserMapping">
+      <Column Name="UserMappingId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Identifier" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedOn" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ProviderName" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Association Name="User_UserMapping" Member="User" ThisKey="UserId" OtherKey="UserId" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[User]" Member="Users">
+    <Type Name="User">
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="EmailAddress" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="EmailAddressVerified" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedOn" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="PhotoUrl" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="Authorized" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="User_Bet" Member="Bets" ThisKey="UserId" OtherKey="User" Type="Bet" />
+      <Association Name="User_UserRole" Member="UserRoles" ThisKey="UserId" OtherKey="UserId" Type="UserRole" />
+      <Association Name="User_UserMapping" Member="UserMappings" ThisKey="UserId" OtherKey="UserId" Type="UserMapping" />
+      <Association Name="User_BonusBet" Member="BonusBets" ThisKey="UserId" OtherKey="User" Type="BonusBet" />
+      <Association Name="User_Comment" Member="Comments" ThisKey="UserId" OtherKey="User" Type="Comment" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BonusBet" Member="BonusBets">
+    <Type Name="BonusBet">
+      <Column Name="BonusBetId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="[User]" Member="User" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Bonus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Team" Type="System.String" DbType="Char(3) NOT NULL" CanBeNull="false" />
+      <Association Name="BonusBet_BonusBet" Member="BonusBet2" ThisKey="BonusBetId" OtherKey="BonusBetId" Type="BonusBet" Cardinality="One" />
+      <Association Name="BonusBet_BonusBet" Member="BonusBet1" ThisKey="BonusBetId" OtherKey="BonusBetId" Type="BonusBet" IsForeignKey="true" />
+      <Association Name="Team_BonusBet" Member="Team1" ThisKey="Team" OtherKey="TeamId" Type="Team" IsForeignKey="true" />
+      <Association Name="User_BonusBet" Member="User1" ThisKey="User" OtherKey="UserId" Type="User" IsForeignKey="true" />
+      <Association Name="Bonus_BonusBet" Member="Bonus11" ThisKey="Bonus" OtherKey="BonusId" Type="Bonus" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Bonus" Member="Bonus">
+    <Type Name="Bonus">
+      <Column Name="BonusId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Team" Type="System.String" DbType="Char(3)" CanBeNull="true" />
+      <Column Name="[Group]" Member="Group" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Bonus_BonusBet" Member="BonusBets" ThisKey="BonusId" OtherKey="Bonus" Type="BonusBet" />
+      <Association Name="Group_Bonus" Member="Group1" ThisKey="Group" OtherKey="GroupId" Type="Group" IsForeignKey="true" />
+      <Association Name="Team_Bonus" Member="Team1" ThisKey="Team" OtherKey="TeamId" Type="Team" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Comments" Member="Comments">
+    <Type Name="Comment">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="[User]" Member="User" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Comments" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="CommentedOn" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="User_Comment" Member="User1" ThisKey="User" OtherKey="UserId" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

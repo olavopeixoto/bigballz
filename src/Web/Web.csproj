@@ -1,0 +1,404 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E1B97A68-6916-4026-87B2-0CFD80FE4FE8}</ProjectGuid>
+    <ProjectTypeGuids>{F85E285D-A4E0-4152-9332-AB1D724D3325};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BigBallz</RootNamespace>
+    <AssemblyName>BigBallz</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+    <SccProjectName>%24/BigBallz/src/Web</SccProjectName>
+    <SccLocalPath>.</SccLocalPath>
+    <SccAuxPath>https://leandrobcf.visualstudio.com/defaultcollection</SccAuxPath>
+    <SccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</SccProvider>
+    <UseIISExpress>true</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DesktopBuildPackageLocation>..\..\..\BigBallzPublished\Web.zip</DesktopBuildPackageLocation>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AntiXSSLibrary">
+      <HintPath>..\..\lib\AntiXSSLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="MvcContrib, Version=1.0.0.916, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\MvcContrib.dll</HintPath>
+    </Reference>
+    <Reference Include="RPXLib">
+      <HintPath>..\..\lib\RPXLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Microsoft ASP.NET\ASP.NET MVC 2\Assemblies\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\TeamController.cs" />
+    <Compile Include="Helpers\ConfigurationHelper.cs" />
+    <Compile Include="Helpers\JobHost.cs" />
+    <Compile Include="Models\BonusBetStatistic.cs" />
+    <Compile Include="Models\MatchBetStatistic.cs" />
+    <Compile Include="Models\UserMatchPoints.cs" />
+    <Compile Include="Services\AlertEndBetTask.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BetController.cs" />
+    <Compile Include="Controllers\BonusController.cs" />
+    <Compile Include="Controllers\CronJobsController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\StandingsController.cs" />
+    <Compile Include="Filters\UserNameFilter.cs" />
+    <Compile Include="Helpers\AuthorizationHelper.cs" />
+    <Compile Include="Helpers\CryptHelper.cs" />
+    <Compile Include="Helpers\GravatarHelper.cs" />
+    <Compile Include="Infrastructure\Mvc\BigBallzViewEngine.cs" />
+    <Compile Include="Models\BBRoles.cs" />
+    <Compile Include="Models\BetPoints.cs" />
+    <Compile Include="Models\BonusPoints.cs" />
+    <Compile Include="Services\BBRoleProvider.cs" />
+    <Compile Include="Services\CronJob.cs" />
+    <Compile Include="Services\ICommentsService.cs" />
+    <Compile Include="Services\IMailService.cs" />
+    <Compile Include="Services\IRoleService.cs" />
+    <Compile Include="Services\IMatchBetService.cs" />
+    <Compile Include="Services\IBonusBetService.cs" />
+    <Compile Include="Services\IBonusService.cs" />
+    <Compile Include="Services\ICronJobTask.cs" />
+    <Compile Include="Services\IUserService.cs" />
+    <Compile Include="Services\L2S\BigBallzService.cs" />
+    <Compile Include="Controllers\MatchController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SecureBaseController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\ControllerExtensions.cs" />
+    <Compile Include="Helpers\FlashHelpers.cs" />
+    <Compile Include="Helpers\HtmlHelpers.cs" />
+    <Compile Include="Helpers\IPagedList.cs" />
+    <Compile Include="Helpers\JqGridData.cs" />
+    <Compile Include="Helpers\JqGridExtensions.cs" />
+    <Compile Include="Helpers\Lists.cs" />
+    <Compile Include="Helpers\PagedList.cs" />
+    <Compile Include="Helpers\PaginatedList.cs" />
+    <Compile Include="Helpers\PagingLinqExtensions.cs" />
+    <Compile Include="Helpers\PhoneValidator.cs" />
+    <Compile Include="Helpers\Routing.cs" />
+    <Compile Include="Helpers\Url.cs" />
+    <Compile Include="Helpers\ViewData.cs" />
+    <Compile Include="Helpers\XSSHelper.cs" />
+    <Compile Include="Infrastructure\Logging\EventLogLogger.cs" />
+    <Compile Include="Infrastructure\Logging\ILogger.cs" />
+    <Compile Include="Infrastructure\Logging\LogUtility.cs" />
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\BigBallz.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BigBallz.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmailAttribute.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Team.cs" />
+    <Compile Include="Services\IBigBallzService.cs" />
+    <Compile Include="Services\IStageService.cs" />
+    <Compile Include="Services\IMatchService.cs" />
+    <Compile Include="Services\IGroupService.cs" />
+    <Compile Include="Services\ITeamService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IAccountService.cs" />
+    <Compile Include="Services\L2S\AccountService.cs" />
+    <Compile Include="Services\L2S\BonusBetService.cs" />
+    <Compile Include="Services\L2S\BonusService.cs" />
+    <Compile Include="Services\L2S\CommentsService.cs" />
+    <Compile Include="Services\L2S\MailService.cs" />
+    <Compile Include="Services\L2S\RoleService.cs" />
+    <Compile Include="Services\L2S\MatchBetService.cs" />
+    <Compile Include="Services\L2S\MatchService.cs" />
+    <Compile Include="Services\L2S\GroupService.cs" />
+    <Compile Include="Services\L2S\StageService.cs" />
+    <Compile Include="Services\L2S\TeamService.cs" />
+    <Compile Include="Models\UserPoints.cs" />
+    <Compile Include="Services\L2S\UserService.cs" />
+    <Compile Include="ViewModels\BetViewModel.cs" />
+    <Compile Include="ViewModels\BonusViewModel.cs" />
+    <Compile Include="ViewModels\MatchBetsViewModel.cs" />
+    <Compile Include="ViewModels\StandingsViewModel.cs" />
+    <Compile Include="ViewModels\MatchViewModel.cs" />
+    <Compile Include="ViewModels\TeamViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="apple-touch-icon.png" />
+    <Content Include="App_Browsers\Devices\readme.txt" />
+    <Content Include="Global.asax" />
+    <Content Include="MailTemplates\BetTimeAlert.txt" />
+    <Content Include="MailTemplates\BonusTimeAlert.txt" />
+    <Content Include="MailTemplates\PaymentConfirmation.txt" />
+    <Content Include="MailTemplates\RegistrationEmailNotVerified.txt" />
+    <Content Include="MailTemplates\RegistrationEmailVerified.txt" />
+    <Content Include="Public\css\ellipsis-xbl.xml" />
+    <Content Include="Public\css\fifa\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Public\css\fifa\images\ui-bg_flat_55_fbec88_40x100.png" />
+    <Content Include="Public\css\fifa\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Public\css\fifa\images\ui-bg_inset-hard_95_fef1ec_1x100.png" />
+    <Content Include="Public\css\fifa\images\ui-bg_inset-soft_100_f5f8f9_1x100.png" />
+    <Content Include="Public\css\fifa\images\ui-bg_inset-soft_55_1f5b9c_1x100.png" />
+    <Content Include="Public\css\fifa\images\ui-bg_inset-soft_75_d0e5f5_1x100.png" />
+    <Content Include="Public\css\fifa\images\ui-bg_inset-soft_85_dfeffc_1x100.png" />
+    <Content Include="Public\css\fifa\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="Public\css\fifa\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Public\css\fifa\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Public\css\fifa\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Public\css\fifa\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Public\css\fifa\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Public\css\fifa\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Public\css\fifa\jquery-ui-1.8.1.custom.css" />
+    <Content Include="Public\css\screen.css" />
+    <Content Include="Public\css\ui.jqgrid.css" />
+    <Content Include="Public\images\2014fwcoe_4cf_ps.png" />
+    <Content Include="Public\images\3553369564_b81011b0b9.jpg" />
+    <Content Include="Public\images\36.jpg" />
+    <Content Include="Public\images\4433124243_f770709f6e_o.jpg" />
+    <Content Include="Public\images\bb-sun.gif" />
+    <Content Include="Public\images\bolao.PNG" />
+    <Content Include="favicon.ico" />
+    <Content Include="Public\images\bolao_paises.jpg" />
+    <Content Include="Public\images\fifa-worldcup-2010-ball.jpg" />
+    <Content Include="Public\images\koboard.jpg" />
+    <Content Include="Public\images\SA-flag.gif" />
+    <Content Include="Public\images\teams\alg.gif" />
+    <Content Include="Public\images\teams\arg.gif" />
+    <Content Include="Public\images\teams\aus.gif" />
+    <Content Include="Public\images\teams\bra.gif" />
+    <Content Include="Public\images\teams\chi.gif" />
+    <Content Include="Public\images\teams\civ.gif" />
+    <Content Include="Public\images\teams\cmr.gif" />
+    <Content Include="Public\images\teams\den.gif" />
+    <Content Include="Public\images\teams\eng.gif" />
+    <Content Include="Public\images\teams\esp.gif" />
+    <Content Include="Public\images\teams\fra.gif" />
+    <Content Include="Public\images\teams\ger.gif" />
+    <Content Include="Public\images\teams\gha.gif" />
+    <Content Include="Public\images\teams\gre.gif" />
+    <Content Include="Public\images\teams\hon.gif" />
+    <Content Include="Public\images\teams\ita.gif" />
+    <Content Include="Public\images\teams\jpn.gif" />
+    <Content Include="Public\images\teams\kor.gif" />
+    <Content Include="Public\images\teams\mex.gif" />
+    <Content Include="Public\images\teams\ned.gif" />
+    <Content Include="Public\images\teams\nga.gif" />
+    <Content Include="Public\images\teams\nzl.gif" />
+    <Content Include="Public\images\teams\par.gif" />
+    <Content Include="Public\images\teams\por.gif" />
+    <Content Include="Public\images\teams\prk.gif" />
+    <Content Include="Public\images\teams\rsa.gif" />
+    <Content Include="Public\images\teams\srb.gif" />
+    <Content Include="Public\images\teams\sui.gif" />
+    <Content Include="Public\images\teams\svk.gif" />
+    <Content Include="Public\images\teams\svn.gif" />
+    <Content Include="Public\images\teams\uru.gif" />
+    <Content Include="Public\images\teams\usa.gif" />
+    <Content Include="Public\images\wc2010logo.png" />
+    <Content Include="Public\images\wc2010_big_title.png" />
+    <Content Include="Public\images\wm2010.jpg" />
+    <Content Include="Public\images\worldcup2010-logo.jpg" />
+    <Content Include="Public\js\Bet.js" />
+    <Content Include="Public\js\Home.js" />
+    <Content Include="Public\js\i18n\grid.locale-bg.js" />
+    <Content Include="Public\js\i18n\grid.locale-bg1251.js" />
+    <Content Include="Public\js\i18n\grid.locale-cat.js" />
+    <Content Include="Public\js\i18n\grid.locale-cn.js" />
+    <Content Include="Public\js\i18n\grid.locale-cs.js" />
+    <Content Include="Public\js\i18n\grid.locale-de.js" />
+    <Content Include="Public\js\i18n\grid.locale-dk.js" />
+    <Content Include="Public\js\i18n\grid.locale-el.js" />
+    <Content Include="Public\js\i18n\grid.locale-en.js" />
+    <Content Include="Public\js\i18n\grid.locale-fa.js" />
+    <Content Include="Public\js\i18n\grid.locale-fi.js" />
+    <Content Include="Public\js\i18n\grid.locale-fr.js" />
+    <Content Include="Public\js\i18n\grid.locale-he.js" />
+    <Content Include="Public\js\i18n\grid.locale-is.js" />
+    <Content Include="Public\js\i18n\grid.locale-it.js" />
+    <Content Include="Public\js\i18n\grid.locale-ja.js" />
+    <Content Include="Public\js\i18n\grid.locale-nl.js" />
+    <Content Include="Public\js\i18n\grid.locale-no.js" />
+    <Content Include="Public\js\i18n\grid.locale-pl.js" />
+    <Content Include="Public\js\i18n\grid.locale-pt-br.js" />
+    <Content Include="Public\js\i18n\grid.locale-pt.js" />
+    <Content Include="Public\js\i18n\grid.locale-ro.js" />
+    <Content Include="Public\js\i18n\grid.locale-ru.js" />
+    <Content Include="Public\js\i18n\grid.locale-sk.js" />
+    <Content Include="Public\js\i18n\grid.locale-sp.js" />
+    <Content Include="Public\js\i18n\grid.locale-sv.js" />
+    <Content Include="Public\js\i18n\grid.locale-tr.js" />
+    <Content Include="Public\js\i18n\grid.locale-ua.js" />
+    <Content Include="Public\js\jquery-1.4.1.min-vsdoc.js" />
+    <Content Include="Public\js\jquery-1.4.1.min.js" />
+    <Content Include="Public\js\jquery-ui-1.8.1.custom.min.js" />
+    <Content Include="Public\js\jquery.jqGrid.min.js" />
+    <Content Include="Public\js\jquery.ui.datepicker-pt-BR.js" />
+    <Content Include="Public\js\Site.Master.js" />
+    <Content Include="Public\js\Team.js" />
+    <Content Include="Views\Auth\ConfirmacaoPagamento.aspx" />
+    <Content Include="Views\Auth\Payment.aspx" />
+    <Content Include="Views\Auth\Join.aspx" />
+    <Content Include="Views\Auth\NewAccount.aspx" />
+    <Content Include="Views\Auth\NewAccountSuccess.aspx" />
+    <Content Include="Views\Bet\MatchBets.aspx" />
+    <Content Include="Views\Bet\_DisplayBonusExpired.ascx" />
+    <Content Include="Views\Bet\_BetExpired.ascx" />
+    <Content Include="Views\Bet\Expired.aspx" />
+    <Content Include="Views\Bet\_DisplayBonusIndex.ascx" />
+    <Content Include="Views\Bet\_BetIndex.ascx" />
+    <Content Include="Views\Bet\Index.aspx" />
+    <Content Include="Views\Bet\_BonusIndex.ascx" />
+    <Content Include="Views\Bonus\Edit.aspx" />
+    <Content Include="Views\Bonus\Index.aspx" />
+    <Content Include="Views\Comments\Index.aspx" />
+    <Content Include="Views\CronJobs\Index.aspx" />
+    <Content Include="Views\Home\Mobile\iPhone\Index.aspx" />
+    <Content Include="Views\Home\Rules.aspx" />
+    <Content Include="Views\Home\_Index.ascx" />
+    <Content Include="Views\Match\Create.aspx" />
+    <Content Include="Views\Match\Edit.aspx" />
+    <Content Include="Views\Match\Index.aspx" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.ascx" />
+    <Content Include="Views\Shared\InfoMenu.ascx" />
+    <Content Include="Views\Shared\Menu.ascx" />
+    <Content Include="Views\Shared\PagSeguro.ascx" />
+    <Content Include="Views\Standings\Index.aspx" />
+    <Content Include="Views\Team\_Index.ascx" />
+    <Content Include="Views\Team\Create.aspx" />
+    <Content Include="Views\Team\Details.aspx" />
+    <Content Include="Views\Team\Edit.aspx" />
+    <Content Include="Views\Team\Index.aspx" />
+    <Content Include="Views\Team\NotFound.aspx" />
+    <Content Include="Views\User\Edit.aspx" />
+    <Content Include="Views\User\Index.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Public\css\Site.css" />
+    <Content Include="Public\js\jquery.validate.min.js" />
+    <Content Include="Public\js\jquery.validate.min-vsdoc.js" />
+    <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\Shared\Error.aspx" />
+    <Content Include="Views\Shared\LogOnUserControl.ascx" />
+    <Content Include="Views\Web.config" />
+    <Content Include="xd_receiver.htm" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Browsers\Devices\mobile.browser" />
+    <None Include="Models\BigBallz.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>BigBallz.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Views\Shared\Site.Master" />
+    <Content Include="Public\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Shared\Mobile\iPhone\Site.Master" />
+    <None Include="Properties\PublishProfiles\bigballz - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\bigballz - Web Deploy.pubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\BigBallz.dbml.layout">
+      <DependentUpon>BigBallz.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BigBallz.Core\BigBallz.Core.csproj">
+      <Project>{061AF39F-97F7-4D69-A054-6E0811641F6B}</Project>
+      <Name>BigBallz.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DynamicQuery\DynamicQuery.csproj">
+      <Project>{16786802-9BB2-46E5-A9E2-C3DC7E4969FF}</Project>
+      <Name>DynamicQuery</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target> -->
+  <Target Name="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>49568</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:17112/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
