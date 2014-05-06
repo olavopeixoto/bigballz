@@ -10,24 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigBallz.Core", "src\BigBallz.Core\BigBallz.Core.csproj", "{061AF39F-97F7-4D69-A054-6E0811641F6B}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://leandrobcf.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = src\\Web\\Web.csproj
-		SccProjectName1 = src/Web
-		SccLocalPath1 = src\\Web
-		SccProjectUniqueName2 = tests\\Web.Tests\\Web.Tests.csproj
-		SccProjectName2 = tests/Web.Tests
-		SccLocalPath2 = tests\\Web.Tests
-		SccProjectUniqueName3 = src\\DynamicQuery\\DynamicQuery.csproj
-		SccProjectName3 = src/DynamicQuery
-		SccLocalPath3 = src\\DynamicQuery
-		SccProjectUniqueName4 = src\\BigBallz.Core\\BigBallz.Core.csproj
-		SccProjectName4 = src/BigBallz.Core
-		SccLocalPath4 = src\\BigBallz.Core
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
