@@ -1,0 +1,10 @@
+﻿Olá <%=userName%>,
+<p>
+Recebemos o seu pagamento e você já está autorizado a usar o BigBallz.<br>
+Boa Sorte!
+</p>
+<p>
+Atenciosamente,<br>
+Equipe <%=siteTitle%><br>
+<%=rootUrl%>
+</p>

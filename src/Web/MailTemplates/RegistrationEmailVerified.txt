@@ -1,0 +1,16 @@
+﻿<p>
+Olá <%=userName%>,<br>
+Bem-vindo ao BigBallz, O Bolão da Copa do Mundo!
+</p>
+<p>
+Seu registro no site foi efetuado com sucesso, mas ainda não registramos o pagamento da sua inscrição.<br>
+Para efetuar o pagamento, siga no seguinte endereço <a href="<%=paymentUrl%>"><%=paymentUrl%></a>.
+</p>
+<p>
+Esta é uma mensagem automática, por favor não responda este e-mail.
+</p>
+<p>
+Atenciosamente,<br>
+Equipe <%=siteTitle%><br>
+<%=rootUrl%>
+</p>

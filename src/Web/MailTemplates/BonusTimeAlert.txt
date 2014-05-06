@@ -1,0 +1,13 @@
+﻿Olá <%=userName%>,
+<p>
+Informamos que as apostas nos bonus estão encerradas.<br>
+Segue a lista de apostas por participante:
+</p>
+<p>
+<%=bonusBets%>
+</p>
+<p>
+Atenciosamente,<br>
+Equipe <%=siteTitle%><br>
+<%=rootUrl%>
+</p>

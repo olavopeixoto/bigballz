@@ -1,0 +1,67 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-BR">
+<head>
+    <title>BigBallz</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+    <meta name="description" content="BigBallz, o Bolão da Copa do Mundo" />
+    <meta name="keywords" content="Bolão, Copa do Mundo, Fifa, World Cup, Soccer, Futebol, Aposta, Bet" />
+    <meta name="robots" content="index, follow" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <%=Html.CSS("fifa/jquery-ui-1.8.1.custom")%>
+    <%=Html.CSS("ui.jqgrid")%>
+    <%=Html.CSS("iphone")%>
+    <%=Html.CSS("site")%>
+</head>
+<body>
+    <div id="flash" class="ui-widget ui-helper-hidden">
+        <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+            <p>
+                <span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+                <strong class="flashType"></strong><span class="flashMsg"></span><span class="ui-icon ui-icon-close"
+                    style="float: right; margin-right: .3em; cursor: pointer"></span>
+            </p>
+        </div>
+    </div>
+    <div id="header">
+        <div>
+            <div id="logindisplay">
+                <% Html.RenderPartial("LogOnUserControl"); %>
+            </div>
+            <h1 id="bb-logo">
+                <strong>BigBallz</strong>, o Bolão da Copa do Mundo!</h1>
+        </div>
+        <% Html.RenderPartial("Menu"); %>
+    </div>
+    <div class="colmask fullpage">
+        <div class="col1">
+            <!-- Column 1 start -->
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+            <!-- Column 1 end -->
+        </div>
+    </div>
+    <div id="footer">
+        <p>
+            <%=Html.ActionLink("BigBallz", "index", "home") %>
+            <%=Html.ActionLink("Regulamento", "rules", "home") %></p>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"
+        type="text/javascript"></script>
+    <%=Html.Script("jquery.ui.datepicker-pt-BR.js")%>
+    <%=Html.Script("Site.Master.js")%>
+    <asp:ContentPlaceHolder ID="Scripts" runat="server" />
+    <script type="text/javascript">
+        var rpxJsHost = (("https:" == document.location.protocol) ? "https://" : "http://static.");
+        document.write(unescape("%3Cscript src='" + rpxJsHost +
+"rpxnow.com/js/lib/rpx.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        RPXNOW.overlay = true;
+        RPXNOW.language_preference = 'pt-BR';
+    </script>
+    <%=Html.Flash()%>
+</body>
+</html>

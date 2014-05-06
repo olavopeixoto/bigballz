@@ -1,0 +1,180 @@
+﻿#bb-logo 
+{
+    font-family: Comic Sans MS, Comic Sans MS5, cursive;
+    font-size: 1.5em;
+    font-style:italic;
+    line-height:100px;
+    margin:0;
+    padding:0;
+    vertical-align:middle;
+    padding-left:110px !important;
+    height:104px;
+    line-height:104px;
+    background: url(../images/2014fwcoe_4cf_ps.png) no-repeat left;
+    color:#ffffff;
+    text-shadow: #1f5b9c 0px 0px 10px;
+}
+#bb-logo strong
+{
+    font-size: 3.5em;
+    font-weight:bold;   
+}
+#logindisplay
+{
+    text-align:right;
+    background-color:#FFFFFF;
+    display:inline-block;
+    margin-top:5px;
+    padding:0 0.7em;
+    white-space:nowrap;
+    float:right;
+    -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px;
+}
+#logindisplay a:hover
+{
+    color:#369;
+    background-color: transparent;
+    text-decoration: underline;
+}
+#logindisplay a
+{
+    text-decoration: none;
+}
+#profile
+{
+    padding-bottom:15px;
+    display:block;
+    height:48px;
+    margin:10px 0 5px;
+}
+#profile .user_icon
+{
+    clear:both;
+    display:block;
+    height:48px;
+}
+#me_name
+{
+font-weight:bold;
+}
+#profile .user_icon img
+{
+vertical-align:middle;
+float:left;
+margin:0;
+margin-right:10px;
+}
+#profile .user_icon .stats
+{
+    height:48px;
+}
+.editor-field
+{
+    margin-bottom:10px;
+}
+.warning
+{
+    color: red;
+}
+table.match-table
+{
+margin-bottom:20px;
+width:100%;
+border-collapse:collapse;
+border-spacing:0;
+border: 1px solid #A6C9E2;
+}
+table.match-table tr.odd
+{
+    font-weight: bold; color: #2e6e9e; 
+}
+table caption {
+color:#666666;
+font-size:14px;
+font-weight:bold;
+line-height:20px;
+text-align:left;
+}
+thead th {
+text-align:center;
+}
+tbody tr td, thead tr th {
+padding-left:5px;
+padding-right:5px;
+}
+td.r, th.r {
+text-align:right;
+}
+th.c, td.c {
+text-align:center;
+}
+th.l, td.l {
+text-align:left;
+}
+td.homeTeam, td.awayTeam  {
+width:20%;
+}
+td.mResult 
+{
+    width:100px;
+}
+td.mResult .mResultSub
+{
+    font-size: 0.7em;
+    color:#333;
+}
+table.match-table input
+{
+    width:20px;
+    text-align:center;
+}
+
+table.match-table tbody tr:hover
+{
+    background: #fbec88 !important;
+}
+
+table.match-table td.reminder span.reminder-explanation
+{
+    font-size: 0.7em;
+    display:block;
+}
+
+div.always-on-bottom
+{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    text-align:center;
+    display:block;
+    z-index:1000;
+}
+
+span.thumb
+{
+    display:block;
+    float:left;
+    height:50px;
+    left:0;
+    margin:5px;
+    overflow:hidden;
+    position:relative;
+    width:50px;
+}
+span.thumb img
+{
+    margin:0;
+    padding:0;
+}
+
+span.username
+{
+    display:block;
+    height:50px;
+    line-height:50px;
+    margin:5px;
+    min-height:48px;
+    vertical-align:middle;
+    white-space:nowrap;
+}
