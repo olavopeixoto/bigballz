@@ -30,7 +30,7 @@ namespace System.Web.Mvc {
         public static string Script(this HtmlHelper helper, string fileName) {
             if (!fileName.EndsWith(".js"))
                 fileName += ".js";
-            var jsPath = string.Format("<script type=\"text/javascript\" src='{0}/{1}/{2}' ></script>\n", PubDir, ScriptDir, helper.AttributeEncode(fileName));
+            var jsPath = string.Format("<script type=\"text/javascript\" src=\"{0}\" ></script>\n", PubDir.StartsWith("http") ? string.Format("{0}/{1}/{2}", PubDir, ScriptDir, helper.AttributeEncode(fileName)) : helper.ResolveUrl(string.Format("~/{0}/{1}/{2}", PubDir, ScriptDir, helper.AttributeEncode(fileName))));
             return jsPath;
         }
         public static string CSS(this HtmlHelper helper, string fileName) {

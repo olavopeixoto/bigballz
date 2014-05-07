@@ -267,6 +267,9 @@ namespace BigBallz.Controllers
         {
             var bets = _db.Bets.Where(x => x.Match == matchId).ToList();
             double totalBets = bets.Count();
+
+            if (totalBets <= 0) return null;
+
             var mostBetScore =
                 bets.GroupBy(x => new {x.Score1, x.Score2}).Select(x => new {x.Key, qtd = x.Count()}).OrderByDescending(
                     x => x.qtd).Select(x => x.Key).FirstOrDefault();
@@ -277,9 +280,9 @@ namespace BigBallz.Controllers
                            AverageScore2 = bets.Average(x => x.Score2).Value,
                            Score1MostBet = mostBetScore.Score1.Value,
                            Score2MostBet = mostBetScore.Score2.Value,
-                           Team1Perc = bets.Where(x => x.Score1 > x.Score2).Count() / totalBets,
-                           Team2Perc = bets.Where(x => x.Score1 < x.Score2).Count() / totalBets,
-                           TiePerc = bets.Where(x => x.Score1 == x.Score2).Count() / totalBets,
+                           Team1Perc = bets.Count(x => x.Score1 > x.Score2) / totalBets,
+                           Team2Perc = bets.Count(x => x.Score1 < x.Score2) / totalBets,
+                           TiePerc = bets.Count(x => x.Score1 == x.Score2) / totalBets,
                         };
         }
 

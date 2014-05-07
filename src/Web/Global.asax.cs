@@ -48,6 +48,12 @@ namespace BigBallz
                 );
 
             routes.MapRoute(
+                "apostaUsuario",
+                "aposta/{id}",
+                new { controller = "bet", action = "expired" }
+                );
+
+            routes.MapRoute(
                 "classificacao",
                 "classificacao",
                 new { controller = "standings", action = "index", id = "" }
