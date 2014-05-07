@@ -1,3 +1,11 @@
 
 /BigBallz.sln.DotSettings.user
 /BigBallz.suo
+/src/web/bin
+/src/Web/obj
+/src/DynamicQuery/obj
+/src/DynamicQuery/bin
+/src/BigBallz.Core/obj
+/src/BigBallz.Core/bin
+/tests/Web.Tests/obj
+/tests/Web.Tests/bin
