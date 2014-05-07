@@ -54,7 +54,7 @@ namespace BigBallz.Controllers
 
         private void ShowRemindMessage()
         {
-            var startDate = _matchService.GetStartDate(); ;
+            var startDate = _matchService.GetStartDate();
 
             var now = DateTime.Now.BrazilTimeZone();
             if (User.Identity.IsAuthenticated && now <= startDate && Convert.ToBoolean(Request.Cookies["betremindershown"].NullSafe(x => x.Value, Boolean.FalseString)))
@@ -178,7 +178,12 @@ namespace BigBallz.Controllers
         {
             var usersMatchPoints = _bigBallzService.GetUserPointsByExpiredMatch(id);
             var matchStatistics = _bigBallzService.GetMatchBetStatistics(id);
-            
+
+            if (matchStatistics == null)
+            {
+                this.FlashWarning("Não existem apostas para esse usuário");
+                return RedirectToAction("Index");
+            }
 
             if (matchStatistics.Match.StartTime.AddHours(-1) > DateTime.Now.BrazilTimeZone())
             {

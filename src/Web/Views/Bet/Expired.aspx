@@ -1,6 +1,6 @@
-<%@ Page Title="" Language="C#" Inherits="System.Web.Mvc.ViewPage<BigBallz.ViewModels.BetViewModel>" MasterPageFile="~/Views/Shared/Site.Master" %>
-<asp:Content runat="server" ID="Content" ContentPlaceHolderID="TitleContent">- Apostas Encerradas</asp:Content>
-<asp:Content runat="server" ID="Content1" ContentPlaceHolderID="MainContent">
+<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<BigBallz.ViewModels.BetViewModel>" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">- Apostas Encerradas</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <h2><%: "Apostas de " + Model.UserName%></h2>
     <div id="tabs">
     	<ul>
@@ -16,4 +16,4 @@
     </div>
     <%:Html.ActionLink("voltar", "index", "standings") %>
 </asp:Content>
-<asp:Content runat="server" ID="Content2" ContentPlaceHolderID="Scripts"></asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="Scripts" runat="server"></asp:Content>
