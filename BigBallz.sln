@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30324.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "src\Web\Web.csproj", "{E1B97A68-6916-4026-87B2-0CFD80FE4FE8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Tests", "tests\Web.Tests\Web.Tests.csproj", "{BFAB61DC-2898-412C-8CA9-A8C75566346E}"
@@ -10,24 +12,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigBallz.Core", "src\BigBallz.Core\BigBallz.Core.csproj", "{061AF39F-97F7-4D69-A054-6E0811641F6B}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs02
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = src\\Web\\Web.csproj
-		SccProjectName1 = src/Web
-		SccLocalPath1 = src\\Web
-		SccProjectUniqueName2 = tests\\Web.Tests\\Web.Tests.csproj
-		SccProjectName2 = tests/Web.Tests
-		SccLocalPath2 = tests\\Web.Tests
-		SccProjectUniqueName3 = src\\DynamicQuery\\DynamicQuery.csproj
-		SccProjectName3 = src/DynamicQuery
-		SccLocalPath3 = src\\DynamicQuery
-		SccProjectUniqueName4 = src\\BigBallz.Core\\BigBallz.Core.csproj
-		SccProjectName4 = src/BigBallz.Core
-		SccLocalPath4 = src\\BigBallz.Core
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
