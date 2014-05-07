@@ -1,5 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
+using BigBallz.Core.Web.MVC.Filters;
 using BigBallz.Infrastructure.Mvc;
 
 namespace BigBallz
@@ -46,6 +48,12 @@ namespace BigBallz
                 );
 
             routes.MapRoute(
+                "apostaUsuario",
+                "aposta/{id}",
+                new { controller = "bet", action = "expired" }
+                );
+
+            routes.MapRoute(
                 "classificacao",
                 "classificacao",
                 new { controller = "standings", action = "index", id = "" }
@@ -86,9 +94,18 @@ namespace BigBallz
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new BigBallzViewEngine());
 
+            RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
             AlertEndBetTask.AddAllMatches();
+        }
+
+        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+        {
+            if (FormsAuthentication.RequireSSL)
+                filters.Add(new RequireHttpsAttribute());
+
+            filters.Add(new ElmahExceptionHandlerAttribute());
         }
 
 #if DEBUG2

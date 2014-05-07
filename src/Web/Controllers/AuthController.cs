@@ -82,11 +82,8 @@ namespace BigBallz.Controllers
         public void ConfirmacaoPagamento(string prodID_1, string cliEmail, string statusTransacao, FormCollection info)
         {
             var token = ConfigurationManager.AppSettings["pagseguro-token"];
-#if DEBUG
-            const string pagina = "http://localhost:9090/pagseguro-ws/checkout/NPI.jhtml";
-#else
-            const string pagina = "https://pagseguro.uol.com.br/pagseguro-ws/checkout/NPI.jhtml";
-#endif
+            var pagina = ConfigurationManager.AppSettings["pagseguro-ws"];
+     
             var dados = Request.Form + "&Comando=validar" + "&Token=" + token;
 
             var req = (HttpWebRequest) WebRequest.Create(pagina);
