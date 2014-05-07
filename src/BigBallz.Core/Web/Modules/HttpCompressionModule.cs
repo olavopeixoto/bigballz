@@ -4,7 +4,7 @@ using System.IO.Compression;
 
 namespace BigBallz.Core.Web.Modules
 {
-    public class HttpCompressionModule : IHttpModule
+    public sealed class HttpCompressionModule : IHttpModule
     {
         #region IHttpModule Members
 
@@ -13,37 +13,37 @@ namespace BigBallz.Core.Web.Modules
 
         void IHttpModule.Init(HttpApplication context)
         {
-            context.PostAcquireRequestState += new EventHandler(context_PostAcquireRequestState);
-            context.EndRequest += new EventHandler(context_EndRequest);
+            context.PostAcquireRequestState += ContextPostAcquireRequestState;
+            context.EndRequest += ContextEndRequest;
         }
 
-        void context_EndRequest(object sender, EventArgs e)
+        void ContextEndRequest(object sender, EventArgs e)
         {
-            HttpApplication context = sender as HttpApplication;
-            context.PostAcquireRequestState -= new EventHandler(context_PostAcquireRequestState);
-            context.EndRequest -= new EventHandler(context_EndRequest);
+            var context = sender as HttpApplication;
+            context.PostAcquireRequestState -= ContextPostAcquireRequestState;
+            context.EndRequest -= ContextEndRequest;
         }
 
-        void context_PostAcquireRequestState(object sender, EventArgs e)
+        void ContextPostAcquireRequestState(object sender, EventArgs e)
         {
             this.RegisterCompressFilter();    
         }
 
         private void RegisterCompressFilter()
         {
-            HttpContext context = HttpContext.Current;
+            var context = HttpContext.Current;
 
             if (context.Handler is StaticFileHandler 
                 || context.Handler is DefaultHttpHandler) return;
 
-            HttpRequest request = context.Request;
+            var request = context.Request;
             
-            string acceptEncoding = request.Headers["Accept-Encoding"];
+            var acceptEncoding = request.Headers["Accept-Encoding"];
             if (string.IsNullOrEmpty(acceptEncoding)) return;
 
             acceptEncoding = acceptEncoding.ToUpperInvariant();
 
-            HttpResponse response = HttpContext.Current.Response;
+            var response = HttpContext.Current.Response;
 
             if (acceptEncoding.Contains("GZIP"))
             {

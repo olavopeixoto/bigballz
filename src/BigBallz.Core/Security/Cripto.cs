@@ -30,11 +30,10 @@ namespace BigBallz.Core.Security
         public static string Encriptar(string texto, string chavePrivada)
         {
             var des = new DESCryptoServiceProvider();
-            byte[] inputByteArray;
 
             if (texto != null)
             {
-                inputByteArray = Encoding.UTF8.GetBytes(texto);
+                var inputByteArray = Encoding.UTF8.GetBytes(texto);
 
                 //Create the crypto objects, with the key, as passed in
                 des.Key = Encoding.ASCII.GetBytes(chavePrivada);
@@ -51,7 +50,7 @@ namespace BigBallz.Core.Security
                         //Get the data back from the memory stream, and into a string
                         var ret = new StringBuilder();
 
-                        foreach (byte b in ms.ToArray())
+                        foreach (var b in ms.ToArray())
                         {
                             //Format as hex
                             ret.AppendFormat("{0:X2}", b);
@@ -214,9 +213,9 @@ namespace BigBallz.Core.Security
 
             var fsCrypt = new FileStream(arquivo + ".Crypt", FileMode.Create);
 
-            var RMCrypto = new RC2CryptoServiceProvider();
+            var rmCrypto = new RC2CryptoServiceProvider();
 
-            var cs = new CryptoStream(fsCrypt, RMCrypto.CreateEncryptor(key, key), CryptoStreamMode.Write);
+            var cs = new CryptoStream(fsCrypt, rmCrypto.CreateEncryptor(key, key), CryptoStreamMode.Write);
 
             var fsIn = new FileStream(arquivo, FileMode.Open);
 
@@ -281,27 +280,27 @@ namespace BigBallz.Core.Security
             }
         }
 
-        public static string defaultHash(string text)
+        public static string DefaultHash(string text)
         {
             return new Cripto().EncriptarMD5(text);
         }
 
-        public static string defaultCrypt(string text)
+        public static string DefaultCrypt(string text)
         {
             return Encriptar(text);
         }
 
-        public static string defaultDecrypt(string text)
+        public static string DefaultDecrypt(string text)
         {
             return new Cripto().Decriptar(text);
         }
 
-        public static string defaultCrypt(string text, string key)
+        public static string DefaultCrypt(string text, string key)
         {
             return Encriptar(text, key);
         }
 
-        public static string defaultDecrypt(string text, string key)
+        public static string DefaultDecrypt(string text, string key)
         {
             return new Cripto().Decriptar(text, key);
         }
