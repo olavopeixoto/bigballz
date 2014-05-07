@@ -1,0 +1,404 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA104xpeUbqU2h/g7pB1+plQAAAAACAAAAAAAQZgAAAAEAACAAAAC0wqWl7zVK+V3Q9zDN4h9SlT8R0hdmMQqWwLEdT3LnIwAAAAAOgAAAAAIAACAAAADpA3O69gY4cWMf54olINNsYTqc0EOU1BZFZHMUFAA1EiAAAAAts5qYGXB+HziKCJdxBY1edACZo1iaUtoR1zNLigX9sEAAAACb0oOnHUIHr9sqyy59T0i0qQTwfZEVMTef8ljDQy8plOxV4zS9M8wJnywCGMGPpwDiezJOvFM6NmtKV++mno9O</EncryptedPassword>
+    <_PublishTargetUrl>ftp://ftp.bigballz.com.br/bigballz.com.br/wwwroot</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="apple-touch-icon.png">
+      <publishTime>04/19/2014 18:37:24</publishTime>
+    </File>
+    <File Include="App_Browsers/Devices/mobile.browser">
+      <publishTime>04/19/2014 18:37:12</publishTime>
+    </File>
+    <File Include="App_Browsers/Devices/readme.txt">
+      <publishTime>04/19/2014 18:37:22</publishTime>
+    </File>
+    <File Include="App_Readme/Elmah.txt">
+      <publishTime>05/07/2014 00:16:54</publishTime>
+    </File>
+    <File Include="bin/AntiXSSLibrary.dll">
+      <publishTime>04/19/2014 18:37:04</publishTime>
+    </File>
+    <File Include="bin/BigBallz.Core.dll">
+      <publishTime>05/07/2014 00:29:05</publishTime>
+    </File>
+    <File Include="bin/BigBallz.dll">
+      <publishTime>05/07/2014 00:43:28</publishTime>
+    </File>
+    <File Include="bin/DynamicQuery.dll">
+      <publishTime>05/07/2014 00:29:05</publishTime>
+    </File>
+    <File Include="bin/Elmah.dll">
+      <publishTime>05/07/2014 00:16:51</publishTime>
+    </File>
+    <File Include="bin/MvcContrib.dll">
+      <publishTime>04/19/2014 18:37:10</publishTime>
+    </File>
+    <File Include="bin/ReadZ.AssetManagement.dll">
+      <publishTime>04/19/2014 18:37:10</publishTime>
+    </File>
+    <File Include="bin/RPXLib.dll">
+      <publishTime>04/19/2014 18:37:12</publishTime>
+    </File>
+    <File Include="bin/VistaDB.NET20.dll">
+      <publishTime>04/19/2014 18:37:06</publishTime>
+    </File>
+    <File Include="favicon.ico">
+      <publishTime>04/19/2014 18:37:24</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>04/19/2014 18:37:24</publishTime>
+    </File>
+    <File Include="MailTemplates/BetTimeAlert.txt">
+      <publishTime>04/19/2014 18:37:24</publishTime>
+    </File>
+    <File Include="MailTemplates/BonusTimeAlert.txt">
+      <publishTime>04/19/2014 18:37:24</publishTime>
+    </File>
+    <File Include="MailTemplates/PaymentConfirmation.txt">
+      <publishTime>04/19/2014 18:37:24</publishTime>
+    </File>
+    <File Include="MailTemplates/RegistrationEmailNotVerified.txt">
+      <publishTime>04/29/2014 01:21:36</publishTime>
+    </File>
+    <File Include="MailTemplates/RegistrationEmailVerified.txt">
+      <publishTime>04/29/2014 01:21:44</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>05/07/2014 00:16:54</publishTime>
+    </File>
+    <File Include="Public/css/ellipsis-xbl.xml">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/css/fifa/images/ui-bg_flat_0_aaaaaa_40x100.png">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/css/fifa/images/ui-bg_flat_55_fbec88_40x100.png">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/css/fifa/images/ui-bg_inset-hard_100_fcfdfd_1x100.png">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/css/fifa/images/ui-bg_inset-hard_95_fef1ec_1x100.png">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/css/fifa/images/ui-bg_inset-soft_100_f5f8f9_1x100.png">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/css/fifa/images/ui-bg_inset-soft_55_1f5b9c_1x100.png">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/css/fifa/images/ui-bg_inset-soft_75_d0e5f5_1x100.png">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/css/fifa/images/ui-bg_inset-soft_85_dfeffc_1x100.png">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/css/fifa/images/ui-icons_217bc0_256x240.png">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/css/fifa/images/ui-icons_2e83ff_256x240.png">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/css/fifa/images/ui-icons_469bdd_256x240.png">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/css/fifa/images/ui-icons_6da8d5_256x240.png">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/css/fifa/images/ui-icons_cd0a0a_256x240.png">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/css/fifa/images/ui-icons_d8e7f3_256x240.png">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/css/fifa/images/ui-icons_f9bd01_256x240.png">
+      <publishTime>04/19/2014 18:37:24</publishTime>
+    </File>
+    <File Include="Public/css/fifa/jquery-ui-1.8.1.custom.css">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/css/iphone.css">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/css/screen.css">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/css/Site.css">
+      <publishTime>04/20/2014 00:34:27</publishTime>
+    </File>
+    <File Include="Public/css/ui.jqgrid.css">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/images/2014fwcoe_4cf_ps.png">
+      <publishTime>04/20/2014 00:32:55</publishTime>
+    </File>
+    <File Include="Public/images/bb-sun.gif">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/images/bolao_paises.png">
+      <publishTime>05/04/2014 00:16:03</publishTime>
+    </File>
+    <File Include="Public/images/worldcup2010-logo.jpg">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/js/Bet.js">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/js/Home.js">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-bg.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-bg1251.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-cat.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-cn.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-cs.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-de.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-dk.js">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-el.js">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-en.js">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-fa.js">
+      <publishTime>04/19/2014 18:37:26</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-fi.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-fr.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-he.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-is.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-it.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-ja.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-nl.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-no.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-pl.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-pt-br.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-pt.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-ro.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-ru.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-sk.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-sp.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-sv.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-tr.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/i18n/grid.locale-ua.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/jquery-1.4.1.min-vsdoc.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/jquery-1.4.1.min.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/jquery-ui-1.8.1.custom.min.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/jquery.jqGrid.min.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/jquery.ui.datepicker-pt-BR.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/jquery.validate.min-vsdoc.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/jquery.validate.min.js">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Public/js/Site.Master.js">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Public/js/Team.js">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Public/Web.config">
+      <publishTime>05/06/2014 22:29:23</publishTime>
+    </File>
+    <File Include="Views/Auth/ConfirmacaoPagamento.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Auth/Join.aspx">
+      <publishTime>05/02/2014 00:57:20</publishTime>
+    </File>
+    <File Include="Views/Auth/NewAccount.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Auth/NewAccountSuccess.aspx">
+      <publishTime>04/29/2014 00:58:19</publishTime>
+    </File>
+    <File Include="Views/Auth/Payment.aspx">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Views/Bet/Expired.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Bet/Index.aspx">
+      <publishTime>05/04/2014 04:55:02</publishTime>
+    </File>
+    <File Include="Views/Bet/MatchBets.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Bet/_BetExpired.ascx">
+      <publishTime>04/19/2014 18:37:28</publishTime>
+    </File>
+    <File Include="Views/Bet/_BetIndex.ascx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Bet/_BonusIndex.ascx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Bet/_DisplayBonusExpired.ascx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Bet/_DisplayBonusIndex.ascx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Bonus/Edit.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Bonus/Index.aspx">
+      <publishTime>05/04/2014 04:52:31</publishTime>
+    </File>
+    <File Include="Views/Comments/Index.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/CronJobs/Index.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Home/Index.aspx">
+      <publishTime>04/21/2014 18:31:15</publishTime>
+    </File>
+    <File Include="Views/Home/Mobile/iPhone/Index.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Home/Rules.aspx">
+      <publishTime>05/02/2014 01:27:03</publishTime>
+    </File>
+    <File Include="Views/Home/_Index.ascx">
+      <publishTime>05/04/2014 00:17:57</publishTime>
+    </File>
+    <File Include="Views/Match/Create.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Match/Edit.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Match/Index.aspx">
+      <publishTime>05/04/2014 03:28:00</publishTime>
+    </File>
+    <File Include="Views/Shared/EditorTemplates/DateTime.ascx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Shared/Error.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Shared/InfoMenu.ascx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Shared/LogOnUserControl.ascx">
+      <publishTime>04/23/2014 11:05:23</publishTime>
+    </File>
+    <File Include="Views/Shared/Menu.ascx">
+      <publishTime>04/24/2014 00:49:24</publishTime>
+    </File>
+    <File Include="Views/Shared/Mobile/iPhone/Site.Master">
+      <publishTime>04/23/2014 11:04:53</publishTime>
+    </File>
+    <File Include="Views/Shared/PagSeguro.ascx">
+      <publishTime>04/29/2014 23:05:33</publishTime>
+    </File>
+    <File Include="Views/Shared/Site.Master">
+      <publishTime>05/06/2014 23:57:10</publishTime>
+    </File>
+    <File Include="Views/Standings/Index.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Team/Create.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Team/Details.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Team/Edit.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Team/Index.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Team/NotFound.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Team/_Index.ascx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/User/Edit.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/User/Index.aspx">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+    <File Include="Views/Web.config">
+      <publishTime>05/06/2014 23:14:52</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>05/07/2014 00:38:25</publishTime>
+    </File>
+    <File Include="xd_receiver.htm">
+      <publishTime>04/19/2014 18:37:30</publishTime>
+    </File>
+  </ItemGroup>
+</Project>
