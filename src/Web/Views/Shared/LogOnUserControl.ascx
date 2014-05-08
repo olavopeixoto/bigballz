@@ -8,7 +8,7 @@
     else {
         var host = Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
 %> 
-        Já está registrado? <a class="rpxnow" onclick="return false;" href="https://bigballz.rpxnow.com/openid/v2/signin?token_url=http%3A%2F%2F<%=host %>%2Frpx">Entre aqui</a>
+        Já está registrado? <a class="rpxnow" onclick="return false;" href="https://bigballz.rpxnow.com/openid/v2/signin?token_url=http<%=FormsAuthentication.RequireSSL ? "s" : ""%>%3A%2F%2F<%=host %>%2Frpx">Entre aqui</a>
 <%
     }
 %>
