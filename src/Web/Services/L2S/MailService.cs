@@ -132,11 +132,13 @@ namespace BigBallz.Services.L2S
                 mailMessage.To.Add(address);
             }
 
-            Task.Factory.StartNew(() => JobHost.DoWork(() =>
-            {
-                var mail = new SmtpClient();
-                mail.Send(mailMessage);
-            }));
+            var mail = new SmtpClient();
+            mail.Send(mailMessage);
+
+            //Task.Factory.StartNew(() => JobHost.DoWork(() =>
+            //{
+                
+            //}));
         }
     }
 }

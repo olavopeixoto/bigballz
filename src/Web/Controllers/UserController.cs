@@ -13,7 +13,7 @@ namespace BigBallz.Controllers
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
         private readonly IAccountService _accountService;
-        private IMailService _mailService;
+        private readonly IMailService _mailService;
 
 
         public UserController(IUserService userService, IRoleService roleService, IMailService mailService, IAccountService accountService)
