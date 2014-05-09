@@ -16,7 +16,6 @@ namespace BigBallz.Controllers
         private readonly IMatchService _matchService;
         private readonly IUserService _userService;
 
-
         public MatchController(ITeamService teamService, IStageService stageService, IMatchService matchService, IUserService userService)
         {
             _teamService = teamService;

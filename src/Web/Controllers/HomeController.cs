@@ -5,7 +5,6 @@ using BigBallz.Services.L2S;
 
 namespace BigBallz.Controllers
 {
-    [HandleError]
     public class HomeController : BaseController
     {
         private readonly IMatchService _matchService;

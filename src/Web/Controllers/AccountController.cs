@@ -6,8 +6,6 @@ using System.Web.Security;
 
 namespace BigBallz.Controllers
 {
-
-    [HandleError]
     public class AccountController : BaseController
     {
         protected override void Initialize(RequestContext requestContext)

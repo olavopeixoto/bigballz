@@ -5,7 +5,7 @@ namespace BigBallz.Controllers
 {
     public class StandingsController : SecureBaseController
     {
-        private IBigBallzService _bigBallzService = new BigBallzService();
+        private readonly IBigBallzService _bigBallzService = new BigBallzService();
 
         public ActionResult Index()
         {

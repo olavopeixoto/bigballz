@@ -270,7 +270,6 @@
     <Content Include="Views\Bonus\Index.aspx" />
     <Content Include="Views\Comments\Index.aspx" />
     <Content Include="Views\CronJobs\Index.aspx" />
-    <Content Include="Views\Home\Mobile\iPhone\Index.aspx" />
     <Content Include="Views\Home\Rules.aspx" />
     <Content Include="Views\Home\_Index.ascx" />
     <Content Include="Views\Match\Create.aspx" />
@@ -306,6 +305,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Browsers\Devices\mobile.browser" />
+    <Content Include="MailTemplates\Web.config" />
     <None Include="Models\BigBallz.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>BigBallz.designer.cs</LastGenOutput>
@@ -315,7 +315,6 @@
     <Content Include="Public\Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Shared\Mobile\iPhone\Site.Master" />
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\bigballz - FTP Arvixe.pubxml" />
     <None Include="Properties\PublishProfiles\bigballz - FTP.pubxml" />
