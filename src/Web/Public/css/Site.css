@@ -63,6 +63,9 @@ vertical-align:middle;
 float:left;
 margin:0;
 margin-right:10px;
+width:auto;
+height:auto;
+max-width:50px;
 }
 #profile .user_icon .stats
 {
@@ -155,12 +158,13 @@ span.thumb
 {
     display:block;
     float:left;
-    height:50px;
+    height:auto;
     left:0;
     margin:5px;
     overflow:hidden;
     position:relative;
-    width:50px;
+    width:auto;
+    max-width:50px;
 }
 span.thumb img
 {
