@@ -203,7 +203,8 @@ namespace BigBallz.Controllers
                 
                 _mailService.SendRegistration(user, paymentUrl, activationUrl);
 
-                return RedirectToAction("NewAccountSuccess", new {pn = authenticationDetails.ProviderName});
+                TempData["provider"] = authenticationDetails.ProviderName;
+                return RedirectToAction("NewAccountSuccess");
             }
             catch (SqlException ex)
             {
@@ -224,10 +225,12 @@ namespace BigBallz.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet]
-        public ActionResult NewAccountSuccess(string pn)
+        public ActionResult NewAccountSuccess()
         {
-            ViewData["nomeProvedor"] = pn;
+            if (string.IsNullOrEmpty(Convert.ToString(TempData["provider"]))) return RedirectToAction("index", "home");
+            ViewData["nomeProvedor"] = TempData["provider"];
             return View();
         }
 
