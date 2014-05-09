@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Net;
+using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -61,11 +62,10 @@ namespace BigBallz.Controllers
             var authenticationDetails = _rpxService.GetAuthenticationDetails(token, true);
             TempData["id"] = authenticationDetails.Identifier;
 
-            Session["UserDetails"] = authenticationDetails;
-
             var user = _accountService.FindUserByIdentifier(authenticationDetails.Identifier);
             if (user == null)
             {
+                TempData["UserDetails"] = authenticationDetails;
                 return RedirectToAction("NewAccount");
             }
 
@@ -139,7 +139,7 @@ namespace BigBallz.Controllers
         [HttpGet]
         public ActionResult NewAccount()
         {
-            var authenticationDetails = Session["UserDetails"] as RPXAuthenticationDetails;
+            var authenticationDetails = TempData.Peek("UserDetails") as RPXAuthenticationDetails;
             if (authenticationDetails == null)
             {
                 SignOutCurrentUser();
@@ -173,7 +173,7 @@ namespace BigBallz.Controllers
         [HttpPost]
         public ActionResult NewAccount(User user)
         {
-            var authenticationDetails = Session["UserDetails"] as RPXAuthenticationDetails;
+            var authenticationDetails = TempData.Peek("UserDetails") as RPXAuthenticationDetails;
             if (authenticationDetails == null) return RedirectToAction("Index", "Home");
             if (string.IsNullOrEmpty(authenticationDetails.PhotoUrl))
             {
@@ -191,19 +191,25 @@ namespace BigBallz.Controllers
 
             try
             {
-                _accountService.CreateUser(authenticationDetails.Identifier, user.UserName,
-                                           authenticationDetails.ProviderName, user.EmailAddress,
-                                           authenticationDetails.VerifiedEmail == user.EmailAddress,
-                                           authenticationDetails.PhotoUrl);
+                using (var tran = new TransactionScope())
+                {
+                    _accountService.CreateUser(authenticationDetails.Identifier, user.UserName,
+                        authenticationDetails.ProviderName, user.EmailAddress,
+                        authenticationDetails.VerifiedEmail == user.EmailAddress,
+                        authenticationDetails.PhotoUrl);
+
+                    var paymentUrl = Url.SiteRoot() + Url.Action("payment", "auth");
+                    var activationUrl = Url.SiteRoot() +
+                                        Url.Action("activate", "auth",
+                                            new {id = CryptHelper.EncryptAES256(user.UserName)});
+
+                    _mailService.SendRegistration(user, paymentUrl, activationUrl);
+
+                    tran.Complete();
+                }
 
                 SignIn(user.UserName, true);
 
-                var paymentUrl = Url.SiteRoot() + Url.Action("payment", "auth");
-                var activationUrl = Url.SiteRoot() + Url.Action("activate", "auth", new { id = CryptHelper.EncryptAES256(user.UserName) });
-                
-                _mailService.SendRegistration(user, paymentUrl, activationUrl);
-
-                TempData["provider"] = authenticationDetails.ProviderName;
                 return RedirectToAction("NewAccountSuccess");
             }
             catch (SqlException ex)
@@ -229,8 +235,10 @@ namespace BigBallz.Controllers
         [HttpGet]
         public ActionResult NewAccountSuccess()
         {
-            if (string.IsNullOrEmpty(Convert.ToString(TempData["provider"]))) return RedirectToAction("index", "home");
-            ViewData["nomeProvedor"] = TempData["provider"];
+            var authenticationDetails = TempData["UserDetails"] as RPXAuthenticationDetails;
+
+            if (authenticationDetails == null) return RedirectToAction("index", "home");
+            ViewData["nomeProvedor"] = authenticationDetails.ProviderName;
             return View();
         }
 

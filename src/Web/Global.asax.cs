@@ -2,7 +2,6 @@
 using System.Web.Routing;
 using System.Web.Security;
 using BigBallz.Core.Web.MVC.Filters;
-using BigBallz.Infrastructure.Mvc;
 
 namespace BigBallz
 {
@@ -95,9 +94,6 @@ namespace BigBallz
             MvcHandler.DisableMvcResponseHeader = true; //Não incluir header de identificação do framework (Segurança)
 
             AreaRegistration.RegisterAllAreas();
-
-            ViewEngines.Engines.Clear();
-            ViewEngines.Engines.Add(new BigBallzViewEngine());
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);

@@ -20,7 +20,7 @@ Complete os seus dados e escolha a forma de pagamento. Recomendamos pagar atravé
 Terminado o processo você deverá aguardar a confirmação do pagamento por um dos administradores do site para que seja liberado o seu login.
 </p>
 <p class="c">
-<%Html.RenderPartial("pagseguro", Model); %>
+<%Html.RenderPartial("pagseguro"); %>
 </p>
 </asp:Content>
 <asp:Content runat="server" ID="Content2" ContentPlaceHolderID="Scripts"></asp:Content>
