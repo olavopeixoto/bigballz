@@ -8,7 +8,7 @@ using BigBallz.Services.L2S;
 namespace BigBallz.Controllers
 {
     [Authorize(Roles = "admin")]
-    public class UserController : SecureBaseController
+    public class UserController : BaseController
     {
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;

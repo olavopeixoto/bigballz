@@ -55,6 +55,9 @@ namespace BigBallz.Services.L2S
         public void AssociateExistingUser(int userId, string identifier, string providerName)
         {
             var user = _db.Users.FirstOrDefault(x => x.UserId == userId);
+            
+            if (user == null) return;
+
             var map = new UserMapping
                           {
                               CreatedOn = DateTime.Now.BrazilTimeZone(),

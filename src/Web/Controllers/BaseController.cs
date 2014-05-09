@@ -10,6 +10,7 @@ using BigBallz.Services.L2S;
 
 namespace BigBallz.Controllers
 {
+    [Authorize]
     public abstract class BaseController : Controller
     {
         protected override void OnActionExecuting(ActionExecutingContext filterContext)

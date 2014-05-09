@@ -26,6 +26,10 @@
     </div>
     
     <input type="submit" value="Registrar" />
+<%
+    var returnUrl = Url.Encode(Url.Action("handleresponse", "auth", null, FormsAuthentication.RequireSSL ? "https" : "http"));
+%> 
+    <a class="rpxnow" onclick="return false;" href="https://bigballz.rpxnow.com/openid/v2/signin?token_url=<%=returnUrl%>">Associar a uma conta existente</a>
 </fieldset>
  <% } %>
 </asp:Content>

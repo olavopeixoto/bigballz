@@ -5,7 +5,7 @@
         <b><%= Html.Encode(Page.User.Identity.Name) %></b> | <%= Html.ActionLink("Sair", "LogOff", "Account") %>
 <%
     }
-    else
+    else if (TempData["UserDetails"]==null)
     {
         var returnUrl = Url.Encode(Url.Action("handleresponse", "auth", null, FormsAuthentication.RequireSSL ? "https" : "http"));
 %> 

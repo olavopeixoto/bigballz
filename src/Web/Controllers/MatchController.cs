@@ -9,7 +9,7 @@ using BigBallz.ViewModels;
 namespace BigBallz.Controllers
 {
     [Authorize(Roles = "admin")]
-    public class MatchController : SecureBaseController
+    public class MatchController : BaseController
     {
         private readonly ITeamService _teamService;
         private readonly IStageService _stageService;
