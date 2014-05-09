@@ -37,7 +37,7 @@ namespace BigBallz.Controllers
 
             if (PlacarExato(betScore1, betScore2, matchScore1, matchScore2))
             {
-                return bet.Match1.StageId == 1 ? 5 : 8;
+                return bet.Match1.StageId == 1 ? 7 : 10;
             }
             if (PlacarParcial(betScore1, betScore2, matchScore1, matchScore2)
                 && Resultado(betScore1, betScore2, matchScore1, matchScore2))
@@ -74,21 +74,21 @@ namespace BigBallz.Controllers
             if (bet.Team == bet.Bonus11.Team)
                 switch (bet.Bonus)
                 {
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
+                    case 1: //Campeao Copa
+                        return 15;
+                    case 2: //Vice Copa
+                        return 10;
+                    case 3: //Terceiro Copa
+                    case 4: //Quarto Copa
+                        return 8;
                     case 5:
                     case 6:
                     case 7:
-                    case 8: //Campeao Grupo
-                        return 3;
-                    case 9: //Campeao Copa
-                        return 15;
-                    case 10: //Vice Copa
-                        return 10;
-                    case 11: //Terceiro Copa
-                    case 12: //Quarto Copa
+                    case 8: 
+                    case 9: 
+                    case 10: 
+                    case 11:
+                    case 12: //Campeao Grupo
                         return 5;
                     default:
                         return 0;

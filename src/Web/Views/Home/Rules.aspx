@@ -58,10 +58,10 @@
                 Placar Exato
             </td>
             <td>
-                5 pts
+                7 pts
             </td>
             <td>
-                8 pts
+                10 pts
             </td>
             <td>
                 Aposta: 1x0 Resultado: 1x0
@@ -128,7 +128,7 @@
                 Campeão de Grupo
             </td>
             <td>
-                3 pts
+                5 pts
             </td>
         </tr>
         <tr>
@@ -152,7 +152,7 @@
                 3º Colocado da Copa
             </td>
             <td>
-                5 pts
+                8 pts
             </td>
         </tr>
         <tr>
@@ -160,7 +160,7 @@
                 4º Colocado da Copa
             </td>
             <td>
-                5 pts
+                8 pts
             </td>
         </tr>
     </table>
@@ -186,10 +186,10 @@
                 Fase de Grupos
             </td>
             <td>
-                240 pts
+                336 pts
             </td>
             <td>
-                56%
+                58%
             </td>
         </tr>
         <tr>
@@ -197,10 +197,10 @@
                 Fase Mata-Mata
             </td>
             <td>
-                128 pts
+                160 pts
             </td>
             <td>
-                30%
+                28%
             </td>
         </tr>
         <tr>
@@ -208,7 +208,7 @@
                 Bonus
             </td>
             <td>
-                59 pts
+                81 pts
             </td>
             <td>
                 14%
@@ -219,7 +219,7 @@
                 TOTAL
             </td>
             <td>
-                427 pts
+                577 pts
             </td>
             <td>
                 100%
