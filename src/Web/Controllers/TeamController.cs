@@ -7,7 +7,7 @@ using BigBallz.ViewModels;
 namespace BigBallz.Controllers
 {
     [Authorize(Roles = "admin")]
-    public class TeamController : SecureBaseController
+    public class TeamController : BaseController
     {
         private readonly ITeamService _teamService;
         private readonly IGroupService _groupService;

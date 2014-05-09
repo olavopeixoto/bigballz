@@ -15,7 +15,7 @@ using BigBallz.ViewModels;
 
 namespace BigBallz.Controllers
 {
-    public class BetController : SecureBaseController
+    public class BetController : BaseController
     {
         private readonly IBonusBetService _bonusBetService;
         private readonly IBonusService _bonusService;

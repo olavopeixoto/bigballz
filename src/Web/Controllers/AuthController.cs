@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using BigBallz.Core;
+using BigBallz.Core.Log;
 using BigBallz.Filters;
 using BigBallz.Helpers;
 using BigBallz.Models;
@@ -49,7 +50,7 @@ namespace BigBallz.Controllers
             _matchService = new MatchService();
         }
 
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         public ActionResult HandleResponse(string token, string returnUrl)
         {
             //according to the spec, it is possible to get here without a token
@@ -57,28 +58,83 @@ namespace BigBallz.Controllers
             if (string.IsNullOrEmpty(token))
                 return string.IsNullOrEmpty(returnUrl) ? (ActionResult) RedirectToAction("Index", "Home") : Redirect(returnUrl);
 
-            //This service call will throw an exception if it fails. 
-            //You may want to catch it explicitly.
-            var authenticationDetails = _rpxService.GetAuthenticationDetails(token, true);
-            TempData["id"] = authenticationDetails.Identifier;
+            RPXAuthenticationDetails authenticationDetails;
+
+            try
+            {
+                //This service call will throw an exception if it fails. 
+                //You may want to catch it explicitly.
+                authenticationDetails = _rpxService.GetAuthenticationDetails(token, true);
+            }
+            catch (Exception ex)
+            {
+                new ElmahLogger().Error(ex);
+                this.FlashError("Ocorreu um erro na autenticação");
+                return RedirectToAction("index", "home");
+            }
 
             var user = _accountService.FindUserByIdentifier(authenticationDetails.Identifier);
             if (user == null)
             {
+                Session.RemoveAll();
                 TempData["UserDetails"] = authenticationDetails;
                 return RedirectToAction("NewAccount");
             }
 
-            user.PhotoUrl = authenticationDetails.PhotoUrl;
-            _accountService.UpdateUserInformation(user);
+            string photoUrl;
+            if (string.IsNullOrEmpty(authenticationDetails.PhotoUrl))
+            {
+                var gravatar = new GravatarHelper
+                {
+                    email = user.EmailAddress
+                };
+                photoUrl = gravatar.GetGravatarUrl();
+            }
+            else
+            {
+                photoUrl = authenticationDetails.PhotoUrl;
+            }
+
+            if (!string.Equals(user.PhotoUrl, photoUrl, StringComparison.InvariantCultureIgnoreCase))
+            {
+                user.PhotoUrl = authenticationDetails.PhotoUrl;
+                _accountService.UpdateUserInformation(user);
+            }
+
             SignIn(user.UserName, true);
             Response.Cookies.Add(new HttpCookie("photoUrl", user.PhotoUrl));
+
+            try
+            {
+                var newUserDetails = Session["UserDetails"] as RPXAuthenticationDetails;
+                if (newUserDetails != null)
+                {
+                    Session.Remove("UserDetails");
+                    if (_accountService.FindUserByIdentifier(newUserDetails.Identifier) != null)
+                    {
+                        this.FlashError(
+                            string.Format("A conta do {0} não foi associada. Já existe uma associação com essa conta.",
+                                newUserDetails.ProviderName));
+                    }
+                    else
+                    {
+                        _accountService.AssociateExistingUser(user.UserId, newUserDetails.Identifier,
+                            newUserDetails.ProviderName);
+                        this.FlashInfo(string.Format("Conta do {0} associada com sucesso!", newUserDetails.ProviderName));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                new ElmahLogger().Error(ex);
+                this.FlashError("Ocorreu um erro na tentativa associar a nova conta a uma existente");
+            }
 
             return string.IsNullOrEmpty(returnUrl) ? (ActionResult)RedirectToAction("Index", "Home") : Redirect(returnUrl);
         }
 
         //o método POST indica que a requisição é o retorno da validação NPI.
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         public void ConfirmacaoPagamento(string prodID_1, string cliEmail, string statusTransacao, FormCollection info)
         {
             var token = ConfigurationManager.AppSettings["pagseguro-token"];
@@ -129,33 +185,14 @@ namespace BigBallz.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public ActionResult Join()
         {
             ViewData["StartDate"] = _matchService.GetStartDate().AddDays(-1).FormatDate();
             return View();
         }
 
-        [HttpGet]
-        public ActionResult NewAccount()
-        {
-            var authenticationDetails = TempData.Peek("UserDetails") as RPXAuthenticationDetails;
-            if (authenticationDetails == null)
-            {
-                SignOutCurrentUser();
-                return RedirectToAction("Index", "Home");
-            }
-            var user = new User
-                           {
-                               UserName = authenticationDetails.PreferredUsername ?? authenticationDetails.DisplayName,
-                               EmailAddress = authenticationDetails.VerifiedEmail ?? authenticationDetails.Email,
-                               PhotoUrl = authenticationDetails.PhotoUrl
-                           };
-
-            return View(user);
-        }
-
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public ActionResult Activate(string id)
         {
             var userName = CryptHelper.DecryptAES256(id);
@@ -170,11 +207,36 @@ namespace BigBallz.Controllers
             return RedirectToAction("index", "home");
         }
 
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult NewAccount()
+        {
+            var authenticationDetails = TempData.Peek("UserDetails") as RPXAuthenticationDetails;
+            
+            if (authenticationDetails == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            Session["UserDetails"] = authenticationDetails;
+
+            var user = new User
+            {
+                UserName = authenticationDetails.PreferredUsername ?? authenticationDetails.DisplayName,
+                EmailAddress = authenticationDetails.VerifiedEmail ?? authenticationDetails.Email,
+                PhotoUrl = authenticationDetails.PhotoUrl
+            };
+
+            return View(user);
+        }
+
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult NewAccount(User user)
         {
-            var authenticationDetails = TempData.Peek("UserDetails") as RPXAuthenticationDetails;
+            var authenticationDetails = Session["UserDetails"] as RPXAuthenticationDetails;
             if (authenticationDetails == null) return RedirectToAction("Index", "Home");
+
             if (string.IsNullOrEmpty(authenticationDetails.PhotoUrl))
             {
                 var gravatar = new GravatarHelper
@@ -210,6 +272,7 @@ namespace BigBallz.Controllers
 
                 SignIn(user.UserName, true);
 
+                TempData["UserDetails"] = authenticationDetails;
                 return RedirectToAction("NewAccountSuccess");
             }
             catch (SqlException ex)
@@ -231,7 +294,6 @@ namespace BigBallz.Controllers
             }
         }
 
-        [Authorize]
         [HttpGet]
         public ActionResult NewAccountSuccess()
         {
@@ -248,7 +310,6 @@ namespace BigBallz.Controllers
             var user = _accountService.FindUserByUserName(userName);
             if (user == null || user.Authorized)
             {
-                SignOutCurrentUser();
                 return RedirectToAction("Index", "Home");
             }
             return View(user);
@@ -262,7 +323,7 @@ namespace BigBallz.Controllers
         private void SignOutCurrentUser()
         {
             FormsAuthentication.SignOut();
-            Session.Abandon();
+            //Session.Abandon();
         }
     }
 }

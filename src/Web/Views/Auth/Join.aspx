@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
 <%@ Import Namespace="BigBallz.Core" %>
-
+- Inscreva-se
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	
 </asp:Content>
@@ -22,9 +22,9 @@
         Provavelmente você já possui conta em alguns desses serviços, neste caso, escolha um dos provedores abaixo e faça o login. Caso contrário, você deverá criar uma conta em algum deles antes de prosseguir no <strong>BigBallz</strong>.
     </p>
     <%
-    var host = Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+    var host = Url.Encode(Url.Action("handleresponse", "auth", null, FormsAuthentication.RequireSSL ? "https" : "http"));
     %>
-    <iframe src="http://bigballz.rpxnow.com/openid/embed?token_url=http%3A%2F%2F<%=host %>%2Frpx&language_preference=pt-BR&flags=show_provider_list" scrolling="no" frameBorder="no" allowtransparency="true" style="width:400px;height:240px"></iframe>
+    <iframe src="http://bigballz.rpxnow.com/openid/embed?token_url=<%=host %>&language_preference=pt-BR&flags=show_provider_list" scrolling="no" frameBorder="no" allowtransparency="true" style="width:400px;height:240px"></iframe>
     <p>
         Feito o login você deverá pagar a taxa de inscrição de <strong><%=Html.Price().ToMoney() %></strong> conforme o <%=Html.ActionLink("regulamento", "Rules", "Home") %>.
         O pagamento é feito através do <a href="https://pagseguro.uol.com.br/">PagSeguro</a>. Clique neste botão

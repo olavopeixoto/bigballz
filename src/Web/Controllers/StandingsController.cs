@@ -3,7 +3,7 @@ using BigBallz.Services;
 
 namespace BigBallz.Controllers
 {
-    public class StandingsController : SecureBaseController
+    public class StandingsController : BaseController
     {
         private readonly IBigBallzService _bigBallzService = new BigBallzService();
 

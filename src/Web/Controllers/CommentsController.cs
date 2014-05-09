@@ -4,7 +4,7 @@ using BigBallz.Services;
 
 namespace BigBallz.Controllers
 {
-    public class CommentsController : SecureBaseController
+    public class CommentsController : BaseController
     {
         private readonly ICommentsService _commentsService;
 

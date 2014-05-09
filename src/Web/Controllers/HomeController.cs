@@ -14,22 +14,22 @@ namespace BigBallz.Controllers
             _matchService = new MatchService();
         }
 
+        [Authorize, AllowAnonymous]
         public ActionResult Index()
         {
-            ViewData["Message"] = "Welcome to ASP.NET MVC!";
-            
-            return this.AjaxView();
+            return View();
         }
-        
+
+        [Authorize, AllowAnonymous]
         public ActionResult Rules()
         {
             ViewData["StartDate"] = _matchService.GetStartDate().FormatDate();
             return View();
         }
 
-        public ActionResult Poll()
-        {
-            return View();
-        }
+        //public ActionResult Poll()
+        //{
+        //    return View();
+        //}
     }
 }
