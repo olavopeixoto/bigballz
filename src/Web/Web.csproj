@@ -75,6 +75,7 @@
     <Reference Include="System.Data.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions">
       <Private>False</Private>
@@ -106,7 +107,6 @@
     <Compile Include="Helpers\AuthorizationHelper.cs" />
     <Compile Include="Helpers\CryptHelper.cs" />
     <Compile Include="Helpers\GravatarHelper.cs" />
-    <Compile Include="Infrastructure\Mvc\BigBallzViewEngine.cs" />
     <Compile Include="Models\BBRoles.cs" />
     <Compile Include="Models\BetPoints.cs" />
     <Compile Include="Models\BonusPoints.cs" />
