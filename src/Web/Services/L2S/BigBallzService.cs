@@ -75,12 +75,12 @@ namespace BigBallz.Controllers
                 switch (bet.Bonus)
                 {
                     case 1: //Campeao Copa
-                        return 15;
-                    case 2: //Vice Copa
                         return 10;
+                    case 2: //Vice Copa
+                        return 7;
                     case 3: //Terceiro Copa
                     case 4: //Quarto Copa
-                        return 8;
+                        return 5;
                     case 5:
                     case 6:
                     case 7:

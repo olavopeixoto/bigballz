@@ -136,7 +136,7 @@
                 Campeão da Copa
             </td>
             <td>
-                15 pts
+                10 pts
             </td>
         </tr>
         <tr>
@@ -144,7 +144,7 @@
                 Vice-Campeão da Copa
             </td>
             <td>
-                10 pts
+                7 pts
             </td>
         </tr>
         <tr>
@@ -152,7 +152,7 @@
                 3º Colocado da Copa
             </td>
             <td>
-                8 pts
+                5 pts
             </td>
         </tr>
         <tr>
@@ -160,7 +160,7 @@
                 4º Colocado da Copa
             </td>
             <td>
-                8 pts
+                5 pts
             </td>
         </tr>
     </table>
@@ -189,7 +189,7 @@
                 336 pts
             </td>
             <td>
-                58%
+                60%
             </td>
         </tr>
         <tr>
@@ -208,10 +208,10 @@
                 Bonus
             </td>
             <td>
-                81 pts
+                67 pts
             </td>
             <td>
-                14%
+                12%
             </td>
         </tr>
         <tr>
