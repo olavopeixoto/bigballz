@@ -134,9 +134,12 @@ namespace BigBallz.Controllers
         }
 
         //o método POST indica que a requisição é o retorno da validação NPI.
-        [HttpPost, AllowAnonymous]
+        [AllowAnonymous]
+        [HttpPost]
         public void ConfirmacaoPagamento(string prodID_1, string cliEmail, string statusTransacao, FormCollection info)
         {
+            if (statusTransacao.ToLowerInvariant() != "aprovado") return; //So interessa saber se ja esta aprovado o pagamento
+
             var token = ConfigurationManager.AppSettings["pagseguro-token"];
             var pagina = ConfigurationManager.AppSettings["pagseguro-ws"];
      
@@ -172,7 +175,7 @@ namespace BigBallz.Controllers
             }
         }
 
-        [HttpGet, Authorize]
+        [HttpGet]
         public ActionResult ConfirmacaoPagamento()
         {
             return View();

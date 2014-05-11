@@ -48,7 +48,7 @@
         <%: Html.ActionLink("Create New", "Create") %>
     </p>--%>
      <div class="editor-label">
-                <%: Html.Label("Total de Usuários: " + ViewData["TotalUsuarios"])%>
+                <%: Html.Label("Total de Usuários: " + ViewData["TotalUsuarios"])%> - <%=Html.ActionLink("Enviar notificação para os não autorizados", "SendNotification", "user") %>
      </div>
 
     <%--<%:Html.ActionLink("Enviar Notificação de Registro", "sendnotification", "user") %>--%>

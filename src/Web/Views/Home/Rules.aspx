@@ -219,7 +219,7 @@
                 TOTAL
             </td>
             <td>
-                577 pts
+                563 pts
             </td>
             <td>
                 100%
