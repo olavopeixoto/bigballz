@@ -10,6 +10,8 @@ using System.Threading;
 using BigBallz.Core;
 using BigBallz.Helpers;
 using BigBallz.Models;
+using System.Threading.Tasks;
+using Elmah;
 
 namespace BigBallz.Services.L2S
 {
@@ -131,13 +133,18 @@ namespace BigBallz.Services.L2S
                 mailMessage.To.Add(address);
             }
 
-            var mail = new SmtpClient();
-            mail.Send(mailMessage);
-
-            //Task.Factory.StartNew(() => JobHost.DoWork(() =>
-            //{
-                
-            //}));
+            Task.Factory.StartNew(() => JobHost.DoWork(() =>
+            {
+                try
+                {
+                    var mail = new SmtpClient();
+                    mail.Send(mailMessage);
+                }
+                catch (Exception ex)
+                {
+                    ErrorLog.GetDefault(null).Log(new Error(ex));
+                }
+            }));
         }
     }
 }

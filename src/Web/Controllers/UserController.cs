@@ -31,9 +31,6 @@ namespace BigBallz.Controllers
             _accountService = new AccountService();
         }
 
-
-        // GET: /Team
-
         public ActionResult Index()
         {
             var userList = _userService.GetAll();
@@ -43,9 +40,6 @@ namespace BigBallz.Controllers
             return View(userList);
         }
 
-        //
-        // GET: /Team/Edit/5
-
         public ActionResult Edit(int id)
        {
             User user = _userService.Get(id);
@@ -53,9 +47,6 @@ namespace BigBallz.Controllers
 
             return View(user);
         }
-
-        //
-        // POST: /Team/Edit/5
 
        [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(User user)
@@ -90,6 +81,7 @@ namespace BigBallz.Controllers
                 TryUpdateModel(dbUser, "user");
                 
                 _userService.Save();
+
                 return RedirectToAction("Index");
             }
             catch(Exception ex)
@@ -97,7 +89,6 @@ namespace BigBallz.Controllers
                 this.FlashError(ex.Message);
 
                 return RedirectToAction("Index");
-               // return View(user);
             }
         }
 

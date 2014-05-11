@@ -84,12 +84,15 @@ namespace BigBallz.Services.L2S
 
         public bool VerifyEmail(string userName)
         {
-            var user = _db.Users.FirstOrDefault(x => x.UserName == userName && !x.EmailAddressVerified);
+            var user = _db.Users.FirstOrDefault(x => x.UserName == userName);
 
             if (user == null) return false;
 
-            user.EmailAddressVerified = true;
-            _db.SubmitChanges();
+            if (!user.EmailAddressVerified)
+            {
+                user.EmailAddressVerified = true;
+                _db.SubmitChanges();
+            }
 
             return true;
         }
@@ -97,10 +100,9 @@ namespace BigBallz.Services.L2S
         public int GetTotalAuthorizedUsers()
         {
             return (from user in _db.Users
-                    where user.Authorized && !user.UserRoles.Any(x => x.Role.Name == BBRoles.Admin)
+                    where user.Authorized && user.UserRoles.All(x => x.Role.Name != BBRoles.Admin)
                     select user).Count();
         }
-
 
         public int GetTotalPlayers()
         {
