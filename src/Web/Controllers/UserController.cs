@@ -52,43 +52,32 @@ namespace BigBallz.Controllers
         {
             try
             {
-                var currentUser = _userService.Get(User.Identity.Name);
-              
-                var roleProvider = new BBRoleProvider();
-
-                //Verifica se usuario tem papel de admin
-                if (!roleProvider.IsUserInRole(currentUser.UserName, "Admin"))
-                {
-                    throw new Exception("Usuário não tem permissão para editar outros usuários.");
-                }
-
                 var dbUser = _userService.Get(user.UserId);
 
-                dbUser.Authorized = user.Authorized;
-
-                if (dbUser.Authorized)
+                if (user.Authorized && !dbUser.Authorized)
                 {
                     var rolePlayer = _roleService.Get(2); // player
                     var userRolePlayer = new UserRole {UserId = user.UserId, RoleId = rolePlayer.RoleId};
                     dbUser.UserRoles.Add(userRolePlayer);
                 }
-                else
+                else if (!user.Authorized && dbUser.Authorized)
                 {
                     dbUser.UserRoles.Clear();
                 }
 
-                dbUser.IsAdmin = user.IsAdmin;
-
-                if (dbUser.IsAdmin)
+                if (user.IsAdmin && !dbUser.IsAdmin)
                 {
                     var adminRole = _roleService.Get(1); // admin
                     var adminUserRole = new UserRole { UserId = user.UserId, RoleId = adminRole.RoleId };
                     dbUser.UserRoles.Add(adminUserRole);
                 }
-                else
+                else if (!user.IsAdmin && dbUser.IsAdmin)
                 {
                     dbUser.UserRoles.Clear();
                 }
+
+                dbUser.Authorized = user.Authorized;
+                dbUser.IsAdmin = user.IsAdmin;
 
                 TryUpdateModel(dbUser, "user");
                 
