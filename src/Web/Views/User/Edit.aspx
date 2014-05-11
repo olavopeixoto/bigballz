@@ -39,6 +39,14 @@
                 <%: Html.ValidationMessageFor(model => model.Authorized) %>
             </div>
             
+            <div class="editor-label">
+                 <%: Html.Label("Administrador") %>
+            </div>
+            <div class="editor-field">
+                <%: Html.CheckBoxFor(model => model.IsAdmin) %>
+                <%: Html.ValidationMessageFor(model => model.IsAdmin) %>
+            </div>
+            
             <p>
                 <input type="submit" value="Salvar" />
             </p>

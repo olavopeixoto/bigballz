@@ -42,8 +42,7 @@ namespace BigBallz.Controllers
 
         public ActionResult Edit(int id)
        {
-            User user = _userService.Get(id);
-
+            var user = _userService.Get(id);
 
             return View(user);
         }
@@ -72,6 +71,19 @@ namespace BigBallz.Controllers
                     var rolePlayer = _roleService.Get(2); // player
                     var userRolePlayer = new UserRole {UserId = user.UserId, RoleId = rolePlayer.RoleId};
                     dbUser.UserRoles.Add(userRolePlayer);
+                }
+                else
+                {
+                    dbUser.UserRoles.Clear();
+                }
+
+                dbUser.IsAdmin = user.IsAdmin;
+
+                if (dbUser.IsAdmin)
+                {
+                    var adminRole = _roleService.Get(1); // admin
+                    var adminUserRole = new UserRole { UserId = user.UserId, RoleId = adminRole.RoleId };
+                    dbUser.UserRoles.Add(adminUserRole);
                 }
                 else
                 {

@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<BigBallz.Models.User>>" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-</asp:Content>
+<asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server"></asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <br />
     <table class="match-table">
@@ -18,13 +17,16 @@
                 <th>
                     Autorizado
                 </th>
+                <th>
+                    Administrador
+                </th>
             </tr>
         </thead>
         <tbody>
             <%
-                var lineIndex = 0;
-                foreach (var item in Model)
-                { %>
+            var lineIndex = 0;
+            foreach (var item in Model)
+            { %>
             <tr class="<%= lineIndex%2==0 ? "ui-state-default": "odd"%>">
                 <td class="c">
                     <%: Html.ActionLink("Editar", "Edit", new { id=item.UserId }) %>
@@ -38,20 +40,20 @@
                 <td class="c">
                     <%: Html.CheckBox("autorizado", item.Authorized, new { disabled = "disabled" }) %>
                 </td>
+                <td class="c">
+                    <%: Html.CheckBox("administrador", item.UserRoles.Any(x => x.Role.Name.ToLower() == "admin"), new { disabled = "disabled" }) %>
+                </td>
             </tr>
             <%
-                    lineIndex++;
-                } %>
+                lineIndex++;
+            } %>
         </tbody>
     </table>
-    <%-- <p>
-        <%: Html.ActionLink("Create New", "Create") %>
-    </p>--%>
-     <div class="editor-label">
-                <%: Html.Label("Total de Usuários: " + ViewData["TotalUsuarios"])%> - <%=Html.ActionLink("Enviar notificação para os não autorizados", "SendNotification", "user") %>
-     </div>
 
-    <%--<%:Html.ActionLink("Enviar Notificação de Registro", "sendnotification", "user") %>--%>
+    <div class="editor-label">
+    <%: Html.Label("Total de Jogadores Autorizados: " + ViewData["TotalUsuarios"])%> - <%=Html.ActionLink("Enviar notificação para os não autorizados", "sendnotification", "user") %>
+    </div>
+
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="Scripts" runat="server">
-</asp:Content>
+
+<asp:Content ID="Content3" ContentPlaceHolderID="Scripts" runat="server"></asp:Content>
