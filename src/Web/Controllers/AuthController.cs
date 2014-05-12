@@ -12,8 +12,6 @@ using BigBallz.Filters;
 using BigBallz.Helpers;
 using BigBallz.Models;
 using BigBallz.Services;
-using BigBallz.Services.L2S;
-using RPXLib;
 using RPXLib.Data;
 using RPXLib.Interfaces;
 
@@ -26,28 +24,12 @@ namespace BigBallz.Controllers
         private readonly IMailService _mailService;
         private readonly IMatchService _matchService;
 
-        public AuthController(IRPXService rpxService, IAccountService accountService, IMailService mailService, IMatchService matchService)
+        public AuthController(IRPXService rpxService, IAccountService accountService, IMailService mailService, IMatchService matchService, IUserService userService, IBigBallzService bigBallzService) : base(userService, matchService, bigBallzService)
         {
             _rpxService = rpxService;
             _accountService = accountService;
             _mailService = mailService;
             _matchService = matchService;
-        }
-
-        public  AuthController()
-        {
-            const string baseUrl = "https://rpxnow.com/api/v2/";
-            var apiKey = ConfigurationManager.AppSettings["rpxnow-apikey"];
-
-            //if you need to access the service via a web proxy set the proxy details here
-            const IWebProxy webProxy = null;
-
-            var settings = new RPXApiSettings(baseUrl, apiKey, webProxy);
-            _rpxService = new RPXService(settings);
-
-            _accountService = new AccountService();
-            _mailService = new MailService();
-            _matchService = new MatchService();
         }
 
         [HttpPost, AllowAnonymous]
@@ -316,6 +298,30 @@ namespace BigBallz.Controllers
                 return RedirectToAction("Index", "Home");
             }
             return View(user);
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult EnableProfiler()
+        {
+            Response.SetCookie(new HttpCookie("x-profiler", "true")
+            {
+                Secure = FormsAuthentication.RequireSSL,
+                HttpOnly = true,
+            });
+
+            return Redirect(Convert.ToString(Request.UrlReferrer));
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult DisableProfiler()
+        {
+            if (Request.Cookies["x-profiler"] != null)
+            {
+                var myCookie = new HttpCookie("x-profiler") { Expires = DateTime.Now.AddDays(-1d) };
+                Response.SetCookie(myCookie);
+            }
+
+            return Redirect(Convert.ToString(Request.UrlReferrer));
         }
 
         private static void SignIn(string localId, bool rememberMe)

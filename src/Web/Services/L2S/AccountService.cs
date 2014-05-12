@@ -8,7 +8,12 @@ namespace BigBallz.Services.L2S
 {
     public class AccountService : IAccountService
     {
-        readonly BigBallzDataContext _db = new BigBallzDataContext();
+        private readonly BigBallzDataContext _db;
+
+        public AccountService(BigBallzDataContext context)
+        {
+            _db = context;
+        }
 
         public User FindUserByIdentifier(string identifier)
         {

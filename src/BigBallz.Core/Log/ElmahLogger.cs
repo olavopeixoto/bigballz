@@ -68,7 +68,7 @@ namespace BigBallz.Core.Log
         private static bool IsFiltered(Exception e)
         {
             var context = HttpContext.Current;
-            var config = context.GetSection("elmah/errorFilter") as ErrorFilterConfiguration;
+            var config = context.NullSafe(x => x.GetSection("elmah/errorFilter") as ErrorFilterConfiguration);
 
             if (config == null)
                 return false;

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
 using BigBallz.Core;
+using BigBallz.Infrastructure;
 using BigBallz.Models;
-using BigBallz.Services;
 using BigBallz.Services.L2S;
 
-namespace BigBallz
+namespace BigBallz.Services
 {
     public class AlertEndBetTask : ICronJobTask
     {
@@ -47,7 +47,7 @@ namespace BigBallz
         {
             IList<Bet> bets;
             IList<User> players;
-            using (var context = new BigBallzDataContext())
+            using (var context = DataContextProvider.Get())
             {
                 var loadOptions = new DataLoadOptions();
                 loadOptions.LoadWith<Bet>(x => x.Match1);
@@ -69,7 +69,7 @@ namespace BigBallz
 
         public static void AddAllMatches()
         {
-            using (var context = new BigBallzDataContext())
+            using (var context = DataContextProvider.Get())
             {
                 var betEndTime = context.Matches.Where(x => !x.Score1.HasValue && !x.Score2.HasValue && x.StartTime.AddHours(-1) >= DateTime.Now.BrazilTimeZone()).GroupBy(x => x.StartTime).Select(x => x.Key.AddHours(-1)).OrderBy(x => x).ToList();
                 foreach(var startTime in betEndTime)

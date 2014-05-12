@@ -1,11 +1,16 @@
 ﻿using System.Linq;
-using BigBallz.Services;
+using BigBallz.Models;
 
-namespace BigBallz.Models
+namespace BigBallz.Services.L2S
 {
     public class TeamService : ITeamService
     {
-        readonly BigBallzDataContext _db = new BigBallzDataContext();
+        readonly BigBallzDataContext _db;
+
+        public TeamService(BigBallzDataContext context)
+        {
+            _db = context;
+        }
 
         public IQueryable<Team> GetAll()
         {

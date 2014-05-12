@@ -1,50 +1,55 @@
 ﻿using System.Linq;
-using BigBallz.Services;
+using BigBallz.Models;
 
-namespace BigBallz.Models
+namespace BigBallz.Services.L2S
 {
     public class BonusBetService : IBonusBetService
     {
-        readonly BigBallzDataContext db = new BigBallzDataContext();
+        readonly BigBallzDataContext _db;
+
+        public BonusBetService(BigBallzDataContext context)
+        {
+            _db = context;
+        }
 
         public IQueryable<BonusBet> GetAll()
         {
-            return db.BonusBets.OrderBy(x => x.User).ThenBy(x => x.BonusBetId);
+            return _db.BonusBets.OrderBy(x => x.User).ThenBy(x => x.BonusBetId);
         }
 
         public IQueryable<BonusBet> GetAll(string userName)
         {
-            return db.BonusBets.Where(d => d.User1.UserName == userName);
+            return _db.BonusBets.Where(d => d.User1.UserName == userName);
         }
 
         public IQueryable<BonusBet> GetAll(int userId)
         {
-            return db.BonusBets.Where(d => d.User == userId);
+            return _db.BonusBets.Where(d => d.User == userId);
         }
 
         public BonusBet Get(int bonusBetId)
         {
-            return db.BonusBets.SingleOrDefault(d => d.BonusBetId == bonusBetId);
+            return _db.BonusBets.SingleOrDefault(d => d.BonusBetId == bonusBetId);
         }
 
         public void Add(BonusBet bonusBet)
         {
-            db.BonusBets.InsertOnSubmit(bonusBet);
+            _db.BonusBets.InsertOnSubmit(bonusBet);
         }
 
         public void Add(System.Collections.Generic.IList<BonusBet> bonusBetList)
         {
-            db.BonusBets.InsertAllOnSubmit(bonusBetList);
+            _db.BonusBets.InsertAllOnSubmit(bonusBetList);
         }
 
         public void Delete(BonusBet bonusBet)
         {
-            db.BonusBets.DeleteOnSubmit(bonusBet);
+            _db.BonusBets.DeleteOnSubmit(bonusBet);
         }
 
         public void Save()
         {
-            db.SubmitChanges();
+            _db.SubmitChanges();
         }
 
     }

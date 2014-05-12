@@ -1,7 +1,6 @@
 ﻿using System.Web.Mvc;
 using BigBallz.Core;
 using BigBallz.Services;
-using BigBallz.Services.L2S;
 
 namespace BigBallz.Controllers
 {
@@ -9,9 +8,9 @@ namespace BigBallz.Controllers
     {
         private readonly IMatchService _matchService;
 
-        public HomeController()
+        public HomeController(IMatchService matchService, IUserService userService, IBigBallzService bigBallzService) : base(userService, matchService, bigBallzService)
         {
-            _matchService = new MatchService();
+            _matchService = matchService;
         }
 
         [Authorize, AllowAnonymous]

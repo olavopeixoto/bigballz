@@ -8,7 +8,12 @@ namespace BigBallz.Services.L2S
 {
     public class MatchService : IMatchService
     {
-        readonly BigBallzDataContext _db = new BigBallzDataContext();
+        readonly BigBallzDataContext _db;
+
+        public MatchService(BigBallzDataContext context)
+        {
+            _db = context;
+        }
 
         public IQueryable<Match> GetAll()
         {

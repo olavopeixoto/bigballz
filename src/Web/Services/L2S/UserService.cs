@@ -1,11 +1,16 @@
 ﻿using System.Linq;
-using BigBallz.Services;
+using BigBallz.Models;
 
-namespace BigBallz.Models
+namespace BigBallz.Services.L2S
 {
     public class UserService : IUserService
     {
-        readonly BigBallzDataContext _db = new BigBallzDataContext();
+        readonly BigBallzDataContext _db;
+
+        public UserService(BigBallzDataContext context)
+        {
+            _db = context;
+        }
 
         public IQueryable<User> GetAll()
         {
