@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web.Mvc;
 using BigBallz.Models;
 using BigBallz.Services;
-using BigBallz.Services.L2S;
 using BigBallz.ViewModels;
 
 namespace BigBallz.Controllers
@@ -15,11 +14,12 @@ namespace BigBallz.Controllers
         private readonly IBonusService _bonusService;
         private readonly IUserService _userService;
         private readonly IAccountService _accountService;
-        private readonly IMailService _mailService;
         private readonly IBonusBetService _bonusBetService;
+        private readonly IMailService _mailService;
 
 
-        public BonusController(ITeamService teamService, IBonusService bonusService, IUserService userService, IMailService mailService, IAccountService accountService, IBonusBetService bonusBetService)
+        public BonusController(ITeamService teamService, IBonusService bonusService, IUserService userService, IAccountService accountService, IBonusBetService bonusBetService, IBigBallzService bigBallzService, IMatchService matchService, IMailService mailService)
+            : base(userService, matchService, bigBallzService)
         {
             _teamService = teamService;
             _bonusService = bonusService;
@@ -27,96 +27,14 @@ namespace BigBallz.Controllers
             _userService = userService;
             _accountService = accountService;
             _bonusBetService = bonusBetService;
+            _mailService = mailService;
         }
-
-        public BonusController()
-        {
-            _teamService = new TeamService();
-            _bonusService = new BonusService();
-            _userService = new UserService();
-            _userService = new UserService();
-            _mailService = new MailService();
-            _accountService = new AccountService();
-            _bonusBetService = new BonusBetService();
-        }
-
-
-        // GET: /Team
 
         public ActionResult Index()
         {
             var bonusList = _bonusService.GetAll();
             return View(bonusList);
         }
-
-        ////
-        //// GET: /Team/Details/5
-
-        //public ActionResult Details(int id)
-        //{
-        //    var Bonus = _BonusService.Get(id);
-
-        //    if (Bonus == null)
-        //    {
-        //        return View("NotFound");
-        //    }
-        //    return View(Bonus);
-        //}
-
-        ////
-        //// GET: /Team/Create
-
-        public ActionResult Create()
-        {
-            var model = new BonusViewModel
-                            {
-                                Bonus = new Bonus(),
-                                Teams = _teamService.GetAll().ToSelectList("TeamId", "Name"),                                
-                            };
-           
-            return View(model);
-        }
-
-        //
-        // POST: /Team/Create
-
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Create(Bonus bonus)
-        {
-            try
-            {
-                var user = _userService.Get(User.Identity.Name);
-
-                //Verifica se usuario tem papel de admin
-                if (user.UserRoles.Count == 0)
-                {
-                    throw new Exception("Usuário não tem permissão para cadastrar jogos.");
-                }
-
-                _bonusService.Add(bonus);
-                _bonusService.Save();
-                return RedirectToAction("Index");
-            }
-            catch(Exception ex)
-            {
-                this.FlashError(ex.Message);
-              
-                var model = new BonusViewModel
-                {
-                    Bonus = bonus,
-                    Teams = _teamService.GetAll().ToSelectList("TeamId", "Name"),
-                   
-                };
-
-                return View(model);
-            }
-
-        }
-
-      
-
-        //
-        // GET: /Team/Edit/5
 
         public ActionResult Edit(int id)
        { 

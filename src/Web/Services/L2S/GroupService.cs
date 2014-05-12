@@ -1,35 +1,40 @@
 ﻿using System.Linq;
-using BigBallz.Services;
+using BigBallz.Models;
 
-namespace BigBallz.Models
+namespace BigBallz.Services.L2S
 {
     public class GroupService : IGroupService
     {
-        readonly BigBallzDataContext db = new BigBallzDataContext();
+        readonly BigBallzDataContext _db;
+
+        public GroupService(BigBallzDataContext context)
+        {
+            _db = context;
+        }
 
         public IQueryable<Group> GetAll()
         {
-            return db.Groups;
+            return _db.Groups;
         }
 
         public Group Get(int id)
         {
-            return db.Groups.SingleOrDefault(d => d.GroupId == id);
+            return _db.Groups.SingleOrDefault(d => d.GroupId == id);
         }
 
         public void Add(Group group)
         {
-            db.Groups.InsertOnSubmit(group);
+            _db.Groups.InsertOnSubmit(group);
         }
 
         public void Delete(Group group)
         {
-            db.Groups.DeleteOnSubmit(group);
+            _db.Groups.DeleteOnSubmit(group);
         }
 
         public void Save()
         {
-            db.SubmitChanges();
+            _db.SubmitChanges();
         }
     }
 }

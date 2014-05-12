@@ -2,45 +2,50 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using BigBallz.Core;
-using BigBallz.Services;
+using BigBallz.Models;
 
-namespace BigBallz.Models
+namespace BigBallz.Services.L2S
 {
     public class MatchBetService : IMatchBetService
     {
-        readonly BigBallzDataContext db = new BigBallzDataContext();
+        readonly BigBallzDataContext _db;
+
+        public MatchBetService(BigBallzDataContext context)
+        {
+            _db = context;
+        }
 
         public IQueryable<Bet> GetAll()
         {
-            return db.Bets.OrderBy(x => x.BetId);
+            return _db.Bets.OrderBy(x => x.BetId);
         }
 
         public IQueryable<Bet> GetAll(string userName)
         {
-            return db.Bets.Where(d => d.User1.UserName == userName);
+            return _db.Bets.Where(d => d.User1.UserName == userName);
         }
 
         public IQueryable<Bet> GetAll(int userId)
         {
-            return db.Bets.Where(d => d.User == userId);
+            return _db.Bets.Where(d => d.User == userId);
         }
 
         public IQueryable<Bet> GetAllExpired(int userId)
         {
-            return db.Bets.Where(d => d.User == userId && d.Match1.StartTime.AddHours(-1) < DateTime.Now.BrazilTimeZone());
+            return _db.Bets.Where(d => d.User == userId && d.Match1.StartTime.AddHours(-1) < DateTime.Now.BrazilTimeZone());
         }
 
         public Bet Get(int betId)
         {
-            return db.Bets.SingleOrDefault(d => d.BetId == betId);
+            return _db.Bets.SingleOrDefault(d => d.BetId == betId);
         }
 
         public void Add(Bet bet)
         {
-            var match = db.Matches.FirstOrDefault(x => x.MatchId == bet.Match);
+            var match = _db.Matches.FirstOrDefault(x => x.MatchId == bet.Match);
             if (match.StartTime.AddHours(-1) >= DateTime.Now.BrazilTimeZone())
             {
-                db.Bets.InsertOnSubmit(bet);
+                _db.Bets.InsertOnSubmit(bet);
             }
             else
             {
@@ -50,17 +55,17 @@ namespace BigBallz.Models
 
         public void Add(System.Collections.Generic.IList<Bet> bets)
         {
-            db.Bets.InsertAllOnSubmit(bets.Where(x => db.Matches.Where(y => y.StartTime.AddHours(-1) >= DateTime.Now.BrazilTimeZone()).Select(y => y.MatchId).Contains(x.Match)));
+            _db.Bets.InsertAllOnSubmit(bets.Where(x => _db.Matches.Where(y => y.StartTime.AddHours(-1) >= DateTime.Now.BrazilTimeZone()).Select(y => y.MatchId).Contains(x.Match)));
         }
 
         public void Delete(Bet bet)
         {
-            db.Bets.DeleteOnSubmit(bet);
+            _db.Bets.DeleteOnSubmit(bet);
         }
 
         public void Save()
         {
-            db.SubmitChanges();
+            _db.SubmitChanges();
         }
 
     }

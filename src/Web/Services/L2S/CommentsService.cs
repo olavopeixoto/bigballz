@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
 using BigBallz.Core;
+using BigBallz.Infrastructure;
 using BigBallz.Models;
 
-namespace BigBallz.Services
+namespace BigBallz.Services.L2S
 {
     public class CommentsService : ICommentsService
     {
         public IList<Comment> GetComments()
         {
-            using (var db = new BigBallzDataContext())
+            using (var db = DataContextProvider.Get())
             {
                 var options = new DataLoadOptions();
                 options.LoadWith<Comment>(x => x.User1);
@@ -22,7 +23,7 @@ namespace BigBallz.Services
 
         public IList<Comment> GetComments(int top)
         {
-            using (var db = new BigBallzDataContext())
+            using (var db = DataContextProvider.Get())
             {
                 var options = new DataLoadOptions();
                 options.LoadWith<Comment>(x => x.User1);
@@ -33,7 +34,7 @@ namespace BigBallz.Services
 
         public IList<Comment> GetComments(string userName)
         {
-            using (var db = new BigBallzDataContext())
+            using (var db = DataContextProvider.Get())
             {
                 var options = new DataLoadOptions();
                 options.LoadWith<Comment>(x => x.User1);
@@ -44,7 +45,7 @@ namespace BigBallz.Services
 
         public void PostComment(string userName, string comment)
         {
-            using (var db = new BigBallzDataContext())
+            using (var db = DataContextProvider.Get())
             {
                 var user = db.Users.FirstOrDefault(x => x.UserName == userName);
                 var post = new Comment

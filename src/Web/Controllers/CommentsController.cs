@@ -8,14 +8,9 @@ namespace BigBallz.Controllers
     {
         private readonly ICommentsService _commentsService;
 
-        public CommentsController(ICommentsService commentsService)
+        public CommentsController(ICommentsService commentsService, IBigBallzService bigBallzService, IMatchService matchService, IUserService userService) : base(userService, matchService, bigBallzService)
         {
             _commentsService = commentsService;
-        }
-
-         public CommentsController()
-        {
-            _commentsService = new CommentsService();
         }
 
         [HttpGet]

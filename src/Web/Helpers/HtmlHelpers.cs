@@ -6,6 +6,7 @@ using BigBallz.Core;
 using BigBallz.Helpers;
 using BigBallz.Models;
 using MvcContrib.UI.Html;
+using StackExchange.Profiling;
 
 namespace System.Web.Mvc {
 
@@ -120,6 +121,11 @@ namespace System.Web.Mvc {
         public static decimal Price(this HtmlHelper helper)
         {
             return ConfigurationHelper.Price;
+        }
+
+        public static IHtmlString MiniProfiler(this HtmlHelper helper)
+        {
+            return StackExchange.Profiling.MiniProfiler.RenderIncludes(RenderPosition.Left, showTrivial: false, showTimeWithChildren: false, useExistingjQuery: true, showControls: true);
         }
     }
 }

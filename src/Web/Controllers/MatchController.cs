@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web.Mvc;
 using BigBallz.Models;
 using BigBallz.Services;
-using BigBallz.Services.L2S;
 using BigBallz.ViewModels;
 
 namespace BigBallz.Controllers
@@ -16,7 +15,7 @@ namespace BigBallz.Controllers
         private readonly IMatchService _matchService;
         private readonly IUserService _userService;
 
-        public MatchController(ITeamService teamService, IStageService stageService, IMatchService matchService, IUserService userService)
+        public MatchController(ITeamService teamService, IStageService stageService, IMatchService matchService, IUserService userService, IBigBallzService bigBallzService) : base(userService, matchService, bigBallzService)
         {
             _teamService = teamService;
             _stageService = stageService;
@@ -24,39 +23,11 @@ namespace BigBallz.Controllers
             _userService = userService;
         }
 
-        public MatchController()
-        {
-            _teamService = new TeamService();
-            _stageService = new StageService();
-            _matchService = new MatchService();
-            _userService = new UserService();
-        }
-
-
-        // GET: /Team
-
         public ActionResult Index()
         {
             var matches = _matchService.GetAll().OrderBy(x => x.StageId).ThenBy(x => x.Team1.GroupId).ThenBy(x => x.MatchId);
             return View(matches);
         }
-
-        ////
-        //// GET: /Team/Details/5
-
-        //public ActionResult Details(int id)
-        //{
-        //    var match = _matchService.Get(id);
-
-        //    if (match == null)
-        //    {
-        //        return View("NotFound");
-        //    }
-        //    return View(match);
-        //}
-
-        ////
-        //// GET: /Team/Create
 
         public ActionResult Create()
         {
@@ -107,34 +78,6 @@ namespace BigBallz.Controllers
 
         }
 
-        //private void GetAllTeams(string teamAId, string teamBId)
-        //{
-        //    var teams = _teamService.GetAll();
-
-        //    if (!string.IsNullOrEmpty(teamAId))
-        //        ViewData["TeamsA"] = new SelectList(teams, "Id", "Name", teamAId);
-        //    else
-        //        ViewData["TeamsA"] = new SelectList(teams, "Id", "Name");
-
-        //    if (!string.IsNullOrEmpty(teamBId))
-        //        ViewData["TeamsB"] = new SelectList(teams, "Id", "Name", teamBId);
-        //    else
-        //        ViewData["TeamsB"] = new SelectList(teams, "Id", "Name");
-        //}
-
-        //private void GetAllStages(int? stageId)
-        //{
-        //    var stages = _stageService.GetAll();
-
-        //    if (stageId != null && stageId > 0)
-        //        ViewData["Stages"] = new SelectList(stages, "Id", "Name", stageId);
-        //    else
-        //        ViewData["Stages"] = new SelectList(stages, "Id", "Name");
-        //}
-
-        //
-        // GET: /Team/Edit/5
-
         public ActionResult Edit(int id)
         {
             var model = new MatchViewModel
@@ -146,9 +89,6 @@ namespace BigBallz.Controllers
 
             return View(model);
         }
-
-        //
-        // POST: /Team/Edit/5
 
         [HttpPost]
         public ActionResult Edit(Match match)

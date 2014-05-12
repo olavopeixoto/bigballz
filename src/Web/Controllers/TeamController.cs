@@ -13,21 +13,13 @@ namespace BigBallz.Controllers
         private readonly IGroupService _groupService;
         private readonly IUserService _userService;
 
-        public TeamController(ITeamService teamService, IGroupService groupService, IUserService userService)
+        public TeamController(ITeamService teamService, IGroupService groupService, IUserService userService, IMatchService matchService, IBigBallzService bigBallzService) : base(userService, matchService, bigBallzService)
         {
             _teamService = teamService;
             _groupService = groupService;
             _userService = userService;
         }
 
-        public TeamController()
-        {
-            _teamService = new TeamService();
-            _groupService = new GroupService();
-            _userService = new UserService();
-        }
-
-        // GET: /Team
         public ActionResult Index()
         {
             return View();
@@ -39,22 +31,6 @@ namespace BigBallz.Controllers
             return Json(teams);
         }
 
-        ////
-        //// GET: /Team/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    var match = _matchService.Get(id);
-
-        //    if (match == null)
-        //    {
-        //        return View("NotFound");
-        //    }
-        //    return View(match);
-        //}
-
-        ////
-        //// GET: /Team/Create
-
         public ActionResult Create()
         {
             var model = new TeamViewModel
@@ -64,9 +40,6 @@ namespace BigBallz.Controllers
 
             return View(model);
         }
-
-        //
-        // POST: /Team/Create
 
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Create(Team team)
@@ -99,9 +72,6 @@ namespace BigBallz.Controllers
 
         }
 
-        //
-        // GET: /Team/Edit/5
-
         public ActionResult Edit(string id)
         {
             ViewData["Groups"] = _groupService.GetAll().ToSelectList("GroupId", "Name");
@@ -109,25 +79,15 @@ namespace BigBallz.Controllers
             return View(_teamService.Get(id));
         }
 
-        //
-        // POST: /Team/Edit/5
-
         [HttpPost]
         public ActionResult Edit(Team team)
         {
             try
             {
-                var user = _userService.Get(User.Identity.Name);
-
-                //Verifica se usuario tem papel de admin
-                if (user.UserRoles.Count == 0)
-                {
-                    throw new Exception("Usuário não tem permissão para editar jogos.");
-                }
-
                 var dbmatch = _teamService.Get(team.TeamId);
                 TryUpdateModel(dbmatch, "team");
                 _teamService.Save();
+                
                 return RedirectToAction("Index");
             }
             catch(Exception ex)

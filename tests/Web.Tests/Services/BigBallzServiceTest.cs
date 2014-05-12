@@ -1,13 +1,13 @@
-﻿using System.Web.Mvc;
+﻿using BigBallz.Models;
+using BigBallz.Services.L2S;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BigBallz.Controllers;
 
-namespace BigBallz.Tests.Controllers
+namespace BigBall.Tests.Services
 {
     [TestClass]
     public class BigBallzServiceTest
     {
-        readonly BigBallzService _service = new BigBallzService();
+        readonly BigBallzService _service = new BigBallzService(new BigBallzDataContext());
         
         [TestMethod]
         public void PlacarExato()

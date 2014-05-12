@@ -25,12 +25,19 @@
             <span style="display:block"><%=Html.ActionLink("Pagamento não registrado. Clique aqui.", "payment", "auth")%></span>
         <%}%>
         <%--<span style="display:block"><span title="3 placares exatos (333) | 1 placar parcial (333) | 5 resultados corretos (333)">90 pontos (85%)</span></span>--%>
+        <% if (Context.User.IsInRole("admin")) { 
+                if (Request.Cookies["x-profiler"] == null) { %>
+                    <span style="display:block"><span><%= Html.ActionLink("Enable Profiler", "EnableProfiler", "auth") %></span></span>
+            <% } else { %>
+                     <span style="display:block"><span><%= Html.ActionLink("Disable Profiler", "DisableProfiler", "auth") %></span></span>
+            <% }
+         } %>
     </span>
   </div>
 </div>
 
 <%var pendingBets = ViewData["PendingBets"] as IEnumerable<BigBallz.Models.Match>;
-if (pendingBets!=null && pendingBets.Count() > 0)
+if (pendingBets!=null && pendingBets.Any())
 {
     var pendingBetsCount = pendingBets.Count();
     var plural = pendingBetsCount > 1 ? "s" : string.Empty;

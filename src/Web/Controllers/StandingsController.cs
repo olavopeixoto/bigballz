@@ -5,7 +5,12 @@ namespace BigBallz.Controllers
 {
     public class StandingsController : BaseController
     {
-        private readonly IBigBallzService _bigBallzService = new BigBallzService();
+        private readonly IBigBallzService _bigBallzService;
+
+        public StandingsController(IUserService userService, IMatchService matchService, IBigBallzService bigBallzService) : base(userService, matchService, bigBallzService)
+        {
+            _bigBallzService = bigBallzService;
+        }
 
         public ActionResult Index()
         {

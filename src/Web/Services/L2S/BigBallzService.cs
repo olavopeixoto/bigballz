@@ -4,13 +4,17 @@ using System.Linq;
 using BigBallz.Core;
 using BigBallz.Helpers;
 using BigBallz.Models;
-using BigBallz.Services;
 
-namespace BigBallz.Controllers
+namespace BigBallz.Services.L2S
 {
     public class BigBallzService : IBigBallzService
     {
-        readonly BigBallzDataContext _db = new BigBallzDataContext();
+        readonly BigBallzDataContext _db;
+
+        public BigBallzService(BigBallzDataContext context)
+        {
+            _db = context;
+        }
 
         public int GetTotalUserPoints(string userName)
         {
@@ -112,18 +116,18 @@ namespace BigBallz.Controllers
 
         public IList<Match> GetUserPendingBets(string userName)
         {
-            return _db.Matches.Where(x => !x.Bets.Any(y => y.User1.UserName == userName) && x.StartTime <= DateTime.Now.BrazilTimeZone().AddHours(24)).ToList();
+            return _db.Matches.Where(x => x.Bets.All(y => y.User1.UserName != userName) && x.StartTime <= DateTime.Now.BrazilTimeZone().AddHours(24)).ToList();
         }
 
         public IList<Bonus> GetUserPendingBonusBets(string userName)
         {
-            return _db.Bonus.Where(x => !x.BonusBets.Any(y => y.User1.UserName == userName)).ToList();
+            return _db.Bonus.Where(x => x.BonusBets.All(y => y.User1.UserName != userName)).ToList();
         }
 
         public IList<UserPoints> GetStandings()
         {
-            List<User> users = _db.Users.Where(x => x.Authorized).ToList();
-            List<UserPoints> userPointsList = users.Select(user => new UserPoints
+            var users = _db.Users.Where(x => x.Authorized).ToList();
+            var userPointsList = users.Select(user => new UserPoints
             {
                 User = user,
                 TotalPoints = GetTotalUserPoints(user.UserName),
@@ -132,7 +136,7 @@ namespace BigBallz.Controllers
                 TotalBonusPoints = GetTotalUserBonusPoints(user.UserName)
             }).OrderByDescending(x => x.TotalPoints).ThenByDescending(x => x.TotalExactScore).ThenByDescending(x => x.TotalBonusPoints).ThenBy(x => x.User.UserName).ToList();
 
-            int j = 1;
+            var j = 1;
             for (int i = 0; i < userPointsList.Count(); i++)
             {
                 if (i > 0)
@@ -297,7 +301,7 @@ namespace BigBallz.Controllers
             {
                 Bonus = bets.FirstOrDefault().Bonus11,
                 Team = mostBetTeam.Team1,
-                TeamPerc = bets.Where(x => x.Team1 == mostBetTeam.Team1).Count() / totalBets,
+                TeamPerc = bets.Count(x => x.Team1 == mostBetTeam.Team1) / totalBets,
             };
         }
     }

@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using BigBallz.Helpers;
 using BigBallz.Models;
 using BigBallz.Services;
-using BigBallz.Services.L2S;
 
 namespace BigBallz.Controllers
 {
@@ -16,19 +15,12 @@ namespace BigBallz.Controllers
         private readonly IMailService _mailService;
 
 
-        public UserController(IUserService userService, IRoleService roleService, IMailService mailService, IAccountService accountService)
+        public UserController(IUserService userService, IRoleService roleService, IAccountService accountService, IMatchService matchService, IBigBallzService bigBallzService, IMailService mailService) : base(userService, matchService, bigBallzService)
         {
             _userService = userService;
             _roleService = roleService;
             _accountService = accountService;
-        }
-
-        public UserController()
-        {
-            _userService = new UserService();
-            _roleService = new RoleService();
-            _mailService = new MailService();
-            _accountService = new AccountService();
+            _mailService = mailService;
         }
 
         public ActionResult Index()

@@ -4,15 +4,24 @@ using System.Web;
 using System.Web.Mvc;
 using BigBallz.Core;
 using BigBallz.Helpers;
-using BigBallz.Models;
 using BigBallz.Services;
-using BigBallz.Services.L2S;
 
 namespace BigBallz.Controllers
 {
     [Authorize]
     public abstract class BaseController : Controller
     {
+        private readonly IUserService _userService;
+        private readonly IMatchService _matchService;
+        private readonly IBigBallzService _bigBallzService;
+
+        protected BaseController(IUserService userService, IMatchService matchService, IBigBallzService bigBallzService)
+        {
+            _userService = userService;
+            _matchService = matchService;
+            _bigBallzService = bigBallzService;
+        }
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             base.OnActionExecuting(filterContext);
@@ -26,8 +35,7 @@ namespace BigBallz.Controllers
                 var photoCookie = Request.Cookies["photoUrl"];
                 if (photoCookie == null || string.IsNullOrEmpty(photoCookie.Value))
                 {
-                    IUserService userService = new UserService();
-                    var user = userService.Get(userName);
+                    var user = _userService.Get(userName);
                     Response.Cookies.Remove("photoUrl");
                     string photoUrl;
                     if (string.IsNullOrEmpty(user.PhotoUrl))
@@ -45,20 +53,17 @@ namespace BigBallz.Controllers
                     Response.Cookies.Add(new HttpCookie("photoUrl", photoUrl) { Expires = DateTime.Now.BrazilTimeZone().AddDays(30) });
                 }
 
-                IMatchService matchService = new MatchService();
-                ViewData["NextMatches"] = matchService.GetNextMatches();
+                ViewData["NextMatches"] = _matchService.GetNextMatches();
+                ViewData["LastMatches"] = _matchService.GetLastPlayedMatches();
 
-                ViewData["LastMatches"] = matchService.GetLastPlayedMatches();
-
-                var bigballzService = new BigBallzService();
-                var totalprize = bigballzService.GetTotalPrize();
+                var totalprize = _bigBallzService.GetTotalPrize();
                 var prizes = new List<double> { totalprize * 0.65, totalprize * 0.20, totalprize * 0.10 };
                 ViewData["Prizes"] = prizes;
-                
-                ViewData["Standings"] = bigballzService.GetStandings();
-                ViewData["DayStandings"] = bigballzService.GetLastRoundStandings();
 
-                ViewData["PendingBets"] = bigballzService.GetUserPendingBets(userName);
+                ViewData["Standings"] = _bigBallzService.GetStandings();
+                ViewData["DayStandings"] = _bigBallzService.GetLastRoundStandings();
+
+                ViewData["PendingBets"] = _bigBallzService.GetUserPendingBets(userName);
             }
         }
     }

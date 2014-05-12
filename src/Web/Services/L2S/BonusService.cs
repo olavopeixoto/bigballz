@@ -1,35 +1,40 @@
 ﻿using System.Linq;
-using BigBallz.Services;
+using BigBallz.Models;
 
-namespace BigBallz.Models
+namespace BigBallz.Services.L2S
 {
     public class BonusService : IBonusService
     {
-        readonly BigBallzDataContext db = new BigBallzDataContext();
+        readonly BigBallzDataContext _db;
+
+        public BonusService(BigBallzDataContext context)
+        {
+            _db = context;
+        }
 
         public IQueryable<Bonus> GetAll()
         {
-            return db.Bonus.OrderBy(d => d.BonusId);
+            return _db.Bonus.OrderBy(d => d.BonusId);
         }
 
         public Bonus Get(int id)
         {
-            return db.Bonus.SingleOrDefault(d => d.BonusId == id);
+            return _db.Bonus.SingleOrDefault(d => d.BonusId == id);
         }
 
         public void Add(Bonus bonus)
         {
-            db.Bonus.InsertOnSubmit(bonus);
+            _db.Bonus.InsertOnSubmit(bonus);
         }
 
         public void Delete(Bonus bonus)
         {
-            db.Bonus.DeleteOnSubmit(bonus);
+            _db.Bonus.DeleteOnSubmit(bonus);
         }
 
         public void Save()
         {
-            db.SubmitChanges();
+            _db.SubmitChanges();
         }
     }
 }

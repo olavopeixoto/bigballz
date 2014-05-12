@@ -1,35 +1,40 @@
 ﻿using System.Linq;
-using BigBallz.Services;
+using BigBallz.Models;
 
-namespace BigBallz.Models
+namespace BigBallz.Services.L2S
 {
     public class StageService : IStageService
     {
-        readonly BigBallzDataContext db = new BigBallzDataContext();
+        readonly BigBallzDataContext _db;
+
+        public StageService(BigBallzDataContext context)
+        {
+            _db = context;
+        }
 
         public IQueryable<Stage> GetAll()
         {
-            return db.Stages;
+            return _db.Stages;
         }
 
         public Stage Get(int id)
         {
-            return db.Stages.SingleOrDefault(d => d.StageId == id);
+            return _db.Stages.SingleOrDefault(d => d.StageId == id);
         }
 
         public void Add(Stage stage)
         {
-            db.Stages.InsertOnSubmit(stage);
+            _db.Stages.InsertOnSubmit(stage);
         }
 
         public void Delete(Stage stage)
         {
-            db.Stages.DeleteOnSubmit(stage);
+            _db.Stages.DeleteOnSubmit(stage);
         }
 
         public void Save()
         {
-            db.SubmitChanges();
+            _db.SubmitChanges();
         }
     }
 }

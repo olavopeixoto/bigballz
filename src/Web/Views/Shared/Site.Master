@@ -84,7 +84,7 @@
             </div>
         </div>
     </div>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js" type="text/javascript"></script>
     <%=Html.Script("jquery.ui.datepicker-pt-BR.js")%>
     <%=Html.Script("Site.Master.js")%>
@@ -99,5 +99,6 @@
         RPXNOW.language_preference = 'pt-BR';
     </script>
     <%=Html.Flash()%>
+    <%=Html.MiniProfiler() %>
 </body>
 </html>
