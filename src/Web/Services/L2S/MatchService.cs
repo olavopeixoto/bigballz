@@ -27,11 +27,21 @@ namespace BigBallz.Services.L2S
 
         public IEnumerable<Match> GetNextMatches()
         {
+            var dataOptions = new System.Data.Linq.DataLoadOptions();
+            dataOptions.LoadWith<Match>(ca => ca.Team1);
+            dataOptions.LoadWith<Match>(ca => ca.Team2);
+            _db.LoadOptions = dataOptions;
+
             return _db.Matches.Where(x => x.StartTime > DateTime.Now.BrazilTimeZone()).Take(5).OrderBy(x => x.StartTime);
         }
 
         public IEnumerable<Match> GetLastPlayedMatches()
         {
+            var dataOptions = new System.Data.Linq.DataLoadOptions();
+            dataOptions.LoadWith<Match>(ca => ca.Team1);
+            dataOptions.LoadWith<Match>(ca => ca.Team2);
+            _db.LoadOptions = dataOptions;
+
             return _db.Matches.Where(x => x.StartTime < DateTime.Now.BrazilTimeZone()).OrderByDescending(x => x.StartTime).Take(5);
         }
 

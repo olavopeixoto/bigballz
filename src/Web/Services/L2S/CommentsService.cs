@@ -10,9 +10,16 @@ namespace BigBallz.Services.L2S
 {
     public class CommentsService : ICommentsService
     {
+        private readonly DataContextProvider _provider;
+
+        public CommentsService(DataContextProvider provider)
+        {
+            _provider = provider;
+        }
+
         public IList<Comment> GetComments()
         {
-            using (var db = DataContextProvider.Get())
+            using (var db = _provider.CreateContext())
             {
                 var options = new DataLoadOptions();
                 options.LoadWith<Comment>(x => x.User1);
@@ -23,7 +30,7 @@ namespace BigBallz.Services.L2S
 
         public IList<Comment> GetComments(int top)
         {
-            using (var db = DataContextProvider.Get())
+            using (var db = _provider.CreateContext())
             {
                 var options = new DataLoadOptions();
                 options.LoadWith<Comment>(x => x.User1);
@@ -34,7 +41,7 @@ namespace BigBallz.Services.L2S
 
         public IList<Comment> GetComments(string userName)
         {
-            using (var db = DataContextProvider.Get())
+            using (var db = _provider.CreateContext())
             {
                 var options = new DataLoadOptions();
                 options.LoadWith<Comment>(x => x.User1);
@@ -45,9 +52,9 @@ namespace BigBallz.Services.L2S
 
         public void PostComment(string userName, string comment)
         {
-            using (var db = DataContextProvider.Get())
+            using (var db = _provider.CreateContext())
             {
-                var user = db.Users.FirstOrDefault(x => x.UserName == userName);
+                var user = db.Users.First(x => x.UserName == userName);
                 var post = new Comment
                 {
                     Comments = comment,

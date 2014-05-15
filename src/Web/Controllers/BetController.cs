@@ -10,7 +10,6 @@ using BigBallz.Filters;
 using BigBallz.Helpers;
 using BigBallz.Models;
 using BigBallz.Services;
-using BigBallz.Services.L2S;
 using BigBallz.ViewModels;
 
 namespace BigBallz.Controllers

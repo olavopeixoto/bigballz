@@ -2,7 +2,7 @@
 <%
     if (Request.IsAuthenticated) {
 %>
-        <b><%= Html.Encode(Page.User.Identity.Name) %></b> | <%= Html.ActionLink("Sair", "LogOff", "Account") %>
+        <b><%= Html.Encode(Page.User.Identity.Name) %></b> | <a href="#" onclick="logoff()">Sair</a>
 <%
     }
     else if (TempData["UserDetails"]==null)

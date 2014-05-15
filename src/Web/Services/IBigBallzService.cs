@@ -6,7 +6,6 @@ namespace BigBallz.Services
 {
     public interface IBigBallzService
     {
-        int GetTotalUserPoints(string userName);
         int GetUserStanding(string userName);
         IList<Match> GetUserPendingBets(string userName);
         IList<Bonus> GetUserPendingBonusBets(string userName);

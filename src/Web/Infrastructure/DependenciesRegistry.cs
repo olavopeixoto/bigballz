@@ -7,6 +7,7 @@ using BigBallz.Services.L2S;
 using RPXLib;
 using RPXLib.Interfaces;
 using StructureMap.Configuration.DSL;
+using StructureMap.Pipeline;
 
 namespace BigBallz.Infrastructure
 {
@@ -32,9 +33,13 @@ namespace BigBallz.Infrastructure
                     return new RPXService(settings);
                 });
 
+            For<DataContextProvider>()
+                .Singleton()
+                .Use<DataContextProvider>();
+
             For<BigBallzDataContext>()
-                .HttpContextScoped()
-                .Use(x => DataContextProvider.Get());
+                .AlwaysUnique()
+                .Use(x => x.GetInstance<DataContextProvider>().CreateContext());
 
             For<IAccountService>()
                 .HttpContextScoped()

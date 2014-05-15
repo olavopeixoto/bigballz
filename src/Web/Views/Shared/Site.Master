@@ -34,6 +34,23 @@
             ga('send', 'pageview');
     </script>
     <% } %>
+    <script src="https://d1v9u0bgi1uimx.cloudfront.net/sso.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        JANRAIN.SSO.CAPTURE.check_login({
+            sso_server: 'https://bigballz.janrainsso.com',
+            client_id: '<%=ConfigurationManager.AppSettings["rpxnow-apikey"]%>',
+            redirect_uri: '<%=Url.Action("handleresponse", "auth", null, FormsAuthentication.RequireSSL ? "https" : "http")%>',
+            logout_uri: '<%=Url.Action("logoff", "account", null, FormsAuthentication.RequireSSL ? "https" : "http")%>',
+            xd_receiver: '<%=Url.SiteRoot() + "/xd_receiver.htm"%>'
+        });
+        function logoff() {
+            JANRAIN.SSO.CAPTURE.logout({
+                sso_server: 'https://bigballz.janrainsso.com',
+                logout_uri: '<%=Url.Action("logoff", "account", null, FormsAuthentication.RequireSSL ? "https" : "http")%>'
+            });
+            return false;
+        };
+    </script>
 </head>
 <body>
     <div id="fixed">
