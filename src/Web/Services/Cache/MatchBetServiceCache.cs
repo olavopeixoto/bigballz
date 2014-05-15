@@ -1,7 +1,5 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using System.Linq;
-using BigBallz.Core;
 using BigBallz.Core.Caching;
 using BigBallz.Models;
 
@@ -9,68 +7,113 @@ namespace BigBallz.Services.Cache
 {
     public class MatchBetServiceCache : IMatchBetService
     {
-        readonly BigBallzDataContext _db;
         private readonly ICache _cache;
+        private readonly IMatchBetService _service;
 
-        public MatchBetServiceCache(BigBallzDataContext context, ICache cache)
+        public MatchBetServiceCache(ICache cache, IMatchBetService service)
         {
-            _db = context;
             _cache = cache;
+            _service = service;
         }
 
-        public IQueryable<Bet> GetAll()
+        public IEnumerable<Bet> GetAll()
         {
-            return _db.Bets.OrderBy(x => x.BetId);
+            var key = string.Format("BB-MatchBetServiceCache-GetAll");
+
+            if (_cache.Contains(key))
+            {
+                return _cache.Get<IEnumerable<Bet>>(key);
+            }
+
+            var results = _service.GetAll().ToList();
+
+            _cache.Set(key, results);
+
+            return results;
         }
 
-        public IQueryable<Bet> GetAll(string userName)
+        public IEnumerable<Bet> GetAll(string userName)
         {
-            return _db.Bets.Where(d => d.User1.UserName == userName);
+            var key = string.Format("BB-MatchBetServiceCache-GetAll-{0}", userName ?? string.Empty);
+
+            if (_cache.Contains(key))
+            {
+                return _cache.Get<IEnumerable<Bet>>(key);
+            }
+
+            var results = _service.GetAll(userName).ToList();
+            _cache.Set(key, results);
+
+            return results;
         }
 
-        public IQueryable<Bet> GetAll(int userId)
+        public IEnumerable<Bet> GetAll(int userId)
         {
-            return _db.Bets.Where(d => d.User == userId);
+            var key = string.Format("BB-MatchBetServiceCache-GetAll-{0}", userId);
+
+            if (_cache.Contains(key))
+            {
+                return _cache.Get<IEnumerable<Bet>>(key);
+            }
+
+            var results = _service.GetAll(userId).ToList();
+            _cache.Set(key, results);
+
+            return results;
         }
 
-        public IQueryable<Bet> GetAllExpired(int userId)
+        public IEnumerable<Bet> GetAllExpired(int userId)
         {
-            return _db.Bets.Where(d => d.User == userId && d.Match1.StartTime.AddHours(-1) < DateTime.Now.BrazilTimeZone());
+            var key = string.Format("BB-MatchBetServiceCache-GetAllExpired-{0}", userId);
+
+            if (_cache.Contains(key))
+            {
+                return _cache.Get<IEnumerable<Bet>>(key);
+            }
+
+            var results = _service.GetAllExpired(userId).ToList();
+            _cache.Set(key, results);
+
+            return results;
         }
 
         public Bet Get(int betId)
         {
-            return _db.Bets.SingleOrDefault(d => d.BetId == betId);
+            var key = string.Format("BB-MatchBetServiceCache-Get-{0}", betId);
+
+            if (_cache.Contains(key))
+            {
+                return _cache.Get<Bet>(key);
+            }
+
+            var results = _service.Get(betId);
+            _cache.Set(key, results);
+
+            return results;
         }
 
         public void Add(Bet bet)
         {
-            var match = _db.Matches.FirstOrDefault(x => x.MatchId == bet.Match);
-            if (match.StartTime.AddHours(-1) >= DateTime.Now.BrazilTimeZone())
-            {
-                _db.Bets.InsertOnSubmit(bet);
-            }
-            else
-            {
-                throw new ValidationException(string.Format("Apostas encerradas para a partida {0} X {1}", match.Team1.Name, match.Team2.Name));
-            }
+            _cache.Clear();
+            _service.Add(bet);
         }
 
-        public void Add(System.Collections.Generic.IList<Bet> bets)
+        public void Add(IList<Bet> bets)
         {
-            _db.Bets.InsertAllOnSubmit(bets.Where(x => _db.Matches.Where(y => y.StartTime.AddHours(-1) >= DateTime.Now.BrazilTimeZone()).Select(y => y.MatchId).Contains(x.Match)));
+            _cache.Clear();
+            _service.Add(bets);
         }
 
         public void Delete(Bet bet)
         {
-            _db.Bets.DeleteOnSubmit(bet);
+            _cache.Clear();
+            _service.Delete(bet);
         }
 
         public void Save()
         {
             _cache.Clear();
-
-            _db.SubmitChanges();
+            _service.Save();
         }
 
     }

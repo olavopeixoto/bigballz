@@ -33,7 +33,7 @@ namespace BigBallz.Services.Cache
 
         public IEnumerable<BonusBet> GetAll(string userName)
         {
-            var key = string.Format("BB-BonusBetServiceCache-GetAll-{0}", userName);
+            var key = string.Format("BB-BonusBetServiceCache-GetAll-{0}", userName ?? string.Empty);
 
             if (_cache.Contains(key))
             {
@@ -78,16 +78,19 @@ namespace BigBallz.Services.Cache
 
         public void Add(BonusBet bonusBet)
         {
+            _cache.Clear();
             _service.Add(bonusBet);
         }
 
-        public void Add(System.Collections.Generic.IList<BonusBet> bonusBetList)
+        public void Add(IList<BonusBet> bonusBetList)
         {
+            _cache.Clear();
             _service.Add(bonusBetList);
         }
 
         public void Delete(BonusBet bonusBetBet)
         {
+            _cache.Clear();
            _service.Delete(bonusBetBet);
         }
 

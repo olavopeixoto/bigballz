@@ -7,10 +7,10 @@ namespace BigBallz.Services
     public interface IMatchBetService
     {
         // Query Methods
-        IQueryable<Bet> GetAll();
-        IQueryable<Bet> GetAll(string userName);
-        IQueryable<Bet> GetAll(int userId);
-        IQueryable<Bet> GetAllExpired(int userId);
+        IEnumerable<Bet> GetAll();
+        IEnumerable<Bet> GetAll(string userName);
+        IEnumerable<Bet> GetAll(int userId);
+        IEnumerable<Bet> GetAllExpired(int userId);
         Bet Get(int betId);
 
         // Insert/Delete

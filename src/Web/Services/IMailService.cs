@@ -9,5 +9,6 @@ namespace BigBallz.Services
         void SendPaymentConfirmation(User user);
         void SendEndBetAlert(User user, IList<Bet> bets);
         void SendEndBonusAlert(User user, IList<BonusBet> bonusBets);
+        void SendNewCommentPosted(User[] toArray, string userName, string comment);
     }
 }

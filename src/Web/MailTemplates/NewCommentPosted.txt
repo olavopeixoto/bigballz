@@ -1,0 +1,9 @@
+﻿Informamos que foi postada uma nova mensagem no BigBallz por <%=userName%> em <%=date%>
+<p>
+"<%=comments%>"
+</p>
+<p>
+Atenciosamente,<br>
+Equipe <%=siteTitle%><br>
+<%=rootUrl%>
+</p>

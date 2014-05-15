@@ -71,7 +71,7 @@ namespace BigBallz.Services.Cache
                 return _cache.Get<IEnumerable<Match>>(key);
             }
 
-            var results = _service.GetNextMatches().ToList();
+            var results = _service.GetLastPlayedMatches().ToList();
             _cache.Set(key, results);
 
             return results;
