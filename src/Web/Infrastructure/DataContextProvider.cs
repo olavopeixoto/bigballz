@@ -6,7 +6,7 @@ namespace BigBallz.Infrastructure
 {
     public class DataContextProvider
     {
-        public static BigBallzDataContext Get()
+        public BigBallzDataContext CreateContext()
         {
             var conn = new StackExchange.Profiling.Data.ProfiledDbConnection(GetConnection(), MiniProfiler.Current);
             return new BigBallzDataContext(conn);

@@ -25,7 +25,7 @@ namespace BigBallz.Services
                 if (HttpRuntime.Cache[cacheKey] == null)
                 {
                     HttpRuntime.Cache.Insert(cacheKey, cronJobTask, null,
-                                             expirationTime, Cache.NoSlidingExpiration,
+                                             expirationTime, System.Web.Caching.Cache.NoSlidingExpiration,
                                              CacheItemPriority.NotRemovable, _onCacheRemove);
                 }
             }
@@ -37,7 +37,7 @@ namespace BigBallz.Services
                 {
                     HttpRuntime.Cache.Insert(cacheKey, cronJobTask,
                                              null,
-                                             Cache.NoAbsoluteExpiration, cronJobTask.SlidingExpiration.Value,
+                                             System.Web.Caching.Cache.NoAbsoluteExpiration, cronJobTask.SlidingExpiration.Value,
                                              CacheItemPriority.NotRemovable, _onCacheRemove);
                 }
             }

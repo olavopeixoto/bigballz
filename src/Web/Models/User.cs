@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using BigBallz.Core.Helper;
+using BigBallz.Core;
 
 namespace BigBallz.Models
 {
@@ -22,7 +22,7 @@ namespace BigBallz.Models
         {
             get
             {
-                return (bool) (_isAdmin = _isAdmin ?? UserRoles.Any(x => x.Role.Name.ToLower() == "admin"));
+                return (bool) (_isAdmin = _isAdmin ?? UserRoles.NullSafe(ur => ur.Any(x => x.Role.NullSafe(r => r.Name.NullSafe(n => n.ToLowerInvariant())) == "admin")));
             }
             set { _isAdmin = value; }
         }

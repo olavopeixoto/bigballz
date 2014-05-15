@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using BigBallz.Core.Caching;
 using BigBallz.Models;
 
 namespace BigBallz.Services.L2S
@@ -6,10 +7,12 @@ namespace BigBallz.Services.L2S
     public class StageService : IStageService
     {
         readonly BigBallzDataContext _db;
+        private readonly ICache _cache;
 
-        public StageService(BigBallzDataContext context)
+        public StageService(BigBallzDataContext context, ICache cache)
         {
             _db = context;
+            _cache = cache;
         }
 
         public IQueryable<Stage> GetAll()
@@ -34,6 +37,7 @@ namespace BigBallz.Services.L2S
 
         public void Save()
         {
+            _cache.Clear();
             _db.SubmitChanges();
         }
     }
