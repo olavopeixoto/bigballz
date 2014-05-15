@@ -141,7 +141,7 @@ namespace BigBallz.Services.L2S
 
             foreach (var address in addresses)
             {
-                mailMessage.To.Add(address);
+                mailMessage.Bcc.Add(address);
             }
 
             Task.Factory.StartNew(() => JobHost.DoWork(() =>
