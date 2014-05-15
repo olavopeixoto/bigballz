@@ -152,6 +152,9 @@
     <Compile Include="Services\BBRoleProvider.cs" />
     <Compile Include="Services\Cache\BigBallsServiceCache.cs" />
     <Compile Include="Services\Cache\BonusBetServiceCache.cs" />
+    <Compile Include="Services\Cache\MatchBetServiceCache.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Services\Cache\MatchServiceCache.cs" />
     <Compile Include="Services\CronJob.cs" />
     <Compile Include="Services\ICommentsService.cs" />
@@ -227,9 +230,9 @@
     <Content Include="App_Browsers\Devices\readme.txt" />
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Global.asax" />
-    <Content Include="index.html" />
     <Content Include="MailTemplates\BetTimeAlert.txt" />
     <Content Include="MailTemplates\BonusTimeAlert.txt" />
+    <Content Include="MailTemplates\NewCommentPosted.txt" />
     <Content Include="MailTemplates\PaymentConfirmation.txt" />
     <Content Include="MailTemplates\RegistrationEmailNotVerified.txt" />
     <Content Include="MailTemplates\RegistrationEmailVerified.txt" />
@@ -306,7 +309,6 @@
     <Content Include="Public\js\jquery.ui.datepicker-pt-BR.js" />
     <Content Include="Public\js\Site.Master.js" />
     <Content Include="Public\js\Team.js" />
-    <Content Include="regulamento.html" />
     <Content Include="Views\Auth\ConfirmacaoPagamento.aspx" />
     <Content Include="Views\Auth\Payment.aspx" />
     <Content Include="Views\Auth\Join.aspx" />

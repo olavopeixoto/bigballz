@@ -18,7 +18,7 @@ namespace BigBallz.Services.Cache
 
         public IList<Match> GetUserPendingBets(string userName)
         {
-            var key = string.Format("BB-GetUserPendingBets-{0}", userName);
+            var key = string.Format("BB-GetUserPendingBets-{0}", userName ?? string.Empty);
 
             if (_cache.Contains(key))
             {
@@ -63,7 +63,7 @@ namespace BigBallz.Services.Cache
 
         public IList<BetPoints> GetUserPointsByMatch(string userName)
         {
-            var key = string.Format("BB-GetUserPointsByMatch-{0}", userName);
+            var key = string.Format("BB-GetUserPointsByMatch-{0}", userName ?? string.Empty);
 
             if (_cache.Contains(key))
             {
@@ -78,7 +78,7 @@ namespace BigBallz.Services.Cache
 
         public IList<BonusPoints> GetUserPointsByBonus(string userName)
         {
-            var key = string.Format("BB-GetUserPointsByBonus-{0}", userName);
+            var key = string.Format("BB-GetUserPointsByBonus-{0}", userName ?? string.Empty);
 
             if (_cache.Contains(key))
             {
@@ -116,7 +116,8 @@ namespace BigBallz.Services.Cache
             }
 
             var results = _service.GetMatchBetStatistics(matchId);
-            _cache.Set(key, results);
+
+            if (results!=null) _cache.Set(key, results);
 
             return results;
         }
@@ -131,7 +132,7 @@ namespace BigBallz.Services.Cache
             }
 
             var results = _service.GetBonusBetStatistics(bonusId);
-            _cache.Set(key, results);
+            if (results != null) _cache.Set(key, results);
 
             return results;
         }
@@ -146,7 +147,7 @@ namespace BigBallz.Services.Cache
             }
 
             var results = _service.GetFirstMatch();
-            _cache.Set(key, results);
+            if (results != null) _cache.Set(key, results);
 
             return results;
         }

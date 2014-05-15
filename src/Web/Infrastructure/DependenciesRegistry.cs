@@ -81,7 +81,7 @@ namespace BigBallz.Infrastructure
 
             For<IMatchBetService>()
                 .HttpContextScoped()
-                .Use<MatchBetService>();
+                .Use(x => new MatchBetServiceCache(x.GetInstance<ICache>(), new MatchBetService(x.GetInstance<BigBallzDataContext>())));
 
             For<IMatchService>()
                 .HttpContextScoped()

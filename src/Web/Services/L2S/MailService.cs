@@ -33,6 +33,17 @@ namespace BigBallz.Services.L2S
             SendMail(user.UserName, user.EmailAddress, "Confirmação de Pagamento", PrepareMailBodyWith("PaymentConfirmation", new[] { "userName", user.UserName, "userEmail", user.EmailAddress}));
         }
 
+        public void SendNewCommentPosted(User[] recipients, string userName, string comment)
+        {
+            var messageBody = PrepareMailBodyWith("NewCommentPosted",
+                new[] { "userName", userName, "comments", comment, "date", DateTime.Now.BrazilTimeZone().FormatDateTime() });
+
+            var recipientsCollection = new MailAddressCollection();
+            recipients.Where(u => u.EmailAddressVerified).ForEach(u => recipientsCollection.Add(u.EmailAddress));
+
+            SendMail(recipientsCollection, "Novo comentário", messageBody);
+        }
+
         public void SendEndBetAlert(User user, IList<Bet> bets)
         {
             Debug.Write("Enviando email de aviso de jogo");
