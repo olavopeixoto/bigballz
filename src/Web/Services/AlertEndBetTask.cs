@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
 using BigBallz.Core;
+using BigBallz.Core.IoC;
 using BigBallz.Infrastructure;
 using BigBallz.Models;
-using BigBallz.Services.L2S;
 
 namespace BigBallz.Services
 {
@@ -13,11 +13,13 @@ namespace BigBallz.Services
     {
         private readonly IMailService _mailService;
         private readonly DateTime _expiration;
+        private readonly DataContextProvider _provider;
 
-        public AlertEndBetTask(IMailService mailService, DateTime expiration)
+        public AlertEndBetTask(IMailService mailService, DateTime expiration, DataContextProvider provider)
         {
             _mailService = mailService;
             _expiration = expiration;
+            _provider = provider;
         }
 
         public string Name
@@ -47,7 +49,7 @@ namespace BigBallz.Services
         {
             IList<Bet> bets;
             IList<User> players;
-            using (var context = DataContextProvider.Get())
+            using (var context = _provider.CreateContext())
             {
                 var loadOptions = new DataLoadOptions();
                 loadOptions.LoadWith<Bet>(x => x.Match1);
@@ -69,7 +71,9 @@ namespace BigBallz.Services
 
         public static void AddAllMatches()
         {
-            using (var context = DataContextProvider.Get())
+            var provider = ServiceLocator.Resolve<DataContextProvider>();
+
+            using (var context = provider.CreateContext())
             {
                 var betEndTime = context.Matches.Where(x => !x.Score1.HasValue && !x.Score2.HasValue && x.StartTime.AddHours(-1) >= DateTime.Now.BrazilTimeZone()).GroupBy(x => x.StartTime).Select(x => x.Key.AddHours(-1)).OrderBy(x => x).ToList();
                 foreach(var startTime in betEndTime)
@@ -81,7 +85,7 @@ namespace BigBallz.Services
 
         public static void AddTask(DateTime startTime)
         {
-            CronJob.AddTask(new AlertEndBetTask(new MailService(), startTime));
+            CronJob.AddTask(new AlertEndBetTask(ServiceLocator.Resolve<IMailService>(), startTime, ServiceLocator.Resolve<DataContextProvider>()));
         }
     }
 }

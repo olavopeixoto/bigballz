@@ -4,11 +4,11 @@ using BigBallz.Services;
 
 namespace BigBallz.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
         private readonly IMatchService _matchService;
 
-        public HomeController(IMatchService matchService, IUserService userService, IBigBallzService bigBallzService) : base(userService, matchService, bigBallzService)
+        public HomeController(IMatchService matchService)
         {
             _matchService = matchService;
         }
@@ -25,10 +25,5 @@ namespace BigBallz.Controllers
             ViewData["StartDate"] = _matchService.GetStartDate().FormatDate();
             return View();
         }
-
-        //public ActionResult Poll()
-        //{
-        //    return View();
-        //}
     }
 }

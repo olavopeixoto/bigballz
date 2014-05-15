@@ -69,10 +69,8 @@ namespace BigBallz.Controllers
                                             BonusEnabled = DateTime.Now.BrazilTimeZone() <= endBonus,
                                             BonusList = (from bonus in _bonusService.GetAll().ToList()
                                                          let teams = _teamService.GetAll().ToList()
-                                                         let bonusBets =
-                                                             _bonusBetService.GetAll(User.Identity.Name).ToList()
-                                                         let pointsEarned =
-                                                             _bigBallzService.GetUserPointsByBonus(userName)
+                                                         let bonusBets = _bonusBetService.GetAll(User.Identity.Name).ToList()
+                                                         let pointsEarned = _bigBallzService.GetUserPointsByBonus(userName)
                                                          select new BetViewModel.BonusTeams
                                                                     {
                                                                         BonusBetId =
@@ -205,7 +203,7 @@ namespace BigBallz.Controllers
                     return RedirectToAction("Index");
                 }
 
-                var firstMatch = _matchService.GetAll().OrderBy(x => x.StartTime).FirstOrDefault();
+                var firstMatch = _bigBallzService.GetFirstMatch();
                 if (firstMatch != null && new DateTime(firstMatch.StartTime.Year, firstMatch.StartTime.Month, firstMatch.StartTime.Day) < DateTime.Now.BrazilTimeZone())
                 {
                     this.FlashWarning("Apostas Bonus Encerradas!");

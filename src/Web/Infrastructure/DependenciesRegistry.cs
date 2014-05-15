@@ -1,8 +1,11 @@
 ﻿using System.Configuration;
 using System.Net;
+using System.Web;
+using BigBallz.Core.Caching;
 using BigBallz.Core.Log;
 using BigBallz.Models;
 using BigBallz.Services;
+using BigBallz.Services.Cache;
 using BigBallz.Services.L2S;
 using RPXLib;
 using RPXLib.Interfaces;
@@ -32,9 +35,21 @@ namespace BigBallz.Infrastructure
                     return new RPXService(settings);
                 });
 
+            For<System.Web.Caching.Cache>()
+                .HttpContextScoped()
+                .Use(x => HttpContext.Current.Cache);
+
+            For<ICache>()
+                .HttpContextScoped()
+                .Use<WebCacheWrapper>();
+
+            For<DataContextProvider>()
+                .Singleton()
+                .Use<DataContextProvider>();
+
             For<BigBallzDataContext>()
                 .HttpContextScoped()
-                .Use(x => DataContextProvider.Get());
+                .Use(x => x.GetInstance<DataContextProvider>().CreateContext());
 
             For<IAccountService>()
                 .HttpContextScoped()
@@ -42,11 +57,11 @@ namespace BigBallz.Infrastructure
 
             For<IBigBallzService>()
                 .HttpContextScoped()
-                .Use<BigBallzService>();
+                .Use(x => new BigBallsServiceCache(x.GetInstance<ICache>(), new BigBallzService(x.GetInstance<BigBallzDataContext>())));
 
             For<IBonusBetService>()
                 .HttpContextScoped()
-                .Use<BonusBetService>();
+                .Use(x => new BonusBetServiceCache(x.GetInstance<ICache>(), new BonusBetService(x.GetInstance<BigBallzDataContext>())));
 
             For<IBonusService>()
                 .HttpContextScoped()
@@ -70,7 +85,7 @@ namespace BigBallz.Infrastructure
 
             For<IMatchService>()
                 .HttpContextScoped()
-                .Use<MatchService>();
+                .Use(x => new MatchServiceCache(x.GetInstance<ICache>(), new MatchService(x.GetInstance<DataContextProvider>())));
 
             For<IRoleService>()
                 .HttpContextScoped()

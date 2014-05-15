@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using BigBallz.Models;
 
 namespace BigBallz.Services
@@ -8,7 +7,8 @@ namespace BigBallz.Services
     public interface IMatchService
     {
         // Query Methods
-        IQueryable<Match> GetAll();
+        IEnumerable<Match> GetAll();
+
         Match Get(int id);
 
         IEnumerable<Match> GetNextMatches();

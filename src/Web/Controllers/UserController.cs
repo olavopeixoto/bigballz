@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using BigBallz.Helpers;
 using BigBallz.Models;
@@ -54,7 +55,8 @@ namespace BigBallz.Controllers
                 }
                 else if (!user.Authorized && dbUser.Authorized)
                 {
-                    dbUser.UserRoles.Clear();
+                    var userRole = dbUser.UserRoles.FirstOrDefault(x => x.Role.Name.ToLowerInvariant() == "player");
+                    if (userRole != null) dbUser.UserRoles.Remove(userRole);
                 }
 
                 if (user.IsAdmin && !dbUser.IsAdmin)
@@ -65,7 +67,8 @@ namespace BigBallz.Controllers
                 }
                 else if (!user.IsAdmin && dbUser.IsAdmin)
                 {
-                    dbUser.UserRoles.Clear();
+                    var userRole = dbUser.UserRoles.FirstOrDefault(x => x.Role.Name.ToLowerInvariant() == "admin");
+                    if (userRole!=null) dbUser.UserRoles.Remove(userRole);
                 }
 
                 dbUser.Authorized = user.Authorized;
@@ -81,7 +84,7 @@ namespace BigBallz.Controllers
             {
                 this.FlashError(ex.Message);
 
-                return RedirectToAction("Index");
+                return View(user);
             }
         }
 

@@ -1,0 +1,123 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+<%@ Import Namespace="BigBallz.Helpers" %>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bolão da Copa do Mundo">
+    
+    <title>BigBallz<asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Custom Google Web Font -->
+    <link href="public/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href='//fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+
+    <!-- Add custom CSS here -->
+    <link href="public/css/landing-page.css" rel="stylesheet">
+    
+    <% if (!Context.IsDebuggingEnabled) { %>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-50591465-1', 'bigballz.com.br');
+        ga('require', 'linkid', 'linkid.js');
+        ga('require', 'displayfeatures');
+            <% if (Context.User != null && Context.User.Identity.IsAuthenticated)
+               { %>
+        ga('set', '&uid', '<%= Context.User.Identity.Name %>'); // Set the user ID using signed-in user_id.
+            <% } %>
+        ga('send', 'pageview');
+    </script>
+    <% } %>
+
+    <script type="text/javascript">
+        var rpxJsHost = (("https:" == document.location.protocol) ? "https://" : "http://static.");
+        document.write(unescape("%3Cscript src='" + rpxJsHost +
+"rpxnow.com/js/lib/rpx.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        RPXNOW.overlay = true;
+        RPXNOW.language_preference = 'pt-BR';
+    </script>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="<%=Url.SiteRoot()%>"><%= Request.IsAuthenticated ? Context.User.Identity.Name : "BigBallz"%></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="<%=Url.Action("index", "home") %>">Home</a></li>
+                    <li><a href="<%=Url.Action("rules", "home") %>">Regulamento</a></li>
+                    
+                    <%if (Request.IsAuthenticated) {%>
+
+                        <li><%=Html.ActionLink("Comentários", "index", "comments", null, new { title = "Mensagens BigBallz" })%></li>
+                        <li><%=Html.ActionLink("Apostas", "index", "bet", null, new { title = "Apostas" })%></li>
+                
+                        <li><%=Html.ActionLink("Ranking", "index", "standings", null, new { title = "Ranking" })%></li>
+
+                        <%if (Html.IsAdmin()) {%>
+                        <li><%=Html.ActionLink("Bonus", "index", "bonus", null, new { title = "Bonus" })%></li>
+                        <li><%=Html.ActionLink("Jogos", "index", "match", null, new { title = "Jogos" })%></li>
+                        <li><%=Html.ActionLink("Usuários", "index", "user", null, new { title = "Usuários" })%></li>
+                        <li><%=Html.ActionLink("Tarefas", "index", "cronjobs", null, new { title = "Tarefas Agendadas" })%></li>        
+                        <%}%>
+    
+                    <%}%>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>
+                        <address>
+                      <strong>Dúvidas e Sugestões</strong><br>
+                      <a href="mailto:contato@bigballz.com.br">contato@bigballz.com.br</a>
+                    </address>
+                    </p>
+                    <p class="copyright text-muted small">Copyright &copy; BigBallz <%=DateTime.Today.Year %>. Todos os direitos reservados</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="public/js/bootstrap.js"></script>
+    <asp:ContentPlaceHolder ID="Scripts" runat="server" />
+
+</body>
+
+</html>

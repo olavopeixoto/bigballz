@@ -22,13 +22,14 @@ namespace BigBallz.Controllers
             _bigBallzService = bigBallzService;
         }
 
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        protected override void OnResultExecuting(ResultExecutingContext filterContext)
         {
-            base.OnActionExecuting(filterContext);
+            base.OnResultExecuting(filterContext);
 
-            //&& filterContext.HttpContext.User.IsInRole(BBRoles.Player)
+            var result = filterContext.Result;
 
-            if (filterContext.HttpContext.User.Identity.IsAuthenticated)
+            if (result is ViewResultBase
+                && filterContext.HttpContext.User.Identity.IsAuthenticated)
             {
                 var userName = filterContext.HttpContext.User.Identity.Name;
 
@@ -41,23 +42,26 @@ namespace BigBallz.Controllers
                     if (string.IsNullOrEmpty(user.PhotoUrl))
                     {
                         var gravatar = new GravatarHelper
-                                           {
-                                               email = user.EmailAddress
-                                           };
+                        {
+                            email = user.EmailAddress
+                        };
                         photoUrl = gravatar.GetGravatarUrl();
                     }
                     else
                     {
                         photoUrl = user.PhotoUrl;
                     }
-                    Response.Cookies.Add(new HttpCookie("photoUrl", photoUrl) { Expires = DateTime.Now.BrazilTimeZone().AddDays(30) });
+                    Response.Cookies.Add(new HttpCookie("photoUrl", photoUrl)
+                    {
+                        Expires = DateTime.Now.BrazilTimeZone().AddDays(30)
+                    });
                 }
 
                 ViewData["NextMatches"] = _matchService.GetNextMatches();
                 ViewData["LastMatches"] = _matchService.GetLastPlayedMatches();
 
                 var totalprize = _bigBallzService.GetTotalPrize();
-                var prizes = new List<double> { totalprize * 0.65, totalprize * 0.20, totalprize * 0.10 };
+                var prizes = new List<double> {totalprize*0.65, totalprize*0.20, totalprize*0.10};
                 ViewData["Prizes"] = prizes;
 
                 ViewData["Standings"] = _bigBallzService.GetStandings();

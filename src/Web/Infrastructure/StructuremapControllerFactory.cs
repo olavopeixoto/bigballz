@@ -11,13 +11,16 @@ namespace BigBallz.Infrastructure
     {
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {
+            if (controllerType == null) return base.GetControllerInstance(requestContext, null);
+
             try
             {
                 return ServiceLocator.Resolve<IController>(controllerType);
             }
             catch (StructureMapException ex)
             {
-                var appex = new ApplicationException(ex.Message + Environment.NewLine + ObjectFactory.WhatDoIHave(), ex);
+                var appex = new ApplicationException(
+                    ex.Message + Environment.NewLine + ObjectFactory.WhatDoIHave(), ex);
                 Logger.Error(appex);
             }
             catch (Exception ex)
@@ -25,7 +28,7 @@ namespace BigBallz.Infrastructure
                 Logger.Error(ex);
             }
 
-            return base.GetControllerInstance(requestContext, null);
+            return base.GetControllerInstance(requestContext, controllerType);
         }
     }
 }

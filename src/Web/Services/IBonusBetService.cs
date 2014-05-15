@@ -7,15 +7,15 @@ namespace BigBallz.Services
     public interface IBonusBetService
     {
         // Query Methods
-        IQueryable<BonusBet> GetAll();
-        IQueryable<BonusBet> GetAll(string userName);
-        IQueryable<BonusBet> GetAll(int userId);
+        IEnumerable<BonusBet> GetAll();
+        IEnumerable<BonusBet> GetAll(string userName);
+        IEnumerable<BonusBet> GetAll(int userId);
         BonusBet Get(int bonusBetID);
 
         // Insert/Delete
         void Add(BonusBet bonusBet);
         void Add(IList<BonusBet> bonusBetList); 
-        void Delete(BonusBet BonusBetBet);
+        void Delete(BonusBet bonusBetBet);
  
         // Persistence
         void Save();

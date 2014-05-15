@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Data.Linq;
+using System.Linq;
 using BigBallz.Models;
 
 namespace BigBallz.Services.L2S
@@ -10,21 +12,27 @@ namespace BigBallz.Services.L2S
         public BonusBetService(BigBallzDataContext context)
         {
             _db = context;
+
+            var options = new DataLoadOptions();
+            options.LoadWith<BonusBet>(x => x.Bonus11);
+            options.LoadWith<BonusBet>(x => x.Team1);
+
+            _db.LoadOptions = options;
         }
 
-        public IQueryable<BonusBet> GetAll()
+        public IEnumerable<BonusBet> GetAll()
         {
-            return _db.BonusBets.OrderBy(x => x.User).ThenBy(x => x.BonusBetId);
+            return _db.BonusBets.OrderBy(x => x.User).ThenBy(x => x.BonusBetId).ToList();
         }
 
-        public IQueryable<BonusBet> GetAll(string userName)
+        public IEnumerable<BonusBet> GetAll(string userName)
         {
-            return _db.BonusBets.Where(d => d.User1.UserName == userName);
+            return _db.BonusBets.Where(d => d.User1.UserName == userName).ToList();
         }
 
-        public IQueryable<BonusBet> GetAll(int userId)
+        public IEnumerable<BonusBet> GetAll(int userId)
         {
-            return _db.BonusBets.Where(d => d.User == userId);
+            return _db.BonusBets.Where(d => d.User == userId).ToList();
         }
 
         public BonusBet Get(int bonusBetId)
@@ -42,15 +50,14 @@ namespace BigBallz.Services.L2S
             _db.BonusBets.InsertAllOnSubmit(bonusBetList);
         }
 
-        public void Delete(BonusBet bonusBet)
+        public void Delete(BonusBet bonusBetBet)
         {
-            _db.BonusBets.DeleteOnSubmit(bonusBet);
+            _db.BonusBets.DeleteOnSubmit(bonusBetBet);
         }
 
         public void Save()
         {
             _db.SubmitChanges();
         }
-
     }
 }

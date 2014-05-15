@@ -112,7 +112,7 @@ namespace BigBallz.Controllers
                 this.FlashError("Ocorreu um erro na tentativa associar a nova conta a uma existente");
             }
 
-            return string.IsNullOrEmpty(returnUrl) ? (ActionResult)RedirectToAction("Index", "Home") : Redirect(returnUrl);
+            return string.IsNullOrEmpty(returnUrl) ? user.Authorized ? (ActionResult)RedirectToAction("index", "bet") : RedirectToAction("payment", "auth") : Redirect(returnUrl);
         }
 
         //o método POST indica que a requisição é o retorno da validação NPI.
@@ -168,11 +168,20 @@ namespace BigBallz.Controllers
         {
             SignOutCurrentUser();
             return RedirectToAction("Index", "Home");
-        }
+        }  
 
         [HttpGet, AllowAnonymous]
         public ActionResult Join()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = _accountService.FindUserByUserName(User.Identity.Name);
+                if (user != null && user.Authorized)
+                {
+                    return RedirectToAction("index", "home");
+                }
+            }
+
             ViewData["StartDate"] = _matchService.GetStartDate().AddDays(-1).FormatDate();
             return View();
         }
@@ -222,22 +231,23 @@ namespace BigBallz.Controllers
             var authenticationDetails = Session["UserDetails"] as RPXAuthenticationDetails;
             if (authenticationDetails == null) return RedirectToAction("Index", "Home");
 
-            if (string.IsNullOrEmpty(authenticationDetails.PhotoUrl))
-            {
-                var gravatar = new GravatarHelper
-                {
-                    email = user.EmailAddress
-                };
-                user.PhotoUrl = gravatar.GetGravatarUrl();
-            }
-            else
-            {
-                user.PhotoUrl = authenticationDetails.PhotoUrl;
-            }
             if (!ModelState.IsValid) return View(user);
 
             try
             {
+                if (string.IsNullOrEmpty(authenticationDetails.PhotoUrl))
+                {
+                    var gravatar = new GravatarHelper
+                    {
+                        email = user.EmailAddress
+                    };
+                    user.PhotoUrl = gravatar.GetGravatarUrl();
+                }
+                else
+                {
+                    user.PhotoUrl = authenticationDetails.PhotoUrl;
+                }
+
                 using (var tran = new TransactionScope())
                 {
                     _accountService.CreateUser(authenticationDetails.Identifier, user.UserName,
@@ -293,9 +303,13 @@ namespace BigBallz.Controllers
         public ActionResult Payment(string userName)
         {
             var user = _accountService.FindUserByUserName(userName);
-            if (user == null || user.Authorized)
+            if (user == null)
             {
                 return RedirectToAction("Index", "Home");
+            }
+            if (user.Authorized)
+            {
+                return RedirectToAction("index", "bet");
             }
             return View(user);
         }
