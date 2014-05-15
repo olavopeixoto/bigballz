@@ -239,7 +239,7 @@ namespace BigBallz.Services.L2S
         public double GetTotalPrize()
         {
             //TODO: Contabilizar quem pagou pelo pagseguro com taxa pra saber o qnt vai estar disponivel pro bolao
-            return _db.Users.Count(x => x.Authorized && x.UserRoles.All(y => y.Role.Name != BBRoles.Admin)) * (double)ConfigurationHelper.Price;
+            return _db.Users.Count(x => x.Authorized && x.UserRoles.Any(y => y.Role.Name == BBRoles.Player)) * (double)ConfigurationHelper.Price;
         }
 
         private int GetTotalUserExactScores(string userName)
