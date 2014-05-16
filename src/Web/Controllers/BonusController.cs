@@ -53,7 +53,6 @@ namespace BigBallz.Controllers
                 model.Teams = _teamService.GetAll().ToSelectList("TeamId", "Name");
             }
 
-
             return View(model);
         }
 
@@ -71,21 +70,22 @@ namespace BigBallz.Controllers
                 if (user.UserRoles.Count > 1)
                 {
                     var dbBonus = _bonusService.Get(bonus.BonusId);
+
                     TryUpdateModel(dbBonus, "bonus");
 
-
                     _bonusService.Save();
-                    this.FlashInfo("Usuário alterado com sucesso");
+
+                    this.FlashInfo("Bônus alterado com sucesso");
+
                     return RedirectToAction("Index");
                 }
 
-                throw new Exception("Usuário não tem permissão para editar jogos.");
-
-               
+                throw new Exception("Usuário não tem permissão para editar o bônus.");
             }
             catch(Exception ex)
             {
                 this.FlashError(ex.Message);
+
                 var model = new BonusViewModel
                 {
                     Bonus = bonus,

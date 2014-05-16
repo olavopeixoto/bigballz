@@ -185,9 +185,6 @@ namespace BigBallz.Controllers
             return View(model);
         }
 
-        //
-        // POST: /Team/Create
-
         [AcceptVerbs(HttpVerbs.Post), UserNameFilter]
         public ActionResult SaveBonus(string userName, IList<BonusBet> bonusBet)
         {
@@ -203,7 +200,7 @@ namespace BigBallz.Controllers
                 }
 
                 var firstMatch = _bigBallzService.GetFirstMatch();
-                if (firstMatch != null && new DateTime(firstMatch.StartTime.Year, firstMatch.StartTime.Month, firstMatch.StartTime.Day) < DateTime.Now.BrazilTimeZone())
+                if (firstMatch != null && firstMatch.StartTime.AddHours(-1) <= DateTime.Now.BrazilTimeZone())
                 {
                     this.FlashWarning("Apostas Bonus Encerradas!");
                     return RedirectToAction("Index");

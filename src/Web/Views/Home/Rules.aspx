@@ -12,7 +12,7 @@
     <h3>1. CRITÉRIO DE PAGAMENTO</h3>
     <p>
     A taxa de inscrição é de <strong>R$ 70,00</strong> e deverá ser paga através do PagSeguro. O Cadastro pode ser feito a qualquer momento, no entanto,
-    é bom observar o prazo final das apostas Bonus que é até 23:59 do dia 12/06/2014. Após essa data suas chances se reduzem significativamente.
+    é bom observar o prazo final das apostas Bonus que é até 1 (uma) hora antes do primeiro jogo. Após essa data suas chances se reduzem significativamente.
     </p>
 
     <h3>2. CRITÉRIO DE APOSTAS</h3>
@@ -30,12 +30,11 @@
     </em>
     </p>
     <p>
-    Cada jogador poderá apostar o BONUS de primeiro colocado de cada grupo até as 23:59 dia
-    11/06/2014.
+    Cada jogador poderá apostar o BONUS de primeiro colocado de cada grupo até 1 (uma) hora antes da primeira partida da copa.
     </p>
     <p>
     Cada jogador poderá apostar o BONUS de campeão, vice-campeão, terceiro e quarto colocado
-    da Copa até as 23:59 dia 11/06/2014.
+    da Copa até 1 (uma) hora antes da primeira partida da copa.
     </p>
 
     <h3>3. CRITÉRIO DE PONTUAÇÃO</h3>
