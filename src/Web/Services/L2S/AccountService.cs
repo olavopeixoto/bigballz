@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BigBallz.Core;
+using BigBallz.Core.Caching;
 using BigBallz.Models;
 
 namespace BigBallz.Services.L2S
@@ -9,10 +10,12 @@ namespace BigBallz.Services.L2S
     public class AccountService : IAccountService
     {
         private readonly BigBallzDataContext _db;
+        private readonly ICache _cache;
 
-        public AccountService(BigBallzDataContext context)
+        public AccountService(BigBallzDataContext context, ICache cache)
         {
             _db = context;
+            _cache = cache;
         }
 
         public User FindUserByIdentifier(string identifier)
@@ -55,6 +58,8 @@ namespace BigBallz.Services.L2S
             _db.Users.InsertOnSubmit(user);
 
             _db.SubmitChanges();
+
+            _cache.Clear();
         }
 
         public void AssociateExistingUser(int userId, string identifier, string providerName)
@@ -87,6 +92,8 @@ namespace BigBallz.Services.L2S
                                        User = user
                                    });
             _db.SubmitChanges();
+
+            _cache.Clear();
         }
 
         public bool VerifyEmail(string userName)
@@ -99,6 +106,7 @@ namespace BigBallz.Services.L2S
             {
                 user.EmailAddressVerified = true;
                 _db.SubmitChanges();
+                _cache.Clear();
             }
 
             return true;
@@ -141,6 +149,7 @@ namespace BigBallz.Services.L2S
 
             dbUser.PhotoUrl = user.PhotoUrl;
             _db.SubmitChanges();
+            _cache.Clear();
         }
     }
 }
