@@ -26,6 +26,7 @@ namespace BigBallz.Controllers
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
+            Session.Abandon();
 
             return RedirectToAction("Index", "Home");
         }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BigBallz-Dev" EntityNamespace="BigBallz.Models" Class="BigBallzDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=www.bigballz.com.br;Initial Catalog=BigBallz-Dev;Persist Security Info=True;User ID=site" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="BigBallzConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=bigballz.com.br;Initial Catalog=BigBallz;Persist Security Info=True;User ID=bigballz" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="BigBallzConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Bet" Member="Bets">
     <Type Name="Bet">
       <Column Name="BetId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -129,6 +129,8 @@
       <Column Name="CreatedOn" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="PhotoUrl" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
       <Column Name="Authorized" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="AuthorizedBy" Type="System.String" DbType="VarChar(50) NULL" CanBeNull="true" />
+      <Column Name="PagSeguro" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="User_Bet" Member="Bets" ThisKey="UserId" OtherKey="User" Type="Bet" />
       <Association Name="User_UserRole" Member="UserRoles" ThisKey="UserId" OtherKey="UserId" Type="UserRole" />
       <Association Name="User_UserMapping" Member="UserMappings" ThisKey="UserId" OtherKey="UserId" Type="UserMapping" />

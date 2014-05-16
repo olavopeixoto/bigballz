@@ -61,7 +61,7 @@ namespace BigBallz.Controllers
                 ViewData["LastMatches"] = _matchService.GetLastPlayedMatches();
 
                 var totalprize = _bigBallzService.GetTotalPrize();
-                var prizes = new List<double> {totalprize*0.65, totalprize*0.20, totalprize*0.10};
+                var prizes = new List<decimal> {totalprize*(decimal) 0.65, totalprize*(decimal) 0.20, totalprize*(decimal) 0.10};
                 ViewData["Prizes"] = prizes;
 
                 ViewData["Standings"] = _bigBallzService.GetStandings();

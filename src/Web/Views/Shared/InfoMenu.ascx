@@ -5,7 +5,7 @@
 <%@ Import Namespace="BigBallz.Core" %>
 <%@ Import Namespace="BigBallz.Helpers" %>
 
-<%var standings = ViewData["Standings"] as IEnumerable<BigBallz.Models.UserPoints>;%>
+<%var standings = ViewData["Standings"] as IList<BigBallz.Models.UserPoints>;%>
 
 
 <div id="profile" class="section">
@@ -36,7 +36,7 @@
   </div>
 </div>
 
-<%var pendingBets = ViewData["PendingBets"] as IEnumerable<BigBallz.Models.Match>;
+<%var pendingBets = ViewData["PendingBets"] as IList<BigBallz.Models.Match>;
 if (pendingBets!=null && pendingBets.Any())
 {
     var pendingBetsCount = pendingBets.Count();
@@ -45,7 +45,7 @@ if (pendingBets!=null && pendingBets.Any())
     <p><%=Html.ActionLink(string.Format("Você tem {0} aposta{1} pendente{1} para as próximas 24h", pendingBetsCount, plural), "index", "bet")%></p>
 <%}%>
 
-<%var prizes = ViewData["prizes"] as IList<double>;%>
+<%var prizes = ViewData["prizes"] as IList<decimal>;%>
 <%if (prizes!=null) {%>
 <%Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");%>
 <hr />
@@ -58,7 +58,7 @@ if (pendingBets!=null && pendingBets.Any())
 <%}%>
 
 
-<%if (standings!=null) {%>
+<%if (standings!=null && standings.Any()) {%>
 <hr />
 <h2>Top 5 Geral</h2>
 <ul>
@@ -82,12 +82,12 @@ if (pendingBets!=null && pendingBets.Any())
 <%} %>
 
 
-<%var dayStandings = ViewData["DayStandings"] as IEnumerable<BigBallz.Models.UserPoints>;%>
+<%var dayStandings = ViewData["DayStandings"] as IList<BigBallz.Models.UserPoints>;%>
 <%if (dayStandings != null) {%>
 <hr />
 <h2>Top 5 do Dia</h2>
 <ul>
-<%var topfiveDayStandings = dayStandings.Take(5); %>
+<%var topfiveDayStandings = dayStandings.Take(5).ToList(); %>
 <%foreach (var userPoints in topfiveDayStandings) {%>
 <li>
 <%= userPoints.Position.ToString()%>º&nbsp;-&nbsp;
@@ -105,8 +105,8 @@ if (pendingBets!=null && pendingBets.Any())
 </ul>
 <%} %>
 
-<% var lastMatches = ViewData["LastMatches"] as IEnumerable<BigBallz.Models.Match>; %>
-<%if (lastMatches != null)
+<% var lastMatches = ViewData["LastMatches"] as IList<BigBallz.Models.Match>; %>
+<%if (lastMatches != null && lastMatches.Any())
   {%>
 <hr />
 <h2>Últimas Partidas</h2>
@@ -126,8 +126,8 @@ if (pendingBets!=null && pendingBets.Any())
 <%} %>
 
 
-<% var matches = ViewData["NextMatches"] as IEnumerable<BigBallz.Models.Match>; %>
-<%if (matches!=null) {%>
+<% var matches = ViewData["NextMatches"] as IList<BigBallz.Models.Match>; %>
+<%if (matches!=null && matches.Any()) {%>
 <hr />
 <h2>Próximas Partidas</h2>
 <%var i = 0; var lineIndex = 0;%>

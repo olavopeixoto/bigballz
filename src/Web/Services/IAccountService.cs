@@ -10,7 +10,7 @@ namespace BigBallz.Services
         User FindUserByLocalId(int userId);
         void CreateUser(string identifier, string username, string providerName, string emailAddress, bool emailVerified, string photoUrl);
         void AssociateExistingUser(int userId, string identifier, string providerName);
-        void AuthorizeUser(string userName);
+        void AuthorizeUser(string userName, string adminName, bool pagSeguro = false);
         int GetTotalAuthorizedUsers();
         int GetTotalPlayers();
         IEnumerable<User> GetAllUsers();

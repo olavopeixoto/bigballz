@@ -7,8 +7,6 @@
         <thead class="ui-widget-header">
             <tr>
                 <th>
-                </th>
-                <th>
                     Nome
                 </th>
                 <th>
@@ -18,7 +16,13 @@
                     Autorizado
                 </th>
                 <th>
-                    Administrador
+                    Admin
+                </th>
+                <th>
+                    PagSeguro
+                </th>
+                <th>
+                    Autorizado Por
                 </th>
             </tr>
         </thead>
@@ -28,13 +32,10 @@
             foreach (var item in Model)
             { %>
             <tr class="<%= lineIndex%2==0 ? "ui-state-default": "odd"%>">
-                <td class="c">
-                    <%: Html.ActionLink("Editar", "Edit", new { id=item.UserId }) %>
+                <td class="l">
+                    <%: Html.ActionLink(item.UserName, "Edit", new { id=item.UserId }) %>
                 </td>
-                <td class="c">
-                    <%: item.UserName %>
-                </td>
-                <td class="c">
+                <td class="l">
                     <%: item.EmailAddress %>
                 </td>
                 <td class="c">
@@ -42,6 +43,12 @@
                 </td>
                 <td class="c">
                     <%: Html.CheckBox("administrador", item.UserRoles.Any(x => x.Role.Name.ToLower() == "admin"), new { disabled = "disabled" }) %>
+                </td>
+                <td class="c">
+                    <%: Html.CheckBox("pagseguro", item.PagSeguro, new { disabled = "disabled" }) %>
+                </td>
+                <td class="c">
+                    <%: item.AuthorizedBy %>
                 </td>
             </tr>
             <%

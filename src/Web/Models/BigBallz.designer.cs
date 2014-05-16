@@ -2691,6 +2691,10 @@ namespace BigBallz.Models
 		
 		private bool _Authorized;
 		
+		private string _AuthorizedBy;
+		
+		private bool _PagSeguro;
+		
 		private EntitySet<Bet> _Bets;
 		
 		private EntitySet<UserRole> _UserRoles;
@@ -2719,6 +2723,10 @@ namespace BigBallz.Models
     partial void OnPhotoUrlChanged();
     partial void OnAuthorizedChanging(bool value);
     partial void OnAuthorizedChanged();
+    partial void OnAuthorizedByChanging(string value);
+    partial void OnAuthorizedByChanged();
+    partial void OnPagSeguroChanging(bool value);
+    partial void OnPagSeguroChanged();
     #endregion
 		
 		public User()
@@ -2867,6 +2875,46 @@ namespace BigBallz.Models
 					this._Authorized = value;
 					this.SendPropertyChanged("Authorized");
 					this.OnAuthorizedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AuthorizedBy", DbType="VarChar(50) NULL")]
+		public string AuthorizedBy
+		{
+			get
+			{
+				return this._AuthorizedBy;
+			}
+			set
+			{
+				if ((this._AuthorizedBy != value))
+				{
+					this.OnAuthorizedByChanging(value);
+					this.SendPropertyChanging();
+					this._AuthorizedBy = value;
+					this.SendPropertyChanged("AuthorizedBy");
+					this.OnAuthorizedByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PagSeguro", DbType="Bit NOT NULL")]
+		public bool PagSeguro
+		{
+			get
+			{
+				return this._PagSeguro;
+			}
+			set
+			{
+				if ((this._PagSeguro != value))
+				{
+					this.OnPagSeguroChanging(value);
+					this.SendPropertyChanging();
+					this._PagSeguro = value;
+					this.SendPropertyChanged("PagSeguro");
+					this.OnPagSeguroChanged();
 				}
 			}
 		}

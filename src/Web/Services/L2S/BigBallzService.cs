@@ -236,11 +236,10 @@ namespace BigBallz.Services.L2S
             return _db.Matches.OrderBy(x => x.StartTime).FirstOrDefault();
         }
 
-        public double GetTotalPrize()
+        public decimal GetTotalPrize()
         {
-            var totalPagantes =
-                    _db.Users.Count(x => x.Authorized && x.UserRoles.Any(y => y.Role.Name == BBRoles.Player));
-            return totalPagantes * (double)ConfigurationHelper.Price * (1 - 0.0499) - (0.4 * totalPagantes); //Taxa do PagSeguro = 4,99% + R$0,40
+            return _db.Users.Where(x => x.Authorized && x.UserRoles.Any(y => y.Role.Name == BBRoles.Player))
+                .Sum(x => x.PagSeguro ? (ConfigurationHelper.Price * (decimal) (1.0 - 0.0499) + (decimal) 0.4) : ConfigurationHelper.Price);
         }
 
         private int GetTotalUserExactScores(string userName)
