@@ -75,10 +75,12 @@ namespace BigBallz.Services.L2S
             _db.SubmitChanges();
         }
 
-        public void AuthorizeUser(string userName)
+        public void AuthorizeUser(string userName, string adminName, bool pagSeguro = false)
         {
-            var user = _db.Users.FirstOrDefault(x => x.UserName == userName);
+            var user = _db.Users.First(x => x.UserName == userName);
             user.Authorized = true;
+            user.PagSeguro = pagSeguro;
+            user.AuthorizedBy = adminName;
             user.UserRoles.Add(new UserRole
                                    {
                                        Role = _db.Roles.FirstOrDefault(x => x.Name == BBRoles.Player),

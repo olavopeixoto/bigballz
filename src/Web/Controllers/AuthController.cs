@@ -120,6 +120,13 @@ namespace BigBallz.Controllers
         [HttpPost]
         public void ConfirmacaoPagamento(string prodID_1, string cliEmail, string statusTransacao, FormCollection info)
         {
+            var msg = string.Format("prodID_1: {0}; cliEmail: {1}; statusTransacao: {2}", prodID_1, cliEmail,
+                statusTransacao);
+
+            Logger.Info(msg);
+
+            _mailService.SendMail("Admin", "admin@bigballz.com.br", "BigBallz - PagSeguro", msg);
+
             if (statusTransacao.ToLowerInvariant() != "aprovado") return; //So interessa saber se ja esta aprovado o pagamento
 
             var token = ConfigurationManager.AppSettings["pagseguro-token"];
@@ -150,7 +157,7 @@ namespace BigBallz.Controllers
                     var user = _accountService.FindUserByUserName(prodID_1);
                     if (user != null)
                     {
-                        _accountService.AuthorizeUser(user.UserName);
+                        _accountService.AuthorizeUser(user.UserName, "PagSeguro", true);
                         _mailService.SendPaymentConfirmation(user);
                     }
                 }

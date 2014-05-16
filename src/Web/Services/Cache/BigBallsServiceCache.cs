@@ -152,13 +152,13 @@ namespace BigBallz.Services.Cache
             return results;
         }
 
-        public double GetTotalPrize()
+        public decimal GetTotalPrize()
         {
             var key = string.Format("BB-GetTotalPrize");
 
             if (_cache.Contains(key))
             {
-                return _cache.Get<double>(key);
+                return _cache.Get<decimal>(key);
             }
 
             var results = _service.GetTotalPrize();

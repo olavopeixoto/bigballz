@@ -47,6 +47,14 @@
                 <%: Html.ValidationMessageFor(model => model.IsAdmin) %>
             </div>
             
+            <div class="editor-label">
+                 <%: Html.Label("PagSeguro") %>
+            </div>
+            <div class="editor-field">
+                <%: Html.CheckBoxFor(model => model.PagSeguro) %>
+                <%: Html.ValidationMessageFor(model => model.PagSeguro) %>
+            </div>
+            
             <p>
                 <input type="submit" value="Salvar" />
             </p>

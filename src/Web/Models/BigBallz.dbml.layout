@@ -1,68 +1,68 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.25, 16.875" name="BigBallz">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11.25, 17" name="BigBallz">
   <DataContextMoniker Name="/BigBallzDataContext" />
   <nestedChildShapes>
-    <classShape Id="5760b43f-7d72-44fb-b9fe-551fe32d2f0f" absoluteBounds="9, 12.625, 2, 1.5891951497395844">
+    <classShape Id="5760b43f-7d72-44fb-b9fe-551fe32d2f0f" absoluteBounds="9, 12.625, 2, 1.7708968098958344">
       <DataClassMoniker Name="/BigBallzDataContext/Bet" />
       <nestedChildShapes>
-        <elementListCompartment Id="774781fa-5fe5-46ac-9f28-a76a64fff493" absoluteBounds="9.015, 13.085, 1.9700000000000002, 1.0291951497395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="774781fa-5fe5-46ac-9f28-a76a64fff493" absoluteBounds="9.015, 13.085, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="656ee96e-fca7-4cb7-8622-6a83dd19576a" absoluteBounds="9, 15, 2, 1.5891951497395844">
+    <classShape Id="656ee96e-fca7-4cb7-8622-6a83dd19576a" absoluteBounds="9, 15, 2, 1.7708968098958344">
       <DataClassMoniker Name="/BigBallzDataContext/BetRule" />
       <nestedChildShapes>
-        <elementListCompartment Id="c7c9d46d-1796-400a-8f7d-132ba07fa690" absoluteBounds="9.0150000005960464, 15.46000000089407, 1.9700000000000002, 1.0291951497395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="c7c9d46d-1796-400a-8f7d-132ba07fa690" absoluteBounds="9.0150000005960464, 15.46000000089407, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="37a0af5b-248a-424c-80f9-ced68a8ef9bc" absoluteBounds="0.75, 8.375, 2, 1.0961531575520844">
+    <classShape Id="37a0af5b-248a-424c-80f9-ced68a8ef9bc" absoluteBounds="0.75, 8.375, 2, 1.1939925130208344">
       <DataClassMoniker Name="/BigBallzDataContext/Group" />
       <nestedChildShapes>
-        <elementListCompartment Id="e4558e3c-1544-40f8-9d03-bb07ff709871" absoluteBounds="0.76500000059604645, 8.83500000089407, 1.9700000000000002, 0.53615315755208326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="e4558e3c-1544-40f8-9d03-bb07ff709871" absoluteBounds="0.76500000059604645, 8.83500000089407, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="166a2af4-e3bf-4354-ae07-2fccf6e7e51c" absoluteBounds="0.75, 0.75, 2, 1.9178898111979166">
+    <classShape Id="166a2af4-e3bf-4354-ae07-2fccf6e7e51c" absoluteBounds="0.75, 0.75, 2, 2.1554996744791666">
       <DataClassMoniker Name="/BigBallzDataContext/Log" />
       <nestedChildShapes>
-        <elementListCompartment Id="52e83be2-092d-4999-ba91-33645e614fbe" absoluteBounds="0.76500000000000012, 1.21, 1.9700000000000002, 1.3578898111979165" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="52e83be2-092d-4999-ba91-33645e614fbe" absoluteBounds="0.76500000000000012, 1.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="aa74192d-44c4-49eb-b7e9-d3d7c60792c9" absoluteBounds="6.25, 12.5, 2, 1.9178898111979166">
+    <classShape Id="aa74192d-44c4-49eb-b7e9-d3d7c60792c9" absoluteBounds="6.25, 12.5, 2, 2.1554996744791666">
       <DataClassMoniker Name="/BigBallzDataContext/Match" />
       <nestedChildShapes>
-        <elementListCompartment Id="bdaf9f43-f90c-49eb-8bab-f09e6c13deae" absoluteBounds="6.2650000005960464, 12.96000000089407, 1.9700000000000002, 1.3578898111979165" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="bdaf9f43-f90c-49eb-8bab-f09e6c13deae" absoluteBounds="6.2650000005960464, 12.96000000089407, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="4cc27569-308b-4c9b-a341-8ca08eead877" absoluteBounds="3.5, 8.125, 2, 1.7535424804687505">
+    <classShape Id="4cc27569-308b-4c9b-a341-8ca08eead877" absoluteBounds="3.5, 8.125, 2, 1.9631982421875005">
       <DataClassMoniker Name="/BigBallzDataContext/MatchRule" />
       <nestedChildShapes>
-        <elementListCompartment Id="50f680f6-55f3-4622-ad49-f71b97fd2a8c" absoluteBounds="3.5150000005960464, 8.58500000089407, 1.9700000000000002, 1.19354248046875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="50f680f6-55f3-4622-ad49-f71b97fd2a8c" absoluteBounds="3.5150000005960464, 8.58500000089407, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="47f0f6c0-68fc-4ef4-911a-3355fd451238" absoluteBounds="6.25, 1.375, 2, 1.0961531575520831">
+    <classShape Id="47f0f6c0-68fc-4ef4-911a-3355fd451238" absoluteBounds="6.25, 1.375, 2, 1.1939925130208331">
       <DataClassMoniker Name="/BigBallzDataContext/Role" />
       <nestedChildShapes>
-        <elementListCompartment Id="2c576cbe-efb6-4c54-bb6c-7a1d04a15a6d" absoluteBounds="6.2650000005960464, 1.8350000008940697, 1.9700000000000002, 0.53615315755208326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="2c576cbe-efb6-4c54-bb6c-7a1d04a15a6d" absoluteBounds="6.2650000005960464, 1.8350000008940697, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="ea56ef31-7ca3-4fe0-9d56-f02f0aa4fba6" absoluteBounds="3.5, 13.875, 2, 1.0961531575520844">
+    <classShape Id="ea56ef31-7ca3-4fe0-9d56-f02f0aa4fba6" absoluteBounds="3.5, 13.875, 2, 1.1939925130208344">
       <DataClassMoniker Name="/BigBallzDataContext/Stage" />
       <nestedChildShapes>
-        <elementListCompartment Id="81d222a4-807f-450b-bde5-72f994d68f47" absoluteBounds="3.5150000005960464, 14.33500000089407, 1.9700000000000002, 0.53615315755208326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="81d222a4-807f-450b-bde5-72f994d68f47" absoluteBounds="3.5150000005960464, 14.33500000089407, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="67547da6-34db-4aa9-8be6-b403354731e0" absoluteBounds="3.5, 10.75, 2, 1.4248478190104166">
+    <classShape Id="67547da6-34db-4aa9-8be6-b403354731e0" absoluteBounds="3.5, 10.75, 2, 1.5785953776041666">
       <DataClassMoniker Name="/BigBallzDataContext/Team" />
       <nestedChildShapes>
-        <elementListCompartment Id="772ba3ce-6d49-4215-aa3c-44ebad732b50" absoluteBounds="3.5150000005960464, 11.21000000089407, 1.9700000000000002, 0.86484781901041663" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="772ba3ce-6d49-4215-aa3c-44ebad732b50" absoluteBounds="3.5150000005960464, 11.21000000089407, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="9c214c80-8d53-45d0-b122-ae581e40390b" absoluteBounds="9, 1.375, 2, 1.0961531575520831">
+    <classShape Id="9c214c80-8d53-45d0-b122-ae581e40390b" absoluteBounds="9, 1.375, 2, 1.1939925130208331">
       <DataClassMoniker Name="/BigBallzDataContext/UserRole" />
       <nestedChildShapes>
-        <elementListCompartment Id="0e9cd3ad-fe7d-4cb9-a4ef-c82a0f8453d9" absoluteBounds="9.0150000005960464, 1.8350000008940697, 1.9700000000000002, 0.53615315755208326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="0e9cd3ad-fe7d-4cb9-a4ef-c82a0f8453d9" absoluteBounds="9.0150000005960464, 1.8350000008940697, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(8.25 : 13.4195975748698); (9 : 13.4195975748698)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(8.25 : 13.4195975748698); (8.54166666666667 : 13.4195975748698 : JumpStart); (8.70833333333333 : 13.4195975748698 : JumpEnd); (9 : 13.4195975748698)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/BigBallzDataContext/Match/Match_Bet" />
       <nodes>
         <classShapeMoniker Id="aa74192d-44c4-49eb-b7e9-d3d7c60792c9" />
@@ -146,43 +146,43 @@
         <classShapeMoniker Id="9c214c80-8d53-45d0-b122-ae581e40390b" />
       </nodes>
     </associationConnector>
-    <classShape Id="92efc93f-ebf7-4e77-b09b-2f22fd8e5f6c" absoluteBounds="9, 4.125, 2, 1.5891951497395827">
+    <classShape Id="92efc93f-ebf7-4e77-b09b-2f22fd8e5f6c" absoluteBounds="9, 4.125, 2, 1.7708968098958327">
       <DataClassMoniker Name="/BigBallzDataContext/UserMapping" />
       <nestedChildShapes>
-        <elementListCompartment Id="9fe1541f-f818-497e-9e13-356b246906a2" absoluteBounds="9.015, 4.585, 1.9700000000000002, 1.0291951497395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="9fe1541f-f818-497e-9e13-356b246906a2" absoluteBounds="9.015, 4.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="103a099b-feca-470a-af38-602345d132fe" absoluteBounds="6.25, 3.875, 2, 1.9178898111979166">
+    <classShape Id="103a099b-feca-470a-af38-602345d132fe" absoluteBounds="6.25, 3.875, 2, 2.5401025390624996">
       <DataClassMoniker Name="/BigBallzDataContext/User" />
       <nestedChildShapes>
-        <elementListCompartment Id="e88603a8-00fb-45fe-a09e-3e761d91f226" absoluteBounds="6.265, 4.335, 1.9700000000000002, 1.3578898111979165" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="e88603a8-00fb-45fe-a09e-3e761d91f226" absoluteBounds="6.265, 4.335, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(8.21901870304988 : 5.79288981119792); (8.625 : 6.19887110814804); (8.625 : 12.9910467874349); (9 : 12.9910467874349)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(8.21769230769231 : 6.4151025390625); (8.625 : 6.82241023137019); (8.625 : 13.5104484049479); (9 : 13.5104484049479)]" fixedFrom="NotFixed" fixedTo="Algorithm">
       <AssociationMoniker Name="/BigBallzDataContext/User/User_Bet" />
       <nodes>
         <classShapeMoniker Id="103a099b-feca-470a-af38-602345d132fe" />
         <classShapeMoniker Id="5760b43f-7d72-44fb-b9fe-551fe32d2f0f" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 3.87647429985477); (8.625 : 3.50147429985477); (8.625 : 2.22836686816406); (9 : 2.22836686816406)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(8.25 : 3.875); (8.625 : 3.5); (8.625 : 1.97199625651042); (9 : 1.97199625651042)]" fixedFrom="NotFixed" fixedTo="Algorithm">
       <AssociationMoniker Name="/BigBallzDataContext/User/User_UserRole" />
       <nodes>
         <classShapeMoniker Id="103a099b-feca-470a-af38-602345d132fe" />
         <classShapeMoniker Id="9c214c80-8d53-45d0-b122-ae581e40390b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 4.91959757486979); (9 : 4.91959757486979)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(8.25 : 5.01044840494792); (9 : 5.01044840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/BigBallzDataContext/User/User_UserMapping" />
       <nodes>
         <classShapeMoniker Id="103a099b-feca-470a-af38-602345d132fe" />
         <classShapeMoniker Id="92efc93f-ebf7-4e77-b09b-2f22fd8e5f6c" />
       </nodes>
     </associationConnector>
-    <classShape Id="03fa6584-610f-41f1-8eef-0380d27202f8" absoluteBounds="9, 10.125, 2, 1.4248478190104166">
+    <classShape Id="03fa6584-610f-41f1-8eef-0380d27202f8" absoluteBounds="9, 10.125, 2, 1.5785953776041666">
       <DataClassMoniker Name="/BigBallzDataContext/BonusBet" />
       <nestedChildShapes>
-        <elementListCompartment Id="662b9f0c-201b-4f76-a0f8-b270f9c8ffd1" absoluteBounds="9.015, 10.585, 1.9700000000000002, 0.86484781901041663" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="662b9f0c-201b-4f76-a0f8-b270f9c8ffd1" absoluteBounds="9.015, 10.585, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <associationConnector edgePoints="[(9.69993984938401 : 11.5498478190104); (9.69993984938401 : 12.0498478190104); (10.3143487292167 : 12.0498478190104); (10.3143487292167 : 11.5498478190104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
@@ -192,54 +192,54 @@
         <classShapeMoniker Id="03fa6584-610f-41f1-8eef-0380d27202f8" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 11.3310978190104); (5.91666666666667 : 11.3310978190104 : JumpStart); (6.14583333333333 : 11.3310978190104 : JumpEnd); (9 : 11.3310978190104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.5 : 11.3310978190104); (5.88541666666667 : 11.3310978190104 : JumpStart); (6.14583333333333 : 11.3310978190104 : JumpEnd); (8.54166666666667 : 11.3310978190104 : JumpStart); (8.70833333333333 : 11.3310978190104 : JumpEnd); (9 : 11.3310978190104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/BigBallzDataContext/Team/Team_BonusBet" />
       <nodes>
         <classShapeMoniker Id="67547da6-34db-4aa9-8be6-b403354731e0" />
         <classShapeMoniker Id="03fa6584-610f-41f1-8eef-0380d27202f8" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 5.76043221439303); (8.65745759680489 : 6.16788981119792); (10 : 6.16788981119792); (10 : 10.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(8.25 : 6.31971692367788); (8.8125 : 6.88221692367788); (8.8125 : 10.9142976888021); (9 : 10.9142976888021)]" fixedFrom="NotFixed" fixedTo="Algorithm">
       <AssociationMoniker Name="/BigBallzDataContext/User/User_BonusBet" />
       <nodes>
         <classShapeMoniker Id="103a099b-feca-470a-af38-602345d132fe" />
         <classShapeMoniker Id="03fa6584-610f-41f1-8eef-0380d27202f8" />
       </nodes>
     </associationConnector>
-    <classShape Id="efb3fda2-508e-4915-bf5a-a4aead176006" absoluteBounds="6.25, 9.625, 2, 1.4248478190104166">
+    <classShape Id="efb3fda2-508e-4915-bf5a-a4aead176006" absoluteBounds="6.25, 9.625, 2, 1.5785953776041666">
       <DataClassMoniker Name="/BigBallzDataContext/Bonus" />
       <nestedChildShapes>
-        <elementListCompartment Id="28702733-7814-4919-97ab-ad27303fe6d5" absoluteBounds="6.265, 10.085, 1.9700000000000002, 0.86484781901041663" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="28702733-7814-4919-97ab-ad27303fe6d5" absoluteBounds="6.265, 10.085, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(8.25 : 10.5874239095052); (9 : 10.5874239095052)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(8.25 : 10.5874239095052); (8.54166666666667 : 10.5874239095052 : JumpStart); (8.70833333333333 : 10.5874239095052 : JumpEnd); (8.72916666666667 : 10.5874239095052 : JumpStart); (8.89583333333333 : 10.5874239095052 : JumpEnd); (9 : 10.5874239095052)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/BigBallzDataContext/Bonus/Bonus_BonusBet" />
       <nodes>
         <classShapeMoniker Id="efb3fda2-508e-4915-bf5a-a4aead176006" />
         <classShapeMoniker Id="03fa6584-610f-41f1-8eef-0380d27202f8" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.2812525 : 9.47115315755208); (2.2812525 : 10.3142712402344); (5.91666666666667 : 10.3142712402344 : JumpStart); (6.08333333333333 : 10.3142712402344 : JumpEnd); (6.25 : 10.3142712402344)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(2.2812525 : 9.47115315755208); (2.2812525 : 10.3142712402344); (5.88541666666667 : 10.3142712402344 : JumpStart); (6.14583333333333 : 10.3142712402344 : JumpEnd); (6.25 : 10.3142712402344)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/BigBallzDataContext/Group/Group_Bonus" />
       <nodes>
         <classShapeMoniker Id="37a0af5b-248a-424c-80f9-ced68a8ef9bc" />
         <classShapeMoniker Id="efb3fda2-508e-4915-bf5a-a4aead176006" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 10.8999239095052); (5.91666666666667 : 10.8999239095052 : JumpStart); (6.08333333333333 : 10.8999239095052 : JumpEnd); (6.25 : 10.8999239095052)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.5 : 10.8999239095052); (6.25 : 10.8999239095052)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/BigBallzDataContext/Team/Team_Bonus" />
       <nodes>
         <classShapeMoniker Id="67547da6-34db-4aa9-8be6-b403354731e0" />
         <classShapeMoniker Id="efb3fda2-508e-4915-bf5a-a4aead176006" />
       </nodes>
     </associationConnector>
-    <classShape Id="7d53cacf-d88d-4b96-b89c-3ddc70f2df08" absoluteBounds="3.125, 3.875, 2, 1.4248478190104168">
+    <classShape Id="7d53cacf-d88d-4b96-b89c-3ddc70f2df08" absoluteBounds="3.125, 3.875, 2, 1.5785953776041666">
       <DataClassMoniker Name="/BigBallzDataContext/Comment" />
       <nestedChildShapes>
-        <elementListCompartment Id="bf36c3f8-c300-49b0-b29d-78a15f7b57e8" absoluteBounds="3.1399999999999997, 4.335, 1.9700000000000002, 0.86484781901041674" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="bf36c3f8-c300-49b0-b29d-78a15f7b57e8" absoluteBounds="3.1399999999999997, 4.335, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(6.25 : 4.58742390950521); (5.125 : 4.58742390950521)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(6.25 : 4.66429768880208); (5.125 : 4.66429768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/BigBallzDataContext/User/User_Comment" />
       <nodes>
         <classShapeMoniker Id="103a099b-feca-470a-af38-602345d132fe" />

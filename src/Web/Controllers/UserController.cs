@@ -15,7 +15,6 @@ namespace BigBallz.Controllers
         private readonly IAccountService _accountService;
         private readonly IMailService _mailService;
 
-
         public UserController(IUserService userService, IRoleService roleService, IAccountService accountService, IMatchService matchService, IBigBallzService bigBallzService, IMailService mailService) : base(userService, matchService, bigBallzService)
         {
             _userService = userService;
@@ -45,6 +44,8 @@ namespace BigBallz.Controllers
         {
             try
             {
+                var sendConfirmationIfSucceed = false;
+
                 var dbUser = _userService.Get(user.UserId);
 
                 if (user.Authorized && !dbUser.Authorized)
@@ -52,11 +53,14 @@ namespace BigBallz.Controllers
                     var rolePlayer = _roleService.Get(2); // player
                     var userRolePlayer = new UserRole {UserId = user.UserId, RoleId = rolePlayer.RoleId};
                     dbUser.UserRoles.Add(userRolePlayer);
+                    dbUser.AuthorizedBy = User.Identity.Name;
+                    sendConfirmationIfSucceed = true;
                 }
                 else if (!user.Authorized && dbUser.Authorized)
                 {
                     var userRole = dbUser.UserRoles.FirstOrDefault(x => x.Role.Name.ToLowerInvariant() == "player");
                     if (userRole != null) dbUser.UserRoles.Remove(userRole);
+                    dbUser.AuthorizedBy = null;
                 }
 
                 if (user.IsAdmin && !dbUser.IsAdmin)
@@ -73,10 +77,13 @@ namespace BigBallz.Controllers
 
                 dbUser.Authorized = user.Authorized;
                 dbUser.IsAdmin = user.IsAdmin;
+                dbUser.PagSeguro = user.Authorized && user.PagSeguro;
 
                 TryUpdateModel(dbUser, "user");
                 
                 _userService.Save();
+
+                if (sendConfirmationIfSucceed) _mailService.SendPaymentConfirmation(dbUser);
 
                 return RedirectToAction("Index");
             }

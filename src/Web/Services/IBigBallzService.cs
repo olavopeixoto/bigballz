@@ -15,7 +15,7 @@ namespace BigBallz.Services
         MatchBetStatistic GetMatchBetStatistics(int matchId);
         BonusBetStatistic GetBonusBetStatistics(int bonusId);
         Match GetFirstMatch();
-        double GetTotalPrize();
+        decimal GetTotalPrize();
         DateTime GetBonusBetExpireDate();
     }
 }
