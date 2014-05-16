@@ -12,8 +12,10 @@ using BigBallz.Filters;
 using BigBallz.Helpers;
 using BigBallz.Models;
 using BigBallz.Services;
+using Elmah;
 using RPXLib.Data;
 using RPXLib.Interfaces;
+using ApplicationException = System.ApplicationException;
 
 namespace BigBallz.Controllers
 {
@@ -120,47 +122,57 @@ namespace BigBallz.Controllers
         [HttpPost]
         public void ConfirmacaoPagamento(string prodID_1, string cliEmail, string statusTransacao, FormCollection info)
         {
-            var msg = string.Format("prodID_1: {0}; cliEmail: {1}; statusTransacao: {2}", prodID_1, cliEmail,
-                statusTransacao);
-
-            Logger.Info(msg);
-
-            _mailService.SendMail("Admin", "admin@bigballz.com.br", "BigBallz - PagSeguro", msg);
-
-            if (statusTransacao.ToLowerInvariant() != "aprovado") return; //So interessa saber se ja esta aprovado o pagamento
-
-            var token = ConfigurationManager.AppSettings["pagseguro-token"];
-            var pagina = ConfigurationManager.AppSettings["pagseguro-ws"];
-     
-            var dados = Request.Form + "&Comando=validar" + "&Token=" + token;
-
-            var req = (HttpWebRequest) WebRequest.Create(pagina);
-
-            req.Method = "POST";
-            req.ContentLength = dados.Length;
-            req.ContentType = "application/x-www-form-urlencoded";
-
-            using (var stOut = new System.IO.StreamWriter(req.GetRequestStream(),
-                                                   System.Text.Encoding.GetEncoding("ISO-8859-1")))
+            try
             {
-                stOut.Write(dados);
-            }
+                var msg = string.Format("prodID_1: {0}; cliEmail: {1}; statusTransacao: {2}", prodID_1, cliEmail,
+                    statusTransacao);
 
-            using (var stIn = new System.IO.StreamReader(req.GetResponse().GetResponseStream(),
-                                                  System.Text.Encoding.GetEncoding("ISO-8859-1")))
-            {
-                var result = stIn.ReadToEnd();
+                _mailService.SendMail("Admin", "admin@bigballz.com.br", "BigBallz - PagSeguro", msg);
 
-                if (result.ToLowerInvariant() == "verificado" && (statusTransacao.ToLowerInvariant() == "aprovado"))
+                if (statusTransacao.ToLowerInvariant() != "aprovado")
+                    return; //Só interessa saber se já está aprovado o pagamento
+
+                var token = ConfigurationManager.AppSettings["pagseguro-token"];
+                var pagina = ConfigurationManager.AppSettings["pagseguro-ws"];
+
+                var dados = Request.Form + "&Comando=validar" + "&Token=" + token;
+
+                var req = (HttpWebRequest) WebRequest.Create(pagina);
+
+                req.Method = "POST";
+                req.ContentLength = dados.Length;
+                req.ContentType = "application/x-www-form-urlencoded";
+
+                using (var stOut = new System.IO.StreamWriter(req.GetRequestStream(),
+                    System.Text.Encoding.GetEncoding("ISO-8859-1")))
                 {
-                    //o post foi validado
-                    var user = _accountService.FindUserByUserName(prodID_1);
-                    if (user != null)
+                    stOut.Write(dados);
+                }
+
+                using (var stIn = new System.IO.StreamReader(req.GetResponse().GetResponseStream(),
+                    System.Text.Encoding.GetEncoding("ISO-8859-1")))
+                {
+                    var result = stIn.ReadToEnd();
+
+                    if (result.ToLowerInvariant() == "verificado" && (statusTransacao.ToLowerInvariant() == "aprovado"))
                     {
-                        _accountService.AuthorizeUser(user.UserName, "PagSeguro", true);
-                        _mailService.SendPaymentConfirmation(user);
+                        //o post foi validado
+                        var user = _accountService.FindUserByUserName(prodID_1);
+                        if (user != null)
+                        {
+                            _accountService.AuthorizeUser(user.UserName, "PagSeguro", true);
+                            _mailService.SendPaymentConfirmation(user);
+                        }
+                        else
+                        {
+                            throw new ApplicationException(string.Format("Usuário {0} não encontrado para autorização", prodID_1));
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
             }
         }
 
