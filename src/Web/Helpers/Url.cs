@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace System.Web.Mvc {
+﻿namespace System.Web.Mvc {
     public static class UrlHelpers {
 
         public static string SiteRoot(HttpContextBase context) {
@@ -11,24 +6,24 @@ namespace System.Web.Mvc {
         }
 
         public static string SiteRoot(HttpContextBase context, bool usePort) {
-            var Port = context.Request.ServerVariables["SERVER_PORT"];
+            var port = context.Request.ServerVariables["SERVER_PORT"];
             if (usePort) {
-                if (Port == null || Port == "80" || Port == "443")
-                    Port = "";
+                if (port == null || port == "80" || port == "443")
+                    port = "";
                 else
-                    Port = ":" + Port;
+                    port = ":" + port;
             }
-            var Protocol = context.Request.ServerVariables["SERVER_PORT_SECURE"];
-            if (Protocol == null || Protocol == "0")
-                Protocol = "http://";
+            var protocol = context.Request.ServerVariables["SERVER_PORT_SECURE"];
+            if (protocol == null || protocol == "0")
+                protocol = "http://";
             else
-                Protocol = "https://";
+                protocol = "https://";
 
             var appPath = context.Request.ApplicationPath;
             if (appPath == "/")
                 appPath = "";
 
-            var sOut = Protocol + context.Request.ServerVariables["SERVER_NAME"] + Port + appPath;
+            var sOut = protocol + context.Request.ServerVariables["SERVER_NAME"] + port + appPath;
             return sOut;
 
         }
