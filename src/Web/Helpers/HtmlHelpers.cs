@@ -83,6 +83,19 @@ namespace System.Web.Mvc {
             return secondsLeft < 0 ? string.Format("<div class=\"match-reminder bet-times-up\">{0} ponto{1}<span class=\"reminder-explanation\">{2}</span></div>", pointsEarned, pointsEarned == 1 ? "" : "s", helper.ActionLink("ver demais apostas", "matchbets", "bet", new {id=matchId}, null)) : string.Format("<div class=\"match-reminder\"><span class=\"ui-icon ui-icon-clock\" style=\"float: left;margin-right:.3em;\"></span>Falta{0} {1} {2}{3}<span class=\"reminder-explanation\">para encerrar a aposta</span></div>", plural ? "m" : "", unit, unitName, plural ? "s" : "");
         }
 
+        public static string CountDown(this HtmlHelper helper, DateTime startTime)
+        {
+            var datetimeLeft = startTime.Subtract(new TimeSpan(0, 1, 0, 0)).Subtract(DateTime.Now.BrazilTimeZone());
+            var hoursLeft = datetimeLeft.TotalHours;
+            var daysLeft = datetimeLeft.TotalDays;
+            var minutesLeft = datetimeLeft.TotalMinutes;
+            var secondsLeft = datetimeLeft.TotalSeconds;
+            var unitName = hoursLeft > 24 ? "dia" : minutesLeft > 60 ? "hora" : secondsLeft > 60 ? "minuto" : "segundo";
+            var unit = (int)(hoursLeft > 24 ? daysLeft : minutesLeft > 60 ? hoursLeft : secondsLeft > 60 ? minutesLeft : secondsLeft);
+            var plural = unit > 1;
+            return secondsLeft > 0 ? string.Format("<h4>Falta{0} {1} {2}{3}</h4>", plural ? "m" : "", unit, unitName, plural ? "s" : "") : string.Empty;
+        }
+
         public static string BonusReminder(this HtmlHelper helper, DateTime bonusStartTime, int pointsEarned)
         {
             var datetimeLeft = bonusStartTime.Subtract(new TimeSpan(0, 1, 0, 0)).Subtract(DateTime.Now.BrazilTimeZone());

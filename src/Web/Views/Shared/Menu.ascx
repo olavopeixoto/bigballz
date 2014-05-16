@@ -9,11 +9,7 @@
     <li><%=Html.ActionActiveLink("Comentários", "index", "comments", null, new { title = "Mensagens BigBallz" })%></li>
     <li><%=Html.ActionActiveLink("Apostas", "index", "bet", null, new { title = "Apostas" })%></li>
                 
-        <%if (Html.IsAuthorized()){%>
-        
         <li><%=Html.ActionActiveLink("Ranking", "index", "standings", null, new { title = "Ranking" })%></li>
-        <%--<li><%=Html.ActionActiveLink("Pesquisa", "poll", "home", null, new { title = "Pesquisa" })%></li>--%>
-        <%} %>
 
         <%if (Html.IsAdmin()) {%>
         <li><%=Html.ActionActiveLink("Bonus", "index", "bonus", null, new { title = "Bonus" })%></li>
