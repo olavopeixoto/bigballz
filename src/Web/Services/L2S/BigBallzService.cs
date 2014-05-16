@@ -238,8 +238,9 @@ namespace BigBallz.Services.L2S
 
         public double GetTotalPrize()
         {
-            //TODO: Contabilizar quem pagou pelo pagseguro com taxa pra saber o qnt vai estar disponivel pro bolao
-            return _db.Users.Count(x => x.Authorized && x.UserRoles.Any(y => y.Role.Name == BBRoles.Player)) * (double)ConfigurationHelper.Price;
+            var totalPagantes =
+                    _db.Users.Count(x => x.Authorized && x.UserRoles.Any(y => y.Role.Name == BBRoles.Player));
+            return totalPagantes * (double)ConfigurationHelper.Price * (1 - 0.0499) - (0.4 * totalPagantes); //Taxa do PagSeguro = 4,99% + R$0,40
         }
 
         private int GetTotalUserExactScores(string userName)
