@@ -10,6 +10,7 @@
     <meta name="description" content="BigBallz, o Bolão da Copa do Mundo" />
     <meta name="keywords" content="Bolão, Copa do Mundo, Fifa, World Cup, Soccer, Futebol, Aposta, Bet" />
     <meta name="robots" content="index, follow" />
+    <meta property="fb:app_id" content="<%=ConfigurationManager.AppSettings["fb-appid"]%>"/>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <%=Html.CSS("fifa/jquery-ui-1.8.1.custom")%>
     <%=Html.CSS("ui.jqgrid")%>
@@ -36,6 +37,14 @@
     <% } %>
 </head>
 <body>
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=121207554580263&version=v2.0";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
     <div id="fixed">
         <div id="flash" class="ui-widget ui-helper-hidden">
             <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">

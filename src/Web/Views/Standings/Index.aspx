@@ -30,15 +30,7 @@
   </tr>
 <%lineIndex++; } %>
 </tbody>
-</table><%--
-<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
-<fb:comments></fb:comments>
-<script type="text/javascript">
-    FB.init("945736eb634f9b9b98e4b8bd98cf6a15", "<%=Url.SiteRoot()%>/xd_receiver.htm");
-</script>
-<script type="text/javascript" src="http://cdn.widgetserver.com/syndication/subscriber/InsertWidget.js"></script>
-<script type="text/javascript">
-if (WIDGETBOX) WIDGETBOX.renderWidget('55bd568e-768d-4a4a-a1f5-cd25f05fcb83');
-</script>--%>
+</table>
+<div class="fb-comments" data-href="<%=Url.Action("index", "standings",null,FormsAuthentication.RequireSSL ? "https" : "http") %>" data-width="675" data-numposts="5" data-colorscheme="light"></div>
 </asp:Content>
 <asp:Content runat="server" ID="Content2" ContentPlaceHolderID="Scripts"></asp:Content>

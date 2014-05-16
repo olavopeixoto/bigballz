@@ -8,6 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Bolão da Copa do Mundo">
+    <meta property="fb:app_id" content="<%=ConfigurationManager.AppSettings["fb-appid"]%>"/>
     
     <title>BigBallz<asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
 

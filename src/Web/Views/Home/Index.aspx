@@ -27,7 +27,7 @@
                                 <a href="<%=Url.Action("index", "standings")%>" class="btn btn-default btn-lg"><i class="fa fa-sort-numeric-asc fa-fw"></i> <span class="network-name">Ranking</span></a>
                                 <%}%>
                             </li>
-                            <li><div class="fb-share-button" data-href="https://www.bigballz.com.br" data-type="button_count"></div></li>
+                            <li><div class="fb-like" data-href="<%=Url.SiteRoot() %>" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></li>
                         </ul>
                     </div>
                 </div>
