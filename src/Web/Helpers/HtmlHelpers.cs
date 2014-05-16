@@ -64,16 +64,10 @@ namespace System.Web.Mvc {
             return helper.ActionLink(text, action, controller, new RouteValueDictionary(routeValues), htmlAttr);
         }
 
-        public static string TeamFlag(this HtmlHelper helper, string teamId)
-        {
-            //return helper.Image("teams/" + teamId + ".gif");
-            return string.Format("<img src=\"http://img.fifa.com/images/flags/4/{0}.png\"  width=\"19\" height=\"13\" />", teamId);
-        }
-
-        public static string TeamFlag(this HtmlHelper helper, string teamId, string toolTip)
+        public static string TeamFlag(this HtmlHelper helper, string teamId, string toolTip = null)
         {
             //return helper.Image("teams/" + teamId + ".gif", new { alt = toolTip});
-            return string.Format("<img src=\"http://img.fifa.com/images/flags/4/{0}.png\"  width=\"19\" height=\"13\" title=\"{1}\" />", teamId, toolTip);
+            return string.Format("<img src=\"{0}\"  width=\"19\" height=\"13\" title=\"{1}\" />", new UrlHelper(helper.ViewContext.RequestContext).Content(string.Format("~/public/images/flags/{0}.png", teamId)), toolTip);
         }
 
         public static string MatchReminder(this HtmlHelper helper, int matchId, DateTime matchStartTime, int pointsEarned)
@@ -114,7 +108,7 @@ namespace System.Web.Mvc {
                 photoUrl = gravatar.GetGravatarUrl();
             }
 
-            return "<img style=\"margin:5px 0 0;padding:0;\" width=\"50\" height=\"50\" src=" + photoUrl +
+            return "<img style=\"margin:5px 0 0;padding:0;\" width=\"50\" height=\"50\" src=" + photoUrl.Replace("https:", "").Replace("http:", "") +
                    " alt=\"\" />";
         }
 
