@@ -2,11 +2,10 @@
 {
     public class GravatarHelper
     {
-
         /// <summary>
         /// Base URL for the Gravatar image
         /// </summary>
-        private string BaseURL = "http://www.gravatar.com/avatar/{0}?d={1}&s={2}&r={3}";
+        private const string BaseUrl = "//www.gravatar.com/avatar/{0}?d={1}&s={2}&r={3}";
 
         #region Properties, very ugly
         /// <summary>
@@ -82,16 +81,15 @@
         /// <returns>Hash of the email address passed.</returns>
         public string MD5(string theEmail)
         {
-            var md5Obj =
-                new System.Security.Cryptography.MD5CryptoServiceProvider();
+            var md5Obj = new System.Security.Cryptography.MD5CryptoServiceProvider();
 
-            byte[] bytesToHash = System.Text.Encoding.ASCII.GetBytes(theEmail);
+            var bytesToHash = System.Text.Encoding.ASCII.GetBytes(theEmail);
 
             bytesToHash = md5Obj.ComputeHash(bytesToHash);
 
-            string strResult = "";
+            var strResult = "";
 
-            foreach (byte b in bytesToHash)
+            foreach (var b in bytesToHash)
             {
                 strResult += b.ToString("x2");
             }
@@ -107,7 +105,7 @@
             //hash the email address
             string hE = MD5(theEmail);
             //format our url to the Gravatar
-            return string.Format(BaseURL, hE, iconset, size, rating);
+            return string.Format(BaseUrl, hE, iconset, size, rating);
         }
     }
 }
