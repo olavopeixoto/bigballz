@@ -16,6 +16,7 @@ namespace BigBallz.Controllers
         [Authorize, AllowAnonymous]
         public ActionResult Index()
         {
+            ViewData["StartDate"] = _matchService.GetStartDate();
             return View();
         }
 
