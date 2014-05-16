@@ -138,7 +138,7 @@
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
                     <h2 class="section-heading">Bonus</h2>
-                    <p class="lead">Com a aposta bonus o jogo pode virar no final.<br>Antes de começar o campeonato, chute quem será o campeão de cada grupo além do campeão, vice e terceiro colocado da copa. Confira o <%=Html.ActionLink("regulamento", "rules", "home")%></p>
+                    <p class="lead">Com a aposta bonus o jogo pode virar no final.<br>Antes de começar o campeonato, chute quem será o campeão de cada grupo além do campeão, vice, terceiro e quarto colocado da copa. Confira o <%=Html.ActionLink("regulamento", "rules", "home")%></p>
                 </div>
                 <div class="col-lg-5 col-lg-offset-2 col-sm-6">
                     <img class="img-responsive" src="<%=Url.Content("~/public/images/bonus.png") %>" alt="">
