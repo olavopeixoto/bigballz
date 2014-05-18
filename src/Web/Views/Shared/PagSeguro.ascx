@@ -4,10 +4,8 @@
  <input type="hidden" name="email_cobranca" value="bigballz@asound.org">
  <input type="hidden" name="tipo" value="CP">
  <input type="hidden" name="moeda" value="BRL">
- <input type="hidden" name="item_id_1" value="<%if(Context.User != null)
-                                                {%> <%= Context.User.Identity.Name%> <%
-                                                }%>">
- <input type="hidden" name="item_descr_1" value="<%:"Inscrição"%>">
+ <input type="hidden" name="item_id_1" value="<%=ViewData["UserId"]%>">
+ <input type="hidden" name="item_descr_1" value="<%:ViewData["UserName"]%>">
  <input type="hidden" name="item_quant_1" value="1">
  <input type="hidden" name="item_valor_1" value="<%=(int)(Html.Price() * 100)%>">
  <input type="hidden" name="item_frete_1" value="0">

@@ -156,3 +156,20 @@ p.copyright {
     float: left;
     padding-right: 10px;
 }
+
+.navbar-default {
+    background-color: #000;
+    border: none;
+    -webkit-box-shadow: 0 0 25px #000;
+    -ms-box-shadow: 0 0 25px #000;
+    box-shadow: 0 0 25px #000;
+}
+
+.navbar-default .navbar-brand, .navbar-default .navbar-nav>li>a {
+    color: #fff;
+}
+
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus,
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+    color: #AAA;
+}
