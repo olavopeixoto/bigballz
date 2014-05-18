@@ -32,11 +32,11 @@ namespace BigBallz.Controllers
                 && filterContext.HttpContext.User.Identity.IsAuthenticated)
             {
                 var userName = filterContext.HttpContext.User.Identity.Name;
+                var user = _userService.Get(userName);
 
                 var photoCookie = Request.Cookies["photoUrl"];
                 if (photoCookie == null || string.IsNullOrEmpty(photoCookie.Value))
                 {
-                    var user = _userService.Get(userName);
                     Response.Cookies.Remove("photoUrl");
                     string photoUrl;
                     if (string.IsNullOrEmpty(user.PhotoUrl))
@@ -56,6 +56,9 @@ namespace BigBallz.Controllers
                         Expires = DateTime.Now.BrazilTimeZone().AddDays(30)
                     });
                 }
+
+                ViewData["UserId"] = user.UserId;
+                ViewData["UserName"] = user.UserName;
 
                 ViewData["NextMatches"] = _matchService.GetNextMatches();
                 ViewData["LastMatches"] = _matchService.GetLastPlayedMatches();

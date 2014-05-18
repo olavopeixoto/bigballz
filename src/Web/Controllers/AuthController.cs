@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Net;
 using System.Transactions;
 using System.Web;
@@ -124,13 +125,14 @@ namespace BigBallz.Controllers
         {
             try
             {
-                var msg = string.Format("prodID_1: {0}; cliEmail: {1}; statusTransacao: {2}", prodID_1, cliEmail,
+                var msg = string.Format("prodID_1: <{0}>; cliEmail: <{1}>; statusTransacao: <{2}>", prodID_1, cliEmail,
                     statusTransacao);
 
-                _mailService.SendMail("Admin", "admin@bigballz.com.br", "BigBallz - PagSeguro", msg);
-
                 if (statusTransacao.ToLowerInvariant() != "aprovado")
+                {
+                    _mailService.SendMail("Admin", "admin@bigballz.com.br", "BigBallz - PagSeguro", msg + " - != \"aprovado\"");
                     return; //Só interessa saber se já está aprovado o pagamento
+                }
 
                 var token = ConfigurationManager.AppSettings["pagseguro-token"];
                 var pagina = ConfigurationManager.AppSettings["pagseguro-ws"];
@@ -157,16 +159,25 @@ namespace BigBallz.Controllers
                     if (result.ToLowerInvariant() == "verificado" && (statusTransacao.ToLowerInvariant() == "aprovado"))
                     {
                         //o post foi validado
-                        var user = _accountService.FindUserByUserName(prodID_1);
+                        int uid;
+                        var user = int.TryParse(prodID_1, NumberStyles.Integer, CultureInfo.CurrentCulture.NumberFormat,
+                            out uid) ? _accountService.FindUserByLocalId(Convert.ToInt32(prodID_1)) : _accountService.FindUserByUserName(prodID_1);
+
                         if (user != null)
                         {
                             _accountService.AuthorizeUser(user.UserName, "PagSeguro", true);
+                            _mailService.SendMail("Admin", "admin@bigballz.com.br", "BigBallz - PagSeguro", msg);
                             _mailService.SendPaymentConfirmation(user);
                         }
                         else
                         {
-                            throw new ApplicationException(string.Format("Usuário {0} não encontrado para autorização", prodID_1));
+                            throw new ApplicationException(string.Format("Usuário {0} não encontrado para autorização",
+                                prodID_1));
                         }
+                    }
+                    else
+                    {
+                        _mailService.SendMail("Admin", "admin@bigballz.com.br", "BigBallz - PagSeguro", msg + string.Format("; result: <{0}>", result));
                     }
                 }
             }
@@ -314,6 +325,7 @@ namespace BigBallz.Controllers
             var authenticationDetails = TempData["UserDetails"] as RPXAuthenticationDetails;
 
             if (authenticationDetails == null) return RedirectToAction("index", "home");
+
             ViewData["nomeProvedor"] = authenticationDetails.ProviderName;
             return View();
         }

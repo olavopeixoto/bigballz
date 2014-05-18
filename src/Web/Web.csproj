@@ -227,7 +227,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="apple-touch-icon.png" />
-    <Content Include="App_Browsers\Devices\readme.txt" />
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Global.asax" />
     <Content Include="MailTemplates\BetTimeAlert.txt" />
@@ -253,9 +252,7 @@
     <Content Include="Public\css\fifa\images\ui-icons_d8e7f3_256x240.png" />
     <Content Include="Public\css\fifa\images\ui-icons_f9bd01_256x240.png" />
     <Content Include="Public\css\fifa\jquery-ui-1.8.1.custom.css" />
-    <Content Include="Public\css\iphone.css" />
     <Content Include="Public\css\landing-page.css" />
-    <Content Include="Public\css\screen.css" />
     <Content Include="Public\css\ui.jqgrid.css" />
     <Content Include="favicon.ico" />
     <Content Include="Public\font-awesome\css\font-awesome.css" />
@@ -391,8 +388,10 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Browsers\Devices\mobile.browser" />
     <Content Include="MailTemplates\Web.config" />
+    <Content Include="secrets.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Models\BigBallz.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>BigBallz.designer.cs</LastGenOutput>
@@ -441,6 +440,12 @@
     <Content Include="Public\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Public\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Views\Home\Site.Master" />
+    <Content Include="connections.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MailSettings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
