@@ -8,7 +8,7 @@
   
         <!-- Itens do pagamento (ao menos um item é obrigatório) -->  
         <input name="itemId1" type="hidden" value="<%=ViewData["UserId"]%>">  
-        <input name="itemDescription1" type="hidden" value="<%:ViewData["UserName"]%>">  
+        <input name="itemDescription1" type="hidden" value="Taxa <%:ViewData["UserName"]%>">  
         <input name="itemAmount1" type="hidden" value="<%=Html.Price().ToString("N2", CultureInfo.InvariantCulture)%>">  
         <input name="itemQuantity1" type="hidden" value="1">  
         <input name="itemWeight1" type="hidden" value="0">  
