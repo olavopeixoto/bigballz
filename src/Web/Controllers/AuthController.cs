@@ -453,9 +453,11 @@ namespace BigBallz.Controllers
         [HttpGet]
         public ActionResult HelpLogin()
         {
+            if (!User.Identity.IsAuthenticated) RedirectToAction("index", "home");
+
             var key = ConfigurationManager.AppSettings["freshdesk-ssokey"];
             var baseUrl = ConfigurationManager.AppSettings["freshdesk-baseUrl"];
-            var pathTemplate = baseUrl + "/login/sso?name={1}&email={2}&timestamp={3}&hash={4}";
+            var pathTemplate = baseUrl + "/login/sso?name={0}&email={1}&timestamp={2}&hash={3}";
 
             var user = _accountService.FindUserByUserName(User.Identity.Name);
 
@@ -478,14 +480,7 @@ namespace BigBallz.Controllers
             var crypto = new HMACMD5(keybytes);
             var hash = crypto.ComputeHash(inputBytes);
 
-            var sb = new StringBuilder();
-            foreach (var b in hash)
-            {
-                var hexValue = b.ToString("X").ToLower(); // Lowercase for compatibility on case-sensitive systems
-                sb.Append((hexValue.Length == 1 ? "0" : "") + hexValue);
-            }
-
-            return sb.ToString();
+            return BitConverter.ToString(hash).ToLowerInvariant().Replace("-", string.Empty);
         }
 
         private static void SignIn(string localId, bool rememberMe)
