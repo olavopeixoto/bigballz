@@ -17,3 +17,8 @@
 /lib/PagSeguro.net/source/Examples/CreatePayment/bin
 /lib/PagSeguro.net/source/Uol.PagSeguro/obj
 /lib/PagSeguro.net/source/Uol.PagSeguro/bin
+/lib/PagSeguro.net/source/Examples/DocExamples/bin
+/lib/PagSeguro.net/source/Examples/DocExamples/obj
+/lib/PagSeguro.net/source/Examples/ReceiveNotification/obj
+/lib/PagSeguro.net/source/Examples/ReceiveNotification/bin
+/lib/PagSeguro.net/source/Examples/SearchTransactionByDate

@@ -4,6 +4,8 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
+using System.Text;
 using System.Transactions;
 using System.Web;
 using System.Web.Mvc;
@@ -234,30 +236,39 @@ namespace BigBallz.Controllers
         [HttpGet]
         public ActionResult ConfirmacaoPagamento(string tid)
         {
-            if (!string.IsNullOrWhiteSpace(tid))
+            if (string.IsNullOrWhiteSpace(tid)) return RedirectToAction("index", "home");
+            
+            var credentials = PagSeguroConfiguration.Credentials;
+            var transaction = TransactionSearchService.SearchByCode(credentials, tid);
+            var item = transaction.Items.Single();
+
+            int uid;
+            if (!int.TryParse(item.Id, NumberStyles.Integer, CultureInfo.CurrentCulture.NumberFormat, out uid))
             {
-                var credentials = PagSeguroConfiguration.Credentials;
-                var transaction = TransactionSearchService.SearchByCode(credentials, tid);
-                var item = transaction.Items.Single();
+                Logger.Warn("Identificação de usuário inválida ({0})", item.Id);
+                return RedirectToAction("index", "home");
+            }
 
-                int uid;
-                if (transaction.TransactionStatus == (int)PagSeguroTransactionStatus.Paga
-                    && int.TryParse(item.Id, NumberStyles.Integer, CultureInfo.CurrentCulture.NumberFormat, out uid))
+            var user = _accountService.FindUserByLocalId(uid);
+            if (user == null)
+            {
+                Logger.Error("Usuário {0} não encontrado para autorização", item.Id);
+                return RedirectToAction("index", "home");
+            }
+            if (user.UserName != User.Identity.Name)
+            {
+                Logger.Error("Usuário {0} ({1}) incorreto para autorização com o {2}", item.Id, user.UserName, User.Identity.Name);
+                return RedirectToAction("index", "home");
+            }
+
+            if (transaction.TransactionStatus == (int)PagSeguroTransactionStatus.Paga)
+            {
+                if (_accountService.AuthorizeUser(user.UserName, "PagSeguro", true))
                 {
-                    var user = _accountService.FindUserByLocalId(uid);
-
-                    if (user != null)
-                    {
-                        if (_accountService.AuthorizeUser(user.UserName, "PagSeguro", true))
-                        {
-                            _mailService.SendPaymentConfirmation(user);
-                        }
-
-                        return View("ConfirmacaoPagamentoPago");
-                    }
-                    
-                    Logger.Error("Usuário {0} não encontrado para autorização", item.Id);
+                    _mailService.SendPaymentConfirmation(user);
                 }
+
+                return View("ConfirmacaoPagamentoPago");
             }
 
             return View();
@@ -437,6 +448,44 @@ namespace BigBallz.Controllers
             }
 
             return Redirect(Convert.ToString(Request.UrlReferrer));
+        }
+
+        [HttpGet]
+        public ActionResult HelpLogin()
+        {
+            var key = ConfigurationManager.AppSettings["freshdesk-ssokey"];
+            var baseUrl = ConfigurationManager.AppSettings["freshdesk-baseUrl"];
+            var pathTemplate = baseUrl + "/login/sso?name={1}&email={2}&timestamp={3}&hash={4}";
+
+            var user = _accountService.FindUserByUserName(User.Identity.Name);
+
+            var username = user.UserName;
+            var email = user.EmailAddress;
+
+            var timems = DateTime.UtcNow.ToUnixTime().ToString(CultureInfo.InvariantCulture);
+            var hash = GetHash(key, username, email, timems);
+            var path = String.Format(pathTemplate, Server.UrlEncode(username), Server.UrlEncode(email), timems, hash);
+
+            return Redirect(path);
+        }
+
+        private static string GetHash(string secret, string name, string email, string timems)
+        {
+            var input = name + email + timems;
+            var keybytes = Encoding.Default.GetBytes(secret);
+            var inputBytes = Encoding.Default.GetBytes(input);
+
+            var crypto = new HMACMD5(keybytes);
+            var hash = crypto.ComputeHash(inputBytes);
+
+            var sb = new StringBuilder();
+            foreach (var b in hash)
+            {
+                var hexValue = b.ToString("X").ToLower(); // Lowercase for compatibility on case-sensitive systems
+                sb.Append((hexValue.Length == 1 ? "0" : "") + hexValue);
+            }
+
+            return sb.ToString();
         }
 
         private static void SignIn(string localId, bool rememberMe)
