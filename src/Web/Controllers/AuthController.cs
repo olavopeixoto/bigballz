@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Transactions;
 using System.Web;
@@ -13,10 +14,10 @@ using BigBallz.Filters;
 using BigBallz.Helpers;
 using BigBallz.Models;
 using BigBallz.Services;
-using Elmah;
 using RPXLib.Data;
 using RPXLib.Interfaces;
-using ApplicationException = System.ApplicationException;
+using Uol.PagSeguro.Resources;
+using Uol.PagSeguro.Service;
 
 namespace BigBallz.Controllers
 {
@@ -27,7 +28,9 @@ namespace BigBallz.Controllers
         private readonly IMailService _mailService;
         private readonly IMatchService _matchService;
 
-        public AuthController(IRPXService rpxService, IAccountService accountService, IMailService mailService, IMatchService matchService, IUserService userService, IBigBallzService bigBallzService) : base(userService, matchService, bigBallzService)
+        public AuthController(IRPXService rpxService, IAccountService accountService, IMailService mailService,
+            IMatchService matchService, IUserService userService, IBigBallzService bigBallzService)
+            : base(userService, matchService, bigBallzService)
         {
             _rpxService = rpxService;
             _accountService = accountService;
@@ -41,7 +44,9 @@ namespace BigBallz.Controllers
             //according to the spec, it is possible to get here without a token
             //which means that the user cancelled the login request
             if (string.IsNullOrEmpty(token))
-                return string.IsNullOrEmpty(returnUrl) ? (ActionResult) RedirectToAction("Index", "Home") : Redirect(returnUrl);
+                return string.IsNullOrEmpty(returnUrl)
+                    ? (ActionResult) RedirectToAction("Index", "Home")
+                    : Redirect(returnUrl);
 
             RPXAuthenticationDetails authenticationDetails;
 
@@ -115,18 +120,57 @@ namespace BigBallz.Controllers
                 this.FlashError("Ocorreu um erro na tentativa associar a nova conta a uma existente");
             }
 
-            return string.IsNullOrEmpty(returnUrl) ? user.Authorized ? (ActionResult)RedirectToAction("index", "bet") : RedirectToAction("payment", "auth") : Redirect(returnUrl);
+            return string.IsNullOrEmpty(returnUrl)
+                ? user.Authorized
+                    ? (ActionResult) RedirectToAction("index", "bet")
+                    : RedirectToAction("payment", "auth")
+                : Redirect(returnUrl);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public void Notification(string notificationCode, string notificationType)
+        {
+            var credentials = PagSeguroConfiguration.Credentials;
+
+            var transaction = NotificationService.CheckTransaction(credentials, notificationCode);
+            if (transaction.TransactionStatus == (int) PagSeguroTransactionStatus.Paga)
+            {
+                int uid;
+                var itemId = transaction.Items.First().Id;
+                var user = int.TryParse(itemId, NumberStyles.Integer, CultureInfo.CurrentCulture.NumberFormat,
+                    out uid)
+                    ? _accountService.FindUserByLocalId(uid)
+                    : _accountService.FindUserByUserName(itemId);
+
+                if (user != null)
+                {
+                    if (_accountService.AuthorizeUser(user.UserName, "PagSeguro", true))
+                    {
+                        _mailService.SendPaymentConfirmation(user);
+                    }
+                }
+                else
+                {
+                    throw new ApplicationException(string.Format("Usuário {0} não encontrado para autorização",
+                        itemId));
+                }
+            }
+            else
+            {
+                Logger.Info(string.Format("PagSeguro - Notification - Transaction = <{0}> - Status = <{1}>",
+                    transaction.Code, transaction.TransactionStatus));
+            }
         }
 
         //o método POST indica que a requisição é o retorno da validação NPI.
         [AllowAnonymous]
         [HttpPost]
-        public void ConfirmacaoPagamento(string prodID_1, string cliEmail, string statusTransacao, FormCollection info)
+        public void ConfirmacaoPagamento(string prodID_1, string statusTransacao, FormCollection info)
         {
             try
             {
-                var msg = string.Format("prodID_1: <{0}>; cliEmail: <{1}>; statusTransacao: <{2}>", prodID_1, cliEmail,
-                    statusTransacao);
+                var msg = string.Format("prodID_1: <{0}>; statusTransacao: <{1}>", prodID_1, statusTransacao);
 
                 if (statusTransacao.ToLowerInvariant() != "aprovado")
                 {
@@ -156,7 +200,7 @@ namespace BigBallz.Controllers
                 {
                     var result = stIn.ReadToEnd();
 
-                    if (result.ToLowerInvariant() == "verificado" && (statusTransacao.ToLowerInvariant() == "aprovado"))
+                    if (result.ToLowerInvariant() == "verificado")
                     {
                         //o post foi validado
                         int uid;
@@ -165,7 +209,7 @@ namespace BigBallz.Controllers
 
                         if (user != null)
                         {
-                            _accountService.AuthorizeUser(user.UserName, "PagSeguro", true);
+                            _accountService.AuthorizeUser(user.UserName, "PagSeguro", pagSeguro: true);
                             _mailService.SendMail("Admin", "admin@bigballz.com.br", "BigBallz - PagSeguro", msg);
                             _mailService.SendPaymentConfirmation(user);
                         }
@@ -177,7 +221,7 @@ namespace BigBallz.Controllers
                     }
                     else
                     {
-                        _mailService.SendMail("Admin", "admin@bigballz.com.br", "BigBallz - PagSeguro", msg + string.Format("; result: <{0}>", result));
+                        throw new ApplicationException(string.Format("{0}; result: <{1}>", msg, result));
                     }
                 }
             }
@@ -188,8 +232,34 @@ namespace BigBallz.Controllers
         }
 
         [HttpGet]
-        public ActionResult ConfirmacaoPagamento()
+        public ActionResult ConfirmacaoPagamento(string tid)
         {
+            if (!string.IsNullOrWhiteSpace(tid))
+            {
+                var credentials = PagSeguroConfiguration.Credentials;
+                var transaction = TransactionSearchService.SearchByCode(credentials, tid);
+                var item = transaction.Items.Single();
+
+                int uid;
+                if (transaction.TransactionStatus == (int)PagSeguroTransactionStatus.Paga
+                    && int.TryParse(item.Id, NumberStyles.Integer, CultureInfo.CurrentCulture.NumberFormat, out uid))
+                {
+                    var user = _accountService.FindUserByLocalId(uid);
+
+                    if (user != null)
+                    {
+                        if (_accountService.AuthorizeUser(user.UserName, "PagSeguro", true))
+                        {
+                            _mailService.SendPaymentConfirmation(user);
+                        }
+
+                        return View("ConfirmacaoPagamentoPago");
+                    }
+                    
+                    Logger.Error("Usuário {0} não encontrado para autorização", item.Id);
+                }
+            }
+
             return View();
         }
 

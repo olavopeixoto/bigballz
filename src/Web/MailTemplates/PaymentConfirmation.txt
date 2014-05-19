@@ -1,7 +1,10 @@
 ﻿Olá <%=userName%>,
 <p>
-Recebemos o seu pagamento e você já está autorizado a usar o BigBallz.<br>
+confirmamos o recebimento do seu pagamento. Você já está autorizado a participar do BigBallz.<br>
 Boa Sorte!
+</p>
+<p>
+Participando do BigBallz você estará ciente e de acordo com as <a href="https://www.bigballz.com.br/regulamento">regras</a> do jogo.
 </p>
 <p>
 Atenciosamente,<br>

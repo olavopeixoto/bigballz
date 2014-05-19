@@ -1,0 +1,7 @@
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\DocExamples\bin\Release\DocExamples.exe
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\DocExamples\bin\Release\DocExamples.pdb
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\DocExamples\bin\Release\Uol.PagSeguro.dll
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\DocExamples\bin\Release\Uol.PagSeguro.pdb
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\DocExamples\obj\x86\Release\DocExamples.csprojResolveAssemblyReference.cache
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\DocExamples\obj\x86\Release\DocExamples.exe
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\DocExamples\obj\x86\Release\DocExamples.pdb

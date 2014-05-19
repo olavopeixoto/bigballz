@@ -1,0 +1,6 @@
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\SearchTransactionByCode\bin\Release\SearchTransactionByCode.exe
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\SearchTransactionByCode\bin\Release\SearchTransactionByCode.pdb
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\SearchTransactionByCode\bin\Release\Uol.PagSeguro.dll
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\SearchTransactionByCode\bin\Release\Uol.PagSeguro.pdb
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\SearchTransactionByCode\obj\x86\Release\SearchTransactionByCode.exe
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\SearchTransactionByCode\obj\x86\Release\SearchTransactionByCode.pdb

@@ -97,6 +97,8 @@
                         <li><%=Html.ActionLink("Tarefas", "index", "cronjobs", null, new { title = "Tarefas Agendadas" })%></li>        
                         <%}%>
     
+                        <li><%= Html.ActionLink("Sair", "logoff", "account") %></li>        
+
                     <%}%>
                 </ul>
             </div>

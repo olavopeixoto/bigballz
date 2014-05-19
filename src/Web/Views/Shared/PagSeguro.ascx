@@ -1,16 +1,28 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<BigBallz.Models.User>" %>
-<!-- INICIO FORMULARIO BOTAO PAGSEGURO -->
- <form target="pagseguro" action="<%=ConfigurationManager.AppSettings["pagseguro-checkout-url"] %>" method="post">
- <input type="hidden" name="email_cobranca" value="bigballz@asound.org">
- <input type="hidden" name="tipo" value="CP">
- <input type="hidden" name="moeda" value="BRL">
- <input type="hidden" name="item_id_1" value="<%=ViewData["UserId"]%>">
- <input type="hidden" name="item_descr_1" value="<%:ViewData["UserName"]%>">
- <input type="hidden" name="item_quant_1" value="1">
- <input type="hidden" name="item_valor_1" value="<%=(int)(Html.Price() * 100)%>">
- <input type="hidden" name="item_frete_1" value="0">
- <input type="hidden" name="encoding" value="UTF-8">
-
- <input type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/pagamentos/120x53-pagar-azul.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!">
- </form>
- <!-- FINAL FORMULARIO BOTAO PAGSEGURO -->
+<%@ Import Namespace="System.Globalization" %>
+<form method="post" target="pagseguro" action="<%=ConfigurationManager.AppSettings["pagseguro-paymentredirecturl"] %>">  
+          
+        <!-- Campos obrigatórios -->  
+        <input name="receiverEmail" type="hidden" value="<%=ConfigurationManager.AppSettings["pagseguro-email"] %>">  
+        <input name="currency" type="hidden" value="BRL">  
+  
+        <!-- Itens do pagamento (ao menos um item é obrigatório) -->  
+        <input name="itemId1" type="hidden" value="<%=ViewData["UserId"]%>">  
+        <input name="itemDescription1" type="hidden" value="<%:ViewData["UserName"]%>">  
+        <input name="itemAmount1" type="hidden" value="<%=Html.Price().ToString("N2", CultureInfo.InvariantCulture)%>">  
+        <input name="itemQuantity1" type="hidden" value="1">  
+        <input name="itemWeight1" type="hidden" value="0">  
+        
+        <!-- Código de referência do pagamento no seu sistema (opcional) -->  
+        <input name="reference" type="hidden" value="<%=ViewData["UserId"]%>">  
+          
+       <!-- Dados do comprador (opcionais) -->  
+<%--        <input name="senderName" type="hidden" value="José Comprador">  
+        <input name="senderAreaCode" type="hidden" value="11">  
+        <input name="senderPhone" type="hidden" value="56273440">  
+        <input name="senderEmail" type="hidden" value="comprador@uol.com.br"> --%> 
+  
+        <!-- submit do form (obrigatório) -->  
+        <input alt="Pague com PagSeguro" name="submit"  type="image" src="https://p.simg.uol.com.br/out/pagseguro/i/botoes/pagamentos/120x53-pagar-azul.gif"/>  
+          
+</form>  

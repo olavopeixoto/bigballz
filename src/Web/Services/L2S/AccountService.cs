@@ -80,20 +80,28 @@ namespace BigBallz.Services.L2S
             _db.SubmitChanges();
         }
 
-        public void AuthorizeUser(string userName, string adminName, bool pagSeguro = false)
+        public bool AuthorizeUser(string userName, string adminName, bool pagSeguro = false)
         {
             var user = _db.Users.First(x => x.UserName == userName);
+            if (user.Authorized) return false;
+
             user.Authorized = true;
             user.PagSeguro = pagSeguro;
             user.AuthorizedBy = adminName;
-            user.UserRoles.Add(new UserRole
-                                   {
-                                       Role = _db.Roles.FirstOrDefault(x => x.Name == BBRoles.Player),
-                                       User = user
-                                   });
+            if (user.UserRoles.All(x => x.Role.Name.ToLowerInvariant() != BBRoles.Player))
+            {
+                user.UserRoles.Add(new UserRole
+                {
+                    Role = _db.Roles.FirstOrDefault(x => x.Name == BBRoles.Player),
+                    User = user
+                });
+            }
+            
             _db.SubmitChanges();
 
             _cache.Clear();
+
+            return true;
         }
 
         public bool VerifyEmail(string userName)

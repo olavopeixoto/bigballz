@@ -13,3 +13,7 @@
 /src/Web/connections.config
 /src/Web/MailSettings.config
 /src/Web/secrets.config
+/lib/PagSeguro.net/source/Examples/CreatePayment/obj
+/lib/PagSeguro.net/source/Examples/CreatePayment/bin
+/lib/PagSeguro.net/source/Uol.PagSeguro/obj
+/lib/PagSeguro.net/source/Uol.PagSeguro/bin

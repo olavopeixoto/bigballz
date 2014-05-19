@@ -1,0 +1,6 @@
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\ReceiveNotification\bin\Release\ReceiveNotification.exe
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\ReceiveNotification\bin\Release\ReceiveNotification.pdb
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\ReceiveNotification\bin\Release\Uol.PagSeguro.dll
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\ReceiveNotification\bin\Release\Uol.PagSeguro.pdb
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\ReceiveNotification\obj\x86\Release\ReceiveNotification.exe
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Examples\ReceiveNotification\obj\x86\Release\ReceiveNotification.pdb

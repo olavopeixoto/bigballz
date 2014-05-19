@@ -24,8 +24,6 @@
                             <li>
                                 <%if (!Request.IsAuthenticated) {%>
                                 <a href="https://bigballz.rpxnow.com/openid/v2/signin?token_url=<%=returnUrl%>" onclick="return false;" class="btn btn-default btn-lg rpxnow"><i class="fa fa-sign-in fa-fw"></i> <span class="network-name">Entrar</span></a>
-                                <%} else {%>
-                                <a href="<%=Url.Action("index", "standings")%>" class="btn btn-default btn-lg"><i class="fa fa-sort-numeric-asc fa-fw"></i> <span class="network-name">Ranking</span></a>
                                 <%}%>
                             </li>
                             <li><div class="fb-like" data-href="<%=Url.SiteRoot() %>" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></li>
@@ -71,8 +69,8 @@
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
                     <h2 class="section-heading">Mais interatividade</h2>
-                    <p class="lead">Aposte nos placares dos jogos de todas as fases da Copa até 1h antes de cada jogo</p>
-                    <p class="lead">Receba e-mails com o resumo das apostas de todos os jogadores antes do início de cada partida</p>
+                    <p class="lead">Aposte nos placares dos jogos de todas as fases da Copa até 1h antes de cada jogo<br/>
+                    Receba e-mails com o resumo das apostas de todos os jogadores antes do início de cada partida</p>
                 </div>
                 <div class="col-lg-5 col-sm-pull-6  col-sm-6">
                     <img class="img-responsive" src="<%=Url.Content("~/public/images/grana.png") %>" alt="">
@@ -183,16 +181,11 @@
 
             <div class="row">
                 <div class="col-lg-6">
-                    <h2>Entre agora no BigBallz:</h2>
+                    <h2>Entenda as regras:</h2>
                 </div>
                 <div class="col-lg-6">
                     <ul class="list-inline banner-social-buttons">
                         <li><a href="<%=Url.Action("rules", "home") %>" class="btn btn-default btn-lg"><i class="fa fa-book fa-fw"></i> <span class="network-name">Regulamento</span></a></li>
-                        <%if (!Request.IsAuthenticated) {%>
-                        <li><a href="https://bigballz.rpxnow.com/openid/v2/signin?token_url=<%=returnUrl %>" onclick="return false;" class="btn btn-default btn-lg rpxnow"><i class="fa fa-sign-in fa-fw"></i> <span class="network-name">Entrar</span></a></li>
-                        <%} else {%>
-                        <li><a href="<%=Url.Action("index", "standings")%>" class="btn btn-default btn-lg"><i class="fa fa-sort-numeric-asc fa-fw"></i> <span class="network-name">Ranking</span></a></li>
-                        <%}%>
                     </ul>
                 </div>
             </div>

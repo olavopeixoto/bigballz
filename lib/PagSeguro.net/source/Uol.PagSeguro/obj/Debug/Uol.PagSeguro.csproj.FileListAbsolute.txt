@@ -1,0 +1,6 @@
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Uol.PagSeguro\bin\Debug\Uol.PagSeguro.XML
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Uol.PagSeguro\bin\Debug\Uol.PagSeguro.dll
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Uol.PagSeguro\bin\Debug\Uol.PagSeguro.pdb
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Uol.PagSeguro\obj\Debug\Uol.PagSeguro.csprojResolveAssemblyReference.cache
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Uol.PagSeguro\obj\Debug\Uol.PagSeguro.dll
+C:\Code\bigballz\git\master\bigballz\lib\PagSeguro.net\source\Uol.PagSeguro\obj\Debug\Uol.PagSeguro.pdb

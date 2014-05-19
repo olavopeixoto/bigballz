@@ -35,6 +35,12 @@ namespace BigBallz
                 "confirmacaopagamento",
                 new { controller = "Auth", action = "confirmacaopagamento", id = "" }
                 );
+            
+            routes.MapRoute(
+                "notification",
+                "notificacao",
+                new { controller = "Auth", action = "notification", id = "" }
+                );
 
             routes.MapRoute(
                 "regulamento",

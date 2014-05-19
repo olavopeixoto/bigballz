@@ -3,7 +3,7 @@
 <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="MainContent">
 <h2>Pagamento Concluído</h2>
 <p>
-Seu pagamento foi concluído com sucesso! Uma mensagem com os detalhes desta transação foi enviada para o seu e-mail. Você também poderá acessar sua conta PagSeguro no endereço <a href="https://pagseguro.uol.com.br/">https://pagseguro.uol.com.br/</a> para mais informações.
+Estamos aguardando a confirmação do pagamento por parte da instituição financeira. Assim que for autorizado, você receberá um e-mail confirmando a transação e liberando o seu acesso ao BigBallz.
 </p>
 </asp:Content>
 <asp:Content runat="server" ID="Content2" ContentPlaceHolderID="Scripts"></asp:Content>
