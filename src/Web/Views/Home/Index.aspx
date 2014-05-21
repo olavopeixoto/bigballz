@@ -173,7 +173,18 @@
                         Convide os seus amigos, quanto mais gente participar maior a bolada do prêmio!
                         <div class="fb-like twitter-share-button" data-href="<%=Url.SiteRoot() %>" data-layout="button_count" data-action="recommend" data-show-faces="true" data-share="true"></div>
                         <a href="https://twitter.com/share" class="twitter-share-button" data-url="<%=Url.SiteRoot() %>" data-lang="pt-BR">Tweet</a>
-                        <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>                    </p>
+                        <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+                        <div class="g-plus" data-action="share" data-annotation="bubble"></div>
+                        <script type="text/javascript">
+                            window.___gcfg = { lang: 'pt-BR' };
+
+                            (function () {
+                                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                                po.src = 'https://apis.google.com/js/platform.js';
+                                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                            })();
+                        </script>
+                    </p>
                 </div>
                 <div class="col-lg-5 col-sm-pull-6  col-sm-6">
                     <img class="img-responsive" src="<%=Url.Content("~/public/images/bolao_paises.png") %>" alt="">
