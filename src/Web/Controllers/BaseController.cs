@@ -43,7 +43,7 @@ namespace BigBallz.Controllers
                     {
                         var gravatar = new GravatarHelper
                         {
-                            email = user.EmailAddress
+                            Email = user.EmailAddress
                         };
                         photoUrl = gravatar.GetGravatarUrl();
                     }

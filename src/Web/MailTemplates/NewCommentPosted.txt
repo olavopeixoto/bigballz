@@ -1,4 +1,4 @@
-﻿Informamos que foi postada uma nova mensagem no BigBallz por <%=userName%> em <%=date%>
+﻿Nova mensagem no BigBallz por <%=userName%> em <%=date%>
 <p>
 "<%=comments%>"
 </p>

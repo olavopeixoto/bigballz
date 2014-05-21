@@ -8,70 +8,22 @@
         private const string BaseUrl = "//www.gravatar.com/avatar/{0}?d={1}&s={2}&r={3}";
 
         #region Properties, very ugly
-        /// <summary>
-        /// Email Property
-        /// </summary>
-        string theEmail;
 
-        public string email
+        public string Email { get; set; }
+
+        public GravatarRating Rating { get; set; }
+
+        public IconSet Iconset { get; set; }
+
+        public GravatarHelper()
         {
-            get { return theEmail; }
-            set
-            {
-                theEmail = value;
-            }
+            Size = 50;
+            Rating = GravatarRating.x;
+            Iconset = IconSet.monsterid;
         }
 
-        /// <summary>
-        /// Rating Property
-        /// </summary>
-        public enum Rating
-        {
-            g, pg, r, x
-        }
+        public int Size { get; set; }
 
-        private Rating theRating;
-
-        public Rating rating
-        {
-            get { return theRating; }
-            set
-            {
-                theRating = value;
-            }
-        }
-
-        /// <summary>
-        /// Icon Set Property
-        /// </summary>
-        public enum IconSet
-        {
-            identicon, monsterid, wavatar
-        }
-
-        private IconSet theIconSet;
-
-        public IconSet iconset
-        {
-            get { return theIconSet; }
-            set
-            {
-                theIconSet = value;
-            }
-        }
-
-        /// <summary>
-        /// Size Property
-        /// </summary>
-        int theSize = 50;
-        public int size
-        {
-            get { return theSize; }
-            set
-            {
-                theSize = value;
-            }
-        }
         #endregion
 
         /// <summary>
@@ -103,9 +55,25 @@
         public string GetGravatarUrl()
         {
             //hash the email address
-            string hE = MD5(theEmail);
+            string hE = MD5(Email);
             //format our url to the Gravatar
-            return string.Format(BaseUrl, hE, iconset, size, rating);
+            return string.Format(BaseUrl, hE, Iconset, Size, Rating);
         }
+    }
+
+    /// <summary>
+    /// Icon Set Property
+    /// </summary>
+    public enum IconSet
+    {
+        identicon, monsterid, wavatar
+    }
+
+    /// <summary>
+    /// Rating Property
+    /// </summary>
+    public enum GravatarRating
+    {
+        g, pg, r, x
     }
 }

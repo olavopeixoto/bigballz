@@ -31,6 +31,7 @@ namespace BigBallz.Services.L2S
         public void SendPaymentConfirmation(User user)
         {
             SendMail(user.UserName, user.EmailAddress, "Confirmação de Pagamento", PrepareMailBodyWith("PaymentConfirmation", new[] { "userName", user.UserName, "userEmail", user.EmailAddress}));
+            SendMail("Admin", "admin@bigballz.com.br", "BigBallz - Novo Usuário", string.Format("{0} <{1}> foi autorizado pelo {2} e já está participando do BigBallz.", user.UserName, user.EmailAddress, user.AuthorizedBy));
         }
 
         public void SendNewCommentPosted(User[] recipients, string userName, string comment)

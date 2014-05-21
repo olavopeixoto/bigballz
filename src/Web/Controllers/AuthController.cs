@@ -78,7 +78,7 @@ namespace BigBallz.Controllers
             {
                 var gravatar = new GravatarHelper
                 {
-                    email = user.EmailAddress
+                    Email = user.EmailAddress
                 };
                 photoUrl = gravatar.GetGravatarUrl();
             }
@@ -160,76 +160,8 @@ namespace BigBallz.Controllers
             }
             else
             {
-                Logger.Info(string.Format("PagSeguro - Notification - Transaction = <{0}> - Status = <{1}>",
+                Logger.Info(string.Format("INFO - PagSeguro - Notification - Transaction = <{0}> - Status = <{1}>",
                     transaction.Code, transaction.TransactionStatus));
-            }
-        }
-
-        //o método POST indica que a requisição é o retorno da validação NPI.
-        [AllowAnonymous]
-        [HttpPost]
-        public void ConfirmacaoPagamento(string prodID_1, string statusTransacao, FormCollection info)
-        {
-            try
-            {
-                var msg = string.Format("prodID_1: <{0}>; statusTransacao: <{1}>", prodID_1, statusTransacao);
-
-                if (statusTransacao.ToLowerInvariant() != "aprovado")
-                {
-                    _mailService.SendMail("Admin", "admin@bigballz.com.br", "BigBallz - PagSeguro", msg + " - != \"aprovado\"");
-                    return; //Só interessa saber se já está aprovado o pagamento
-                }
-
-                var token = ConfigurationManager.AppSettings["pagseguro-token"];
-                var pagina = ConfigurationManager.AppSettings["pagseguro-ws"];
-
-                var dados = Request.Form + "&Comando=validar" + "&Token=" + token;
-
-                var req = (HttpWebRequest) WebRequest.Create(pagina);
-
-                req.Method = "POST";
-                req.ContentLength = dados.Length;
-                req.ContentType = "application/x-www-form-urlencoded";
-
-                using (var stOut = new System.IO.StreamWriter(req.GetRequestStream(),
-                    System.Text.Encoding.GetEncoding("ISO-8859-1")))
-                {
-                    stOut.Write(dados);
-                }
-
-                using (var stIn = new System.IO.StreamReader(req.GetResponse().GetResponseStream(),
-                    System.Text.Encoding.GetEncoding("ISO-8859-1")))
-                {
-                    var result = stIn.ReadToEnd();
-
-                    if (result.ToLowerInvariant() == "verificado")
-                    {
-                        //o post foi validado
-                        int uid;
-                        var user = int.TryParse(prodID_1, NumberStyles.Integer, CultureInfo.CurrentCulture.NumberFormat,
-                            out uid) ? _accountService.FindUserByLocalId(Convert.ToInt32(prodID_1)) : _accountService.FindUserByUserName(prodID_1);
-
-                        if (user != null)
-                        {
-                            _accountService.AuthorizeUser(user.UserName, "PagSeguro", pagSeguro: true);
-                            _mailService.SendMail("Admin", "admin@bigballz.com.br", "BigBallz - PagSeguro", msg);
-                            _mailService.SendPaymentConfirmation(user);
-                        }
-                        else
-                        {
-                            throw new ApplicationException(string.Format("Usuário {0} não encontrado para autorização",
-                                prodID_1));
-                        }
-                    }
-                    else
-                    {
-                        throw new ApplicationException(string.Format("{0}; result: <{1}>", msg, result));
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex);
             }
         }
 
@@ -350,7 +282,7 @@ namespace BigBallz.Controllers
                 {
                     var gravatar = new GravatarHelper
                     {
-                        email = user.EmailAddress
+                        Email = user.EmailAddress
                     };
                     user.PhotoUrl = gravatar.GetGravatarUrl();
                 }

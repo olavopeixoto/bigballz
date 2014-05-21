@@ -58,7 +58,7 @@ namespace BigBallz.Controllers
                 }
                 else if (!user.Authorized && dbUser.Authorized)
                 {
-                    var userRole = dbUser.UserRoles.FirstOrDefault(x => x.Role.Name.ToLowerInvariant() == "player");
+                    var userRole = dbUser.UserRoles.FirstOrDefault(x => x.Role.Name.ToLowerInvariant() == BBRoles.Player);
                     if (userRole != null) dbUser.UserRoles.Remove(userRole);
                     dbUser.AuthorizedBy = null;
                 }
@@ -71,7 +71,7 @@ namespace BigBallz.Controllers
                 }
                 else if (!user.IsAdmin && dbUser.IsAdmin)
                 {
-                    var userRole = dbUser.UserRoles.FirstOrDefault(x => x.Role.Name.ToLowerInvariant() == "admin");
+                    var userRole = dbUser.UserRoles.FirstOrDefault(x => x.Role.Name.ToLowerInvariant() == BBRoles.Admin);
                     if (userRole!=null) dbUser.UserRoles.Remove(userRole);
                 }
 

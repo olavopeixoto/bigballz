@@ -117,7 +117,7 @@ namespace System.Web.Mvc {
                 photoUrl = user.PhotoUrl;
             else
             {
-                var gravatar = new GravatarHelper {email = user.EmailAddress};
+                var gravatar = new GravatarHelper {Email = user.EmailAddress};
                 photoUrl = gravatar.GetGravatarUrl();
             }
 

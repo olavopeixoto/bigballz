@@ -5,6 +5,7 @@
 <html lang="pt-br">
 
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=10;requiresActiveX=true">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Bolão da Copa do Mundo">
@@ -41,15 +42,36 @@
         ga('send', 'pageview');
     </script>
     <% } %>
+    
+    <script type="text/javascript">
+        (function () {
+            if (typeof window.janrain !== 'object') window.janrain = {};
+            if (typeof window.janrain.settings !== 'object') window.janrain.settings = {};
 
-    <script type="text/javascript">
-        var rpxJsHost = (("https:" == document.location.protocol) ? "https://" : "http://static.");
-        document.write(unescape("%3Cscript src='" + rpxJsHost +
-"rpxnow.com/js/lib/rpx.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <script type="text/javascript">
-        RPXNOW.overlay = true;
-        RPXNOW.language_preference = 'pt-BR';
+            janrain.settings.tokenUrl = '<%=Url.Action("handleresponse", "auth", null, FormsAuthentication.RequireSSL ? "https" : "http") %>';
+            janrain.settings.showAttribution = false;
+            janrain.settings.language = "pt-BR";
+
+            function isReady() { janrain.ready = true; };
+            if (document.addEventListener) {
+                document.addEventListener("DOMContentLoaded", isReady, false);
+            } else {
+                window.attachEvent('onload', isReady);
+            }
+
+            var e = document.createElement('script');
+            e.type = 'text/javascript';
+            e.id = 'janrainAuthWidget';
+
+            if (document.location.protocol === 'https:') {
+                e.src = 'https://rpxnow.com/js/lib/bigballz/engage.js';
+            } else {
+                e.src = 'http://widget-cdn.rpxnow.com/js/lib/bigballz/engage.js';
+            }
+
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(e, s);
+        })();
     </script>
 
 </head>
@@ -130,10 +152,12 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js"></script>
     <script type="text/javascript">
-        FreshWidget.init("", { "queryString": "&widgetType=popup&formTitle=Ajuda+%26+Suporte&submitThanks=Obrigado+pelo+feedback", "widgetType": "popup", "buttonType": "text", "buttonText": "Ajuda", "buttonColor": "black", "buttonBg": "#FFFFFF", "alignment": "4", "offset": "235px", "submitThanks": "Obrigado pelo feedback", "formHeight": "500px", "url": "https://bigballz.freshdesk.com" });
+        FreshWidget.init("", { "queryString": "&widgetType=popup", "widgetType": "popup", "buttonType": "text", "buttonText": "Precisa de ajuda? Clique Aqui", "buttonColor": "black", "buttonBg": "#FFFFFF", "alignment": "4", "offset": "260px", "formHeight": "500px", "url": "https://bigballz.freshdesk.com" });
     </script>
     <asp:ContentPlaceHolder ID="Scripts" runat="server" />
-    <script type='text/javascript'>if (new Date().getTime() < 1403138675000) { var fc_CSS = document.createElement('link'); fc_CSS.setAttribute('rel', 'stylesheet'); var isSecured = (window.location && window.location.protocol == 'https:'); fc_CSS.setAttribute('type', 'text/css'); fc_CSS.setAttribute('href', ((isSecured) ? 'https://d36mpcpuzc4ztk.cloudfront.net' : 'http://assets1.chat.freshdesk.com') + '/css/visitor.css'); document.getElementsByTagName('head')[0].appendChild(fc_CSS); var fc_JS = document.createElement('script'); fc_JS.type = 'text/javascript'; fc_JS.src = ((isSecured) ? 'https://d36mpcpuzc4ztk.cloudfront.net' : 'http://assets.chat.freshdesk.com') + '/js/visitor.js'; (document.body ? document.body : document.getElementsByTagName('head')[0]).appendChild(fc_JS); window.freshchat_setting = 'eyJmY19pZCI6ImJkMzY1YWM0YThkMjFiYjI0NTQ5NzIwYTRjODA0NDI2IiwiZmNfc2UiOiJjYWRjYjIyNzQ3OTlkZWVkMDVmMDRlN2VmYWE4YTIzYmY3MDUxMjdhNzdjNDhmYTliYThmYTRmZTc4ZTFiZWFlMjBlNWExMTM0ODkxNTMzYjdjMjY4N2QwZGJkMzYwNjFhOGVkNmJlZDVkNTQ5MTM2M2NkNzJjN2RhNjIyNTFjOSIsIm1pbmltaXplZF90aXRsZSI6IkNoYXQgT25saW5lIiwibWF4aW1pemVkX3RpdGxlIjoiQ2hhdCBlbSBwcm9ncmVzc28iLCJ3ZWxjb21lX21lc3NhZ2UiOiJPaSEgQ29tbyBwb3NzbyBhanVkYXI/IiwidGhhbmtfbWVzc2FnZSI6IlRoYW5rIHlvdSBmb3IgY2hhdHRpbmcgd2l0aCB1cy4gSWYgeW91IGhhdmUgYWRkaXRpb25hbCBxdWVzdGlvbnMsIGZlZWwgZnJlZSB0byBwaW5nIHVzISIsIndhaXRfbWVzc2FnZSI6Ik5vc3NvcyBhZ2VudGVzIGVzdMOjbyB0b2RvcyBvY3VwYWRvcyBuZXN0ZSBtb21lbnRvLCBwb3IgZmF2b3IgYWd1YXJkZSB1bSBpbnN0YW50ZS4iLCJ0eXBpbmdfbWVzc2FnZSI6ImRpZ2l0YW5kby4uLiIsInByZWNoYXRfbWVzc2FnZSI6IldlIGNhbid0IHdhaXQgdG8gdGFsayB0byB5b3UuIEJ1dCBmaXJzdCwgcGxlYXNlIHRha2UgYSBjb3VwbGUgb2YgbW9tZW50cyB0byB0ZWxsIHVzIGEgYml0IGFib3V0IHlvdXJzZWxmLiIsInByZWNoYXRfZm9ybSI6MCwicHJlY2hhdF9tYWlsIjowLCJwcmVjaGF0X3Bob25lIjowLCJwcm9hY3RpdmVfY2hhdCI6MCwicHJvYWN0aXZlX3RpbWUiOjE1LCJidXNpbmVzc19jYWxlbmRhciI6Im51bGwiLCJzaG93X29uX3BvcnRhbCI6dHJ1ZSwicG9ydGFsX2xvZ2luX3JlcXVpcmVkIjp0cnVlLCJ3ZWJ1cmwiOiJiaWdiYWxsei5mcmVzaGRlc2suY29tIiwibm9kZXVybCI6ImNoYXQuZnJlc2hkZXNrLmNvbSIsImRlYnVnIjoxLCJhZ2VudF9qb2luZWRfbXNnIjoiJCBoYXMgam9pbmVkIHRoZSBjaGF0IiwiYWdlbnRfbGVmdF9tc2ciOiIkIGhhcyBsZWZ0IHRoZSBjaGF0IiwiY29ubmVjdGluZ19tc2ciOiJXYWl0aW5nIGZvciBhbiBhZ2VudCIsIm5vbl9hdmFpbGFiaWxpdHlfbWVzc2FnZSI6IkluZmVsaXptZW50ZSBuw6NvIGVzdGFtb3MgZGlzcG9uw612ZWwgbm8gbW9tZW50by4gUGVkaW1vcyBkZXNjdWxwYXMsIG1hcyBwb3IgZmF2b3IgIyBkZWl4ZSBhIHN1YSBtZW5zYWdlbSAjIHF1ZSByZXRvcm5hcmVtb3MiLCJtZSI6Ik1lIiwibmFtZV9wbGFjZSI6Ik5hbWUiLCJtYWlsX3BsYWNlIjoiRW1haWwiLCJwaG9uZV9wbGFjZSI6IlBob25lIE51bWJlciIsInRleHRfcGxhY2UiOiJZb3VyIE1lc3NhZ2UiLCJiZWdpbl9jaGF0IjoiQmVnaW4gY2hhdCIsImNvbG9yIjoiIzc3Nzc3NyIsIm9mZnNldCI6IjMwIiwicG9zaXRpb24iOiJCb3R0b20gUmlnaHQiLCJ0aWNrZXRfbGlua19vcHRpb24iOiIwIiwiZXhwaXJ5IjoxNDAzMTM4Njc1MDAwLCJjdXN0b21fbGlua191cmwiOiIifQ=='; }</script>
+    <%if (Context.User.Identity.IsAuthenticated) {%>
+    <script type='text/javascript'>if (new Date().getTime() < 1403138675000) { var fc_CSS = document.createElement('link'); fc_CSS.setAttribute('rel', 'stylesheet'); var isSecured = (window.location && window.location.protocol == 'https:'); fc_CSS.setAttribute('type', 'text/css'); fc_CSS.setAttribute('href', ((isSecured) ? 'https://d36mpcpuzc4ztk.cloudfront.net' : 'http://assets1.chat.freshdesk.com') + '/css/visitor.css'); document.getElementsByTagName('head')[0].appendChild(fc_CSS); var fc_JS = document.createElement('script'); fc_JS.type = 'text/javascript'; fc_JS.src = ((isSecured) ? 'https://d36mpcpuzc4ztk.cloudfront.net' : 'http://assets.chat.freshdesk.com') + '/js/visitor.js'; (document.body ? document.body : document.getElementsByTagName('head')[0]).appendChild(fc_JS); window.freshchat_setting = 'eyJmY19pZCI6ImJkMzY1YWM0YThkMjFiYjI0NTQ5NzIwYTRjODA0NDI2IiwiZmNfc2UiOiJjYWRjYjIyNzQ3OTlkZWVkMDVmMDRlN2VmYWE4YTIzYmY3MDUxMjdhNzdjNDhmYTliYThmYTRmZTc4ZTFiZWFlMjBlNWExMTM0ODkxNTMzYjdjMjY4N2QwZGJkMzYwNjFhOGVkNmJlZDVkNTQ5MTM2M2NkNzJjN2RhNjIyNTFjOSIsIm1pbmltaXplZF90aXRsZSI6IkNoYXQgT25saW5lIiwibWF4aW1pemVkX3RpdGxlIjoiQ2hhdCBlbSBwcm9ncmVzc28iLCJ3ZWxjb21lX21lc3NhZ2UiOiJPaSEgQ29tbyBwb3NzbyBhanVkYXI/IiwidGhhbmtfbWVzc2FnZSI6Ik9icmlnYWRvIHBlbGEgcGFydGljaXBhw6fDo28sIHF1YWxxdWVyIG91dHJhIHBlcmd1bnRhIGVzdGFyZW1vcyBhIGRpc3Bvc2nDp8Ojby4iLCJ3YWl0X21lc3NhZ2UiOiJOb3Nzb3MgYWdlbnRlcyBlc3TDo28gdG9kb3Mgb2N1cGFkb3MgbmVzdGUgbW9tZW50bywgcG9yIGZhdm9yIGFndWFyZGUgdW0gaW5zdGFudGUuIiwidHlwaW5nX21lc3NhZ2UiOiJkaWdpdGFuZG8uLi4iLCJwcmVjaGF0X21lc3NhZ2UiOiJXZSBjYW4ndCB3YWl0IHRvIHRhbGsgdG8geW91LiBCdXQgZmlyc3QsIHBsZWFzZSB0YWtlIGEgY291cGxlIG9mIG1vbWVudHMgdG8gdGVsbCB1cyBhIGJpdCBhYm91dCB5b3Vyc2VsZi4iLCJwcmVjaGF0X2Zvcm0iOjAsInByZWNoYXRfbWFpbCI6MCwicHJlY2hhdF9waG9uZSI6MCwicHJvYWN0aXZlX2NoYXQiOjAsInByb2FjdGl2ZV90aW1lIjoxNSwiYnVzaW5lc3NfY2FsZW5kYXIiOiJudWxsIiwic2hvd19vbl9wb3J0YWwiOmZhbHNlLCJwb3J0YWxfbG9naW5fcmVxdWlyZWQiOnRydWUsIndlYnVybCI6ImJpZ2JhbGx6LmZyZXNoZGVzay5jb20iLCJub2RldXJsIjoiY2hhdC5mcmVzaGRlc2suY29tIiwiZGVidWciOjEsImFnZW50X2pvaW5lZF9tc2ciOiIkIGhhcyBqb2luZWQgdGhlIGNoYXQiLCJhZ2VudF9sZWZ0X21zZyI6IiQgaGFzIGxlZnQgdGhlIGNoYXQiLCJjb25uZWN0aW5nX21zZyI6IldhaXRpbmcgZm9yIGFuIGFnZW50Iiwibm9uX2F2YWlsYWJpbGl0eV9tZXNzYWdlIjoiSW5mZWxpem1lbnRlIG7Do28gZXN0YW1vcyBkaXNwb27DrXZlbCBubyBtb21lbnRvLiBQZWRpbW9zIGRlc2N1bHBhcywgbWFzIHBvciBmYXZvciAjIGRlaXhlIGEgc3VhIG1lbnNhZ2VtICMgcXVlIHJldG9ybmFyZW1vcyIsIm1lIjoiTWUiLCJuYW1lX3BsYWNlIjoiTmFtZSIsIm1haWxfcGxhY2UiOiJFbWFpbCIsInBob25lX3BsYWNlIjoiUGhvbmUgTnVtYmVyIiwidGV4dF9wbGFjZSI6IllvdXIgTWVzc2FnZSIsImJlZ2luX2NoYXQiOiJCZWdpbiBjaGF0IiwiY29sb3IiOiIjNzc3Nzc3Iiwib2Zmc2V0IjoiMzAiLCJwb3NpdGlvbiI6IkJvdHRvbSBSaWdodCIsInRpY2tldF9saW5rX29wdGlvbiI6IjAiLCJleHBpcnkiOjE0MDMxMzg2NzUwMDAsImN1c3RvbV9saW5rX3VybCI6IiJ9'; }</script>
+    <%}%>
 </body>
 
 </html>
