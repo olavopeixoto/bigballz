@@ -1,0 +1,25 @@
+﻿<browsers>
+    <!-- Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko -->
+    <browser id="IE11" parentID="Mozilla">
+        <identification>
+            <userAgent match="Trident/(?'layoutVersion'\d+\.\d+)" />
+        </identification>
+
+        <capture>
+            <userAgent match="rv:(?'version'(?'major'\d+)(\.(?'minor'\d+)?))" />
+        </capture>
+
+        <capabilities>
+            <capability name="browser"                 value="IE" />
+            <capability name="ecmascriptversion"       value="3.0" />
+            <capability name="layoutEngine"            value="Trident" />
+            <capability name="layoutEngineVersion"     value="${layoutVersion}" />
+            <capability name="majorversion"            value="${major}" />
+            <capability name="minorversion"            value="${minor}" />
+            <capability name="type"                    value="IE${major}" />
+            <capability name="version"                 value="${version}" />
+
+            <capability name="preferredRenderingMime"  value="text/html" />
+        </capabilities>
+    </browser>
+</browsers>

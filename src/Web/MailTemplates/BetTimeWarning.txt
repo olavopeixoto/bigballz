@@ -1,0 +1,15 @@
+﻿Olá <%=userName%>,
+<p>
+Informamos que as apostas nos jogos de <%=startTime%> se encerrarão às <%=endBetTime%> e o(s) seguinte(s) jogo(s) ainda não foi(foram) preenchido(s):
+</p>
+<p>
+<%=bets%>
+</p>
+<p>
+Corra para não perder o prazo!
+</p>
+<p>
+Atenciosamente,<br>
+Equipe <%=siteTitle%><br>
+<%=rootUrl%>
+</p>
