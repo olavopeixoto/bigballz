@@ -125,6 +125,7 @@ namespace BigBallz
             RegisterRoutes(RouteTable.Routes);
 
             AlertEndBetTask.AddAllMatches();
+            BetExpirationWarningTask.AddAllMatches();
 
             InitializeMiniProfiler();
         }

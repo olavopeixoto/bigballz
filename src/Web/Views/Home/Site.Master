@@ -152,7 +152,7 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js"></script>
     <script type="text/javascript">
-        FreshWidget.init("", { "queryString": "&widgetType=popup", "widgetType": "popup", "buttonType": "text", "buttonText": "Precisa de ajuda? Clique Aqui", "buttonColor": "black", "buttonBg": "#FFFFFF", "alignment": "4", "offset": "260px", "formHeight": "500px", "url": "https://bigballz.freshdesk.com" });
+        FreshWidget.init("", { "queryString": "&widgetType=popup", "widgetType": "popup", "buttonType": "text", "buttonText": "Precisa de ajuda? Clique Aqui", "buttonColor": "black", "buttonBg": "#FFFFFF", "alignment": "<%=Request.Browser.IsMobileDevice ? "3" : "4"%>", "offset": "<%=Request.Browser.IsMobileDevice ? "10px" : "260px"%>", "formHeight": "500px", "url": "https://bigballz.freshdesk.com" });
     </script>
     <asp:ContentPlaceHolder ID="Scripts" runat="server" />
     <%if (Context.User.Identity.IsAuthenticated) {%>

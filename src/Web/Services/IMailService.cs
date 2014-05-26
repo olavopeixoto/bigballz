@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Linq;
 using BigBallz.Models;
 
 namespace BigBallz.Services
@@ -11,5 +12,6 @@ namespace BigBallz.Services
         void SendEndBonusAlert(User user, IList<BonusBet> bonusBets);
         void SendNewCommentPosted(User[] toArray, string userName, string comment);
         void SendMail(string name, string address, string subject, string message);
+        void SendBetWarning(User player, IList<Bet> bets);
     }
 }

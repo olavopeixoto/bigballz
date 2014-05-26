@@ -87,6 +87,7 @@ namespace BigBallz.Services.L2S
             {
                 db.Matches.InsertOnSubmit(match);
                 AlertEndBetTask.AddTask(match.StartTime.AddHours(-1));
+                BetExpirationWarningTask.AddTask(match.StartTime.AddHours(-2));
             }
         }
 

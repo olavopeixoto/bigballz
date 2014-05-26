@@ -138,6 +138,7 @@
     <Compile Include="Models\MatchBetStatistic.cs" />
     <Compile Include="Models\TransactionStatus.cs" />
     <Compile Include="Models\UserMatchPoints.cs" />
+    <Compile Include="Services\BetExpirationWarningTask.cs" />
     <Compile Include="Services\AlertEndBetTask.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -234,6 +235,7 @@
     <Content Include="apple-touch-icon.png" />
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Global.asax" />
+    <Content Include="MailTemplates\BetTimeWarning.txt" />
     <Content Include="MailTemplates\BetTimeAlert.txt" />
     <Content Include="MailTemplates\BonusTimeAlert.txt" />
     <Content Include="MailTemplates\NewCommentPosted.txt" />
@@ -398,6 +400,7 @@
     <Content Include="secrets.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Browsers\ie11.browser" />
     <None Include="Models\BigBallz.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>BigBallz.designer.cs</LastGenOutput>
