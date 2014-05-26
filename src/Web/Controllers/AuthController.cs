@@ -89,7 +89,7 @@ namespace BigBallz.Controllers
 
             if (!string.Equals(user.PhotoUrl, photoUrl, StringComparison.InvariantCultureIgnoreCase))
             {
-                user.PhotoUrl = authenticationDetails.PhotoUrl;
+                user.PhotoUrl = photoUrl;
                 _accountService.UpdateUserInformation(user);
             }
 

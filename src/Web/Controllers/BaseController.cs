@@ -35,9 +35,8 @@ namespace BigBallz.Controllers
                 var user = _userService.Get(userName);
 
                 var photoCookie = Request.Cookies["photoUrl"];
-                if (photoCookie == null || string.IsNullOrEmpty(photoCookie.Value))
+                if (photoCookie == null || user.PhotoUrl != photoCookie.Value)
                 {
-                    Response.Cookies.Remove("photoUrl");
                     string photoUrl;
                     if (string.IsNullOrEmpty(user.PhotoUrl))
                     {
@@ -51,7 +50,7 @@ namespace BigBallz.Controllers
                     {
                         photoUrl = user.PhotoUrl;
                     }
-                    Response.Cookies.Add(new HttpCookie("photoUrl", photoUrl)
+                    Response.SetCookie(new HttpCookie("photoUrl", photoUrl)
                     {
                         Expires = DateTime.Now.BrazilTimeZone().AddDays(30)
                     });
