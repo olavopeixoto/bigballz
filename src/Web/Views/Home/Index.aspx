@@ -103,7 +103,7 @@
                     <hr class="section-heading-spacer">
                     <div class="clearfix"></div>
                     <h2 class="section-heading">24h</h2>
-                    <p class="lead">Acompanhe em tempo real a classificação do Bolão</p>
+                    <p class="lead">Acompanhe em tempo real a classificação do Bolão. Receba alertas por e-mail para ficar informado e não perder os prazos.</p>
                 </div>
                 <div class="col-lg-5 col-lg-offset-2 col-sm-6">
                     <img class="img-responsive" src="<%=Url.Content("~/public/images/clock.png") %>" alt="">
