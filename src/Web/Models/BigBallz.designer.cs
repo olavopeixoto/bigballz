@@ -128,14 +128,6 @@ namespace BigBallz.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<Log> Logs
-		{
-			get
-			{
-				return this.GetTable<Log>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Match> Matches
 		{
 			get
@@ -827,141 +819,6 @@ namespace BigBallz.Models
 		{
 			this.SendPropertyChanging();
 			entity.Group1 = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[Log]")]
-	public partial class Log
-	{
-		
-		private int _Id;
-		
-		private System.DateTime _Date;
-		
-		private string _Thread;
-		
-		private string _Level;
-		
-		private string _Logger;
-		
-		private string _Message;
-		
-		private string _Exception;
-		
-		public Log()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this._Id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime NOT NULL")]
-		public System.DateTime Date
-		{
-			get
-			{
-				return this._Date;
-			}
-			set
-			{
-				if ((this._Date != value))
-				{
-					this._Date = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Thread", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string Thread
-		{
-			get
-			{
-				return this._Thread;
-			}
-			set
-			{
-				if ((this._Thread != value))
-				{
-					this._Thread = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Level]", Storage="_Level", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Level
-		{
-			get
-			{
-				return this._Level;
-			}
-			set
-			{
-				if ((this._Level != value))
-				{
-					this._Level = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Logger", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string Logger
-		{
-			get
-			{
-				return this._Logger;
-			}
-			set
-			{
-				if ((this._Logger != value))
-				{
-					this._Logger = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Message", DbType="VarChar(4000) NOT NULL", CanBeNull=false)]
-		public string Message
-		{
-			get
-			{
-				return this._Message;
-			}
-			set
-			{
-				if ((this._Message != value))
-				{
-					this._Message = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Exception", DbType="VarChar(2000)")]
-		public string Exception
-		{
-			get
-			{
-				return this._Exception;
-			}
-			set
-			{
-				if ((this._Exception != value))
-				{
-					this._Exception = value;
-				}
-			}
 		}
 	}
 	
@@ -2695,6 +2552,8 @@ namespace BigBallz.Models
 		
 		private bool _PagSeguro;
 		
+		private bool _HelpShown;
+		
 		private EntitySet<Bet> _Bets;
 		
 		private EntitySet<UserRole> _UserRoles;
@@ -2727,6 +2586,8 @@ namespace BigBallz.Models
     partial void OnAuthorizedByChanged();
     partial void OnPagSeguroChanging(bool value);
     partial void OnPagSeguroChanged();
+    partial void OnHelpShownChanging(bool value);
+    partial void OnHelpShownChanged();
     #endregion
 		
 		public User()
@@ -2915,6 +2776,26 @@ namespace BigBallz.Models
 					this._PagSeguro = value;
 					this.SendPropertyChanged("PagSeguro");
 					this.OnPagSeguroChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HelpShown", DbType="Bit NOT NULL")]
+		public bool HelpShown
+		{
+			get
+			{
+				return this._HelpShown;
+			}
+			set
+			{
+				if ((this._HelpShown != value))
+				{
+					this.OnHelpShownChanging(value);
+					this.SendPropertyChanging();
+					this._HelpShown = value;
+					this.SendPropertyChanged("HelpShown");
+					this.OnHelpShownChanged();
 				}
 			}
 		}

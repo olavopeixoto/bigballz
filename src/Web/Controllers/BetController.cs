@@ -63,8 +63,12 @@ namespace BigBallz.Controllers
 
             var matches = _matchService.GetAll().OrderBy(x => x.StartTime).ToList();
             var endBonus = _bigBallzService.GetBonusBetExpireDate();
+
+            var user = _userService.Get(userName);
+
             var bonusBetViewModel = new BetViewModel
                                         {
+                                            ShowHelp = !user.HelpShown,
                                             BonusEnabled = DateTime.Now.BrazilTimeZone() <= endBonus,
                                             BonusList = (from bonus in _bonusService.GetAll().ToList()
                                                          let teams = _teamService.GetAll().ToList()
@@ -113,12 +117,16 @@ namespace BigBallz.Controllers
                                         };
 
             //Verifica se usuario está autorizado
-            var user = _userService.Get(userName);
             if (!user.Authorized)
             {
                 this.FlashWarning("Favor efetuar o pagamento e aguardar a autorização para realizar as apostas.");
             }
 
+            if (!user.HelpShown)
+            {
+                user.HelpShown = true;
+                _userService.Save();
+            }
 
             return View(bonusBetViewModel);
         }

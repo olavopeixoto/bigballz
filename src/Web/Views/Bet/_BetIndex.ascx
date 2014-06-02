@@ -6,7 +6,8 @@
 <% using (Html.BeginForm("savebet", "bet")) {%>
 <%var i = 0; var lineIndex = 0;%>
 <%foreach (var date in Model.BetList.GroupBy(x => new DateTime(x.Match.StartTime.Year, x.Match.StartTime.Month, x.Match.StartTime.Day)).Select(x => x.Key)){%>
-    <table class="match-table" summary="<%=date.FormatDate()%>">
+    <table class="match-table" summary="<%=date.FormatDate()%>"
+        <%=lineIndex==0 ? " data-intro=\"Cadastre aqui os seus palpites e fique ligado no prazo informado. Você tem até uma hora antes do início de cada partida para cadastrar ou alterar o seu palpite.\" data-position=\"top\"" : "" %>>
         <thead class="ui-widget-header">
         <tr>
             <th colspan="7" class="l"><%=date.ToLongDateString()%></th>

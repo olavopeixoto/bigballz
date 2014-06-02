@@ -20,4 +20,11 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="Scripts" runat="server">
     <%=Html.Script("Bet.js")%>
+    
+    <%if(Model.ShowHelp) {%>
+    <%=Html.Script("chardinjs.min.js")%>
+    <script type="text/javascript">
+        $('body').chardinJs('start');
+    </script>
+    <%}%>
 </asp:Content>

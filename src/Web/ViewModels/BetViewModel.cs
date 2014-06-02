@@ -8,6 +8,7 @@ namespace BigBallz.ViewModels
     public class BetViewModel
     {
         public string UserName { get; set; }
+        public bool ShowHelp { get; set; }
         public bool BonusEnabled { get; set; }
         public IList<BonusTeams> BonusList { get; set; }
         public IList<BetMatches> BetList { get; set; }

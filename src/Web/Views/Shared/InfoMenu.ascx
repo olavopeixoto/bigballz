@@ -1,12 +1,10 @@
 <%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl"%>
-
 <%@ Import Namespace="System.Threading" %>
 <%@ Import Namespace="System.Globalization" %>
 <%@ Import Namespace="BigBallz.Core" %>
 <%@ Import Namespace="BigBallz.Helpers" %>
 
 <%var standings = ViewData["Standings"] as IList<BigBallz.Models.UserPoints>;%>
-
 
 <div id="profile" class="section">
   <div class="user_icon">
@@ -58,13 +56,13 @@ if (pendingBets!=null && pendingBets.Any())
 <%}%>
 
 
-<%if (standings!=null && standings.Any()) {%>
+<%if (standings!=null && standings.Any(s => s.TotalPoints > 0)) {%>
 <hr />
 <h2>Top 5 Geral</h2>
 <ul>
 <%
     var topfiveStandings = standings.Take(5);
-      foreach (var userPoints in topfiveStandings){%>
+foreach (var userPoints in topfiveStandings){%>
 <li>
 <%= userPoints.Position.ToString()%>º&nbsp;-&nbsp;
 <%= userPoints.User.UserName == Context.User.Identity.Name ? "<strong>" : string.Empty%>
@@ -83,7 +81,8 @@ if (pendingBets!=null && pendingBets.Any())
 
 
 <%var dayStandings = ViewData["DayStandings"] as IList<BigBallz.Models.UserPoints>;%>
-<%if (dayStandings != null) {%>
+<%if (dayStandings != null && dayStandings.Any(s => s.TotalDayPoints > 0))
+  {%>
 <hr />
 <h2>Top 5 do Dia</h2>
 <ul>
@@ -96,7 +95,7 @@ if (pendingBets!=null && pendingBets.Any())
 <%= userPoints.User.UserName == Context.User.Identity.Name ? "</strong>" : string.Empty%>
  - <%: userPoints.TotalDayPoints%></li>
 <%} %>
-<%if (!topfiveDayStandings.Any(x => x.User.UserName == Context.User.Identity.Name) && Html.IsAuthorized()) { %>
+<%if (topfiveDayStandings.All(x => x.User.UserName != Context.User.Identity.Name) && Html.IsAuthorized()) { %>
 <%var userPoints = dayStandings.FirstOrDefault(x => x.User.UserName == Context.User.Identity.Name); %>
 <li>
 <%= userPoints.NullSafe(x => x.Position.ToString())%>º&nbsp;-&nbsp;
