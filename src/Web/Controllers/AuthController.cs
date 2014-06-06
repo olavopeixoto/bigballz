@@ -60,7 +60,7 @@ namespace BigBallz.Controllers
             }
             catch (Exception ex)
             {
-                new ElmahLogger().Error(ex);
+                Logger.Error(ex);
                 this.FlashError("Ocorreu um erro na autenticação");
                 return RedirectToAction("index", "home");
             }
@@ -118,7 +118,7 @@ namespace BigBallz.Controllers
             }
             catch (Exception ex)
             {
-                new ElmahLogger().Error(ex);
+                Logger.Error(ex);
                 this.FlashError("Ocorreu um erro na tentativa associar a nova conta a uma existente");
             }
 
@@ -321,12 +321,14 @@ namespace BigBallz.Controllers
                         this.FlashError("Usuário já cadastrado no sistema");
                         return View(user);
                     default:
+                        Logger.Error(ex);
                         this.FlashError(ex.Message);
                         return View(user);
                 }
             }
             catch (Exception ex)
             {
+                Logger.Error(ex);
                 this.FlashError(ex.Message);
                 return View(user);
             }

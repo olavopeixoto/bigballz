@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using BigBallz.Core.Log;
 using BigBallz.Helpers;
 using BigBallz.Models;
 using BigBallz.Services;
@@ -89,6 +90,7 @@ namespace BigBallz.Controllers
             }
             catch(Exception ex)
             {
+                Logger.Error(ex);
                 this.FlashError(ex.Message);
 
                 return View(user);

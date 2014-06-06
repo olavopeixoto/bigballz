@@ -195,7 +195,6 @@
     <Compile Include="Infrastructure\Logging\EventLogLogger.cs" />
     <Compile Include="Infrastructure\Logging\ILogger.cs" />
     <Compile Include="Infrastructure\Logging\LogUtility.cs" />
-    <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\BigBallz.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -242,6 +241,8 @@
     <Content Include="MailTemplates\PaymentConfirmation.txt" />
     <Content Include="MailTemplates\RegistrationEmailNotVerified.txt" />
     <Content Include="MailTemplates\RegistrationEmailVerified.txt" />
+    <Content Include="favicon.ico" />
+    <Content Include="Public\css\chardinjs.css" />
     <Content Include="Public\css\ellipsis-xbl.xml" />
     <Content Include="Public\css\fifa\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Public\css\fifa\images\ui-bg_flat_55_fbec88_40x100.png" />
@@ -261,12 +262,45 @@
     <Content Include="Public\css\fifa\jquery-ui-1.8.1.custom.css" />
     <Content Include="Public\css\landing-page.css" />
     <Content Include="Public\css\screen.css" />
+    <Content Include="Public\css\Site.css" />
     <Content Include="Public\css\ui.jqgrid.css" />
-    <Content Include="favicon.ico" />
     <Content Include="Public\font-awesome\css\font-awesome.css" />
     <Content Include="Public\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Public\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Public\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Public\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Public\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Public\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Public\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Public\font-awesome\less\core.less" />
+    <Content Include="Public\font-awesome\less\fixed-width.less" />
+    <Content Include="Public\font-awesome\less\font-awesome.less" />
+    <Content Include="Public\font-awesome\less\icons.less" />
+    <Content Include="Public\font-awesome\less\larger.less" />
+    <Content Include="Public\font-awesome\less\list.less" />
+    <Content Include="Public\font-awesome\less\mixins.less" />
+    <Content Include="Public\font-awesome\less\path.less" />
+    <Content Include="Public\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Public\font-awesome\less\spinning.less" />
+    <Content Include="Public\font-awesome\less\stacked.less" />
+    <Content Include="Public\font-awesome\less\variables.less" />
+    <Content Include="Public\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Public\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Public\font-awesome\scss\_core.scss" />
+    <Content Include="Public\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Public\font-awesome\scss\_icons.scss" />
+    <Content Include="Public\font-awesome\scss\_larger.scss" />
+    <Content Include="Public\font-awesome\scss\_list.scss" />
+    <Content Include="Public\font-awesome\scss\_mixins.scss" />
+    <Content Include="Public\font-awesome\scss\_path.scss" />
+    <Content Include="Public\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Public\font-awesome\scss\_spinning.scss" />
+    <Content Include="Public\font-awesome\scss\_stacked.scss" />
+    <Content Include="Public\font-awesome\scss\_variables.scss" />
+    <Content Include="Public\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Public\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Public\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Public\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Public\images\2014fwcoe_4cf_ps.png" />
     <Content Include="Public\images\banner-bg.jpg" />
     <Content Include="Public\images\bb-sun.gif" />
@@ -310,6 +344,7 @@
     <Content Include="Public\images\ranking.png" />
     <Content Include="Public\images\worldcup2010-logo.jpg" />
     <Content Include="Public\js\Bet.js" />
+    <Content Include="Public\js\chardinjs.min.js" />
     <Content Include="Public\js\Home.js" />
     <Content Include="Public\js\i18n\grid.locale-bg.js" />
     <Content Include="Public\js\i18n\grid.locale-bg1251.js" />
@@ -339,13 +374,18 @@
     <Content Include="Public\js\i18n\grid.locale-sv.js" />
     <Content Include="Public\js\i18n\grid.locale-tr.js" />
     <Content Include="Public\js\i18n\grid.locale-ua.js" />
-    <Content Include="Public\js\jquery-1.4.1.min-vsdoc.js" />
+    <None Include="Public\js\jquery-1.4.1.min-vsdoc.js" />
     <Content Include="Public\js\jquery-1.4.1.min.js" />
     <Content Include="Public\js\jquery-ui-1.8.1.custom.min.js" />
     <Content Include="Public\js\jquery.jqGrid.min.js" />
     <Content Include="Public\js\jquery.ui.datepicker-pt-BR.js" />
+    <None Include="Public\js\jquery.validate.min-vsdoc.js" />
+    <Content Include="Public\js\jquery.validate.min.js" />
     <Content Include="Public\js\Site.Master.js" />
     <Content Include="Public\js\Team.js" />
+    <Content Include="Public\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Auth\ConfirmacaoPagamento.aspx" />
     <Content Include="Views\Auth\ConfirmacaoPagamentoPago.aspx" />
     <Content Include="Views\Auth\Payment.aspx" />
@@ -384,9 +424,6 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Public\css\Site.css" />
-    <Content Include="Public\js\jquery.validate.min.js" />
-    <Content Include="Public\js\jquery.validate.min-vsdoc.js" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Shared\Error.aspx" />
     <Content Include="Views\Shared\LogOnUserControl.ascx" />
@@ -408,47 +445,8 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Views\Shared\Site.Master" />
-    <Content Include="Public\Web.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\bigballz - FTP Arvixe.pubxml" />
-    <None Include="Properties\PublishProfiles\bigballz - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\bigballz - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\bigballz.com.br - Web Deploy Arvixe.pubxml" />
-    <Content Include="Public\font-awesome\fonts\fontawesome-webfont.eot" />
-    <Content Include="Public\font-awesome\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Public\font-awesome\fonts\fontawesome-webfont.woff" />
-    <Content Include="Public\font-awesome\fonts\FontAwesome.otf" />
-    <Content Include="Public\font-awesome\less\bordered-pulled.less" />
-    <Content Include="Public\font-awesome\less\core.less" />
-    <Content Include="Public\font-awesome\less\fixed-width.less" />
-    <Content Include="Public\font-awesome\less\font-awesome.less" />
-    <Content Include="Public\font-awesome\less\icons.less" />
-    <Content Include="Public\font-awesome\less\larger.less" />
-    <Content Include="Public\font-awesome\less\list.less" />
-    <Content Include="Public\font-awesome\less\mixins.less" />
-    <Content Include="Public\font-awesome\less\path.less" />
-    <Content Include="Public\font-awesome\less\rotated-flipped.less" />
-    <Content Include="Public\font-awesome\less\spinning.less" />
-    <Content Include="Public\font-awesome\less\stacked.less" />
-    <Content Include="Public\font-awesome\less\variables.less" />
-    <Content Include="Public\font-awesome\scss\font-awesome.scss" />
-    <Content Include="Public\font-awesome\scss\_bordered-pulled.scss" />
-    <Content Include="Public\font-awesome\scss\_core.scss" />
-    <Content Include="Public\font-awesome\scss\_fixed-width.scss" />
-    <Content Include="Public\font-awesome\scss\_icons.scss" />
-    <Content Include="Public\font-awesome\scss\_larger.scss" />
-    <Content Include="Public\font-awesome\scss\_list.scss" />
-    <Content Include="Public\font-awesome\scss\_mixins.scss" />
-    <Content Include="Public\font-awesome\scss\_path.scss" />
-    <Content Include="Public\font-awesome\scss\_rotated-flipped.scss" />
-    <Content Include="Public\font-awesome\scss\_spinning.scss" />
-    <Content Include="Public\font-awesome\scss\_stacked.scss" />
-    <Content Include="Public\font-awesome\scss\_variables.scss" />
-    <Content Include="Public\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Public\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Public\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Views\Home\Site.Master" />
     <Content Include="connections.config">
       <SubType>Designer</SubType>
@@ -456,7 +454,7 @@
     <Content Include="MailSettings.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Views\Home\Alt.cshtml" />
+    <None Include="Properties\PublishProfiles\bigballz.com.br - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

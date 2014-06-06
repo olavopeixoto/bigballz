@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 using BigBallz.Core.Helper;
+using BigBallz.Core.Log;
 
 namespace BigBallz.Core
 {
@@ -95,8 +96,9 @@ namespace BigBallz.Core
 
                     result = new Guid(base64);
                 }
-                catch (FormatException)
+                catch (FormatException ex)
                 {
+                    Logger.Error(ex);
                 }
             }
 
@@ -114,8 +116,9 @@ namespace BigBallz.Core
                 {
                     convertedValue = (T)Enum.Parse(typeof(T), target.Trim(), true);
                 }
-                catch (ArgumentException)
+                catch (ArgumentException ex)
                 {
+                    Logger.Error(ex);
                 }
             }
 

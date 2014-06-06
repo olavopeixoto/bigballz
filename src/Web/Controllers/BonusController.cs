@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using BigBallz.Core.Log;
 using BigBallz.Models;
 using BigBallz.Services;
 using BigBallz.ViewModels;
@@ -84,6 +85,8 @@ namespace BigBallz.Controllers
             }
             catch(Exception ex)
             {
+                Logger.Error(ex);
+
                 this.FlashError(ex.Message);
 
                 var model = new BonusViewModel
@@ -111,6 +114,8 @@ namespace BigBallz.Controllers
            }
            catch (Exception ex)
            {
+               Logger.Error(ex);
+
                this.FlashError(ex.Message);
                return RedirectToAction("index");
            }

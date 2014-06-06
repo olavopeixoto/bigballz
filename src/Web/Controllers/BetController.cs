@@ -6,6 +6,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using BigBallz.Core;
+using BigBallz.Core.Log;
 using BigBallz.Filters;
 using BigBallz.Helpers;
 using BigBallz.Models;
@@ -235,6 +236,7 @@ namespace BigBallz.Controllers
             }
             catch (Exception ex)
             {
+                Logger.Error(ex);
                 this.FlashError(ex.Message);
                 return RedirectToAction("Index");
             }
@@ -294,6 +296,7 @@ namespace BigBallz.Controllers
             }
             catch (Exception ex)
             {
+                Logger.Error(ex);
                 this.FlashError(ex.Message);
                 return RedirectToAction("Index");
             }

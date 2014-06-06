@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using BigBallz.Core.Log;
 using BigBallz.Models;
 using BigBallz.Services;
 using BigBallz.ViewModels;
@@ -60,6 +61,7 @@ namespace BigBallz.Controllers
             }
             catch(Exception ex)
             {
+                Logger.Error(ex);
                 this.FlashError(ex.Message);
                 //ModelState.AddModelErrors(game.GetRuleViolations());
                 var model = new TeamViewModel
@@ -92,6 +94,7 @@ namespace BigBallz.Controllers
             }
             catch(Exception ex)
             {
+                Logger.Error(ex);
                 this.FlashError(ex.Message);
 
                 ViewData["Groups"] = _groupService.GetAll().ToSelectList("GroupId", "Name");

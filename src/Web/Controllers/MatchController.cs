@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using BigBallz.Core.Log;
 using BigBallz.Models;
 using BigBallz.Services;
 using BigBallz.ViewModels;
@@ -64,6 +65,8 @@ namespace BigBallz.Controllers
             }
             catch(Exception ex)
             {
+                Logger.Error(ex);
+
                 this.FlashError(ex.Message);
                 //ModelState.AddModelErrors(game.GetRuleViolations());
                 var model = new MatchViewModel
@@ -110,6 +113,7 @@ namespace BigBallz.Controllers
             }
             catch(Exception ex)
             {
+                Logger.Error(ex);
                 this.FlashError(ex.Message);
                 var model = new MatchViewModel
                 {

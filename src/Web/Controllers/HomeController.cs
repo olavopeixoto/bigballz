@@ -26,10 +26,5 @@ namespace BigBallz.Controllers
             ViewData["StartDate"] = _matchService.GetStartDate().FormatDate();
             return View();
         }
-
-        public ActionResult Alt()
-        {
-            return View();
-        }
     }
 }
