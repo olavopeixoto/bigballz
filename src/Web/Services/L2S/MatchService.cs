@@ -8,9 +8,10 @@ using BigBallz.Models;
 
 namespace BigBallz.Services.L2S
 {
-    public class MatchService : IMatchService
+    public class MatchService : IMatchService, IDisposable
     {
         private readonly DataContextProvider _provider;
+        private BigBallzDataContext _context;
 
         public MatchService(DataContextProvider provider)
         {
@@ -35,17 +36,18 @@ namespace BigBallz.Services.L2S
 
         public Match Get(int id)
         {
-            var options = new DataLoadOptions();
-            options.LoadWith<Match>(x => x.Team1);
-            options.LoadWith<Match>(x => x.Team2);
-            options.LoadWith<Match>(x => x.Stage);
-
-            using (var db = _provider.CreateContext())
+            if (_context == null)
             {
-                db.LoadOptions = options;
+                var options = new DataLoadOptions();
+                options.LoadWith<Match>(x => x.Team1);
+                options.LoadWith<Match>(x => x.Team2);
+                options.LoadWith<Match>(x => x.Stage);
 
-                return db.Matches.SingleOrDefault(d => d.MatchId == id);
+                _context = _provider.CreateContext();
+                _context.LoadOptions = options;
             }
+
+            return _context.Matches.SingleOrDefault(d => d.MatchId == id);
         }
 
         public IEnumerable<Match> GetNextMatches()
@@ -86,6 +88,7 @@ namespace BigBallz.Services.L2S
             using (var db = _provider.CreateContext())
             {
                 db.Matches.InsertOnSubmit(match);
+                db.SubmitChanges();
                 AlertEndBetTask.AddTask(match.StartTime.AddHours(-1));
                 BetExpirationWarningTask.AddTask(match.StartTime.AddHours(-2));
             }
@@ -93,18 +96,16 @@ namespace BigBallz.Services.L2S
 
         public void Delete(Match match)
         {
-            using (var db = _provider.CreateContext())
-            {
-                db.Matches.DeleteOnSubmit(match);
-            }
+            if (_context == null) return;
+
+            _context.Matches.DeleteOnSubmit(match);
         }
 
         public void Save()
         {
-            using (var db = _provider.CreateContext())
-            {
-                db.SubmitChanges();
-            }
+            if (_context == null) return;
+
+            _context.SubmitChanges();
         }
 
         public DateTime GetStartDate()
@@ -113,6 +114,11 @@ namespace BigBallz.Services.L2S
             {
                 return db.Matches.Min(x => (DateTime?) x.StartTime) ?? DateTime.Now;
             }
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
         }
     }
 }

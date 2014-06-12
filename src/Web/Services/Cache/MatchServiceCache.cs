@@ -34,15 +34,15 @@ namespace BigBallz.Services.Cache
 
         public Match Get(int id)
         {
-            var key = string.Format("BB-MatchService-Get-{0}", id);
+            //var key = string.Format("BB-MatchService-Get-{0}", id);
 
-            if (_cache.Contains(key))
-            {
-                return _cache.Get<Match>(key);
-            }
+            //if (_cache.Contains(key))
+            //{
+            //    return _cache.Get<Match>(key);
+            //}
 
             var results = _service.Get(id);
-            _cache.Set(key, results);
+            //_cache.Set(key, results);
 
             return results;
         }
@@ -108,6 +108,11 @@ namespace BigBallz.Services.Cache
             _cache.Set(key, results);
 
             return results;
+        }
+
+        public void Dispose()
+        {
+            _service.Dispose();
         }
     }
 }

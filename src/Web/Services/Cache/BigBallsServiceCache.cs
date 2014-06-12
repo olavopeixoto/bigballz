@@ -5,7 +5,7 @@ using BigBallz.Models;
 
 namespace BigBallz.Services.Cache
 {
-    public class BigBallsServiceCache : IBigBallzService
+    public class BigBallsServiceCache : IBigBallzService, IDisposable
     {
         private readonly ICache _cache;
         private readonly IBigBallzService _service;
@@ -180,6 +180,11 @@ namespace BigBallz.Services.Cache
             _cache.Set(key, results);
 
             return results;
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -22,7 +22,7 @@ namespace BigBallz.Models
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="BigBallz-Dev")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="BigBallz")]
 	public partial class BigBallzDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -72,6 +72,9 @@ namespace BigBallz.Models
     partial void InsertComment(Comment instance);
     partial void UpdateComment(Comment instance);
     partial void DeleteComment(Comment instance);
+    partial void InsertPaymentStatus(PaymentStatus instance);
+    partial void UpdatePaymentStatus(PaymentStatus instance);
+    partial void DeletePaymentStatus(PaymentStatus instance);
     #endregion
 		
 		public BigBallzDataContext() : 
@@ -213,6 +216,14 @@ namespace BigBallz.Models
 			get
 			{
 				return this.GetTable<Comment>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PaymentStatus> PaymentStatus
+		{
+			get
+			{
+				return this.GetTable<PaymentStatus>();
 			}
 		}
 	}
@@ -2564,6 +2575,8 @@ namespace BigBallz.Models
 		
 		private EntitySet<Comment> _Comments;
 		
+		private EntitySet<PaymentStatus> _PaymentStatus;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2597,6 +2610,7 @@ namespace BigBallz.Models
 			this._UserMappings = new EntitySet<UserMapping>(new Action<UserMapping>(this.attach_UserMappings), new Action<UserMapping>(this.detach_UserMappings));
 			this._BonusBets = new EntitySet<BonusBet>(new Action<BonusBet>(this.attach_BonusBets), new Action<BonusBet>(this.detach_BonusBets));
 			this._Comments = new EntitySet<Comment>(new Action<Comment>(this.attach_Comments), new Action<Comment>(this.detach_Comments));
+			this._PaymentStatus = new EntitySet<PaymentStatus>(new Action<PaymentStatus>(this.attach_PaymentStatus), new Action<PaymentStatus>(this.detach_PaymentStatus));
 			OnCreated();
 		}
 		
@@ -2865,6 +2879,19 @@ namespace BigBallz.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_PaymentStatus", Storage="_PaymentStatus", ThisKey="UserId", OtherKey="User")]
+		public EntitySet<PaymentStatus> PaymentStatus
+		{
+			get
+			{
+				return this._PaymentStatus;
+			}
+			set
+			{
+				this._PaymentStatus.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2940,6 +2967,18 @@ namespace BigBallz.Models
 		}
 		
 		private void detach_Comments(Comment entity)
+		{
+			this.SendPropertyChanging();
+			entity.User1 = null;
+		}
+		
+		private void attach_PaymentStatus(PaymentStatus entity)
+		{
+			this.SendPropertyChanging();
+			entity.User1 = this;
+		}
+		
+		private void detach_PaymentStatus(PaymentStatus entity)
 		{
 			this.SendPropertyChanging();
 			entity.User1 = null;
@@ -3651,6 +3690,297 @@ namespace BigBallz.Models
 					if ((value != null))
 					{
 						value.Comments.Add(this);
+						this._User = value.UserId;
+					}
+					else
+					{
+						this._User = default(int);
+					}
+					this.SendPropertyChanged("User1");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PaymentStatus")]
+	public partial class PaymentStatus : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private int _User;
+		
+		private System.DateTime _Date;
+		
+		private System.DateTime _LastEventDate;
+		
+		private string _Transaction;
+		
+		private string _Status;
+		
+		private string _SenderEmail;
+		
+		private string _SenderName;
+		
+		private string _PaymentMethod;
+		
+		private EntityRef<User> _User1;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnUserChanging(int value);
+    partial void OnUserChanged();
+    partial void OnDateChanging(System.DateTime value);
+    partial void OnDateChanged();
+    partial void OnLastEventDateChanging(System.DateTime value);
+    partial void OnLastEventDateChanged();
+    partial void OnTransactionChanging(string value);
+    partial void OnTransactionChanged();
+    partial void OnStatusChanging(string value);
+    partial void OnStatusChanged();
+    partial void OnSenderEmailChanging(string value);
+    partial void OnSenderEmailChanged();
+    partial void OnSenderNameChanging(string value);
+    partial void OnSenderNameChanged();
+    partial void OnPaymentMethodChanging(string value);
+    partial void OnPaymentMethodChanged();
+    #endregion
+		
+		public PaymentStatus()
+		{
+			this._User1 = default(EntityRef<User>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[User]", Storage="_User", DbType="Int NOT NULL")]
+		public int User
+		{
+			get
+			{
+				return this._User;
+			}
+			set
+			{
+				if ((this._User != value))
+				{
+					this.OnUserChanging(value);
+					this.SendPropertyChanging();
+					this._User = value;
+					this.SendPropertyChanged("User");
+					this.OnUserChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="DateTime NOT NULL")]
+		public System.DateTime Date
+		{
+			get
+			{
+				return this._Date;
+			}
+			set
+			{
+				if ((this._Date != value))
+				{
+					this.OnDateChanging(value);
+					this.SendPropertyChanging();
+					this._Date = value;
+					this.SendPropertyChanged("Date");
+					this.OnDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastEventDate", DbType="DateTime NOT NULL")]
+		public System.DateTime LastEventDate
+		{
+			get
+			{
+				return this._LastEventDate;
+			}
+			set
+			{
+				if ((this._LastEventDate != value))
+				{
+					this.OnLastEventDateChanging(value);
+					this.SendPropertyChanging();
+					this._LastEventDate = value;
+					this.SendPropertyChanged("LastEventDate");
+					this.OnLastEventDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Transaction]", Storage="_Transaction", DbType="Char(36) NOT NULL", CanBeNull=false)]
+		public string Transaction
+		{
+			get
+			{
+				return this._Transaction;
+			}
+			set
+			{
+				if ((this._Transaction != value))
+				{
+					this.OnTransactionChanging(value);
+					this.SendPropertyChanging();
+					this._Transaction = value;
+					this.SendPropertyChanged("Transaction");
+					this.OnTransactionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SenderEmail", DbType="VarChar(60) NOT NULL", CanBeNull=false)]
+		public string SenderEmail
+		{
+			get
+			{
+				return this._SenderEmail;
+			}
+			set
+			{
+				if ((this._SenderEmail != value))
+				{
+					this.OnSenderEmailChanging(value);
+					this.SendPropertyChanging();
+					this._SenderEmail = value;
+					this.SendPropertyChanged("SenderEmail");
+					this.OnSenderEmailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SenderName", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string SenderName
+		{
+			get
+			{
+				return this._SenderName;
+			}
+			set
+			{
+				if ((this._SenderName != value))
+				{
+					this.OnSenderNameChanging(value);
+					this.SendPropertyChanging();
+					this._SenderName = value;
+					this.SendPropertyChanged("SenderName");
+					this.OnSenderNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PaymentMethod", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string PaymentMethod
+		{
+			get
+			{
+				return this._PaymentMethod;
+			}
+			set
+			{
+				if ((this._PaymentMethod != value))
+				{
+					this.OnPaymentMethodChanging(value);
+					this.SendPropertyChanging();
+					this._PaymentMethod = value;
+					this.SendPropertyChanged("PaymentMethod");
+					this.OnPaymentMethodChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="User_PaymentStatus", Storage="_User1", ThisKey="User", OtherKey="UserId", IsForeignKey=true)]
+		public User User1
+		{
+			get
+			{
+				return this._User1.Entity;
+			}
+			set
+			{
+				User previousValue = this._User1.Entity;
+				if (((previousValue != value) 
+							|| (this._User1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._User1.Entity = null;
+						previousValue.PaymentStatus.Remove(this);
+					}
+					this._User1.Entity = value;
+					if ((value != null))
+					{
+						value.PaymentStatus.Add(this);
 						this._User = value.UserId;
 					}
 					else

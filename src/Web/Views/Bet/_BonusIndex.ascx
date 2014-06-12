@@ -1,7 +1,4 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<BigBallz.ViewModels.BetViewModel>" %>
-<%@ Import Namespace="BigBallz.Core" %>
-<%@ Import Namespace="System.Threading" %>
-<%@ Import Namespace="System.Globalization" %>
 <% using (Html.BeginForm("savebonus", "bet")){%>
 <table class="match-table">
 <tbody>

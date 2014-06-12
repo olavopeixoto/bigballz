@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BigBallz.Models;
+using Uol.PagSeguro.Domain;
 
 namespace BigBallz.Services
 {
-    public interface IAccountService
+    public interface IAccountService : IDisposable
     {
         User FindUserByIdentifier(string identifier);
         User FindUserByUserName(string userName);
@@ -18,5 +20,6 @@ namespace BigBallz.Services
         IList<User> GetAllPlayers();
         IList<User> GetAllUnAuthorizedUsers();
         void UpdateUserInformation(User user);
+        void UpdateTransactionStatus(User user, Transaction transaction);
     }
 }

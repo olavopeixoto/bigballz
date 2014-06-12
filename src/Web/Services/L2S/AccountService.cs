@@ -4,6 +4,7 @@ using System.Linq;
 using BigBallz.Core;
 using BigBallz.Core.Caching;
 using BigBallz.Models;
+using Uol.PagSeguro.Domain;
 
 namespace BigBallz.Services.L2S
 {
@@ -158,6 +159,42 @@ namespace BigBallz.Services.L2S
             dbUser.PhotoUrl = user.PhotoUrl;
             _db.SubmitChanges();
             _cache.Clear();
+        }
+
+        public void UpdateTransactionStatus(User user, Transaction transaction)
+        {
+            var paymentStatus = new PaymentStatus
+            {
+                Date = transaction.Date,
+                LastEventDate = transaction.LastEventDate,
+                SenderName = transaction.Sender.Name,
+                SenderEmail = transaction.Sender.Email,
+                Transaction = transaction.Code,
+                User1 = user,
+                User = user.UserId,
+                PaymentMethod = GetPaymentMethodDescription(transaction.PaymentMethod.PaymentMethodCode),
+                Status = GetStatusDescription(transaction.TransactionStatus)
+            };
+
+            _db.PaymentStatus.InsertOnSubmit(paymentStatus);
+            _db.SubmitChanges();
+        }
+
+        private string GetPaymentMethodDescription(int paymentMethodCode)
+        {
+            var status = (PagSeguroPaymentMethod)paymentMethodCode;
+            return status.ToString();
+        }
+
+        private string GetStatusDescription(int transactionStatus)
+        {
+            var status = (PagSeguroTransactionStatus)transactionStatus;
+            return status.ToString();
+        }
+
+        public void Dispose()
+        {
+            _db.Dispose();
         }
     }
 }

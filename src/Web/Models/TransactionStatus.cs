@@ -19,4 +19,41 @@ namespace BigBallz.Models
         [Description("Cancelada: a transação foi cancelada sem ter sido finalizada.")]
         Cancelada = 7
     }
+
+    public enum PagSeguroPaymentMethod
+    {
+        Cartao_de_credito_Visa				= 101,
+        Cartao_de_credito_MasterCard		= 102,
+        Cartao_de_credito_American_Express 	= 103,
+        Cartao_de_credito_Diners			= 104,
+        Cartao_de_credito_Hipercard 		= 105,
+        Cartao_de_credito_Aura				= 106,
+        Cartao_de_credito_Elo 				= 107,
+        Cartao_de_credito_PLENOCard 		= 108,
+        Cartao_de_credito_PersonalCard 		= 109,
+        Cartao_de_credito_JCB 				= 110,
+        Cartao_de_credito_Discover 			= 111,
+        Cartao_de_credito_BrasilCard 		= 112,
+        Cartao_de_credito_FORTBRASIL 		= 113,
+        Cartao_de_credito_CARDBAN 			= 114,
+        Cartao_de_credito_VALECARD 			= 115,
+        Cartao_de_credito_Cabal 			= 116,
+        Cartao_de_credito_Mais 				= 117,
+        Cartao_de_credito_Avista 			= 118,
+        Cartao_de_credito_GRANDCARD 		= 119,
+        Cartao_de_credito_Sorocred 			= 120,
+        Boleto_Bradesco 					= 201,
+        Boleto_Santander 					= 202,
+        Debito_online_Bradesco 				= 301,
+        Debito_online_Itau 					= 302,
+        Debito_online_Unibanco 				= 303,
+        Debito_online_Banco_do_Brasil 		= 304,
+        Debito_online_Banco_Real 			= 305,
+        Debito_online_Banrisul 				= 306,
+        Debito_online_HSBC 					= 307,
+        Saldo_PagSeguro 					= 401,
+        Oi_Paggo 							= 501,
+        Deposito_em_conta_Banco_do_Brasil = 701,
+        Deposito_em_conta_HSBC 			= 702
+    }
 }

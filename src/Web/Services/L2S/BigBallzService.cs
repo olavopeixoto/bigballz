@@ -8,7 +8,7 @@ using BigBallz.Models;
 
 namespace BigBallz.Services.L2S
 {
-    public class BigBallzService : IBigBallzService
+    public class BigBallzService : IBigBallzService, IDisposable
     {
         readonly BigBallzDataContext _db;
 
@@ -19,6 +19,7 @@ namespace BigBallz.Services.L2S
             var options = new DataLoadOptions();
             options.LoadWith<BonusBet>(x => x.Bonus11);
             options.LoadWith<BonusBet>(x => x.Team1);
+            options.LoadWith<Bet>(x => x.User1);
             options.LoadWith<Bet>(x => x.Match1);
             options.LoadWith<Match>(x => x.Team1);
             options.LoadWith<Match>(x => x.Team2);
@@ -28,11 +29,11 @@ namespace BigBallz.Services.L2S
 
         private int GetTotalUserPoints(string userName)
         {
-            var bets = _db.Bets.Where(x => x.User1.UserName == userName);
-            var bonusBets = _db.BonusBets.Where(x => x.User1.UserName == userName);
+            var bets = _db.Bets.Where(x => x.User1.UserName == userName).ToList();
+            var bonusBets = _db.BonusBets.Where(x => x.User1.UserName == userName).ToList();
 
-            var totalPoints = Enumerable.Sum(bets, bet => BetPoints(bet));
-            totalPoints += Enumerable.Sum(bonusBets, bet => BonusBetPoints(bet));
+            var totalPoints = bets.Sum(bet => BetPoints(bet));
+            totalPoints += bonusBets.Sum(bet => BonusBetPoints(bet));
             return totalPoints;
         }
 
@@ -85,30 +86,29 @@ namespace BigBallz.Services.L2S
         }
         private int BonusBetPoints(BonusBet bet)
         {
-            if (bet.Team == bet.Bonus11.Team)
-                switch (bet.Bonus)
-                {
-                    case 1: //Campeao Copa
-                        return 10;
-                    case 2: //Vice Copa
-                        return 7;
-                    case 3: //Terceiro Copa
-                    case 4: //Quarto Copa
-                        return 5;
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8: 
-                    case 9: 
-                    case 10: 
-                    case 11:
-                    case 12: //Campeao Grupo
-                        return 5;
-                    default:
-                        return 0;
-                }
+            if (bet.Team != bet.Bonus11.Team) return 0;
 
-            return 0;
+            switch (bet.Bonus)
+            {
+                case 1: //Campeao Copa
+                    return 10;
+                case 2: //Vice Copa
+                    return 7;
+                case 3: //Terceiro Copa
+                case 4: //Quarto Copa
+                    return 5;
+                case 5:
+                case 6:
+                case 7:
+                case 8: 
+                case 9: 
+                case 10: 
+                case 11:
+                case 12: //Campeao Grupo
+                    return 5;
+                default:
+                    return 0;
+            }
         }
 #endregion
 
@@ -134,10 +134,15 @@ namespace BigBallz.Services.L2S
                 TotalDayPoints = GetLastRoundPoints(user.UserName),
                 TotalExactScore = GetTotalUserExactScores(user.UserName),
                 TotalBonusPoints = GetTotalUserBonusPoints(user.UserName)
-            }).OrderByDescending(x => x.TotalPoints).ThenByDescending(x => x.TotalExactScore).ThenByDescending(x => x.TotalBonusPoints).ThenBy(x => x.User.UserName).ToList();
+            })
+            .OrderByDescending(x => x.TotalPoints)
+            .ThenByDescending(x => x.TotalExactScore)
+            .ThenByDescending(x => x.TotalBonusPoints)
+            .ThenBy(x => x.User.UserName)
+            .ToList();
 
             var j = 1;
-            for (int i = 0; i < userPointsList.Count(); i++)
+            for (var i = 0; i < userPointsList.Count(); i++)
             {
                 if (i > 0)
                 {
@@ -167,9 +172,9 @@ namespace BigBallz.Services.L2S
 
         private int GetTotalUserBonusPoints(string userName)
         {
-            var bonusBets = _db.BonusBets.Where(x => x.User1.UserName == userName);
+            var bonusBets = _db.BonusBets.Where(x => x.User1.UserName == userName).ToList();
 
-            var totalBonusPoints = Enumerable.Sum(bonusBets, bet => BonusBetPoints(bet));
+            var totalBonusPoints = bonusBets.Sum(bet => BonusBetPoints(bet));
             return totalBonusPoints;
         }
 
@@ -203,20 +208,25 @@ namespace BigBallz.Services.L2S
 
         public IList<BetPoints> GetUserPointsByMatch(string userName)
         {
-            return _db.Bets.Where(x => x.User1.UserName == userName).ToList().Select(x => new BetPoints()
-                                                                                             {
-                                                                                                 Bet = x,
-                                                                                                 Points = BetPoints(x)
-                                                                                             }).ToList();
+            return _db.Bets.Where(x => x.User1.UserName == userName)
+                            .ToList()
+                            .Select(x => new BetPoints
+                                            {
+                                                Bet = x,
+                                                Points = BetPoints(x)
+                                            }).ToList();
         }
 
         public IList<BonusPoints> GetUserPointsByBonus(string userName)
         {
-            return _db.BonusBets.Where(x => x.User1.UserName == userName).ToList().Select(x => new BonusPoints
-            {
-                BonusBet = x,
-                Points = BonusBetPoints(x)
-            }).ToList();
+            return _db.BonusBets
+                .Where(x => x.User1.UserName == userName)
+                .ToList()
+                .Select(x => new BonusPoints
+                                {
+                                    BonusBet = x,
+                                    Points = BonusBetPoints(x)
+                                }).ToList();
         }
 
         public IList<UserMatchPoints> GetUserPointsByExpiredMatch(int matchId)
@@ -228,7 +238,11 @@ namespace BigBallz.Services.L2S
                                    Bet = bet,
                                    Points = BetPoints(bet)
                                }
-            ).ToList().OrderByDescending(x => x.Points).ThenBy(x => x.Bet.User1.UserName).ToList();
+            )
+            .ToList()
+            .OrderByDescending(x => x.Points)
+            .ThenBy(x => x.Bet.User1.UserName)
+            .ToList();
         }
 
         public Match GetFirstMatch()
@@ -262,9 +276,8 @@ namespace BigBallz.Services.L2S
             if (!_db.Matches.Any()) return DateTime.Now;
 
             var minDate = _db.Matches.Min(x => x.StartTime);
-            minDate = minDate.AddDays(-1);
-            var endBonus = new DateTime(minDate.Year, minDate.Month, minDate.Day, 23, 59, 59);
-            return endBonus;
+            minDate = minDate.AddHours(-1);
+            return minDate;
         }
 
         public MatchBetStatistic GetMatchBetStatistics(int matchId)
@@ -308,6 +321,11 @@ namespace BigBallz.Services.L2S
                 Team = mostBetTeam.Team1,
                 TeamPerc = bets.Count(x => x.Team1 == mostBetTeam.Team1) / totalBets,
             };
+        }
+
+        public void Dispose()
+        {
+            _db.Dispose();
         }
     }
 }

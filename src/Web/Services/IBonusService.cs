@@ -1,17 +1,18 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BigBallz.Models;
 
 namespace BigBallz.Services
 {
-    public interface IBonusService
+    public interface IBonusService : IDisposable
     {
         // Query Methods
         IQueryable<Bonus> GetAll();
         Bonus Get(int id);
 
         // Insert/Delete
-        void Add(Bonus Bonus);
-        void Delete(Bonus Bonus);
+        void Add(Bonus bonus);
+        void Delete(Bonus bonus);
  
         // Persistence
         void Save();

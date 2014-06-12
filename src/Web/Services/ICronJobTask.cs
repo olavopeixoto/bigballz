@@ -2,7 +2,7 @@
 
 namespace BigBallz.Services
 {
-    public interface ICronJobTask
+    public interface ICronJobTask : IDisposable
     {
         string Name { get; }
         bool Recurring { get; }

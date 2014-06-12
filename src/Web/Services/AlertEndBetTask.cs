@@ -87,5 +87,8 @@ namespace BigBallz.Services
         {
             CronJob.AddTask(new AlertEndBetTask(ServiceLocator.Resolve<IMailService>(), startTime, ServiceLocator.Resolve<DataContextProvider>()));
         }
+
+        public void Dispose()
+        {}
     }
 }

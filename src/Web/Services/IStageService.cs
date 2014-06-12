@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BigBallz.Models;
 
 namespace BigBallz.Services
 {
-    public interface IStageService
+    public interface IStageService : IDisposable
     {
         // Query Methods
         IQueryable<Stage> GetAll();

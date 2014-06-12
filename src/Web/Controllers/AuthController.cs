@@ -136,32 +136,36 @@ namespace BigBallz.Controllers
             var credentials = PagSeguroConfiguration.Credentials;
 
             var transaction = NotificationService.CheckTransaction(credentials, notificationCode);
-            if (transaction.TransactionStatus == (int) PagSeguroTransactionStatus.Paga)
-            {
-                int uid;
-                var itemId = transaction.Items.First().Id;
-                var user = int.TryParse(itemId, NumberStyles.Integer, CultureInfo.CurrentCulture.NumberFormat,
-                    out uid)
-                    ? _accountService.FindUserByLocalId(uid)
-                    : _accountService.FindUserByUserName(itemId);
 
-                if (user != null)
+            int uid;
+            var itemId = transaction.Items.First().Id;
+            var user = int.TryParse(itemId, NumberStyles.Integer, CultureInfo.CurrentCulture.NumberFormat,
+                out uid)
+                ? _accountService.FindUserByLocalId(uid)
+                : _accountService.FindUserByUserName(itemId);
+
+            if (user != null)
+            {
+                try
+                {
+                    _accountService.UpdateTransactionStatus(user, transaction);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex);
+                }
+
+                if (transaction.TransactionStatus == (int) PagSeguroTransactionStatus.Paga)
                 {
                     if (_accountService.AuthorizeUser(user.UserName, "PagSeguro", true))
                     {
                         _mailService.SendPaymentConfirmation(user);
                     }
                 }
-                else
-                {
-                    throw new ApplicationException(string.Format("Usuário {0} não encontrado para autorização",
-                        itemId));
-                }
             }
             else
             {
-                Logger.Info(string.Format("INFO - PagSeguro - Notification - Transaction = <{0}> - Status = <{1}>",
-                    transaction.Code, transaction.TransactionStatus));
+                throw new ApplicationException(string.Format("Usuário {0} não encontrado para autorização", itemId));
             }
         }
 
@@ -177,7 +181,7 @@ namespace BigBallz.Controllers
             int uid;
             if (!int.TryParse(item.Id, NumberStyles.Integer, CultureInfo.CurrentCulture.NumberFormat, out uid))
             {
-                Logger.Warn("Identificação de usuário inválida ({0})", item.Id);
+                Logger.Error("Identificação de usuário inválida ({0})", item.Id);
                 return RedirectToAction("index", "home");
             }
 

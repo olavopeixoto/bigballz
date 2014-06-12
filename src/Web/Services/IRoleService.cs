@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BigBallz.Models;
 
 namespace BigBallz.Services
 {
-    public interface IRoleService
+    public interface IRoleService : IDisposable
     {
         // Query Methods
         IQueryable<Role> GetAll();

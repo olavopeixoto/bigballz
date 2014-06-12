@@ -116,5 +116,9 @@ namespace BigBallz.Services.Cache
             _service.Save();
         }
 
+        public void Dispose()
+        {
+            _service.Dispose();
+        }
     }
 }

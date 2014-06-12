@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BigBallz.Models;
 
 namespace BigBallz.Services
 {
-    public interface ITeamService
+    public interface ITeamService : IDisposable
     {
         // Query Methods
         IQueryable<Team> GetAll();

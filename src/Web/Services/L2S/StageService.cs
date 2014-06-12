@@ -40,5 +40,10 @@ namespace BigBallz.Services.L2S
             _cache.Clear();
             _db.SubmitChanges();
         }
+
+        public void Dispose()
+        {
+            _db.Dispose();
+        }
     }
 }

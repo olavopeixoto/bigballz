@@ -1,10 +1,10 @@
-﻿using System.Linq;
+﻿using System;
 using BigBallz.Models;
 using System.Collections.Generic;
 
 namespace BigBallz.Services
 {
-    public interface IMatchBetService
+    public interface IMatchBetService : IDisposable
     {
         // Query Methods
         IEnumerable<Bet> GetAll();

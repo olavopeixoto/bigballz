@@ -28,7 +28,7 @@
             ga('create', '<%=ConfigurationManager.AppSettings["google-tid"]%>', 'bigballz.com.br');
             ga('require', 'linkid', 'linkid.js');
             ga('require', 'displayfeatures');
-            <% if (Context.User != null && Context.User.Identity.IsAuthenticated)
+            <% if (Request.IsAuthenticated)
                { %>
             ga('set', '&uid', '<%= Context.User.Identity.Name %>'); // Set the user ID using signed-in user_id.
             <% } %>

@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BigBallz.Models;
 
 namespace BigBallz.Services
 {
-    public interface ICommentsService
+    public interface ICommentsService : IDisposable
     {
         IList<Comment> GetComments();
         IList<Comment> GetComments(int top);

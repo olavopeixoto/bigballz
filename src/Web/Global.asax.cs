@@ -10,6 +10,7 @@ using BigBallz.Infrastructure;
 using BigBallz.Services;
 using StackExchange.Profiling;
 using StackExchange.Profiling.Mvc;
+using StructureMap.Pipeline;
 
 namespace BigBallz
 {
@@ -146,6 +147,8 @@ namespace BigBallz
 
         protected void Application_EndRequest(object sender, EventArgs e)
         {
+            HttpContextLifecycle.DisposeAndClearAll();
+
             if (MiniProfiler.Current != null) // they had a cookie
             {
                 var allowed = AllowProfiler(Request);

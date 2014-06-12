@@ -39,7 +39,7 @@ namespace BigBallz.Controllers
                                 Stages = _stageService.GetAll().ToSelectList("StageId", "Name")
                             };
 
-            model.Match.StartTime = new DateTime(2010, 6, 11, 11, 00, 00);
+            model.Match.StartTime = DateTime.Today;
             return View(model);
         }
 
@@ -57,7 +57,6 @@ namespace BigBallz.Controllers
                 if (user.UserRoles.Count > 1)
                 {
                     _matchService.Add(match);
-                    _matchService.Save();
                     return RedirectToAction("Index");
                 }
 

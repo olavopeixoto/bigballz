@@ -4,7 +4,7 @@ using BigBallz.Models;
 
 namespace BigBallz.Services
 {
-    public interface IBigBallzService
+    public interface IBigBallzService : IDisposable
     {
         IList<Match> GetUserPendingBets(string userName);
         IList<UserPoints> GetStandings();

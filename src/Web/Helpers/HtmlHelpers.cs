@@ -74,7 +74,7 @@ namespace System.Web.Mvc {
         {
             var datetimeLeft = matchStartTime.Subtract(new TimeSpan(0, 1, 0, 0)).Subtract(DateTime.Now.BrazilTimeZone());
             var hoursLeft = datetimeLeft.TotalHours;
-            var daysLeft = datetimeLeft.TotalDays;
+            var daysLeft = Math.Ceiling(datetimeLeft.TotalDays);
             var minutesLeft = datetimeLeft.TotalMinutes;
             var secondsLeft = datetimeLeft.TotalSeconds;
             var unitName = hoursLeft > 24 ? "dia" : minutesLeft > 60 ? "hora" : secondsLeft > 60 ? "minuto" : "segundo";
@@ -87,7 +87,7 @@ namespace System.Web.Mvc {
         {
             var datetimeLeft = startTime.Subtract(new TimeSpan(0, 1, 0, 0)).Subtract(DateTime.Now.BrazilTimeZone());
             var hoursLeft = datetimeLeft.TotalHours;
-            var daysLeft = datetimeLeft.TotalDays;
+            var daysLeft = Math.Ceiling(datetimeLeft.TotalDays);
             var minutesLeft = datetimeLeft.TotalMinutes;
             var secondsLeft = datetimeLeft.TotalSeconds;
             var unitName = hoursLeft > 24 ? "dia" : minutesLeft > 60 ? "hora" : secondsLeft > 60 ? "minuto" : "segundo";

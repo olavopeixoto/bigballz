@@ -4,7 +4,7 @@ using BigBallz.Models;
 
 namespace BigBallz.Services
 {
-    public interface IMatchService
+    public interface IMatchService : IDisposable
     {
         // Query Methods
         IEnumerable<Match> GetAll();

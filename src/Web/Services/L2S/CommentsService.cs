@@ -65,5 +65,8 @@ namespace BigBallz.Services.L2S
                 db.SubmitChanges();
             }
         }
+
+        public void Dispose()
+        {}
     }
 }

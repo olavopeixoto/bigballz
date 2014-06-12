@@ -99,5 +99,10 @@ namespace BigBallz.Services.Cache
             _cache.Clear();
             _service.Save();
         }
+
+        public void Dispose()
+        {
+            _service.Dispose();
+        }
     }
 }

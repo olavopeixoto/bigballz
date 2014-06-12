@@ -169,7 +169,6 @@ namespace BigBallz.Controllers
 
         public ActionResult MatchBets(int id)
         {
-            var usersMatchPoints = _bigBallzService.GetUserPointsByExpiredMatch(id);
             var matchStatistics = _bigBallzService.GetMatchBetStatistics(id);
 
             if (matchStatistics == null)
@@ -183,6 +182,8 @@ namespace BigBallz.Controllers
                 this.FlashWarning("Partida ainda não disponível para acompanhamento de resultados.");
                 return RedirectToAction("index");
             }
+
+            var usersMatchPoints = _bigBallzService.GetUserPointsByExpiredMatch(id);
 
             var model = new MatchBetsViewModel
                             {
@@ -215,22 +216,23 @@ namespace BigBallz.Controllers
                     return RedirectToAction("Index");
                 }
 
+                foreach (var bet in user.BonusBets)
+                {
+                    _bonusBetService.Delete(bet);
+                }
+
+                user.BonusBets.Clear();
+
                 foreach (var bet in bonusBet.Where(x => !string.IsNullOrEmpty(x.Team)))
                 {
-                    var userBet = bet;
-                    if (bet.BonusBetId > 0)
-                    {
-                        userBet = _bonusBetService.Get(bet.BonusBetId);
-                        userBet.Team = bet.Team;
-                    }
-                    else
-                    {
-                        var userId = _userService.Get(userName).UserId;
-                        userBet.User = userId;
-                        _bonusBetService.Add(userBet);
-                    }
+                    bet.User = user.UserId;
+                    bet.User1 = user;
+                    user.BonusBets.Add(bet);
+                    _bonusBetService.Add(bet);
                 }
+
                 _bonusBetService.Save();
+
                 this.FlashInfo("Apostas Cadastradas Com Sucesso!");
                 return RedirectToAction("Index");
             }

@@ -84,5 +84,8 @@ namespace BigBallz.Services
         {
             CronJob.AddTask(new BetExpirationWarningTask(ServiceLocator.Resolve<IMailService>(), startTime, ServiceLocator.Resolve<DataContextProvider>()));
         }
+
+        public void Dispose()
+        {}
     }
 }
