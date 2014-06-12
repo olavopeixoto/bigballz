@@ -265,7 +265,7 @@ namespace BigBallz.Controllers
                         userBet = _matchBetService.Get(bet.BetId);
                         if (userBet.Match1.StartTime.AddHours(-1) <= DateTime.Now.BrazilTimeZone())
                         {
-                            erroStringBuilder.AppendLine(string.Format("Apostas para a partida {0} X {1} já estão encerradas", userBet.Match1.Team1.Name, userBet.Match1.Team2.Name));
+                            erroStringBuilder.AppendLine(string.Format("Aposta para a partida {0} X {1} já está encerrada", userBet.Match1.Team1.Name, userBet.Match1.Team2.Name));
                             continue;
                         }
                         userBet.Score1 = bet.Score1;

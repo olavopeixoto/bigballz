@@ -23,17 +23,19 @@ namespace BigBallz.Services.L2S
             options.LoadWith<Bet>(x => x.Match1);
             options.LoadWith<Match>(x => x.Team1);
             options.LoadWith<Match>(x => x.Team2);
+            options.LoadWith<User>(x => x.Bets);
+            options.LoadWith<User>(x => x.BonusBets);
 
             _db.LoadOptions = options;
         }
 
         private int GetTotalUserPoints(string userName)
         {
-            var bets = _db.Bets.Where(x => x.User1.UserName == userName).ToList();
-            var bonusBets = _db.BonusBets.Where(x => x.User1.UserName == userName).ToList();
+            var bets = _db.Bets.Where(x => x.User1.UserName == userName);
+            var bonusBets = _db.BonusBets.Where(x => x.User1.UserName == userName);
 
-            var totalPoints = bets.Sum(bet => BetPoints(bet));
-            totalPoints += bonusBets.Sum(bet => BonusBetPoints(bet));
+            var totalPoints = Enumerable.Sum(bets, bet => BetPoints(bet));
+            totalPoints += Enumerable.Sum(bonusBets, bet => BonusBetPoints(bet));
             return totalPoints;
         }
 

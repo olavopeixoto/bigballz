@@ -79,15 +79,15 @@ namespace BigBallz.Services.Cache
 
         public Bet Get(int betId)
         {
-            var key = string.Format("BB-MatchBetServiceCache-Get-{0}", betId);
+            //var key = string.Format("BB-MatchBetServiceCache-Get-{0}", betId);
 
-            if (_cache.Contains(key))
-            {
-                return _cache.Get<Bet>(key);
-            }
+            //if (_cache.Contains(key))
+            //{
+            //    return _cache.Get<Bet>(key);
+            //}
 
             var results = _service.Get(betId);
-            _cache.Set(key, results);
+            //_cache.Set(key, results);
 
             return results;
         }
