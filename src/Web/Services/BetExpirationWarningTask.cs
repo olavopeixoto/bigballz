@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Linq;
 using System.Linq;
 using BigBallz.Core;
 using BigBallz.Core.IoC;
@@ -50,19 +49,19 @@ namespace BigBallz.Services
             IList<User> players;
             using (var context = _provider.CreateContext())
             {
-                var loadOptions = new DataLoadOptions();
-                loadOptions.LoadWith<User>(x => x.Bets);
-                loadOptions.LoadWith<Bet>(x => x.Match1);
-                loadOptions.LoadWith<Match>(x => x.Team1);
-                loadOptions.LoadWith<Match>(x => x.Team2);
-                context.LoadOptions = loadOptions;
+                //var loadOptions = new DataLoadOptions();
+                //loadOptions.LoadWith<User>(x => x.Bets);
+                //loadOptions.LoadWith<Bet>(x => x.Match1);
+                //loadOptions.LoadWith<Match>(x => x.Team1Id);
+                //loadOptions.LoadWith<Match>(x => x.Team2Id);
+                //context.LoadOptions = loadOptions;
 
-                players = context.Users.Where(x => x.UserRoles.Any(y => y.Role.Name == BBRoles.Player) && x.Bets.Any(b => b.Match1.StartTime.AddHours(-2) == AbsoluteExpiration && !(b.Score1.HasValue && b.Score2.HasValue))).ToList();
+                players = context.Users.Where(x => x.Roles.Any(y => y.Name == BBRoles.Player) && x.Bets.Any(b => b.Match1.StartTime.AddHours(-2) == AbsoluteExpiration)).ToList();
             }
 
             foreach (var player in players)
             {
-                _mailService.SendBetWarning(player, player.Bets.Where(b => b.Match1.StartTime.AddHours(-2) == AbsoluteExpiration && !(b.Score1.HasValue && b.Score2.HasValue)).ToList());
+                _mailService.SendBetWarning(player, player.Bets.Where(b => b.Match1.StartTime.AddHours(-2) == AbsoluteExpiration).ToList());
             }
         }
 

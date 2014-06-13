@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading;
 using BigBallz.Core;
 using BigBallz.Helpers;
-using BigBallz.Models;
 using System.Threading.Tasks;
 using Elmah;
 
@@ -75,7 +74,7 @@ namespace BigBallz.Services.L2S
             var sb = new StringBuilder("<table><thead><tr><th>Jogador</th><td>Aposta</td></thead><tbody>");
             foreach (var bet in bets)
             {
-                var matchString = string.Format("{0} {1} X {2} {3}", bet.Match1.Team1.Name, bet.Score1.HasValue ? bet.Score1.Value.ToString(CultureInfo.InvariantCulture) : "-", bet.Score2.HasValue ? bet.Score2.Value.ToString(CultureInfo.InvariantCulture) : "-", bet.Match1.Team2.Name);
+                var matchString = string.Format("{0} {1} X {2} {3}", bet.Match1.Team1.Name, bet.Score1.ToString(CultureInfo.InvariantCulture),bet.Score2.ToString(CultureInfo.InvariantCulture), bet.Match1.Team2.Name);
                 sb.AppendFormat("<tr><td>{0}</td><td>{1}</td></tr>", bet.User1.UserName, matchString);
             }
             sb.Append("</tbody></table>");
@@ -92,7 +91,7 @@ namespace BigBallz.Services.L2S
             var sb = new StringBuilder("<table><thead><tr><th>Jogador</th><td>Bonus</td><td>Aposta</td></thead><tbody>");
             foreach (var bet in bonusBets)
             {
-                var bonusString = bet.Bonus11.Name;
+                var bonusString = bet.Bonus1.Name;
                 var bonusBetString = bet.Team1 != null ? bet.Team1.Name : string.Empty;
                 sb.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>", bet.User1.UserName, bonusString, bonusBetString);
             }

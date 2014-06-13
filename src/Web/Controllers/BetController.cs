@@ -149,7 +149,7 @@ namespace BigBallz.Controllers
                                                          {
                                                              BonusBet = bonusBets.FirstOrDefault(x => x.Bonus == bonus.BonusId),
                                                              Bonus = bonus,
-                                                             PointsEarned = pointsEarned.FirstOrDefault(x => x.BonusBet.Bonus == bonus.BonusId && !string.IsNullOrEmpty(x.BonusBet.Bonus11.Team)).NullSafe(x => x.Points),
+                                                             PointsEarned = pointsEarned.FirstOrDefault(x => x.BonusBet.Bonus == bonus.BonusId && !string.IsNullOrEmpty(x.BonusBet.Bonus1.Team)).NullSafe(x => x.Points),
                                                              BonusBetStatistic = bonusBetStatistic
                                                          }).ToList(),
 
@@ -257,7 +257,7 @@ namespace BigBallz.Controllers
                 }
 
                 var erroStringBuilder = new StringBuilder();
-                foreach (var bet in bets.Where(x => x.Score1.HasValue && x.Score2.HasValue))
+                foreach (var bet in bets)
                 {
                     var userBet = bet;
                     if (bet.BetId > 0)

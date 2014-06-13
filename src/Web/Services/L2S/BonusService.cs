@@ -27,18 +27,18 @@ namespace BigBallz.Services.L2S
 
         public void Add(Bonus bonus)
         {
-            _db.Bonus.InsertOnSubmit(bonus);
+            _db.Bonus.Add(bonus);
         }
 
         public void Delete(Bonus bonus)
         {
-            _db.Bonus.DeleteOnSubmit(bonus);
+            _db.Bonus.Remove(bonus);
         }
 
         public void Save()
         {
             _cache.Clear();
-            _db.SubmitChanges();
+            _db.SaveChanges();
         }
 
         public void Dispose()

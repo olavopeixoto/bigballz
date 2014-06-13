@@ -61,6 +61,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\packages\EntityFramework.6.1.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\packages\EntityFramework.6.1.0\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -89,6 +95,8 @@
     <Reference Include="System.Data.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions">
@@ -126,18 +134,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Entity\Bet.cs" />
+    <Compile Include="Models\Entity\BigBallzDataContext.cs" />
+    <Compile Include="Models\Entity\Bonus.cs" />
+    <Compile Include="Models\Entity\BonusBet.cs" />
+    <Compile Include="Models\Entity\Comment.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
+    <Compile Include="Models\Entity\Group.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\JobHost.cs" />
     <Compile Include="Infrastructure\DataContextProvider.cs" />
     <Compile Include="Infrastructure\DependenciesRegistry.cs" />
     <Compile Include="Infrastructure\StructuremapControllerFactory.cs" />
     <Compile Include="Infrastructure\StructuremapDependencyResolver.cs" />
+    <Compile Include="Models\Entity\Match.cs" />
     <Compile Include="Models\BonusBetStatistic.cs" />
     <Compile Include="Models\MatchBetStatistic.cs" />
     <Compile Include="Models\TransactionStatus.cs" />
     <Compile Include="Models\UserMatchPoints.cs" />
+    <Compile Include="Models\Entity\PaymentStatus.cs" />
+    <Compile Include="Models\Entity\Role.cs" />
     <Compile Include="Services\BetExpirationWarningTask.cs" />
     <Compile Include="Services\AlertEndBetTask.cs" />
     <Compile Include="Controllers\AuthController.cs" />
@@ -195,14 +212,7 @@
     <Compile Include="Infrastructure\Logging\EventLogLogger.cs" />
     <Compile Include="Infrastructure\Logging\ILogger.cs" />
     <Compile Include="Infrastructure\Logging\LogUtility.cs" />
-    <Compile Include="Models\BigBallz.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BigBallz.dbml</DependentUpon>
-    </Compile>
     <Compile Include="Models\EmailAttribute.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Models\Team.cs" />
     <Compile Include="Services\IBigBallzService.cs" />
     <Compile Include="Services\IStageService.cs" />
     <Compile Include="Services\IMatchService.cs" />
@@ -223,6 +233,10 @@
     <Compile Include="Services\L2S\TeamService.cs" />
     <Compile Include="Models\UserPoints.cs" />
     <Compile Include="Services\L2S\UserService.cs" />
+    <Compile Include="Models\Entity\Stage.cs" />
+    <Compile Include="Models\Entity\Team.cs" />
+    <Compile Include="Models\Entity\User.cs" />
+    <Compile Include="Models\Entity\UserMapping.cs" />
     <Compile Include="ViewModels\BetViewModel.cs" />
     <Compile Include="ViewModels\BonusViewModel.cs" />
     <Compile Include="ViewModels\MatchBetsViewModel.cs" />
@@ -438,11 +452,6 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="App_Browsers\ie11.browser" />
-    <None Include="Models\BigBallz.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>BigBallz.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Views\Shared\Site.Master" />
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\bigballz - FTP Arvixe.pubxml" />
@@ -459,11 +468,6 @@
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Models\BigBallz.dbml.layout">
-      <DependentUpon>BigBallz.dbml</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

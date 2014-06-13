@@ -24,17 +24,17 @@ namespace BigBallz.Services.L2S
 
         public void Add(Group group)
         {
-            _db.Groups.InsertOnSubmit(group);
+            _db.Groups.Add(group);
         }
 
         public void Delete(Group group)
         {
-            _db.Groups.DeleteOnSubmit(group);
+            _db.Groups.Remove(group);
         }
 
         public void Save()
         {
-            _db.SubmitChanges();
+            _db.SaveChanges();
         }
 
         public void Dispose()

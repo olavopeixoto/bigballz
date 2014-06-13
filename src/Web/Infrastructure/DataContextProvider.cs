@@ -9,12 +9,12 @@ namespace BigBallz.Infrastructure
         public BigBallzDataContext CreateContext()
         {
             var conn = new StackExchange.Profiling.Data.ProfiledDbConnection(GetConnection(), MiniProfiler.Current);
-            return new BigBallzDataContext(conn);
+            return new BigBallzDataContext();
         }
 
         private static DbConnection GetConnection()
         {
-            return new BigBallzDataContext().Connection;
+            return new BigBallzDataContext().Database.Connection;
         }
     }
 }

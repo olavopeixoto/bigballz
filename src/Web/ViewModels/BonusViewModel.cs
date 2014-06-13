@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using BigBallz.Models;
 
 namespace BigBallz.ViewModels
 {

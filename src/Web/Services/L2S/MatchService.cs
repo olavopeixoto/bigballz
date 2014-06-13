@@ -20,15 +20,15 @@ namespace BigBallz.Services.L2S
 
         public IEnumerable<Match> GetAll()
         {
-            var options = new DataLoadOptions();
-            options.LoadWith<Match>(x => x.Team1);
-            options.LoadWith<Match>(x => x.Team2);
-            options.LoadWith<Match>(x => x.Stage);
-            options.LoadWith<Team>(x => x.Group);
+            //var options = new DataLoadOptions();
+            //options.LoadWith<Match>(x => x.Team1Id);
+            //options.LoadWith<Match>(x => x.Team2Id);
+            //options.LoadWith<Match>(x => x.StageId);
+            //options.LoadWith<Team>(x => x.GroupId);
 
             using (var db = _provider.CreateContext())
             {
-                db.LoadOptions = options;
+                //db.LoadOptions = options;
 
                 return db.Matches.ToList();
             }
@@ -38,13 +38,13 @@ namespace BigBallz.Services.L2S
         {
             if (_context == null)
             {
-                var options = new DataLoadOptions();
-                options.LoadWith<Match>(x => x.Team1);
-                options.LoadWith<Match>(x => x.Team2);
-                options.LoadWith<Match>(x => x.Stage);
+                //var options = new DataLoadOptions();
+                //options.LoadWith<Match>(x => x.Team1Id);
+                //options.LoadWith<Match>(x => x.Team2Id);
+                //options.LoadWith<Match>(x => x.StageId);
 
                 _context = _provider.CreateContext();
-                _context.LoadOptions = options;
+                //_context.LoadOptions = options;
             }
 
             return _context.Matches.SingleOrDefault(d => d.MatchId == id);
@@ -52,13 +52,13 @@ namespace BigBallz.Services.L2S
 
         public IEnumerable<Match> GetNextMatches()
         {
-            var options = new DataLoadOptions();
-            options.LoadWith<Match>(x => x.Team1);
-            options.LoadWith<Match>(x => x.Team2);
+            //var options = new DataLoadOptions();
+            //options.LoadWith<Match>(x => x.Team1Id);
+            //options.LoadWith<Match>(x => x.Team2Id);
 
             using (var db = _provider.CreateContext())
             {
-                db.LoadOptions = options;
+                //db.LoadOptions = options;
 
                 return db.Matches.Where(x => x.StartTime > DateTime.Now.BrazilTimeZone())
                         .Take(5)
@@ -68,13 +68,13 @@ namespace BigBallz.Services.L2S
 
         public IEnumerable<Match> GetLastPlayedMatches()
         {
-            var options = new DataLoadOptions();
-            options.LoadWith<Match>(x => x.Team1);
-            options.LoadWith<Match>(x => x.Team2);
+            //var options = new DataLoadOptions();
+            //options.LoadWith<Match>(x => x.Team1Id);
+            //options.LoadWith<Match>(x => x.Team2Id);
 
             using (var db = _provider.CreateContext())
             {
-                db.LoadOptions = options;
+                //db.LoadOptions = options;
 
                 return
                     db.Matches.Where(x => x.StartTime < DateTime.Now.BrazilTimeZone())
@@ -87,8 +87,8 @@ namespace BigBallz.Services.L2S
         {
             using (var db = _provider.CreateContext())
             {
-                db.Matches.InsertOnSubmit(match);
-                db.SubmitChanges();
+                db.Matches.Add(match);
+                db.SaveChanges();
                 AlertEndBetTask.AddTask(match.StartTime.AddHours(-1));
                 BetExpirationWarningTask.AddTask(match.StartTime.AddHours(-2));
             }
@@ -98,14 +98,14 @@ namespace BigBallz.Services.L2S
         {
             if (_context == null) return;
 
-            _context.Matches.DeleteOnSubmit(match);
+            _context.Matches.Remove(match);
         }
 
         public void Save()
         {
             if (_context == null) return;
 
-            _context.SubmitChanges();
+            _context.SaveChanges();
         }
 
         public DateTime GetStartDate()

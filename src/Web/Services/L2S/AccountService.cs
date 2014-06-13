@@ -56,9 +56,9 @@ namespace BigBallz.Services.L2S
 
             user.UserMappings.Add(map);
 
-            _db.Users.InsertOnSubmit(user);
+            _db.Users.Add(user);
 
-            _db.SubmitChanges();
+            _db.SaveChanges();
 
             _cache.Clear();
         }
@@ -78,7 +78,7 @@ namespace BigBallz.Services.L2S
                           };
             user.UserMappings.Add(map);
 
-            _db.SubmitChanges();
+            _db.SaveChanges();
         }
 
         public bool AuthorizeUser(string userName, string adminName, bool pagSeguro = false)
@@ -89,16 +89,12 @@ namespace BigBallz.Services.L2S
             user.Authorized = true;
             user.PagSeguro = pagSeguro;
             user.AuthorizedBy = adminName;
-            if (user.UserRoles.All(x => x.Role.Name.ToLowerInvariant() != BBRoles.Player))
+            if (user.Roles.All(x => x.Name.ToLowerInvariant() != BBRoles.Player))
             {
-                user.UserRoles.Add(new UserRole
-                {
-                    Role = _db.Roles.FirstOrDefault(x => x.Name == BBRoles.Player),
-                    User = user
-                });
+                user.Roles.Add(_db.Roles.FirstOrDefault(x => x.Name == BBRoles.Player));
             }
             
-            _db.SubmitChanges();
+            _db.SaveChanges();
 
             _cache.Clear();
 
@@ -114,7 +110,7 @@ namespace BigBallz.Services.L2S
             if (!user.EmailAddressVerified)
             {
                 user.EmailAddressVerified = true;
-                _db.SubmitChanges();
+                _db.SaveChanges();
                 _cache.Clear();
             }
 
@@ -124,14 +120,14 @@ namespace BigBallz.Services.L2S
         public int GetTotalAuthorizedUsers()
         {
             return (from user in _db.Users
-                    where user.Authorized && user.UserRoles.All(x => x.Role.Name != BBRoles.Admin)
+                    where user.Authorized && user.Roles.All(x => x.Name != BBRoles.Admin)
                     select user).Count();
         }
 
         public int GetTotalPlayers()
         {
             return (from user in _db.Users
-                    where user.Authorized && user.UserRoles.Any(x => x.Role.Name == BBRoles.Player)
+                    where user.Authorized && user.Roles.Any(x => x.Name == BBRoles.Player)
                     select user).Count();
         }
 
@@ -142,12 +138,12 @@ namespace BigBallz.Services.L2S
 
         public IList<User> GetAllPlayers()
         {
-            return _db.Users.Where(x => x.UserRoles.Any(y => y.Role.Name == BBRoles.Player)).ToList();
+            return _db.Users.Where(x => x.Roles.Any(y => y.Name == BBRoles.Player)).ToList();
         }
 
         public IList<User> GetAllUnAuthorizedUsers()
         {
-            return _db.Users.Where(x => !x.UserRoles.Any(y => y.Role.Name == BBRoles.Player)).ToList();
+            return _db.Users.Where(x => x.Roles.All(y => y.Name != BBRoles.Player)).ToList();
         }
 
         public void UpdateUserInformation(User user)
@@ -157,7 +153,7 @@ namespace BigBallz.Services.L2S
             if (dbUser == null) return;
 
             dbUser.PhotoUrl = user.PhotoUrl;
-            _db.SubmitChanges();
+            _db.SaveChanges();
             _cache.Clear();
         }
 
@@ -176,8 +172,8 @@ namespace BigBallz.Services.L2S
                 Status = GetStatusDescription(transaction.TransactionStatus)
             };
 
-            _db.PaymentStatus.InsertOnSubmit(paymentStatus);
-            _db.SubmitChanges();
+            _db.PaymentStatus.Add(paymentStatus);
+            _db.SaveChanges();
         }
 
         private string GetPaymentMethodDescription(int paymentMethodCode)

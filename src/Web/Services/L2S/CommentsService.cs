@@ -21,9 +21,10 @@ namespace BigBallz.Services.L2S
         {
             using (var db = _provider.CreateContext())
             {
-                var options = new DataLoadOptions();
-                options.LoadWith<Comment>(x => x.User1);
-                db.LoadOptions = options;
+                //var options = new DataLoadOptions();
+                //options.LoadWith<Comment>(x => x.User1);
+                //db.LoadOptions = options;
+
                 return db.Comments.OrderByDescending(x => x.CommentedOn).ToList();
             }
         }
@@ -32,9 +33,10 @@ namespace BigBallz.Services.L2S
         {
             using (var db = _provider.CreateContext())
             {
-                var options = new DataLoadOptions();
-                options.LoadWith<Comment>(x => x.User1);
-                db.LoadOptions = options;
+                //var options = new DataLoadOptions();
+                //options.LoadWith<Comment>(x => x.User1);
+                //db.LoadOptions = options;
+
                 return db.Comments.OrderByDescending(x => x.CommentedOn).Take(top).ToList();
             }
         }
@@ -43,9 +45,10 @@ namespace BigBallz.Services.L2S
         {
             using (var db = _provider.CreateContext())
             {
-                var options = new DataLoadOptions();
-                options.LoadWith<Comment>(x => x.User1);
-                db.LoadOptions = options;
+                //var options = new DataLoadOptions();
+                //options.LoadWith<Comment>(x => x.User1);
+                //db.LoadOptions = options;
+
                 return db.Comments.Where(x => x.User1.UserName == userName).ToList();
             }
         }
@@ -54,7 +57,8 @@ namespace BigBallz.Services.L2S
         {
             using (var db = _provider.CreateContext())
             {
-                var user = db.Users.FirstOrDefault(x => x.UserName == userName);
+                var user = db.Users.First(x => x.UserName == userName);
+
                 var post = new Comment
                 {
                     Comments = comment,
@@ -62,7 +66,7 @@ namespace BigBallz.Services.L2S
                     CommentedOn = DateTime.Now.BrazilTimeZone()
                 };
                 user.Comments.Add(post);
-                db.SubmitChanges();
+                db.SaveChanges();
             }
         }
 

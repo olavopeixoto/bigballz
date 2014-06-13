@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Web.Mvc;
 using BigBallz.Core.Log;
-using BigBallz.Models;
 using BigBallz.Services;
 using BigBallz.ViewModels;
 
@@ -52,9 +51,7 @@ namespace BigBallz.Controllers
             try
             {
                 var user = _userService.Get(User.Identity.Name);
-
-                //Verifica se usuario tem papel de admin
-                if (user.UserRoles.Count > 1)
+                if (user.IsAdmin)
                 {
                     _matchService.Add(match);
                     return RedirectToAction("Index");
@@ -100,7 +97,7 @@ namespace BigBallz.Controllers
                 var user = _userService.Get(User.Identity.Name);
 
                 //Verifica se usuario tem papel de admin
-                if (user.UserRoles.Count == 0)
+                if (!user.IsAdmin)
                 {
                     throw new Exception("Usuário não tem permissão para editar jogos.");
                 }

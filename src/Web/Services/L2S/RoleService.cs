@@ -29,17 +29,17 @@ namespace BigBallz.Services.L2S
 
         public void Add(Role role)
         {
-            _db.Roles.InsertOnSubmit(role);
+            _db.Roles.Add(role);
         }
 
         public void Delete(Role role)
         {
-            _db.Roles.DeleteOnSubmit(role);
+            _db.Roles.Remove(role);
         }
 
         public void Save()
         {
-            _db.SubmitChanges();
+            _db.SaveChanges();
         }
 
         public void Dispose()

@@ -52,28 +52,27 @@ namespace BigBallz.Controllers
                 if (user.Authorized && !dbUser.Authorized)
                 {
                     var rolePlayer = _roleService.Get(2); // player
-                    var userRolePlayer = new UserRole {UserId = user.UserId, RoleId = rolePlayer.RoleId};
-                    dbUser.UserRoles.Add(userRolePlayer);
+                    dbUser.Roles.Add(rolePlayer);
                     dbUser.AuthorizedBy = User.Identity.Name;
+
                     sendConfirmationIfSucceed = true;
                 }
                 else if (!user.Authorized && dbUser.Authorized)
                 {
-                    var userRole = dbUser.UserRoles.FirstOrDefault(x => x.Role.Name.ToLowerInvariant() == BBRoles.Player);
-                    if (userRole != null) dbUser.UserRoles.Remove(userRole);
+                    var userRole = dbUser.Roles.FirstOrDefault(x => x.Name.ToLowerInvariant() == BBRoles.Player);
+                    if (userRole != null) dbUser.Roles.Remove(userRole);
                     dbUser.AuthorizedBy = null;
                 }
 
                 if (user.IsAdmin && !dbUser.IsAdmin)
                 {
                     var adminRole = _roleService.Get(1); // admin
-                    var adminUserRole = new UserRole { UserId = user.UserId, RoleId = adminRole.RoleId };
-                    dbUser.UserRoles.Add(adminUserRole);
+                    dbUser.Roles.Add(adminRole);
                 }
                 else if (!user.IsAdmin && dbUser.IsAdmin)
                 {
-                    var userRole = dbUser.UserRoles.FirstOrDefault(x => x.Role.Name.ToLowerInvariant() == BBRoles.Admin);
-                    if (userRole!=null) dbUser.UserRoles.Remove(userRole);
+                    var userRole = dbUser.Roles.FirstOrDefault(x => x.Name.ToLowerInvariant() == BBRoles.Admin);
+                    if (userRole!=null) dbUser.Roles.Remove(userRole);
                 }
 
                 dbUser.Authorized = user.Authorized;

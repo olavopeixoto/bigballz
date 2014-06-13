@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Security;
+using BigBallz.Core;
 using BigBallz.Core.Caching;
 using BigBallz.Core.IoC;
 using BigBallz.Infrastructure;
@@ -21,7 +22,7 @@ namespace BigBallz.Services
         {
             using (var db = _provider.CreateContext())
             {
-                return db.Users.Any(x => x.UserName == username && x.UserRoles.Any(r => r.Role.Name == roleName));
+                return db.Users.Any(x => x.UserName == username && x.Roles.Any(r => r.Name == roleName));
             }
         }
 
@@ -36,7 +37,7 @@ namespace BigBallz.Services
             using (var db = _provider.CreateContext())
             {
                 var user = db.Users.FirstOrDefault(x => x.UserName == username);
-                var result = user == null ? new string[] {} : user.UserRoles.Select(x => x.Role.Name).ToArray();
+                var result = user == null ? new string[] {} : user.Roles.Select(x => x.Name).ToArray();
                 
                 cache.Set(key, result);
 
@@ -52,8 +53,8 @@ namespace BigBallz.Services
                                {
                                    Name = roleName
                                };
-                db.Roles.InsertOnSubmit(role);
-                db.SubmitChanges();
+                db.Roles.Add(role);
+                db.SaveChanges();
             }
         }
 
@@ -74,21 +75,15 @@ namespace BigBallz.Services
         {
             using (var db = _provider.CreateContext())
             {
-                foreach (var roleName in roleNames)
+                foreach (var user in db.Users.Where(u => usernames.Contains(u.UserName)))
                 {
-                    var role = db.Roles.FirstOrDefault(x => x.Name == roleName);
-                    if (role != null)
+                    foreach (var role in db.Roles.Where(r => roleNames.Contains(r.Name)))
                     {
-                        var users = db.Users.Where(x => usernames.Contains(x.UserName)).Select(x => new UserRole
-                                                                                                         {
-                                                                                                             Role = role,
-                                                                                                             User = x
-                                                                                                         }).ToList();
-                        role.UserRoles.AddRange(users);
+                        user.Roles.Add(role);
                     }
                 }
 
-                db.SubmitChanges();
+                db.SaveChanges();
             }
         }
 
@@ -96,10 +91,15 @@ namespace BigBallz.Services
         {
             using (var db = _provider.CreateContext())
             {
-                var userRoles =
-                    db.UserRoles.Where(x => usernames.Contains(x.User.UserName) && roleNames.Contains(x.Role.Name));
-                db.UserRoles.DeleteAllOnSubmit(userRoles);
-                db.SubmitChanges();
+                foreach (var user in db.Users.Where(u => usernames.Contains(u.UserName)))
+                {
+                    foreach (var role in db.Roles.Where(r => roleNames.Contains(r.Name)))
+                    {
+                        user.Roles.Remove(role);
+                    }
+                }
+
+                db.SaveChanges();
             }
         }
 
@@ -107,7 +107,9 @@ namespace BigBallz.Services
         {
             using (var db = _provider.CreateContext())
             {
-                return db.UserRoles.Where(x => x.Role.Name == roleName).Select(x => x.User.UserName).ToArray();
+                return
+                    db.Roles.FirstOrDefault(r => r.Name == roleName)
+                        .NullSafe(r => r.Users.Select(u => u.UserName).ToArray());
             }
         }
 
@@ -124,7 +126,7 @@ namespace BigBallz.Services
             using (var db = _provider.CreateContext())
             {
                 var role = db.Roles.FirstOrDefault(x => x.Name == roleName);
-                return role == null ? new string[] {} : role.UserRoles.Select(x => x.User.UserName).ToArray();
+                return role == null ? new string[] {} : role.Users.Select(x => x.UserName).ToArray();
             }
         }
 

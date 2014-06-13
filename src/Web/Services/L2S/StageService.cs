@@ -27,18 +27,18 @@ namespace BigBallz.Services.L2S
 
         public void Add(Stage stage)
         {
-            _db.Stages.InsertOnSubmit(stage);
+            _db.Stages.Add(stage);
         }
 
         public void Delete(Stage stage)
         {
-            _db.Stages.DeleteOnSubmit(stage);
+            _db.Stages.Remove(stage);
         }
 
         public void Save()
         {
             _cache.Clear();
-            _db.SubmitChanges();
+            _db.SaveChanges();
         }
 
         public void Dispose()

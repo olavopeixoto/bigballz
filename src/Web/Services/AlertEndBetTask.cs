@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Linq;
+using System.Data.Entity;
 using System.Linq;
 using BigBallz.Core;
 using BigBallz.Core.IoC;
@@ -51,16 +51,16 @@ namespace BigBallz.Services
             IList<User> players;
             using (var context = _provider.CreateContext())
             {
-                var loadOptions = new DataLoadOptions();
-                loadOptions.LoadWith<Bet>(x => x.Match1);
-                loadOptions.LoadWith<Bet>(x => x.User1);
-                loadOptions.LoadWith<Match>(x => x.Team1);
-                loadOptions.LoadWith<Match>(x => x.Team2);
-                context.LoadOptions = loadOptions;
-                bets =
-                    context.Bets.Where(x => x.Match1.StartTime.AddHours(-1) == AbsoluteExpiration).OrderBy(
+                //var loadOptions = new DataLoadOptions();
+                //loadOptions.LoadWith<Bet>(x => x.Match1);
+                //loadOptions.LoadWith<Bet>(x => x.User1);
+                //loadOptions.LoadWith<Match>(x => x.Team1Id);
+                //loadOptions.LoadWith<Match>(x => x.Team2Id);
+                //context.LoadOptions = loadOptions;
+
+                bets = context.Bets.Where(x => x.Match1.StartTime.AddHours(-1) == AbsoluteExpiration).OrderBy(
                         x => x.Match).ThenBy(x => x.User1.UserName).ToList();
-                players = context.Users.Where(x => x.UserRoles.Any(y => y.Role.Name == BBRoles.Player)).ToList();
+                players = context.Users.Where(x => x.Roles.Any(y => y.Name == BBRoles.Player)).ToList();
             }
 
             foreach (var player in players)
@@ -75,7 +75,7 @@ namespace BigBallz.Services
 
             using (var context = provider.CreateContext())
             {
-                var betEndTime = context.Matches.Where(x => !x.Score1.HasValue && !x.Score2.HasValue && x.StartTime.AddHours(-1) >= DateTime.Now.BrazilTimeZone()).GroupBy(x => x.StartTime).Select(x => x.Key.AddHours(-1)).OrderBy(x => x).ToList();
+                var betEndTime = context.Matches.Where(x => !x.Score1.HasValue && !x.Score2.HasValue && DbFunctions.AddHours(x.StartTime, -1) >= DateTime.Now.BrazilTimeZone()).GroupBy(x => x.StartTime).Select(x => DbFunctions.AddHours(x.Key,-1).Value).OrderBy(x => x).ToList();
                 foreach(var startTime in betEndTime)
                 {
                     AddTask(startTime);

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Data.Linq;
 using System.Linq;
 using BigBallz.Core;
-using BigBallz.Models;
 
 namespace BigBallz.Services.L2S
 {
@@ -16,14 +14,14 @@ namespace BigBallz.Services.L2S
         {
             _db = context;
 
-            var options = new DataLoadOptions();
-            options.LoadWith<BonusBet>(x => x.Bonus11);
-            options.LoadWith<BonusBet>(x => x.Team1);
-            options.LoadWith<Bet>(x => x.Match1);
-            options.LoadWith<Match>(x => x.Team1);
-            options.LoadWith<Match>(x => x.Team2);
+            //var options = new DataLoadOptions();
+            //options.LoadWith<BonusBet>(x => x.Bonus11);
+            //options.LoadWith<BonusBet>(x => x.Team1);
+            //options.LoadWith<Bet>(x => x.Match1);
+            //options.LoadWith<Match>(x => x.Team1);
+            //options.LoadWith<Match>(x => x.Team2);
 
-            _db.LoadOptions = options;
+            //_db.LoadOptions = options;
         }
 
         public IEnumerable<Bet> GetAll()
@@ -56,7 +54,7 @@ namespace BigBallz.Services.L2S
             var match = _db.Matches.Single(x => x.MatchId == bet.Match);
             if (match.StartTime.AddHours(-1) >= DateTime.Now.BrazilTimeZone())
             {
-                _db.Bets.InsertOnSubmit(bet);
+                _db.Bets.Add(bet);
             }
             else
             {
@@ -66,17 +64,17 @@ namespace BigBallz.Services.L2S
 
         public void Add(IList<Bet> bets)
         {
-            _db.Bets.InsertAllOnSubmit(bets.Where(x => _db.Matches.Where(y => y.StartTime.AddHours(-1) >= DateTime.Now.BrazilTimeZone()).Select(y => y.MatchId).Contains(x.Match)));
+            _db.Bets.AddRange(bets.Where(x => _db.Matches.Where(y => y.StartTime.AddHours(-1) >= DateTime.Now.BrazilTimeZone()).Select(y => y.MatchId).Contains(x.Match)));
         }
 
         public void Delete(Bet bet)
         {
-            _db.Bets.DeleteOnSubmit(bet);
+            _db.Bets.Remove(bet);
         }
 
         public void Save()
         {
-            _db.SubmitChanges();
+            _db.SaveChanges();
         }
 
         public void Dispose()

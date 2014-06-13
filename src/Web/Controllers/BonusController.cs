@@ -68,7 +68,7 @@ namespace BigBallz.Controllers
                 var user = _userService.Get(User.Identity.Name);
 
                 //Verifica se usuario tem papel de admin
-                if (user.UserRoles.Count > 1)
+                if (user.IsAdmin)
                 {
                     var dbBonus = _bonusService.Get(bonus.BonusId);
 

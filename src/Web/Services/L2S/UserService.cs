@@ -33,7 +33,7 @@ namespace BigBallz.Services.L2S
         public void Save()
         {
             _cache.Clear();
-            _db.SubmitChanges();
+            _db.SaveChanges();
         }
 
         public void Dispose()

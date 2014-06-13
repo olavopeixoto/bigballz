@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Data.Linq;
 using System.Linq;
-using BigBallz.Models;
 
 namespace BigBallz.Services.L2S
 {
@@ -13,11 +11,11 @@ namespace BigBallz.Services.L2S
         {
             _db = context;
 
-            var options = new DataLoadOptions();
-            options.LoadWith<BonusBet>(x => x.Bonus11);
-            options.LoadWith<BonusBet>(x => x.Team1);
+            //var options = new DataLoadOptions();
+            //options.LoadWith<BonusBet>(x => x.Bonus11);
+            //options.LoadWith<BonusBet>(x => x.Team1);
 
-            _db.LoadOptions = options;
+            //_db.LoadOptions = options;
         }
 
         public IEnumerable<BonusBet> GetAll()
@@ -42,22 +40,22 @@ namespace BigBallz.Services.L2S
 
         public void Add(BonusBet bonusBet)
         {
-            _db.BonusBets.InsertOnSubmit(bonusBet);
+            _db.BonusBets.Add(bonusBet);
         }
 
         public void Add(System.Collections.Generic.IList<BonusBet> bonusBetList)
         {
-            _db.BonusBets.InsertAllOnSubmit(bonusBetList);
+            _db.BonusBets.AddRange(bonusBetList);
         }
 
         public void Delete(BonusBet bonusBetBet)
         {
-            _db.BonusBets.DeleteOnSubmit(bonusBetBet);
+            _db.BonusBets.Remove(bonusBetBet);
         }
 
         public void Save()
         {
-            _db.SubmitChanges();
+            _db.SaveChanges();
         }
 
         public void Dispose()

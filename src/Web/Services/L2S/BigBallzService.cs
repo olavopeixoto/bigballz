@@ -16,17 +16,17 @@ namespace BigBallz.Services.L2S
         {
             _db = context;
 
-            var options = new DataLoadOptions();
-            options.LoadWith<BonusBet>(x => x.Bonus11);
-            options.LoadWith<BonusBet>(x => x.Team1);
-            options.LoadWith<Bet>(x => x.User1);
-            options.LoadWith<Bet>(x => x.Match1);
-            options.LoadWith<Match>(x => x.Team1);
-            options.LoadWith<Match>(x => x.Team2);
-            options.LoadWith<User>(x => x.Bets);
-            options.LoadWith<User>(x => x.BonusBets);
+            //var options = new DataLoadOptions();
+            //options.LoadWith<BonusBet>(x => x.Bonus11);
+            //options.LoadWith<BonusBet>(x => x.Team1);
+            //options.LoadWith<Bet>(x => x.User1);
+            //options.LoadWith<Bet>(x => x.Match1);
+            //options.LoadWith<Match>(x => x.Team1);
+            //options.LoadWith<Match>(x => x.Team2);
+            //options.LoadWith<User>(x => x.Bets);
+            //options.LoadWith<User>(x => x.BonusBets);
 
-            _db.LoadOptions = options;
+            //_db.LoadOptions = options;
         }
 
         private int GetTotalUserPoints(string userName)
@@ -42,13 +42,13 @@ namespace BigBallz.Services.L2S
         #region Points Rules
         protected int BetPoints(Bet bet)
         {
-            if (!bet.Score1.HasValue || !bet.Score2.HasValue || !bet.Match1.Score1.HasValue || !bet.Match1.Score2.HasValue)
+            if (!bet.Match1.Score1.HasValue || !bet.Match1.Score2.HasValue)
             {
                 return 0;
             }
 
-            var betScore1 = bet.Score1.Value;
-            var betScore2 = bet.Score2.Value;
+            var betScore1 = bet.Score1;
+            var betScore2 = bet.Score2;
             var matchScore1 = bet.Match1.Score1.Value;
             var matchScore2 = bet.Match1.Score2.Value;
 
@@ -88,7 +88,7 @@ namespace BigBallz.Services.L2S
         }
         private int BonusBetPoints(BonusBet bet)
         {
-            if (bet.Team != bet.Bonus11.Team) return 0;
+            if (bet.Team != bet.Bonus1.Team) return 0;
 
             switch (bet.Bonus)
             {
@@ -254,7 +254,7 @@ namespace BigBallz.Services.L2S
 
         public decimal GetTotalPrize()
         {
-            return _db.Users.Where(x => x.Authorized && x.UserRoles.Any(y => y.Role.Name == BBRoles.Player))
+            return _db.Users.Where(x => x.Authorized && x.Roles.Any(y => y.Name == BBRoles.Player))
                 .Sum(x => x.PagSeguro ? (ConfigurationHelper.Price * (decimal) (1.0 - 0.0499) + (decimal) 0.4) : ConfigurationHelper.Price);
         }
 
@@ -265,10 +265,9 @@ namespace BigBallz.Services.L2S
                 Enumerable.Count(
                     bets.Where(
                         bet =>
-                        bet.Score1 != null && bet.Score2 != null && bet.Match1.Score1 != null &&
+                        bet.Match1.Score1 != null &&
                         bet.Match1.Score2 != null),
-                    bet =>
-                    PlacarExato(bet.Score1.Value, bet.Score2.Value, bet.Match1.Score1.Value, bet.Match1.Score2.Value));
+                    bet => PlacarExato(bet.Score1, bet.Score2, bet.Match1.Score1.Value, bet.Match1.Score2.Value));
 
             return exactScores;
         }
@@ -297,10 +296,10 @@ namespace BigBallz.Services.L2S
             return new MatchBetStatistic
                        {
                            Match = bets.First().Match1,
-                           AverageScore1 = bets.Average(x => x.Score1).Value,
-                           AverageScore2 = bets.Average(x => x.Score2).Value,
-                           Score1MostBet = mostBetScore.Score1.Value,
-                           Score2MostBet = mostBetScore.Score2.Value,
+                           AverageScore1 = bets.Average(x => x.Score1),
+                           AverageScore2 = bets.Average(x => x.Score2),
+                           Score1MostBet = mostBetScore.Score1,
+                           Score2MostBet = mostBetScore.Score2,
                            Team1Perc = bets.Count(x => x.Score1 > x.Score2) / totalBets,
                            Team2Perc = bets.Count(x => x.Score1 < x.Score2) / totalBets,
                            TiePerc = bets.Count(x => x.Score1 == x.Score2) / totalBets,
@@ -313,13 +312,16 @@ namespace BigBallz.Services.L2S
 
             double totalBets = bets.Count();
 
-            var mostBetTeam =
-                bets.GroupBy(x => new { x.Team1 }).Select(x => new { x.Key, qtd = x.Count() }).OrderByDescending(
-                    x => x.qtd).Select(x => x.Key).First();
+            var mostBetTeam = bets
+                                .GroupBy(x => new { x.Team1 })
+                                .Select(x => new { x.Key, qtd = x.Count() })
+                                .OrderByDescending(x => x.qtd)
+                                .Select(x => x.Key)
+                                .First();
             
             return new BonusBetStatistic
             {
-                Bonus = bets.First().Bonus11,
+                Bonus = bets.First().Bonus1,
                 Team = mostBetTeam.Team1,
                 TeamPerc = bets.Count(x => x.Team1 == mostBetTeam.Team1) / totalBets,
             };
