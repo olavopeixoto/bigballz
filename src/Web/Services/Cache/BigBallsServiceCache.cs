@@ -184,7 +184,7 @@ namespace BigBallz.Services.Cache
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _service.Dispose();
         }
     }
 }

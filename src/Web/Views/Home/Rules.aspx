@@ -36,6 +36,9 @@
     Cada jogador poderá apostar o BONUS de campeão, vice-campeão, terceiro e quarto colocado
     da Copa até 1 (uma) hora antes da primeira partida da copa.
     </p>
+    <p>
+      Para o resultado do jogo, será considerado o resultado oficial da fifa. Portanto, para a fase mata mata, o que fica valendo é o resultado final após a prorrogação, quando houver. Não será considerado os gols das disputas de pênaltis.
+    </p>
 
     <h3>3. CRITÉRIO DE PONTUAÇÃO</h3>
     <h4>3.1 Jogos</h4>

@@ -23,8 +23,8 @@ namespace BigBallz.Services.L2S
             options.LoadWith<Bet>(x => x.Match1);
             options.LoadWith<Match>(x => x.Team1);
             options.LoadWith<Match>(x => x.Team2);
-            options.LoadWith<User>(x => x.Bets);
-            options.LoadWith<User>(x => x.BonusBets);
+            //options.LoadWith<User>(x => x.Bets);
+            //options.LoadWith<User>(x => x.BonusBets);
 
             _db.LoadOptions = options;
         }
