@@ -9,7 +9,7 @@
     <h3>
         Fase de grupos</h3>
     <div id="group-stage">
-        <%foreach (var group in Model.Select(x => x.Team1.Group).Distinct())
+        <%foreach (var group in Model.Select(x => x.Team1Obj.Group).Distinct())
           {%>
         <table class="match-table" summary="<%=group.Name%>">
             <caption>
@@ -30,7 +30,7 @@
             </thead>
             <tbody>
                 <%var i = 0;
-                  foreach (var match in Model.Where(x => x.StageId == 1 && x.Team1.GroupId == group.GroupId))
+                  foreach (var match in Model.Where(x => x.Stage == 1 && x.Team1Obj.GroupId == group.GroupId))
                   {%>
                 <tr class="<%= i%2==0 ? "ui-state-default": "odd"%>">
                     <td>
@@ -43,10 +43,10 @@
                         <%= Html.Encode(match.StartTime.ToString("dd/MM HH:mm"))%>
                     </td>
                     <td class="c">
-                        <%= Html.TeamFlag(match.Team1Id)%>
+                        <%= Html.TeamFlag(match.Team1)%>
                     </td>
                     <td class="l homeTeam">
-                        <%= Html.Encode(match.Team1.Name)%>
+                        <%= Html.Encode(match.Team1Obj.Name)%>
                     </td>
                     <td class="c mResult">
                         <%= Html.Encode(match.Score1)%>
@@ -54,10 +54,10 @@
                         <%= Html.Encode(match.Score2)%>
                     </td>
                     <td class="r awayTeam">
-                        <%= Html.Encode(match.Team2.Name)%>
+                        <%= Html.Encode(match.Team2Obj.Name)%>
                     </td>
                     <td class="c">
-                        <%= Html.TeamFlag(match.Team2Id)%>
+                        <%= Html.TeamFlag(match.Team2)%>
                     </td>
                 </tr>
                 <%i++;
@@ -89,7 +89,7 @@
             </thead>
             <tbody>
                 <%var j = 0;
-                  foreach (var match in Model.Where(x => x.StageId != 1))
+                  foreach (var match in Model.Where(x => x.Stage != 1))
                   {%>
                 <tr class="<%= j%2==0 ? "ui-state-default": "odd"%>">
                     <td>
@@ -102,10 +102,10 @@
                         <%= Html.Encode(match.StartTime.ToString("dd/MM HH:mm"))%>
                     </td>
                     <td class="c">
-                        <%= Html.TeamFlag(match.Team1Id)%>
+                        <%= Html.TeamFlag(match.Team1)%>
                     </td>
                     <td class="l homeTeam">
-                        <%= Html.Encode(match.Team1.Name)%>
+                        <%= Html.Encode(match.Team1Obj.Name)%>
                     </td>
                     <td class="c mResult">
                         <%= Html.Encode(match.Score1)%>
@@ -113,10 +113,10 @@
                         <%= Html.Encode(match.Score2)%>
                     </td>
                     <td class="r awayTeam">
-                        <%= Html.Encode(match.Team2.Name)%>
+                        <%= Html.Encode(match.Team2Obj.Name)%>
                     </td>
                     <td class="c">
-                        <%= Html.TeamFlag(match.Team2Id)%>
+                        <%= Html.TeamFlag(match.Team2)%>
                     </td>
                     <td class="c">
                         <%= match.Stage.Name%>

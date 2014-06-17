@@ -44,9 +44,9 @@ namespace BigBallz.Controllers
                 Bonus = _bonusService.Get(id)                
             };
 
-            if (model.Bonus.Group != null)
+            if (model.Bonus.GroupId != null)
             {
-                var groupId = (int)model.Bonus.Group;
+                var groupId = (int)model.Bonus.GroupId;
                 model.Teams = _teamService.GetAll(groupId).ToSelectList("TeamId", "Name");
             }
             else

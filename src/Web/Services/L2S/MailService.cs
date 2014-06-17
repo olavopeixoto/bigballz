@@ -10,6 +10,7 @@ using System.Threading;
 using BigBallz.Core;
 using BigBallz.Helpers;
 using System.Threading.Tasks;
+using BigBallz.Models;
 using Elmah;
 
 namespace BigBallz.Services.L2S
@@ -50,12 +51,12 @@ namespace BigBallz.Services.L2S
 
             Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");
 
-            var parameters = new List<string>(new[] { "userName", user.UserName, "startTime", bets.First().Match1.StartTime.FormatDateTime(), "endBetTime", bets.First().Match1.StartTime.AddHours(-1).FormatDateTime() });
+            var parameters = new List<string>(new[] { "userName", user.UserName, "startTime", bets.First().Match.StartTime.FormatDateTime(), "endBetTime", bets.First().Match.StartTime.AddHours(-1).FormatDateTime() });
 
             var sb = new StringBuilder("<table><tbody>");
             foreach (var bet in bets)
             {
-                sb.AppendFormat("<tr><td>{0} X {1}</td></tr>", bet.Match1.Team1.Name, bet.Match1.Team2.Name);
+                sb.AppendFormat("<tr><td>{0} X {1}</td></tr>", bet.Match.Team1Obj.Name, bet.Match.Team2Obj.Name);
             }
             sb.Append("</tbody></table>");
             parameters.Add("bets");
@@ -69,13 +70,13 @@ namespace BigBallz.Services.L2S
             Debug.Write("Enviando email de aviso de jogo");
 
             Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");
-            var parameters = new List<string>(new[] { "userName", user.UserName, "startTime", bets.First().Match1.StartTime.FormatDateTime() });
+            var parameters = new List<string>(new[] { "userName", user.UserName, "startTime", bets.First().Match.StartTime.FormatDateTime() });
 
             var sb = new StringBuilder("<table><thead><tr><th>Jogador</th><td>Aposta</td></thead><tbody>");
             foreach (var bet in bets)
             {
-                var matchString = string.Format("{0} {1} X {2} {3}", bet.Match1.Team1.Name, bet.Score1.ToString(CultureInfo.InvariantCulture),bet.Score2.ToString(CultureInfo.InvariantCulture), bet.Match1.Team2.Name);
-                sb.AppendFormat("<tr><td>{0}</td><td>{1}</td></tr>", bet.User1.UserName, matchString);
+                var matchString = string.Format("{0} {1} X {2} {3}", bet.Match.Team1Obj.Name, bet.Score1.ToString(CultureInfo.InvariantCulture),bet.Score2.ToString(CultureInfo.InvariantCulture), bet.Match.Team2Obj.Name);
+                sb.AppendFormat("<tr><td>{0}</td><td>{1}</td></tr>", bet.User.UserName, matchString);
             }
             sb.Append("</tbody></table>");
             parameters.Add("bets");
@@ -91,9 +92,9 @@ namespace BigBallz.Services.L2S
             var sb = new StringBuilder("<table><thead><tr><th>Jogador</th><td>Bonus</td><td>Aposta</td></thead><tbody>");
             foreach (var bet in bonusBets)
             {
-                var bonusString = bet.Bonus1.Name;
-                var bonusBetString = bet.Team1 != null ? bet.Team1.Name : string.Empty;
-                sb.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>", bet.User1.UserName, bonusString, bonusBetString);
+                var bonusString = bet.Bonus.Name;
+                var bonusBetString = bet.Team != null ? bet.Team.Name : string.Empty;
+                sb.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>", bet.User.UserName, bonusString, bonusBetString);
             }
             sb.Append("</tbody></table>");
             parameters.Add("bonusBets");

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<BigBallz.Bonus>>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<BigBallz.Models.Bonus>>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
    
@@ -29,8 +29,8 @@
                 <%: item.Name %>
             </td>
             <td class="table.td.admin">
-                <%if (item.Team1 != null)
-{%> <%:item.Team1.Name%> <%
+                <%if (item.Team != null)
+{%> <%:item.Team.Name%> <%
 }%>
             </td>
         </tr>

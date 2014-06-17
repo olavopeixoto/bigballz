@@ -166,8 +166,8 @@ namespace BigBallz.Services.L2S
                 SenderName = transaction.Sender.Name,
                 SenderEmail = transaction.Sender.Email,
                 Transaction = transaction.Code,
-                User1 = user,
-                User = user.UserId,
+                User = user,
+                UserId = user.UserId,
                 PaymentMethod = GetPaymentMethodDescription(transaction.PaymentMethod.PaymentMethodCode),
                 Status = GetStatusDescription(transaction.TransactionStatus)
             };

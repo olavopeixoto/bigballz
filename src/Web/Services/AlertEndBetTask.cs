@@ -58,8 +58,12 @@ namespace BigBallz.Services
                 //loadOptions.LoadWith<Match>(x => x.Team2Id);
                 //context.LoadOptions = loadOptions;
 
-                bets = context.Bets.Where(x => x.Match1.StartTime.AddHours(-1) == AbsoluteExpiration).OrderBy(
-                        x => x.Match).ThenBy(x => x.User1.UserName).ToList();
+                bets = context.Bets
+                                .Where(x => DbFunctions.AddHours(x.Match.StartTime, -1) == AbsoluteExpiration)
+                                .OrderBy(x => x.MatchId)
+                                .ThenBy(x => x.User.UserName)
+                                .ToList();
+
                 players = context.Users.Where(x => x.Roles.Any(y => y.Name == BBRoles.Player)).ToList();
             }
 
@@ -75,7 +79,16 @@ namespace BigBallz.Services
 
             using (var context = provider.CreateContext())
             {
-                var betEndTime = context.Matches.Where(x => !x.Score1.HasValue && !x.Score2.HasValue && DbFunctions.AddHours(x.StartTime, -1) >= DateTime.Now.BrazilTimeZone()).GroupBy(x => x.StartTime).Select(x => DbFunctions.AddHours(x.Key,-1).Value).OrderBy(x => x).ToList();
+                var now = DateTime.Now.BrazilTimeZone();
+                var betEndTime = context.Matches
+                                    .Where(x => !x.Score1.HasValue
+                                                && !x.Score2.HasValue
+                                                && DbFunctions.AddHours(x.StartTime, -1) >= now)
+                                    .GroupBy(x => x.StartTime)
+                                    .Select(x => DbFunctions.AddHours(x.Key, -1).Value)
+                                    .OrderBy(x => x)
+                                    .ToList();
+
                 foreach(var startTime in betEndTime)
                 {
                     AddTask(startTime);

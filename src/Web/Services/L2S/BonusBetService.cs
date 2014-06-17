@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BigBallz.Models;
 
 namespace BigBallz.Services.L2S
 {
@@ -25,12 +26,12 @@ namespace BigBallz.Services.L2S
 
         public IEnumerable<BonusBet> GetAll(string userName)
         {
-            return _db.BonusBets.Where(d => d.User1.UserName == userName).ToList();
+            return _db.BonusBets.Where(d => d.User.UserName == userName).ToList();
         }
 
         public IEnumerable<BonusBet> GetAll(int userId)
         {
-            return _db.BonusBets.Where(d => d.User == userId).ToList();
+            return _db.BonusBets.Where(d => d.UserId == userId).ToList();
         }
 
         public BonusBet Get(int bonusBetId)

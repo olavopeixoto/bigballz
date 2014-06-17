@@ -22,19 +22,19 @@
                 Fase:</label>
         </div>
         <div class="editor-field">
-            <%= Html.DropDownListFor(model => model.Match.StageId, Model.Stages, "--- Selecione ---")%>
-            <%= Html.ValidationMessageFor(model => model.Match.StageId, "Favor selecionar a fase.")%>
+            <%= Html.DropDownListFor(model => model.Match.Stage, Model.Stages, "--- Selecione ---")%>
+            <%= Html.ValidationMessageFor(model => model.Match.Stage, "Favor selecionar a fase.")%>
         </div>
         <div class="editor-label">
             <label for="Team1">
                 Jogo:</label>
         </div>
         <div class="editor-field">
-            <%= Html.DropDownListFor(model => model.Match.Team1Id, Model.Teams, "--- Selecione ---")%>
+            <%= Html.DropDownListFor(model => model.Match.Team1, Model.Teams, "--- Selecione ---")%>
             X
-            <%= Html.ValidationMessageFor(model => model.Match.Team1Id, "Favor selecionar o time A.")%>
-            <%= Html.DropDownListFor(model => model.Match.Team2Id, Model.Teams, "--- Selecione ---")%>
-            <%= Html.ValidationMessageFor(model => model.Match.Team2Id, "Favor selecionar o time B diferente do time A.")%>
+            <%= Html.ValidationMessageFor(model => model.Match.Team1, "Favor selecionar o time A.")%>
+            <%= Html.DropDownListFor(model => model.Match.Team2, Model.Teams, "--- Selecione ---")%>
+            <%= Html.ValidationMessageFor(model => model.Match.Team2, "Favor selecionar o time B diferente do time A.")%>
         </div>
         <%--    <div class="editor-label">
             <label for="Team1">

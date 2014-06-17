@@ -134,27 +134,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Entity\Bet.cs" />
-    <Compile Include="Models\Entity\BigBallzDataContext.cs" />
-    <Compile Include="Models\Entity\Bonus.cs" />
-    <Compile Include="Models\Entity\BonusBet.cs" />
-    <Compile Include="Models\Entity\Comment.cs" />
+    <Compile Include="Models\Bet.cs" />
+    <Compile Include="Models\BigBallzDataContext.cs" />
+    <Compile Include="Models\Bonus.cs" />
+    <Compile Include="Models\BonusBet.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
-    <Compile Include="Models\Entity\Group.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\JobHost.cs" />
     <Compile Include="Infrastructure\DataContextProvider.cs" />
     <Compile Include="Infrastructure\DependenciesRegistry.cs" />
     <Compile Include="Infrastructure\StructuremapControllerFactory.cs" />
     <Compile Include="Infrastructure\StructuremapDependencyResolver.cs" />
-    <Compile Include="Models\Entity\Match.cs" />
+    <Compile Include="Models\Match.cs" />
     <Compile Include="Models\BonusBetStatistic.cs" />
     <Compile Include="Models\MatchBetStatistic.cs" />
     <Compile Include="Models\TransactionStatus.cs" />
     <Compile Include="Models\UserMatchPoints.cs" />
-    <Compile Include="Models\Entity\PaymentStatus.cs" />
-    <Compile Include="Models\Entity\Role.cs" />
+    <Compile Include="Models\PaymentStatus.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Services\BetExpirationWarningTask.cs" />
     <Compile Include="Services\AlertEndBetTask.cs" />
     <Compile Include="Controllers\AuthController.cs" />
@@ -233,10 +233,10 @@
     <Compile Include="Services\L2S\TeamService.cs" />
     <Compile Include="Models\UserPoints.cs" />
     <Compile Include="Services\L2S\UserService.cs" />
-    <Compile Include="Models\Entity\Stage.cs" />
-    <Compile Include="Models\Entity\Team.cs" />
-    <Compile Include="Models\Entity\User.cs" />
-    <Compile Include="Models\Entity\UserMapping.cs" />
+    <Compile Include="Models\Stage.cs" />
+    <Compile Include="Models\Team.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserMapping.cs" />
     <Compile Include="ViewModels\BetViewModel.cs" />
     <Compile Include="ViewModels\BonusViewModel.cs" />
     <Compile Include="ViewModels\MatchBetsViewModel.cs" />

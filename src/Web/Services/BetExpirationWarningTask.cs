@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using BigBallz.Core;
 using BigBallz.Core.IoC;
@@ -56,12 +57,16 @@ namespace BigBallz.Services
                 //loadOptions.LoadWith<Match>(x => x.Team2Id);
                 //context.LoadOptions = loadOptions;
 
-                players = context.Users.Where(x => x.Roles.Any(y => y.Name == BBRoles.Player) && x.Bets.Any(b => b.Match1.StartTime.AddHours(-2) == AbsoluteExpiration)).ToList();
+                players = context.Users
+                    .Include(x => x.Bets)
+                    .Where(x => x.Roles.Any(y => y.Name == BBRoles.Player)
+                            && x.Bets.Any(b => DbFunctions.AddHours(b.Match.StartTime, -2) == AbsoluteExpiration))
+                    .ToList();
             }
 
             foreach (var player in players)
             {
-                _mailService.SendBetWarning(player, player.Bets.Where(b => b.Match1.StartTime.AddHours(-2) == AbsoluteExpiration).ToList());
+                _mailService.SendBetWarning(player, player.Bets.Where(b => b.Match.StartTime.AddHours(-2) == AbsoluteExpiration).ToList());
             }
         }
 
@@ -71,7 +76,14 @@ namespace BigBallz.Services
 
             using (var context = provider.CreateContext())
             {
-                var betAlertTime = context.Matches.Where(x => x.StartTime.AddHours(-2) >= DateTime.Now.BrazilTimeZone()).GroupBy(x => x.StartTime).Select(x => x.Key.AddHours(-2)).OrderBy(x => x).ToList();
+                var now = DateTime.Now.BrazilTimeZone();
+                var betAlertTime = context.Matches
+                                            .Where(x => DbFunctions.AddHours(x.StartTime, -2) >= now)
+                                            .GroupBy(x => x.StartTime)
+                                            .Select(x => DbFunctions.AddHours(x.Key, -2).Value)
+                                            .OrderBy(x => x)
+                                            .ToList();
+
                 foreach (var startTime in betAlertTime)
                 {
                     AddTask(startTime);

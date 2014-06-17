@@ -11,9 +11,9 @@
 </div>
 <%foreach(var comment in Model) {%>
 <div class="comment-container" style="clear:both;display:block;padding-bottom:10px;">
-<span class="comment-photo" style="float:left;padding-right:10px;"><%=Html.GetUserPhoto(comment.User1)%></span>
+<span class="comment-photo" style="float:left;padding-right:10px;"><%=Html.GetUserPhoto(comment.User)%></span>
 <div class="comment-contents" style="margin-left:60px;display:block;">
-<span class="comment-timestamp" style="font-weight:bold;"><%:comment.CommentedOn.FormatDateTime()%> - <%:comment.User1.UserName%></span>
+<span class="comment-timestamp" style="font-weight:bold;"><%:comment.CommentedOn.FormatDateTime()%> - <%:comment.User.UserName%></span>
 <span class="comment-text" style="display:block"><%=HttpUtility.HtmlEncode(comment.Comments).ToHtml()%></span>
 </div>
 </div>

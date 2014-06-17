@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Linq;
+using System.Data.Entity;
 using System.Linq;
 using BigBallz.Core;
 using BigBallz.Infrastructure;
@@ -21,11 +21,10 @@ namespace BigBallz.Services.L2S
         {
             using (var db = _provider.CreateContext())
             {
-                //var options = new DataLoadOptions();
-                //options.LoadWith<Comment>(x => x.User1);
-                //db.LoadOptions = options;
-
-                return db.Comments.OrderByDescending(x => x.CommentedOn).ToList();
+                return db.Comments
+                    .OrderByDescending(x => x.CommentedOn)
+                    .Include(x => x.User)
+                    .ToList();
             }
         }
 
@@ -33,11 +32,11 @@ namespace BigBallz.Services.L2S
         {
             using (var db = _provider.CreateContext())
             {
-                //var options = new DataLoadOptions();
-                //options.LoadWith<Comment>(x => x.User1);
-                //db.LoadOptions = options;
-
-                return db.Comments.OrderByDescending(x => x.CommentedOn).Take(top).ToList();
+                return db.Comments
+                    .OrderByDescending(x => x.CommentedOn)
+                    .Include(x => x.User)
+                    .Take(top)
+                    .ToList();
             }
         }
 
@@ -45,11 +44,10 @@ namespace BigBallz.Services.L2S
         {
             using (var db = _provider.CreateContext())
             {
-                //var options = new DataLoadOptions();
-                //options.LoadWith<Comment>(x => x.User1);
-                //db.LoadOptions = options;
-
-                return db.Comments.Where(x => x.User1.UserName == userName).ToList();
+                return db.Comments
+                            .Where(x => x.User.UserName == userName)
+                            .Include(x => x.User)
+                            .ToList();
             }
         }
 
@@ -62,7 +60,7 @@ namespace BigBallz.Services.L2S
                 var post = new Comment
                 {
                     Comments = comment,
-                    User = user.UserId,
+                    UserId = user.UserId,
                     CommentedOn = DateTime.Now.BrazilTimeZone()
                 };
                 user.Comments.Add(post);

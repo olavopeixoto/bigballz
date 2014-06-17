@@ -77,42 +77,33 @@ namespace BigBallz.Controllers
                                                          let pointsEarned = _bigBallzService.GetUserPointsByBonus(userName)
                                                          select new BetViewModel.BonusTeams
                                                                     {
-                                                                        BonusBetId =
-                                                                            bonusBets.Where(
-                                                                                x => x.Bonus == bonus.BonusId).Select(
-                                                                                    x => x.BonusBetId).FirstOrDefault(),
+                                                                        BonusBetId = bonusBets.Where(x => x.BonusId == bonus.BonusId)
+                                                                                                .Select(x => x.BonusBetId)
+                                                                                                .FirstOrDefault(),
                                                                         Bonus = bonus,
                                                                         CupStartDate = _bigBallzService.GetFirstMatch().StartTime,
                                                                         PointsEarned = pointsEarned.FirstOrDefault(x => x.BonusBet.BonusBetId == bonus.BonusId).NullSafe(x => x.Points),
                                                                         Enabled = _bigBallzService.GetFirstMatch().StartTime.Subtract(new TimeSpan(0, 1, 0, 0)).Subtract(DateTime.Now.BrazilTimeZone()).TotalMilliseconds > 0,
                                                                         Teams =
-                                                                            bonus.Group.HasValue
+                                                                            bonus.GroupId.HasValue
                                                                                 ? new SelectList(
-                                                                                      teams.Where(
-                                                                                          x => x.GroupId == bonus.Group),
-                                                                                      "TeamId", "Name",
-                                                                                      bonusBets.Where(
-                                                                                          x => x.Bonus == bonus.BonusId)
-                                                                                          .Select(x => x.Team).
-                                                                                          FirstOrDefault())
+                                                                                      teams.Where(x => x.GroupId == bonus.GroupId), "TeamId", "Name",
+                                                                                              bonusBets.Where(x => x.BonusId == bonus.BonusId)
+                                                                                                  .Select(x => x.TeamId).FirstOrDefault())
                                                                                 : new SelectList(teams, "TeamId", "Name",
-                                                                                                 bonusBets.Where(
-                                                                                                     x =>
-                                                                                                     x.Bonus ==
-                                                                                                     bonus.BonusId).
-                                                                                                     Select(x => x.Team)
-                                                                                                     .FirstOrDefault())
+                                                                                                     bonusBets.Where(x => x.BonusId == bonus.BonusId)
+                                                                                                         .Select(x => x.TeamId)
+                                                                                                         .FirstOrDefault())
                                                                     }).ToList(),
 
                                             BetList = (from match in matches
-                                                       let matchBets =
-                                                           _matchBetService.GetAll(User.Identity.Name).ToList()
+                                                       let matchBets = _matchBetService.GetAll(User.Identity.Name).ToList()
                                                        let pointsEarned = _bigBallzService.GetUserPointsByMatch(userName)
                                                        select new BetViewModel.BetMatches
                                                                     {
-                                                                        PointsEarned = pointsEarned.FirstOrDefault(x => x.Bet.Match == match.MatchId).NullSafe(x => x.Points),
+                                                                        PointsEarned = pointsEarned.FirstOrDefault(x => x.Bet.MatchId == match.MatchId).NullSafe(x => x.Points),
                                                                         Enabled = match.StartTime.Subtract(new TimeSpan(0,1,0,0)).Subtract(DateTime.Now.BrazilTimeZone()).TotalMilliseconds > 0,
-                                                                        Bet = matchBets.FirstOrDefault(x => x.Match == match.MatchId),
+                                                                        Bet = matchBets.FirstOrDefault(x => x.MatchId == match.MatchId),
                                                                         Match = match
                                                                     }).ToList()
                                         };
@@ -147,9 +138,9 @@ namespace BigBallz.Controllers
                                                          let bonusBetStatistic = bonusEnded ? _bigBallzService.GetBonusBetStatistics(bonus.BonusId) : new BonusBetStatistic()
                                                          select new BetViewModel.BonusTeams
                                                          {
-                                                             BonusBet = bonusBets.FirstOrDefault(x => x.Bonus == bonus.BonusId),
+                                                             BonusBet = bonusBets.FirstOrDefault(x => x.BonusId == bonus.BonusId),
                                                              Bonus = bonus,
-                                                             PointsEarned = pointsEarned.FirstOrDefault(x => x.BonusBet.Bonus == bonus.BonusId && !string.IsNullOrEmpty(x.BonusBet.Bonus1.Team)).NullSafe(x => x.Points),
+                                                             PointsEarned = pointsEarned.FirstOrDefault(x => x.BonusBet.BonusId == bonus.BonusId && !string.IsNullOrEmpty(x.BonusBet.Bonus.TeamId)).NullSafe(x => x.Points),
                                                              BonusBetStatistic = bonusBetStatistic
                                                          }).ToList(),
 
@@ -158,8 +149,8 @@ namespace BigBallz.Controllers
                                                        let pointsEarned = _bigBallzService.GetUserPointsByMatch(user.UserName)
                                                        select new BetViewModel.BetMatches
                                                        {
-                                                           PointsEarned = pointsEarned.FirstOrDefault(x => x.Bet.Match == match.MatchId).NullSafe(x => x.Points),
-                                                           Bet = matchBets.FirstOrDefault(x => x.Match == match.MatchId),
+                                                           PointsEarned = pointsEarned.FirstOrDefault(x => x.Bet.MatchId == match.MatchId).NullSafe(x => x.Points),
+                                                           Bet = matchBets.FirstOrDefault(x => x.MatchId == match.MatchId),
                                                            Match = match
                                                        }).ToList()
                                         };
@@ -223,10 +214,10 @@ namespace BigBallz.Controllers
 
                 user.BonusBets.Clear();
 
-                foreach (var bet in bonusBet.Where(x => !string.IsNullOrEmpty(x.Team)))
+                foreach (var bet in bonusBet.Where(x => !string.IsNullOrEmpty(x.TeamId)))
                 {
-                    bet.User = user.UserId;
-                    bet.User1 = user;
+                    bet.UserId = user.UserId;
+                    bet.User = user;
                     user.BonusBets.Add(bet);
                     _bonusBetService.Add(bet);
                 }
@@ -263,9 +254,9 @@ namespace BigBallz.Controllers
                     if (bet.BetId > 0)
                     {
                         userBet = _matchBetService.Get(bet.BetId);
-                        if (userBet.Match1.StartTime.AddHours(-1) <= DateTime.Now.BrazilTimeZone())
+                        if (userBet.Match.StartTime.AddHours(-1) <= DateTime.Now.BrazilTimeZone())
                         {
-                            erroStringBuilder.AppendLine(string.Format("Aposta para a partida {0} X {1} já está encerrada", userBet.Match1.Team1.Name, userBet.Match1.Team2.Name));
+                            erroStringBuilder.AppendLine(string.Format("Aposta para a partida {0} X {1} já está encerrada", userBet.Match.Team1Obj.Name, userBet.Match.Team2Obj.Name));
                             continue;
                         }
                         userBet.Score1 = bet.Score1;
@@ -274,7 +265,7 @@ namespace BigBallz.Controllers
                     else
                     {
                         var userId = _userService.Get(userName).UserId;
-                        userBet.User = userId;
+                        userBet.UserId = userId;
                         try
                         {
                             _matchBetService.Add(userBet);

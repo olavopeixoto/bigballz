@@ -23,23 +23,23 @@
                 Fase:</label>
         </div>
         <div class="editor-field">
-            <%= Html.DropDownListFor(model => model.Match.StageId, Model.Stages, "--- Selecione ---")%>
-            <%= Html.ValidationMessageFor(model => model.Match.StageId, "Favor selecionar a fase.")%>
+            <%= Html.DropDownListFor(model => model.Match.Stage, Model.Stages, "--- Selecione ---")%>
+            <%= Html.ValidationMessageFor(model => model.Match.Stage, "Favor selecionar a fase.")%>
         </div>
         <div class="editor-label">
             <label for="Team">
                 Jogo:</label>
         </div>
         <div class="editor-field">
-            <%= Html.DropDownListFor(model => model.Match.Team1Id, Model.Teams, "--- Selecione ---")%>
-            <%= Html.ValidationMessageFor(model => model.Match.Team1Id, "Favor selecionar o time A.")%>
+            <%= Html.DropDownListFor(model => model.Match.Team1, Model.Teams, "--- Selecione ---")%>
+            <%= Html.ValidationMessageFor(model => model.Match.Team1, "Favor selecionar o time A.")%>
             <%= Html.TextBoxFor(model => model.Match.Score1, new { @class = "numbersonly bet-score-value score1", maxlength = "2", size = "2" }) %>
             <%= Html.ValidationMessageFor(model => model.Match.Score1, "Favor informar um número inteiro maior ou igual a zero.")%>
             X
             <%= Html.TextBoxFor(model => model.Match.Score2, new { @class = "numbersonly bet-score-value score2", maxlength = "2", size = "2" })%>
             <%= Html.ValidationMessageFor(model => model.Match.Score2, "Favor informar um número inteiro maior ou igual a zero.")%>
-            <%= Html.DropDownListFor(model => model.Match.Team2Id, Model.Teams, "--- Selecione ---")%>
-            <%= Html.ValidationMessageFor(model => model.Match.Team2Id, "Favor selecionar o time B diferente do time A.")%>
+            <%= Html.DropDownListFor(model => model.Match.Team2, Model.Teams, "--- Selecione ---")%>
+            <%= Html.ValidationMessageFor(model => model.Match.Team2, "Favor selecionar o time B diferente do time A.")%>
         </div>
         <p>
             <input type="submit" value="Salvar" />

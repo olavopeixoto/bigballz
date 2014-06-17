@@ -116,7 +116,7 @@ foreach (var userPoints in topfiveStandings){%>
     <%foreach (var match in lastMatches)
       {%>
     <tr class="<%= lineIndex%2==0 ? "ui-state-default": "odd"%>">
-        <td class="c"><%= Html.TeamFlag(match.Team1Id, match.Team1.Name)%>&nbsp;<%= Html.Encode(match.Score1)%>&nbsp;X&nbsp;<%= Html.Encode(match.Score2)%>&nbsp;<%= Html.TeamFlag(match.Team2Id, match.Team2.Name)%>&nbsp;<%: Html.ActionLink("ver apostas", "matchbets", "bet", new { id = match.MatchId }, null)%>
+        <td class="c"><%= Html.TeamFlag(match.Team1, match.Team1Obj.Name)%>&nbsp;<%= Html.Encode(match.Score1)%>&nbsp;X&nbsp;<%= Html.Encode(match.Score2)%>&nbsp;<%= Html.TeamFlag(match.Team2, match.Team2Obj.Name)%>&nbsp;<%: Html.ActionLink("ver apostas", "matchbets", "bet", new { id = match.MatchId }, null)%>
          </td>
     </tr>
     <%i++; lineIndex++; } %>
@@ -135,9 +135,9 @@ foreach (var userPoints in topfiveStandings){%>
     <%foreach (var match in matches){%>
     <tr class="<%= lineIndex%2==0 ? "ui-state-default": "odd"%>">
         <td class="c dt" style="width:70%;"><%= Html.Encode(match.StartTime.ToString("dd/MM"))%>&nbsp;&nbsp;<%= Html.Encode(match.StartTime.ToString("HH:mm"))%></td>
-        <td class="c"><%= Html.TeamFlag(match.Team1Id, match.Team1.Name)%>&nbsp;<%= Html.Encode(match.Team1Id)%></td>
+        <td class="c"><%= Html.TeamFlag(match.Team1, match.Team1Obj.Name)%>&nbsp;<%= Html.Encode(match.Team1)%></td>
         <td class="c mResult"> X </td>
-        <td class="c"><%= Html.TeamFlag(match.Team2Id, match.Team2.Name)%>&nbsp;<%= Html.Encode(match.Team2Id)%></td>        
+        <td class="c"><%= Html.TeamFlag(match.Team2, match.Team2Obj.Name)%>&nbsp;<%= Html.Encode(match.Team2)%></td>        
     </tr>
     <%i++; lineIndex++; } %>
     </tbody>

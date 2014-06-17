@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using BigBallz.Core.Log;
+using BigBallz.Models;
 using BigBallz.Services;
 using BigBallz.ViewModels;
 
@@ -25,7 +26,7 @@ namespace BigBallz.Controllers
 
         public ActionResult Index()
         {
-            var matches = _matchService.GetAll().OrderBy(x => x.StageId).ThenBy(x => x.Team1.GroupId).ThenBy(x => x.MatchId);
+            var matches = _matchService.GetAll().OrderBy(x => x.Stage).ThenBy(x => x.Team1Obj.GroupId).ThenBy(x => x.MatchId);
             return View(matches);
         }
 

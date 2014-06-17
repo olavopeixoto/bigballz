@@ -15,9 +15,9 @@
 <%foreach (var bonus in Model.BonusList){%>
     <tr class="<%= lineIndex%2==0 ? "ui-state-default": "odd"%>">
         <td class="l"><%:bonus.Bonus.Name%></td>
-        <td class="l"><%:bonus.BonusBet.NullSafe(y => y.Team1.NullSafe(x => x.Name))%></td>
-        <td class="l"><%:bonus.Bonus.Team1.NullSafe(x => x.Name)%></td>
-        <td class="c"><%if (string.IsNullOrEmpty(bonus.Bonus.Team)) {%>
+        <td class="l"><%:bonus.BonusBet.NullSafe(y => y.Team.NullSafe(x => x.Name))%></td>
+        <td class="l"><%:bonus.Bonus.Team.NullSafe(x => x.Name)%></td>
+        <td class="c"><%if (string.IsNullOrEmpty(bonus.Bonus.TeamId)) {%>
             -
         <%} else {%>
             <%:bonus.PointsEarned%> ponto<%:bonus.PointsEarned == 1 ? "" : "s"%>
