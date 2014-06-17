@@ -15,6 +15,8 @@ namespace BigBallz.Services
         private readonly DateTime _expiration;
         private readonly DataContextProvider _provider;
 
+        private const int HoursBeforeStartTime = -3;
+
         public BetExpirationWarningTask(IMailService mailService, DateTime expiration, DataContextProvider provider)
         {
             _mailService = mailService;
@@ -57,12 +59,21 @@ namespace BigBallz.Services
                 loadOptions.LoadWith<Match>(x => x.Team2);
                 context.LoadOptions = loadOptions;
 
-                players = context.Users.Where(x => x.UserRoles.Any(y => y.Role.Name == BBRoles.Player) && x.Bets.Any(b => b.Match1.StartTime.AddHours(-2) == AbsoluteExpiration && !(b.Score1.HasValue && b.Score2.HasValue))).ToList();
+                players = context.Users
+                                .Where(x => x.UserRoles.Any(y => y.Role.Name == BBRoles.Player)
+                                            && x.Bets.Any(b => b.Match1.StartTime.AddHours(HoursBeforeStartTime) == AbsoluteExpiration
+                                                && !(b.Score1.HasValue && b.Score2.HasValue)))
+                                .ToList();
             }
 
             foreach (var player in players)
             {
-                _mailService.SendBetWarning(player, player.Bets.Where(b => b.Match1.StartTime.AddHours(-2) == AbsoluteExpiration && !(b.Score1.HasValue && b.Score2.HasValue)).ToList());
+                var bets = player.Bets.Where(
+                                            b =>
+                                                b.Match1.StartTime.AddHours(HoursBeforeStartTime) == AbsoluteExpiration &&
+                                                !(b.Score1.HasValue && b.Score2.HasValue)).ToList();
+
+                _mailService.SendBetWarning(player, bets);
             }
         }
 
@@ -72,7 +83,7 @@ namespace BigBallz.Services
 
             using (var context = provider.CreateContext())
             {
-                var betAlertTime = context.Matches.Where(x => x.StartTime.AddHours(-2) >= DateTime.Now.BrazilTimeZone()).GroupBy(x => x.StartTime).Select(x => x.Key.AddHours(-2)).OrderBy(x => x).ToList();
+                var betAlertTime = context.Matches.Where(x => x.StartTime.AddHours(HoursBeforeStartTime) >= DateTime.Now.BrazilTimeZone()).GroupBy(x => x.StartTime).Select(x => x.Key.AddHours(HoursBeforeStartTime)).OrderBy(x => x).ToList();
                 foreach (var startTime in betAlertTime)
                 {
                     AddTask(startTime);
