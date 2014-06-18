@@ -1,4 +1,6 @@
 ﻿using System.Configuration;
+using System.Data.Common;
+using System.Data.SqlClient;
 using System.Net;
 using System.Web;
 using BigBallz.Core.Caching;
@@ -23,7 +25,7 @@ namespace BigBallz.Infrastructure
 
             For<IRPXService>()
                 .HttpContextScoped()
-                .Use(x =>
+                .Use(() =>
                 {
                     var baseUrl = ConfigurationManager.AppSettings["rpxnow-baseurl"];
                     var apiKey = ConfigurationManager.AppSettings["rpxnow-apikey"];
@@ -34,6 +36,10 @@ namespace BigBallz.Infrastructure
                     var settings = new RPXApiSettings(baseUrl, apiKey, webProxy);
                     return new RPXService(settings);
                 });
+
+            For<DbConnection>()
+                .HttpContextScoped()
+                .Use(() => new SqlConnection(ConfigurationManager.ConnectionStrings["BigBallzConnectionString"].ToString()));
 
             For<System.Web.Caching.Cache>()
                 .HttpContextScoped()
@@ -83,9 +89,13 @@ namespace BigBallz.Infrastructure
                 .HttpContextScoped()
                 .Use(x => new MatchBetServiceCache(x.GetInstance<ICache>(), new MatchBetService(x.GetInstance<BigBallzDataContext>())));
 
+            //For<IMatchService>()
+            //    .HttpContextScoped()
+            //    .Use(x => new MatchServiceCache(x.GetInstance<ICache>(), new MatchService(x.GetInstance<DataContextProvider>())));
+
             For<IMatchService>()
                 .HttpContextScoped()
-                .Use(x => new MatchServiceCache(x.GetInstance<ICache>(), new MatchService(x.GetInstance<DataContextProvider>())));
+                .Use<Services.Sql.MatchService>();
 
             For<IRoleService>()
                 .HttpContextScoped()
@@ -101,7 +111,7 @@ namespace BigBallz.Infrastructure
 
             For<IUserService>()
                 .HttpContextScoped()
-                .Use<UserService>();
+                .Use<Services.Sql.UserService>();
         }
     }
 }
