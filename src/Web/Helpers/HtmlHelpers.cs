@@ -73,7 +73,7 @@ namespace System.Web.Mvc {
         public static string MatchReminder(this HtmlHelper helper, int matchId, DateTime matchStartTime, int pointsEarned)
         {
             return string.Format("<div class=\"match-reminder bet-times-up hide\" data-bind=\"visible: expired\">{0} ponto{1}<span class=\"reminder-explanation\">{2}</span></div>", pointsEarned, pointsEarned == 1 ? "" : "s", helper.ActionLink("ver demais apostas", "matchbets", "bet", new {id=matchId}, null)) +
-                string.Format("<div class=\"match-reminder hide\" data-bind=\"visible: !expired()\"><span class=\"ui-icon ui-icon-clock\" style=\"float: left;margin-right:.3em;\"></span>Faltam <span data-bind=\"text: expirationDate\"></span><span class=\"reminder-explanation\">para encerrar a aposta</span></div>");
+                string.Format("<div class=\"match-reminder hide\" data-bind=\"visible: !expired()\"><span class=\"ui-icon ui-icon-clock\" style=\"float: left;margin-right:.3em;\"></span><span data-bind=\"text: expirationDate\"></span><span class=\"reminder-explanation\">para encerrar a aposta</span></div>");
         }
 
         public static string CountDown(this HtmlHelper helper, DateTime startTime)
