@@ -134,7 +134,12 @@ foreach (var userPoints in topfiveStandings){%>
        <tbody>
     <%foreach (var match in matches){%>
     <tr class="<%= lineIndex%2==0 ? "ui-state-default": "odd"%>">
-        <td class="c dt" style="width:70%;"><%= Html.Encode(match.StartTime.ToString("dd/MM"))%>&nbsp;&nbsp;<%= Html.Encode(match.StartTime.ToString("HH:mm"))%></td>
+        <td class="c dt" style="width:70%;"><%= Html.Encode(match.StartTime.ToString("dd/MM"))%>&nbsp;&nbsp;<%= Html.Encode(match.StartTime.ToString("HH:mm"))%>
+            <% if (match.StartTime.AddHours(-1) <= DateTime.Now.BrazilTimeZone())
+               {%>
+                 <%: Html.ActionLink("ver apostas", "matchbets", "bet", new { id = match.MatchId }, new {style="display:block;"})%>  
+               <%} %>
+        </td>
         <td class="c"><%= Html.TeamFlag(match.Team1Id, match.Team1.Name)%>&nbsp;<%= Html.Encode(match.Team1Id)%></td>
         <td class="c mResult"> X </td>
         <td class="c"><%= Html.TeamFlag(match.Team2Id, match.Team2.Name)%>&nbsp;<%= Html.Encode(match.Team2Id)%></td>        
