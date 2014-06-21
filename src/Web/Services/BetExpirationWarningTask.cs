@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
@@ -49,31 +50,23 @@ namespace BigBallz.Services
 
         public void Run()
         {
-            IList<User> players;
             using (var context = _provider.CreateContext())
             {
                 var loadOptions = new DataLoadOptions();
                 loadOptions.LoadWith<User>(x => x.Bets);
-                loadOptions.LoadWith<Bet>(x => x.Match1);
+                loadOptions.LoadWith<User>(x => x.UserRoles);
+                loadOptions.LoadWith<UserRole>(x => x.Role);
                 loadOptions.LoadWith<Match>(x => x.Team1);
                 loadOptions.LoadWith<Match>(x => x.Team2);
+                loadOptions.LoadWith<Match>(x => x.Bets);
                 context.LoadOptions = loadOptions;
 
-                players = context.Users
-                                .Where(x => x.UserRoles.Any(y => y.Role.Name == BBRoles.Player)
-                                            && x.Bets.Any(b => b.Match1.StartTime.AddHours(HoursBeforeStartTime) == AbsoluteExpiration
-                                                && !(b.Score1.HasValue && b.Score2.HasValue)))
-                                .ToList();
-            }
+                var matches = context.Matches.Where(match => match.StartTime.AddHours(HoursBeforeStartTime) != AbsoluteExpiration).ToList();
 
-            foreach (var player in players)
-            {
-                var bets = player.Bets.Where(
-                                            b =>
-                                                b.Match1.StartTime.AddHours(HoursBeforeStartTime) == AbsoluteExpiration &&
-                                                !(b.Score1.HasValue && b.Score2.HasValue)).ToList();
+                var players = context.Users.Where(x => x.UserRoles.Any(y => y.Role.Name == BBRoles.Player)
+                                    && x.Bets.All(b => b.Match1.StartTime.AddHours(HoursBeforeStartTime) != AbsoluteExpiration));
 
-                _mailService.SendBetWarning(player, bets);
+                players.ForEach(player => _mailService.SendBetWarning(player, matches));
             }
         }
 
@@ -83,11 +76,10 @@ namespace BigBallz.Services
 
             using (var context = provider.CreateContext())
             {
-                var betAlertTime = context.Matches.Where(x => x.StartTime.AddHours(HoursBeforeStartTime) >= DateTime.Now.BrazilTimeZone()).GroupBy(x => x.StartTime).Select(x => x.Key.AddHours(HoursBeforeStartTime)).OrderBy(x => x).ToList();
-                foreach (var startTime in betAlertTime)
-                {
-                    AddTask(startTime);
-                }
+                context.Matches
+                    .Where(x => x.StartTime.AddHours(HoursBeforeStartTime) >= DateTime.Now.BrazilTimeZone())
+                    .GroupBy(x => x.StartTime)
+                    .ForEach(x => AddTask(x.Key.AddHours(HoursBeforeStartTime)));
             }
         }
 

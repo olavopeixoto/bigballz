@@ -57,16 +57,22 @@
 {
 font-weight:bold;
 }
-#profile .user_icon img
-{
+
+.profile-pic {
+    -ms-border-radius: 10px;
+    border-radius: 10px;
+    width:auto;
+    height:auto;
+    max-width:50px;
+}
+
+#profile .user_icon img {
 vertical-align:middle;
 float:left;
 margin:0;
 margin-right:10px;
-width:auto;
-height:auto;
-max-width:50px;
 }
+
 #profile .user_icon .stats
 {
     height:48px;
@@ -170,6 +176,8 @@ span.thumb img
 {
     margin:0;
     padding:0;
+    -ms-border-radius: 10px;
+    border-radius: 10px;
 }
 
 span.username

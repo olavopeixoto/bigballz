@@ -34,10 +34,10 @@ namespace System.Web.Mvc {
             var jsPath = string.Format("<script type=\"text/javascript\" src=\"{0}\" ></script>\n", PubDir.StartsWith("http") ? string.Format("{0}/{1}/{2}", PubDir, ScriptDir, helper.AttributeEncode(fileName)) : helper.ResolveUrl(string.Format("~/{0}/{1}/{2}", PubDir, ScriptDir, helper.AttributeEncode(fileName))));
             return jsPath;
         }
-        public static string CSS(this HtmlHelper helper, string fileName) {
-            return CSS(helper, fileName, "screen");
+        public static string Css(this HtmlHelper helper, string fileName) {
+            return Css(helper, fileName, "screen");
         }
-        public static string CSS(this HtmlHelper helper, string fileName, string media) {
+        public static string Css(this HtmlHelper helper, string fileName, string media) {
             if (!fileName.EndsWith(".css"))
                 fileName += ".css";
             var jsPath = string.Format("<link rel='stylesheet' type='text/css' href='{0}'  media='" + media + "'/>\n", PubDir.StartsWith("http") ?  string.Format("{0}/{1}/{2}", PubDir, CssDir, helper.AttributeEncode(fileName)) : helper.ResolveUrl(string.Format("~/{0}/{1}/{2}", PubDir, CssDir, helper.AttributeEncode(fileName))));
@@ -72,22 +72,15 @@ namespace System.Web.Mvc {
 
         public static string MatchReminder(this HtmlHelper helper, int matchId, DateTime matchStartTime, int pointsEarned)
         {
-            var datetimeLeft = matchStartTime.Subtract(new TimeSpan(0, 1, 0, 0)).Subtract(DateTime.Now.BrazilTimeZone());
-            var hoursLeft = datetimeLeft.TotalHours;
-            var daysLeft = Math.Ceiling(datetimeLeft.TotalDays);
-            var minutesLeft = datetimeLeft.TotalMinutes;
-            var secondsLeft = datetimeLeft.TotalSeconds;
-            var unitName = hoursLeft > 24 ? "dia" : minutesLeft > 60 ? "hora" : secondsLeft > 60 ? "minuto" : "segundo";
-            var unit = (int)(hoursLeft > 24 ? daysLeft : minutesLeft > 60 ? hoursLeft : secondsLeft > 60 ? minutesLeft : secondsLeft);
-            var plural = unit > 1;
-            return secondsLeft < 0 ? string.Format("<div class=\"match-reminder bet-times-up\">{0} ponto{1}<span class=\"reminder-explanation\">{2}</span></div>", pointsEarned, pointsEarned == 1 ? "" : "s", helper.ActionLink("ver demais apostas", "matchbets", "bet", new {id=matchId}, null)) : string.Format("<div class=\"match-reminder\"><span class=\"ui-icon ui-icon-clock\" style=\"float: left;margin-right:.3em;\"></span>Falta{0} {1} {2}{3}<span class=\"reminder-explanation\">para encerrar a aposta</span></div>", plural ? "m" : "", unit, unitName, plural ? "s" : "");
+            return string.Format("<div class=\"match-reminder bet-times-up hide\" data-bind=\"visible: expired\">{0} ponto{1}<span class=\"reminder-explanation\">{2}</span></div>", pointsEarned, pointsEarned == 1 ? "" : "s", helper.ActionLink("ver demais apostas", "matchbets", "bet", new {id=matchId}, null)) +
+                string.Format("<div class=\"match-reminder hide\" data-bind=\"visible: !expired()\"><span class=\"ui-icon ui-icon-clock\" style=\"float: left;margin-right:.3em;\"></span>Faltam <span data-bind=\"text: expirationDate\"></span><span class=\"reminder-explanation\">para encerrar a aposta</span></div>");
         }
 
         public static string CountDown(this HtmlHelper helper, DateTime startTime)
         {
             var datetimeLeft = startTime.Subtract(new TimeSpan(0, 1, 0, 0)).Subtract(DateTime.Now.BrazilTimeZone());
             var hoursLeft = datetimeLeft.TotalHours;
-            var daysLeft = Math.Ceiling(datetimeLeft.TotalDays);
+            var daysLeft = Math.Round(datetimeLeft.TotalDays);
             var minutesLeft = datetimeLeft.TotalMinutes;
             var secondsLeft = datetimeLeft.TotalSeconds;
             var unitName = hoursLeft > 24 ? "dia" : minutesLeft > 60 ? "hora" : secondsLeft > 60 ? "minuto" : "segundo";
@@ -121,7 +114,7 @@ namespace System.Web.Mvc {
                 photoUrl = gravatar.GetGravatarUrl();
             }
 
-            return "<img style=\"margin:5px 0 0;padding:0;\" width=\"50\" height=\"50\" src=" + photoUrl.Replace("https:", "").Replace("http:", "") +
+            return "<img class=\"profile-pic\" style=\"margin:5px 0 0;padding:0;\" width=\"50\" height=\"50\" src=" + photoUrl.Replace("https:", "").Replace("http:", "") +
                    " alt=\"\" />";
         }
 

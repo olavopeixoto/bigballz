@@ -45,19 +45,20 @@ namespace BigBallz.Services.L2S
             SendMail(recipientsCollection, "Novo comentário", messageBody);
         }
 
-        public void SendBetWarning(User user, IList<Bet> bets)
+        public void SendBetWarning(User user, IList<Match> matches)
         {
             Debug.Write("Enviando email de aviso de fim de aposta proximo");
 
             Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");
 
-            var parameters = new List<string>(new[] { "userName", user.UserName, "startTime", bets.First().Match1.StartTime.FormatDateTime(), "endBetTime", bets.First().Match1.StartTime.AddHours(-1).FormatDateTime() });
+            var parameters = new List<string>(new[] { "userName", user.UserName, "startTime", matches.First().StartTime.FormatDateTime(), "endBetTime", matches.First().StartTime.AddHours(-1).FormatDateTime() });
 
             var sb = new StringBuilder("<table><tbody>");
-            foreach (var bet in bets)
+            foreach (var match in matches)
             {
-                sb.AppendFormat("<tr><td>{0} X {1}</td></tr>", bet.Match1.Team1.Name, bet.Match1.Team2.Name);
+                sb.AppendFormat("<tr><td>{0} X {1}</td></tr>", match.Team1.Name, match.Team2.Name);
             }
+
             sb.Append("</tbody></table>");
             parameters.Add("bets");
             parameters.Add(sb.ToString());

@@ -10,7 +10,7 @@
   <div class="user_icon">
     <%var photoCookie = Request.Cookies["photoUrl"];%>
     <%if (photoCookie != null && !string.IsNullOrEmpty(photoCookie.Value)){%>
-    <img alt="<%=Context.User.Identity.Name%>" src="<%=photoCookie.Value%>" />
+    <img class="profile-pic" alt="<%=Context.User.Identity.Name%>" src="<%=photoCookie.Value%>" />
     <%}%>
     <span class="stats">
         <span id="me_name"><%=Page.User.Identity.Name%></span>

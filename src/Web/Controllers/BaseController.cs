@@ -29,7 +29,8 @@ namespace BigBallz.Controllers
             var result = filterContext.Result;
 
             if (result is ViewResultBase
-                && filterContext.HttpContext.User.Identity.IsAuthenticated)
+                && filterContext.HttpContext.User.Identity.IsAuthenticated
+                && !ControllerContext.HttpContext.IsDebuggingEnabled)
             {
                 var userName = filterContext.HttpContext.User.Identity.Name;
                 var user = _userService.Get(userName);

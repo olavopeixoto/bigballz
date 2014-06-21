@@ -2,6 +2,7 @@
 <%@ Import Namespace="BigBallz.Core" %>
 <%@ Import Namespace="System.Threading" %>
 <%@ Import Namespace="System.Globalization" %>
+<%@ Import Namespace="Newtonsoft.Json" %>
 <%Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");%>
 <% using (Html.BeginForm("savebet", "bet")) {%>
 <%var i = 0; var lineIndex = 0;%>
@@ -22,7 +23,7 @@
         <td class="c mResult"><%=Html.TextBox("bets[{0}].Score1".FormatWith(i), matchBet.Bet.NullSafe(x => x.Score1), new { @class = "numbersonly bet-score-value score1", maxlength = "2", size = "2" }).Conditional(matchBet.Enabled, Html.TextBox("foo", matchBet.Bet.NullSafe(x => x.Score1), new { disabled = "disabled" }))%> X <%= Html.TextBox("bets[{0}].Score2".FormatWith(i), matchBet.Bet.NullSafe(x => (int?)x.Score2), new { @class = "numbersonly bet-score-value score2", maxlength = "2", size = "2" }).Conditional(matchBet.Enabled, Html.TextBox("foo", matchBet.Bet.NullSafe(x => x.Score2), new {disabled="disabled"}))%><%if (matchBet.Match.Score1.HasValue) {%><div class="mResultSub"><%=matchBet.Match.Score1%> X <%=matchBet.Match.Score2%></div><%}%></td>
         <td class="c"><%= Html.TeamFlag(matchBet.Match.Team2Id)%></td>
         <td class="l awayTeam"><%: matchBet.Match.Team2.Name%></td>
-        <td class="l reminder"><%= Html.MatchReminder(matchBet.Match.MatchId, matchBet.Match.StartTime, matchBet.PointsEarned)%></td>        
+        <td class="l reminder" data-expirationdate=<%=JsonConvert.SerializeObject(matchBet.Match.StartTime.ToUniversalTime().AddHours(-1)) %>><%= Html.MatchReminder(matchBet.Match.MatchId, matchBet.Match.StartTime, matchBet.PointsEarned)%></td>        
     </tr>
     <%if (matchBet.Enabled) i++; lineIndex++; } %>
     </tbody>

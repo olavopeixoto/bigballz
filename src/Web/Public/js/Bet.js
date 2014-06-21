@@ -12,6 +12,24 @@
                 $("input[type=submit]").click(function () { window.onbeforeunload = null; });
             }
         });
+
+        var now = ko.observable(new Date());
+        setInterval(function () { now(new Date()); }, 1000);
+
+        var model = function (e) {
+            var dateObj = moment($(e).attr("data-expirationdate"));
+
+            this.expired = ko.computed(function() {
+                return dateObj.isBefore(now());
+            });
+            this.expirationDate = ko.computed(function () {
+                return dateObj.from(now(), true);
+            });
+        };
+
+        $(".reminder").each(function (index, e) {
+            ko.applyBindings(new model(e), e);
+        });
     }
 };
 
