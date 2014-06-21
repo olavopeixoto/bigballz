@@ -1,5 +1,4 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
-<%@ Import Namespace="BigBallz.Helpers" %>
 
 <!DOCTYPE html>
 <html lang="pt-br">

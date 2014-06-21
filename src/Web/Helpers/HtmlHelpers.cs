@@ -34,15 +34,15 @@ namespace System.Web.Mvc {
             var jsPath = string.Format("<script type=\"text/javascript\" src=\"{0}\" ></script>\n", PubDir.StartsWith("http") ? string.Format("{0}/{1}/{2}", PubDir, ScriptDir, helper.AttributeEncode(fileName)) : helper.ResolveUrl(string.Format("~/{0}/{1}/{2}", PubDir, ScriptDir, helper.AttributeEncode(fileName))));
             return jsPath;
         }
-        public static string Css(this HtmlHelper helper, string fileName) {
-            return Css(helper, fileName, "screen");
-        }
-        public static string Css(this HtmlHelper helper, string fileName, string media) {
-            if (!fileName.EndsWith(".css"))
-                fileName += ".css";
-            var jsPath = string.Format("<link rel='stylesheet' type='text/css' href='{0}'  media='" + media + "'/>\n", PubDir.StartsWith("http") ?  string.Format("{0}/{1}/{2}", PubDir, CssDir, helper.AttributeEncode(fileName)) : helper.ResolveUrl(string.Format("~/{0}/{1}/{2}", PubDir, CssDir, helper.AttributeEncode(fileName))));
-            return jsPath;
-        }
+        //public static string Css(this HtmlHelper helper, string fileName) {
+        //    return Css(helper, fileName, "screen");
+        //}
+        //public static string Css(this HtmlHelper helper, string fileName, string media) {
+        //    if (!fileName.EndsWith(".css"))
+        //        fileName += ".css";
+        //    var jsPath = string.Format("<link rel='stylesheet' type='text/css' href='{0}'  media='" + media + "'/>\n", PubDir.StartsWith("http") ?  string.Format("{0}/{1}/{2}", PubDir, CssDir, helper.AttributeEncode(fileName)) : helper.ResolveUrl(string.Format("~/{0}/{1}/{2}", PubDir, CssDir, helper.AttributeEncode(fileName))));
+        //    return jsPath;
+        //}
         public static string Image(this HtmlHelper helper, string fileName) {
             return Image(helper, fileName, null);
         }

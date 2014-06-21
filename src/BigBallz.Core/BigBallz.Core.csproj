@@ -96,8 +96,6 @@
     <Compile Include="Caching\ICache.cs" />
     <Compile Include="Caching\NullCache.cs" />
     <Compile Include="Caching\WebCacheWrapper.cs" />
-    <Compile Include="Compatibility\IDat.cs" />
-    <Compile Include="Compatibility\XMLDAT.cs" />
     <Compile Include="Configuration\DefaultConfigurationManager.cs" />
     <Compile Include="Configuration\IConfigurationManager.cs" />
     <Compile Include="Extension\BooleanExtension.cs" />
@@ -168,9 +166,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

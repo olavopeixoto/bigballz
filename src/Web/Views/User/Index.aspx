@@ -32,10 +32,10 @@
             foreach (var item in Model)
             { %>
             <tr class="<%= lineIndex%2==0 ? "ui-state-default": "odd"%>">
-                <td class="l">
+                <td class="l linebreak">
                     <%: Html.ActionLink(item.UserName, "Edit", new { id=item.UserId }) %>
                 </td>
-                <td class="l">
+                <td class="l linebreak">
                     <%: item.EmailAddress %>
                 </td>
                 <td class="c">
@@ -47,7 +47,7 @@
                 <td class="c">
                     <%: Html.CheckBox("pagseguro", item.PagSeguro, new { disabled = "disabled" }) %>
                 </td>
-                <td class="c">
+                <td class="c linebreak">
                     <%: item.AuthorizedBy %>
                 </td>
             </tr>

@@ -210,3 +210,8 @@ ol {
 .rightmenu .col2 {
     background-color: #fff;
 }
+
+.linebreak {
+    word-break: break-all;
+    white-space: normal;
+}

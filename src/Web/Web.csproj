@@ -193,7 +193,6 @@
     <Compile Include="Helpers\PagingLinqExtensions.cs" />
     <Compile Include="Helpers\PhoneValidator.cs" />
     <Compile Include="Helpers\Routing.cs" />
-    <Compile Include="Helpers\Url.cs" />
     <Compile Include="Helpers\ViewData.cs" />
     <Compile Include="Helpers\XSSHelper.cs" />
     <Compile Include="Infrastructure\Logging\EventLogLogger.cs" />
