@@ -17,5 +17,6 @@ namespace BigBallz.Services
         Match GetFirstMatch();
         decimal GetTotalPrize();
         DateTime GetBonusBetExpireDate();
+        IEnumerable<MoneyDistribution> GetMoneyDistribution();
     }
 }

@@ -15,6 +15,7 @@
             <li><%=Html.ActionActiveLink("Bonus", "index", "bonus", null, new { title = "Bonus" })%></li>
             <li><%=Html.ActionActiveLink("Jogos", "index", "match", null, new { title = "Jogos" })%></li>
             <li><%=Html.ActionActiveLink("Usuários", "index", "user", null, new { title = "Usuários" })%></li>
+            <li><%=Html.ActionActiveLink("Arrecadação", "index", "money", null, new { title = "Distribuição da Arrecadação" })%></li>
             <li><%=Html.ActionActiveLink("Tarefas", "index", "cronjobs", null, new { title = "Tarefas Agendadas" })%></li>        
         <%}%>
     

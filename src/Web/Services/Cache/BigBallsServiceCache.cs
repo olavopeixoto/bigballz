@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BigBallz.Core.Caching;
 using BigBallz.Models;
 
@@ -177,6 +178,21 @@ namespace BigBallz.Services.Cache
             }
 
             var results = _service.GetBonusBetExpireDate();
+            _cache.Set(key, results);
+
+            return results;
+        }
+
+        public IEnumerable<MoneyDistribution> GetMoneyDistribution()
+        {
+            var key = string.Format("BB-GetMoneyDistribution");
+
+            if (_cache.Contains(key))
+            {
+                return _cache.Get<IEnumerable<MoneyDistribution>>(key);
+            }
+
+            var results = _service.GetMoneyDistribution().ToList();
             _cache.Set(key, results);
 
             return results;

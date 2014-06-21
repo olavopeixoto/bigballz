@@ -130,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\MoneyController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\JobHost.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Services\L2S\TeamService.cs" />
     <Compile Include="Models\UserPoints.cs" />
     <Compile Include="Services\L2S\UserService.cs" />
+    <Compile Include="Models\MoneyDistribution.cs" />
     <Compile Include="ViewModels\BetViewModel.cs" />
     <Compile Include="ViewModels\BonusViewModel.cs" />
     <Compile Include="ViewModels\MatchBetsViewModel.cs" />
@@ -410,6 +412,7 @@
     <Content Include="Views\Match\Create.aspx" />
     <Content Include="Views\Match\Edit.aspx" />
     <Content Include="Views\Match\Index.aspx" />
+    <Content Include="Views\Money\Index.aspx" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.ascx" />
     <Content Include="Views\Shared\InfoMenu.ascx" />
     <Content Include="Views\Shared\Menu.ascx" />

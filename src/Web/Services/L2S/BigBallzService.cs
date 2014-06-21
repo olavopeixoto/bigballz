@@ -5,6 +5,7 @@ using System.Linq;
 using BigBallz.Core;
 using BigBallz.Helpers;
 using BigBallz.Models;
+using StructureMap;
 
 namespace BigBallz.Services.L2S
 {
@@ -256,7 +257,7 @@ namespace BigBallz.Services.L2S
         public decimal GetTotalPrize()
         {
             return _db.Users.Where(x => x.Authorized && x.UserRoles.Any(y => y.Role.Name == BBRoles.Player))
-                .Sum(x => x.PagSeguro ? (ConfigurationHelper.Price * (decimal) (1.0 - 0.0499) + (decimal) 0.4) : ConfigurationHelper.Price);
+                .Sum(x => x.PagSeguro ? ConfigurationHelper.Price - Math.Round((ConfigurationHelper.Price * (decimal)0.0499 + (decimal)0.4), 2) : ConfigurationHelper.Price);
         }
 
         private int GetTotalUserExactScores(string userName)
@@ -281,6 +282,19 @@ namespace BigBallz.Services.L2S
             var minDate = _db.Matches.Min(x => x.StartTime);
             minDate = minDate.AddHours(-1);
             return minDate;
+        }
+
+        public IEnumerable<MoneyDistribution> GetMoneyDistribution()
+        {
+            return _db.Users
+                .Where(x => x.Authorized && x.UserRoles.Any(y => y.Role.Name == BBRoles.Player))
+                .GroupBy(x => new { Holder = x.PagSeguro && x.AuthorizedBy != "PagSeguro" ? x.AuthorizedBy + " (PagSeguro)" : x.AuthorizedBy, x.PagSeguro })
+                .Select(x => new MoneyDistribution { 
+                            Holder = x.Key.Holder,
+                            Amount = x.Sum(key => key.PagSeguro ? ConfigurationHelper.Price - Math.Round(ConfigurationHelper.Price * (decimal) 0.0499 + (decimal)0.4, 2) : ConfigurationHelper.Price),
+                            TotalPlayers = x.Count()
+                            })
+                .OrderBy(x => x.Holder);
         }
 
         public MatchBetStatistic GetMatchBetStatistics(int matchId)
