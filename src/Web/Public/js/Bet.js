@@ -13,11 +13,11 @@
             }
         });
 
-        var now = ko.observable(new Date());
-        setInterval(function () { now(new Date()); }, 1000);
+        var now = ko.observable(moment.utc());
+        setInterval(function () { now(moment.utc()); }, 1000);
 
         var model = function (e) {
-            var dateObj = moment($(e).attr("data-expirationdate"));
+            var dateObj = moment.utc($(e).attr("data-expirationdate"));
 
             this.expired = ko.computed(function() {
                 return dateObj.isBefore(now());
