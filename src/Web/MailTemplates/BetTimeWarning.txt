@@ -1,6 +1,6 @@
 ﻿Olá <%=userName%>,
 <p>
-Informamos que as apostas nos jogos de <%=startTime%> se encerrarão às <%=endBetTime%> e o(s) seguinte(s) jogo(s) ainda não foi(foram) preenchido(s):
+Informamos que as apostas nos jogos de <%=startTime%> se encerrarão em <%=endBetTime%> e o(s) seguinte(s) jogo(s) ainda não foi(foram) preenchido(s):
 </p>
 <p>
 <%=bets%>

@@ -90,7 +90,7 @@ namespace BigBallz.Services.L2S
                 db.Matches.InsertOnSubmit(match);
                 db.SubmitChanges();
                 AlertEndBetTask.AddTask(match.StartTime.AddHours(-1));
-                BetExpirationWarningTask.AddTask(match.StartTime.AddHours(-2));
+                BetExpirationWarningTask.AddTask(match.StartTime);
             }
         }
 

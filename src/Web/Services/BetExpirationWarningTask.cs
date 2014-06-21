@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
 using BigBallz.Core;
@@ -14,20 +12,22 @@ namespace BigBallz.Services
     {
         private readonly IMailService _mailService;
         private readonly DateTime _expiration;
+        private readonly DateTime _matchStart;
         private readonly DataContextProvider _provider;
 
-        private const int HoursBeforeStartTime = -3;
+        private static readonly TimeSpan[] AlertsTime = { TimeSpan.FromHours(2), TimeSpan.FromHours(3), TimeSpan.FromHours(12), TimeSpan.FromHours(24) };
 
-        public BetExpirationWarningTask(IMailService mailService, DateTime expiration, DataContextProvider provider)
+        public BetExpirationWarningTask(IMailService mailService, DateTime expiration, TimeSpan timeBefore, DataContextProvider provider)
         {
             _mailService = mailService;
-            _expiration = expiration;
+            _expiration = expiration.Add(timeBefore.Negate());
+            _matchStart = expiration;
             _provider = provider;
         }
 
         public string Name
         {
-            get { return "Envio de E-Mail aviso sem aposta"; }
+            get { return string.Format("Envio de E-Mail aviso sem aposta ({0:s})", _matchStart); }
         }
 
         public bool Recurring
@@ -61,12 +61,15 @@ namespace BigBallz.Services
                 loadOptions.LoadWith<Match>(x => x.Bets);
                 context.LoadOptions = loadOptions;
 
-                var matches = context.Matches.Where(match => match.StartTime.AddHours(HoursBeforeStartTime) != AbsoluteExpiration).ToList();
+                var matches = context.Matches
+                    .Where(match => match.StartTime == _matchStart)
+                    .ToList();
 
-                var players = context.Users.Where(x => x.UserRoles.Any(y => y.Role.Name == BBRoles.Player)
-                                    && x.Bets.All(b => b.Match1.StartTime.AddHours(HoursBeforeStartTime) != AbsoluteExpiration));
+                var players = context.Users
+                    .Where(x => x.UserRoles.Any(y => y.Role.Name == BBRoles.Player)
+                                && x.Bets.All(b => b.Match1.StartTime != _matchStart));
 
-                players.ForEach(player => _mailService.SendBetWarning(player, matches));
+                players.ForEach(player => _mailService.SendBetWarning(player, matches.Where(m => m.Bets.All(b => b.User != player.UserId)).ToList()));
             }
         }
 
@@ -77,15 +80,15 @@ namespace BigBallz.Services
             using (var context = provider.CreateContext())
             {
                 context.Matches
-                    .Where(x => x.StartTime.AddHours(HoursBeforeStartTime) >= DateTime.Now.BrazilTimeZone())
+                    .Where(x => !x.Score1.HasValue && !x.Score2.HasValue)
                     .GroupBy(x => x.StartTime)
-                    .ForEach(x => AddTask(x.Key.AddHours(HoursBeforeStartTime)));
+                    .ForEach(x => AddTask(x.Key));
             }
         }
 
         public static void AddTask(DateTime startTime)
         {
-            CronJob.AddTask(new BetExpirationWarningTask(ServiceLocator.Resolve<IMailService>(), startTime, ServiceLocator.Resolve<DataContextProvider>()));
+            AlertsTime.ForEach(t => CronJob.AddTask(new BetExpirationWarningTask(ServiceLocator.Resolve<IMailService>(), startTime, t, ServiceLocator.Resolve<DataContextProvider>())));
         }
 
         public void Dispose()

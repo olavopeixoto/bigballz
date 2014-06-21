@@ -20,7 +20,7 @@ namespace BigBall.Tests.Services
         {
             var provider = new DataContextProvider();
 
-            _task = new BetExpirationWarningTask(_mailMock.Object, DateTime.Now, provider);
+            _task = new BetExpirationWarningTask(_mailMock.Object, DateTime.Now, TimeSpan.FromSeconds(1), provider);
         }
 
         [TestMethod]

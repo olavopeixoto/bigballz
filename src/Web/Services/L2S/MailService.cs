@@ -51,7 +51,9 @@ namespace BigBallz.Services.L2S
 
             Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");
 
-            var parameters = new List<string>(new[] { "userName", user.UserName, "startTime", matches.First().StartTime.FormatDateTime(), "endBetTime", matches.First().StartTime.AddHours(-1).FormatDateTime() });
+            var hoursLeft = matches.First().StartTime.AddHours(-1).Subtract(DateTime.Now.BrazilTimeZone()).TotalHours;
+
+            var parameters = new List<string>(new[] { "userName", user.UserName, "startTime", matches.First().StartTime.FormatDateTime(), "endBetTime", hoursLeft + " hora" + (hoursLeft > 1 ? "s" : "") });
 
             var sb = new StringBuilder("<table><tbody>");
             foreach (var match in matches)
