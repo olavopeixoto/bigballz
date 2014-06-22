@@ -8,7 +8,9 @@
     <table class="match-table" summary="<%=date.FormatDate()%>">
         <thead class="ui-widget-header">
         <tr>
-            <th colspan="7" class="l"><%=date.ToLongDateString()%></th>
+            <th colspan="6" class="l"><%=date.ToLongDateString()%></th>
+            <% var pontosRodada = Model.BetList.Where(x => x.Match.StartTime.Year == date.Year && x.Match.StartTime.DayOfYear == date.DayOfYear).Sum(x => x.PointsEarned); %>
+            <th class="r"><%: pontosRodada%> ponto<%: pontosRodada == 1 ? "" : "s" %></th>
         </tr>
         </thead>
         <tbody>

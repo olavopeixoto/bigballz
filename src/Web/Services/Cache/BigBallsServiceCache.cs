@@ -62,16 +62,16 @@ namespace BigBallz.Services.Cache
             return results;
         }
 
-        public IList<BetPoints> GetUserPointsByMatch(string userName)
+        public IList<BetPoints> GetUserPointsByMatch(User user)
         {
-            var key = string.Format("BB-GetUserPointsByMatch-{0}", userName ?? string.Empty);
+            var key = string.Format("BB-GetUserPointsByMatch-{0}", user.UserId);
 
             if (_cache.Contains(key))
             {
                 return _cache.Get<IList<BetPoints>>(key);
             }
 
-            var results = _service.GetUserPointsByMatch(userName);
+            var results = _service.GetUserPointsByMatch(user);
             _cache.Set(key, results);
 
             return results;

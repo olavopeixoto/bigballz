@@ -49,7 +49,7 @@
 <%foreach (var betPoints in Model.UsersMatchPoints) {%>
     <tr class="<%= lineIndex%2==0 ? "ui-state-default": "odd"%>">
         <td class="c" style="width:50px;height:50px;"><%=Html.GetUserPhoto(betPoints.Bet.User1)%></td>
-        <td class="l"><%: betPoints.Bet.User1.UserName%></td>
+        <td class="l"><%: Html.ActionLink(betPoints.Bet.User1.UserName, "expired", "bet", new {id=betPoints.Bet.User1.UserId}, null)%></td>
         <td class="r homeTeam"><%: betPoints.Bet.Match1.Team1.Name%></td>
         <td class="c"><%= Html.TeamFlag(betPoints.Bet.Match1.Team1Id)%></td>
         <td class="c mResult"><%: betPoints.Bet.NullSafe(x => x.Score1)%> X <%: betPoints.Bet.NullSafe(x => x.Score2)%><%if (betPoints.Bet.Match1.Score1.HasValue) {%><div class="mResultSub"><%=betPoints.Bet.Match1.Score1%> X <%=betPoints.Bet.Match1.Score2%></div><%}%></td>

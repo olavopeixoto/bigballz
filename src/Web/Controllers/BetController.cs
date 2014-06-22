@@ -77,10 +77,7 @@ namespace BigBallz.Controllers
                                                          let pointsEarned = _bigBallzService.GetUserPointsByBonus(user)
                                                          select new BetViewModel.BonusTeams
                                                                     {
-                                                                        BonusBetId =
-                                                                            bonusBets.Where(
-                                                                                x => x.Bonus == bonus.BonusId).Select(
-                                                                                    x => x.BonusBetId).FirstOrDefault(),
+                                                                        BonusBetId = bonusBets.Where(x => x.Bonus == bonus.BonusId).Select(x => x.BonusBetId).FirstOrDefault(),
                                                                         Bonus = bonus,
                                                                         CupStartDate = _bigBallzService.GetFirstMatch().StartTime,
                                                                         PointsEarned = pointsEarned.FirstOrDefault(x => x.BonusBet.BonusBetId == bonus.BonusId).NullSafe(x => x.Points),
@@ -88,26 +85,20 @@ namespace BigBallz.Controllers
                                                                         Teams =
                                                                             bonus.Group.HasValue
                                                                                 ? new SelectList(
-                                                                                      teams.Where(
-                                                                                          x => x.GroupId == bonus.Group),
+                                                                                      teams.Where(x => x.GroupId == bonus.Group),
                                                                                       "TeamId", "Name",
-                                                                                      bonusBets.Where(
-                                                                                          x => x.Bonus == bonus.BonusId)
-                                                                                          .Select(x => x.Team).
-                                                                                          FirstOrDefault())
+                                                                                      bonusBets.Where(x => x.Bonus == bonus.BonusId)
+                                                                                                      .Select(x => x.Team)
+                                                                                                      .FirstOrDefault())
                                                                                 : new SelectList(teams, "TeamId", "Name",
-                                                                                                 bonusBets.Where(
-                                                                                                     x =>
-                                                                                                     x.Bonus ==
-                                                                                                     bonus.BonusId).
-                                                                                                     Select(x => x.Team)
-                                                                                                     .FirstOrDefault())
+                                                                                                 bonusBets.Where(x => x.Bonus == bonus.BonusId)
+                                                                                                    .Select(x => x.Team)
+                                                                                                    .FirstOrDefault())
                                                                     }).ToList(),
 
                                             BetList = (from match in matches
-                                                       let matchBets =
-                                                           _matchBetService.GetAll(User.Identity.Name).ToList()
-                                                       let pointsEarned = _bigBallzService.GetUserPointsByMatch(userName)
+                                                       let matchBets = _matchBetService.GetAll(User.Identity.Name).ToList()
+                                                       let pointsEarned = _bigBallzService.GetUserPointsByMatch(user)
                                                        select new BetViewModel.BetMatches
                                                                     {
                                                                         PointsEarned = pointsEarned.FirstOrDefault(x => x.Bet.Match == match.MatchId).NullSafe(x => x.Points),
@@ -135,14 +126,14 @@ namespace BigBallz.Controllers
         public ActionResult Expired(int id)
         {
             var user = _userService.Get(id);
-            var matches = _matchService.GetAll().Where(x => x.StartTime.AddHours(-1) < DateTime.Now.BrazilTimeZone()).OrderBy(x => x.StartTime).ToList();
+            var matches = _matchService.GetAll().Where(x => x.StartTime.AddHours(-1) < DateTime.Now.BrazilTimeZone()).OrderByDescending(x => x.StartTime).ToList();
             var bonusEnded = DateTime.Now.BrazilTimeZone() > _bigBallzService.GetBonusBetExpireDate();
             var bonusBetViewModel = new BetViewModel
                                         {
                                             UserName = user.UserName,
 
                                             BonusList = (from bonus in _bonusService.GetAll().ToList()
-                                                         let bonusBets = bonusEnded ? _bonusBetService.GetAll(user.UserName).ToList() : new List<BonusBet>()
+                                                         let bonusBets = bonusEnded ? user.BonusBets.ToList() : new List<BonusBet>()
                                                          let pointsEarned = _bigBallzService.GetUserPointsByBonus(user)
                                                          let bonusBetStatistic = bonusEnded ? _bigBallzService.GetBonusBetStatistics(bonus.BonusId) : new BonusBetStatistic()
                                                          select new BetViewModel.BonusTeams
@@ -155,7 +146,7 @@ namespace BigBallz.Controllers
 
                                             BetList = (from match in matches
                                                        let matchBets = _matchBetService.GetAllExpired(id).ToList()
-                                                       let pointsEarned = _bigBallzService.GetUserPointsByMatch(user.UserName)
+                                                       let pointsEarned = _bigBallzService.GetUserPointsByMatch(user)
                                                        select new BetViewModel.BetMatches
                                                        {
                                                            PointsEarned = pointsEarned.FirstOrDefault(x => x.Bet.Match == match.MatchId).NullSafe(x => x.Points),

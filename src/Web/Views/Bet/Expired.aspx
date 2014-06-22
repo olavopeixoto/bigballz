@@ -4,8 +4,8 @@
     <h2><%: "Apostas de " + Model.UserName%></h2>
     <div id="tabs">
     	<ul>
-            <li><a href="#Jogos" title="Jogos"><span>Jogos</span></a></li>
-    		<li><a href="#Bonus" title="Bonus"><span>Bonus</span></a></li>
+            <li><a href="#Jogos" title="Jogos"><span>Jogos (<%: Model.BetList.Sum(x => x.PointsEarned) %>)</span></a></li>
+    		<li><a href="#Bonus" title="Bonus"><span>Bonus (<%: Model.BonusList.Sum(x => x.PointsEarned) %>)</span></a></li>
     	</ul>
         <div id="Jogos">
             <%Html.RenderPartial("_BetExpired");%>

@@ -9,7 +9,7 @@ namespace BigBallz.Services
         IList<Match> GetUserPendingBets(string userName);
         IList<UserPoints> GetStandings();
         IList<UserPoints> GetLastRoundStandings();
-        IList<BetPoints> GetUserPointsByMatch(string userName);
+        IList<BetPoints> GetUserPointsByMatch(User user);
         IList<BonusPoints> GetUserPointsByBonus(User user);
         IList<UserMatchPoints> GetUserPointsByExpiredMatch(int matchId);
         MatchBetStatistic GetMatchBetStatistics(int matchId);

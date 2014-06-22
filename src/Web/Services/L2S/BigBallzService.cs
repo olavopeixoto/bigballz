@@ -5,7 +5,6 @@ using System.Linq;
 using BigBallz.Core;
 using BigBallz.Helpers;
 using BigBallz.Models;
-using StructureMap;
 
 namespace BigBallz.Services.L2S
 {
@@ -186,11 +185,9 @@ namespace BigBallz.Services.L2S
                 .ToList();
         }
 
-        public IList<BetPoints> GetUserPointsByMatch(string userName)
+        public IList<BetPoints> GetUserPointsByMatch(User user)
         {
-            return _db.Bets.Where(x => x.User1.UserName == userName)
-                            .ToList()
-                            .Select(x => new BetPoints
+            return user.Bets.Select(x => new BetPoints
                                             {
                                                 Bet = x,
                                                 Points = BetPoints(x)
@@ -276,9 +273,12 @@ namespace BigBallz.Services.L2S
 
             if (totalBets <= 0) return null;
 
-            var mostBetScore =
-                bets.GroupBy(x => new {x.Score1, x.Score2}).Select(x => new {x.Key, qtd = x.Count()}).OrderByDescending(
-                    x => x.qtd).Select(x => x.Key).First();
+            var mostBetScore = bets
+                                .GroupBy(x => new {x.Score1, x.Score2})
+                                .Select(x => new {x.Key, qtd = x.Count()})
+                                .OrderByDescending(x => x.qtd)
+                                .Select(x => x.Key)
+                                .First();
 
             return new MatchBetStatistic
                        {

@@ -132,6 +132,11 @@ td.mResult .mResultSub
     font-size: 0.7em;
     color:#333;
 }
+.mResultSubBet
+{
+    font-size: 0.7em;
+    color:#aaa;
+}
 table.match-table input
 {
     width:20px;
@@ -143,10 +148,15 @@ table.match-table tbody tr:hover
     background: #fbec88 !important;
 }
 
-table.match-table td.reminder span.reminder-explanation
+.reminder-explanation
 {
     font-size: 0.7em;
     display:block;
+}
+
+.reminder-explanation a {
+    color: #2e6e9e;
+    text-decoration: none;
 }
 
 div.always-on-bottom
@@ -214,4 +224,11 @@ ol {
 .linebreak {
     word-break: break-all;
     white-space: normal;
+}
+
+.betpc {
+    display: block;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
 }

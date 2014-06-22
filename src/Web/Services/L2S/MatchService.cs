@@ -24,6 +24,7 @@ namespace BigBallz.Services.L2S
             options.LoadWith<Match>(x => x.Team1);
             options.LoadWith<Match>(x => x.Team2);
             options.LoadWith<Match>(x => x.Stage);
+            options.LoadWith<Match>(x => x.Bets);
             options.LoadWith<Team>(x => x.Group);
 
             using (var db = _provider.CreateContext())
