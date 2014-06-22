@@ -10,14 +10,14 @@ using BigBallz.Services;
 namespace BigBallz.Controllers
 {
     [Authorize(Roles = "admin")]
-    public class UserController : BaseController
+    public class UserController : Controller
     {
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
         private readonly IAccountService _accountService;
         private readonly IMailService _mailService;
 
-        public UserController(IUserService userService, IRoleService roleService, IAccountService accountService, IMatchService matchService, IBigBallzService bigBallzService, IMailService mailService) : base(userService, matchService, bigBallzService)
+        public UserController(IUserService userService, IRoleService roleService, IAccountService accountService, IMailService mailService)
         {
             _userService = userService;
             _roleService = roleService;

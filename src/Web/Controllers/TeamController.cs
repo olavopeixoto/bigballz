@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using BigBallz.Core.Log;
 using BigBallz.Models;
@@ -8,13 +9,13 @@ using BigBallz.ViewModels;
 namespace BigBallz.Controllers
 {
     [Authorize(Roles = "admin")]
-    public class TeamController : BaseController
+    public class TeamController : Controller
     {
         private readonly ITeamService _teamService;
         private readonly IGroupService _groupService;
         private readonly IUserService _userService;
 
-        public TeamController(ITeamService teamService, IGroupService groupService, IUserService userService, IMatchService matchService, IBigBallzService bigBallzService) : base(userService, matchService, bigBallzService)
+        public TeamController(ITeamService teamService, IGroupService groupService, IUserService userService)
         {
             _teamService = teamService;
             _groupService = groupService;
@@ -23,7 +24,8 @@ namespace BigBallz.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var teams = _teamService.GetAll().ToList();
+            return View(teams);
         }
 
         public ActionResult List()
@@ -86,6 +88,12 @@ namespace BigBallz.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    ViewData["Groups"] = _groupService.GetAll().ToSelectList("GroupId", "Name");
+                    return View(_teamService.Get(team.TeamId));
+                }
+
                 var dbmatch = _teamService.Get(team.TeamId);
                 TryUpdateModel(dbmatch, "team");
                 _teamService.Save();

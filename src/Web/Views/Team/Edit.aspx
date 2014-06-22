@@ -12,7 +12,9 @@
 
         <fieldset>
             <legend>Fields</legend>
-            
+          
+            <%= Html.HiddenFor(model => model.TeamId) %>
+
         <div class="editor-label">
             <label for="Name">Time:</label>
         </div>

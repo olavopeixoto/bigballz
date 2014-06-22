@@ -114,6 +114,7 @@
                         <%if (Html.IsAdmin()) {%>
                         <li><%=Html.ActionLink("Bonus", "index", "bonus", null, new { title = "Bonus" })%></li>
                         <li><%=Html.ActionLink("Jogos", "index", "match", null, new { title = "Jogos" })%></li>
+                        <li><%=Html.ActionLink("Times", "index", "team", null, new { title = "Times" })%></li>
                         <li><%=Html.ActionLink("Usuários", "index", "user", null, new { title = "Usuários" })%></li>
                         <li><%=Html.ActionLink("Arrecadação", "index", "money", null, new { title = "Distribuição da Arrecadação" })%></li>
                         <li><%=Html.ActionLink("Tarefas", "index", "cronjobs", null, new { title = "Tarefas Agendadas" })%></li>        

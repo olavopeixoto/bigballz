@@ -9,7 +9,7 @@ using BigBallz.ViewModels;
 namespace BigBallz.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class BonusController : BaseController
+    public class BonusController : Controller
     {
         private readonly ITeamService _teamService;
         private readonly IBonusService _bonusService;
@@ -19,8 +19,7 @@ namespace BigBallz.Controllers
         private readonly IMailService _mailService;
 
 
-        public BonusController(ITeamService teamService, IBonusService bonusService, IUserService userService, IAccountService accountService, IBonusBetService bonusBetService, IBigBallzService bigBallzService, IMatchService matchService, IMailService mailService)
-            : base(userService, matchService, bigBallzService)
+        public BonusController(ITeamService teamService, IBonusService bonusService, IUserService userService, IAccountService accountService, IBonusBetService bonusBetService, IMailService mailService)
         {
             _teamService = teamService;
             _bonusService = bonusService;

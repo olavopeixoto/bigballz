@@ -9,14 +9,14 @@ using BigBallz.ViewModels;
 namespace BigBallz.Controllers
 {
     [Authorize(Roles = "admin")]
-    public class MatchController : BaseController
+    public class MatchController : Controller
     {
         private readonly ITeamService _teamService;
         private readonly IStageService _stageService;
         private readonly IMatchService _matchService;
         private readonly IUserService _userService;
 
-        public MatchController(ITeamService teamService, IStageService stageService, IMatchService matchService, IUserService userService, IBigBallzService bigBallzService) : base(userService, matchService, bigBallzService)
+        public MatchController(ITeamService teamService, IStageService stageService, IMatchService matchService, IUserService userService)
         {
             _teamService = teamService;
             _stageService = stageService;
