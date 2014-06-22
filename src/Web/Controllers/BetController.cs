@@ -74,7 +74,7 @@ namespace BigBallz.Controllers
                                             BonusList = (from bonus in _bonusService.GetAll().ToList()
                                                          let teams = _teamService.GetAll().ToList()
                                                          let bonusBets = _bonusBetService.GetAll(User.Identity.Name).ToList()
-                                                         let pointsEarned = _bigBallzService.GetUserPointsByBonus(userName)
+                                                         let pointsEarned = _bigBallzService.GetUserPointsByBonus(user)
                                                          select new BetViewModel.BonusTeams
                                                                     {
                                                                         BonusBetId =
@@ -134,7 +134,7 @@ namespace BigBallz.Controllers
 
         public ActionResult Expired(int id)
         {
-            var user = _accountService.FindUserByLocalId(id);
+            var user = _userService.Get(id);
             var matches = _matchService.GetAll().Where(x => x.StartTime.AddHours(-1) < DateTime.Now.BrazilTimeZone()).OrderBy(x => x.StartTime).ToList();
             var bonusEnded = DateTime.Now.BrazilTimeZone() > _bigBallzService.GetBonusBetExpireDate();
             var bonusBetViewModel = new BetViewModel
@@ -143,7 +143,7 @@ namespace BigBallz.Controllers
 
                                             BonusList = (from bonus in _bonusService.GetAll().ToList()
                                                          let bonusBets = bonusEnded ? _bonusBetService.GetAll(user.UserName).ToList() : new List<BonusBet>()
-                                                         let pointsEarned = _bigBallzService.GetUserPointsByBonus(user.UserName)
+                                                         let pointsEarned = _bigBallzService.GetUserPointsByBonus(user)
                                                          let bonusBetStatistic = bonusEnded ? _bigBallzService.GetBonusBetStatistics(bonus.BonusId) : new BonusBetStatistic()
                                                          select new BetViewModel.BonusTeams
                                                          {
@@ -171,13 +171,7 @@ namespace BigBallz.Controllers
         {
             var matchStatistics = _bigBallzService.GetMatchBetStatistics(id);
 
-            if (matchStatistics == null)
-            {
-                this.FlashWarning("Não existem apostas para esse usuário");
-                return RedirectToAction("Index");
-            }
-
-            if (matchStatistics.Match.StartTime.AddHours(-1) > DateTime.Now.BrazilTimeZone())
+            if (matchStatistics == null || matchStatistics.Match.StartTime.AddHours(-1) > DateTime.Now.BrazilTimeZone())
             {
                 this.FlashWarning("Partida ainda não disponível para acompanhamento de resultados.");
                 return RedirectToAction("index");

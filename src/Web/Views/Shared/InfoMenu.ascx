@@ -84,7 +84,7 @@ foreach (var userPoints in topfiveStandings){%>
 <%if (dayStandings != null && dayStandings.Any(s => s.TotalDayPoints > 0))
   {%>
 <hr />
-<h2>Top 5 do Dia</h2>
+<h2>Top 5 da Rodada</h2>
 <ul>
 <%var topfiveDayStandings = dayStandings.Take(5).ToList(); %>
 <%foreach (var userPoints in topfiveDayStandings) {%>

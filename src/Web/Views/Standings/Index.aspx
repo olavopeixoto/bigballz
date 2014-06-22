@@ -11,7 +11,7 @@
 <th>Pontos</th>
 <th>Placar Exato</th>
 <th>Bonus</th>
-<th>Pontos no Dia</th>
+<th>Pontos da Rodada</th>
 <th></th>
 </tr>
 </thead>

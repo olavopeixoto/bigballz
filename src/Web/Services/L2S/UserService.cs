@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.Linq;
+using System.Linq;
 using BigBallz.Core.Caching;
 using BigBallz.Models;
 
@@ -13,6 +14,18 @@ namespace BigBallz.Services.L2S
         {
             _db = context;
             _cache = cache;
+
+            var options = new DataLoadOptions();
+            options.LoadWith<BonusBet>(x => x.Bonus11);
+            options.LoadWith<BonusBet>(x => x.Team1);
+            options.LoadWith<Bet>(x => x.Match1);
+            options.LoadWith<Match>(x => x.Team1);
+            options.LoadWith<Match>(x => x.Team2);
+
+            options.LoadWith<User>(x => x.Bets);
+            options.LoadWith<User>(x => x.BonusBets);
+
+            _db.LoadOptions = options;
         }
 
         public IQueryable<User> GetAll()

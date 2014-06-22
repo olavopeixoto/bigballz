@@ -88,7 +88,11 @@ namespace BigBallz.Services
 
         public static void AddTask(DateTime startTime)
         {
-            AlertsTime.ForEach(t => CronJob.AddTask(new BetExpirationWarningTask(ServiceLocator.Resolve<IMailService>(), startTime, t, ServiceLocator.Resolve<DataContextProvider>())));
+            AlertsTime.ForEach(t =>
+            {
+                if (startTime.Add(t.Negate()) > DateTime.Now.BrazilTimeZone())
+                    CronJob.AddTask(new BetExpirationWarningTask(ServiceLocator.Resolve<IMailService>(), startTime, t, ServiceLocator.Resolve<DataContextProvider>()));
+            });
         }
 
         public void Dispose()

@@ -20,24 +20,21 @@ namespace BigBallz.Services.L2S
             var options = new DataLoadOptions();
             options.LoadWith<BonusBet>(x => x.Bonus11);
             options.LoadWith<BonusBet>(x => x.Team1);
-            options.LoadWith<Bet>(x => x.User1);
+
             options.LoadWith<Bet>(x => x.Match1);
             options.LoadWith<Match>(x => x.Team1);
             options.LoadWith<Match>(x => x.Team2);
 
-            //options.LoadWith<User>(x => x.Bets);
-            //options.LoadWith<User>(x => x.BonusBets);
+            options.LoadWith<User>(x => x.Bets);
+            options.LoadWith<User>(x => x.BonusBets);
 
             _db.LoadOptions = options;
         }
 
-        private int GetTotalUserPoints(string userName)
+        private int GetTotalUserPoints(User user)
         {
-            var bets = _db.Bets.Where(x => x.User1.UserName == userName);
-            var bonusBets = _db.BonusBets.Where(x => x.User1.UserName == userName);
-
-            var totalPoints = Enumerable.Sum(bets, bet => BetPoints(bet));
-            totalPoints += Enumerable.Sum(bonusBets, bet => BonusBetPoints(bet));
+            var totalPoints = user.Bets.Sum(bet => BetPoints(bet));
+            totalPoints += user.BonusBets.Sum(bet => BonusBetPoints(bet));
             return totalPoints;
         }
 
@@ -116,11 +113,22 @@ namespace BigBallz.Services.L2S
         }
 #endregion
 
-        private int GetLastRoundPoints(string userName)
+        private int GetLastRoundPoints(User user)
         {
-            var bets = _db.Bets.Where(x => x.User1.UserName == userName && x.Match1.StartTime.DayOfYear == DateTime.Now.BrazilTimeZone().DayOfYear && x.Match1.StartTime.Year == DateTime.Now.BrazilTimeZone().Year);
+            var lastRoundTime =
+                _db.Matches.Where(x => x.Score1.HasValue && x.Score2.HasValue)
+                    .Select(x => (DateTime?)x.StartTime)
+                    .OrderByDescending(x => x)
+                    .FirstOrDefault();
 
-            return Enumerable.Sum(bets, bet => BetPoints(bet));
+            if (lastRoundTime == null) return 0;
+
+            var bets = user.Bets
+                            .Where(x =>
+                                x.Match1.StartTime.DayOfYear == lastRoundTime.Value.DayOfYear &&
+                                x.Match1.StartTime.Year == lastRoundTime.Value.Year);
+                
+            return bets.Sum(bet => BetPoints(bet));
         }
 
         public IList<Match> GetUserPendingBets(string userName)
@@ -130,84 +138,52 @@ namespace BigBallz.Services.L2S
 
         public IList<UserPoints> GetStandings()
         {
+            var position = 1;
             var users = _db.Users.Where(x => x.Authorized).ToList();
-            var userPointsList = users.Select(user => new UserPoints
+            return users.Select(user => new UserPoints
             {
                 User = user,
-                TotalPoints = GetTotalUserPoints(user.UserName),
-                TotalDayPoints = GetLastRoundPoints(user.UserName),
-                TotalExactScore = GetTotalUserExactScores(user.UserName),
-                TotalBonusPoints = GetTotalUserBonusPoints(user.UserName)
+                TotalPoints = GetTotalUserPoints(user),
+                TotalDayPoints = GetLastRoundPoints(user),
+                TotalExactScore = GetTotalUserExactScores(user),
+                TotalBonusPoints = GetTotalUserBonusPoints(user)
             })
-            .OrderByDescending(x => x.TotalPoints)
-            .ThenByDescending(x => x.TotalExactScore)
-            .ThenByDescending(x => x.TotalBonusPoints)
-            .ThenBy(x => x.User.UserName)
-            .ToList();
-
-            var j = 1;
-            for (var i = 0; i < userPointsList.Count(); i++)
+            .GroupBy(x => new { x.TotalPoints, x.TotalExactScore, x.TotalBonusPoints })
+            .OrderByDescending(x => x.Key.TotalPoints)
+            .ThenByDescending(x => x.Key.TotalExactScore)
+            .ThenByDescending(x => x.Key.TotalBonusPoints)
+            .Select((x, i) =>
             {
-                if (i > 0)
-                {
-                    var lastUser = userPointsList[i - 1];
-                    var currentUser = userPointsList[i];
-                    if (lastUser.TotalPoints > currentUser.TotalPoints 
-                        || (lastUser.TotalPoints == currentUser.TotalPoints && lastUser.TotalExactScore > currentUser.TotalExactScore)
-                        || (lastUser.TotalPoints == currentUser.TotalPoints && lastUser.TotalExactScore == currentUser.TotalExactScore && lastUser.TotalBonusPoints > currentUser.TotalBonusPoints))
-                    {
-                        currentUser.Position = lastUser.Position+j;
-                        j = 1;
-                    }
-                    else
-                    {
-                        currentUser.Position = lastUser.Position;
-                        j++;
-                    }
-                }
-                else
-                {
-                    userPointsList[i].Position = i + 1;
-                }
-            }
-
-            return userPointsList;
+                x.ForEach(u => u.Position = position);
+                position += x.Count();
+                return x;
+            })
+            .SelectMany((k, u) => k, (k, u) => u)
+            .ToList();
         }
 
-        private int GetTotalUserBonusPoints(string userName)
+        private int GetTotalUserBonusPoints(User user)
         {
-            var bonusBets = _db.BonusBets.Where(x => x.User1.UserName == userName).ToList();
-
-            var totalBonusPoints = bonusBets.Sum(bet => BonusBetPoints(bet));
+            var totalBonusPoints = user.BonusBets.Sum(bet => BonusBetPoints(bet));
             return totalBonusPoints;
         }
 
         public IList<UserPoints> GetLastRoundStandings()
         {
-            var userPointsList = GetStandings().OrderByDescending(x => x.TotalDayPoints).ThenBy(x => x.User.UserName).ToList();
-
-            for (var i = 0; i < userPointsList.Count(); i++)
-            {
-                if (i > 0)
+            var position = 1;
+            return GetStandings()
+                .GroupBy(x => x.TotalDayPoints)
+                .OrderByDescending(x => x.Key)
+                .Select((x, i) =>
                 {
-                    var lastUser = userPointsList[i - 1];
-                    var currentUser = userPointsList[i];
-                    if (lastUser.TotalDayPoints > currentUser.TotalDayPoints)
-                    {
-                        currentUser.Position = lastUser.Position + 1;
-                    }
-                    else
-                    {
-                        currentUser.Position = lastUser.Position;
-                    }
-                }
-                else
-                {
-                    userPointsList[i].Position = i + 1;
-                }
-            }
-
-            return userPointsList;
+                    x.ForEach(u => u.Position = position);
+                    position += x.Count();
+                    return x;
+                })
+                .SelectMany((k,u) => k, (k,u) => u)
+                .OrderBy(x => x.Position)
+                .ThenBy(x => x.User.UserName)
+                .ToList();
         }
 
         public IList<BetPoints> GetUserPointsByMatch(string userName)
@@ -221,11 +197,9 @@ namespace BigBallz.Services.L2S
                                             }).ToList();
         }
 
-        public IList<BonusPoints> GetUserPointsByBonus(string userName)
+        public IList<BonusPoints> GetUserPointsByBonus(User user)
         {
-            return _db.BonusBets
-                .Where(x => x.User1.UserName == userName)
-                .ToList()
+            return user.BonusBets
                 .Select(x => new BonusPoints
                                 {
                                     BonusBet = x,
@@ -260,17 +234,14 @@ namespace BigBallz.Services.L2S
                 .Sum(x => x.PagSeguro ? ConfigurationHelper.Price - Math.Round((ConfigurationHelper.Price * (decimal)0.0499 + (decimal)0.4), 2) : ConfigurationHelper.Price);
         }
 
-        private int GetTotalUserExactScores(string userName)
+        private int GetTotalUserExactScores(User user)
         {
-            var bets = _db.Bets.Where(x => x.User1.UserName == userName);
-            var exactScores =
-                Enumerable.Count(
-                    bets.Where(
-                        bet =>
-                        bet.Score1 != null && bet.Score2 != null && bet.Match1.Score1 != null &&
-                        bet.Match1.Score2 != null),
-                    bet =>
-                    PlacarExato(bet.Score1.Value, bet.Score2.Value, bet.Match1.Score1.Value, bet.Match1.Score2.Value));
+            var exactScores = user.Bets
+                                .Where(bet => bet.Score1.HasValue
+                                            && bet.Score2.HasValue
+                                            && bet.Match1.Score1.HasValue
+                                            && bet.Match1.Score2.HasValue)
+                                .Count(bet => PlacarExato(bet.Score1.Value, bet.Score2.Value, bet.Match1.Score1.Value, bet.Match1.Score2.Value));
 
             return exactScores;
         }

@@ -125,8 +125,11 @@ namespace BigBallz
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
-            AlertEndBetTask.AddAllMatches();
-            BetExpirationWarningTask.AddAllMatches();
+            if (!Context.IsDebuggingEnabled)
+            {
+                AlertEndBetTask.AddAllMatches();
+                BetExpirationWarningTask.AddAllMatches();
+            }
 
             InitializeMiniProfiler();
         }

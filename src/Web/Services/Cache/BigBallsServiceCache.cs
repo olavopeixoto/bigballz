@@ -77,16 +77,16 @@ namespace BigBallz.Services.Cache
             return results;
         }
 
-        public IList<BonusPoints> GetUserPointsByBonus(string userName)
+        public IList<BonusPoints> GetUserPointsByBonus(User user)
         {
-            var key = string.Format("BB-GetUserPointsByBonus-{0}", userName ?? string.Empty);
+            var key = string.Format("BB-GetUserPointsByBonus-{0}", user.UserId);
 
             if (_cache.Contains(key))
             {
                 return _cache.Get<IList<BonusPoints>>(key);
             }
 
-            var results = _service.GetUserPointsByBonus(userName);
+            var results = _service.GetUserPointsByBonus(user);
             _cache.Set(key, results);
 
             return results;
