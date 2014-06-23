@@ -18,12 +18,6 @@ namespace BigBallz.Helpers
             return htmlHelper.ViewContext.HttpContext.User.IsInRole(BBRoles.Player);
         }
 
-        public static bool IsAdmin(this Controller controller)
-        {
-            if (controller.ControllerContext.HttpContext.User == null) return false;
-            return controller.ControllerContext.HttpContext.User.IsInRole(BBRoles.Admin);
-        }
-
         public static bool IsAuthorized(this Controller controller)
         {
             if (controller.ControllerContext.HttpContext.User == null) return false;

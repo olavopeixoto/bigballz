@@ -20,10 +20,12 @@ namespace BigBallz.Controllers
             _mailService = mailService;
         }
 
-        [HttpGet]
-        public ActionResult Index()
+        [HttpGet, UserNameFilter]
+        public ActionResult Index(string userName)
         {
             var comments = _commentsService.GetComments();
+            ViewBag.EmailAlert = _userService.Get(userName).EmailAlert;
+
             return View(comments);
         }
 
@@ -34,7 +36,7 @@ namespace BigBallz.Controllers
 
             try
             {
-                _mailService.SendNewCommentPosted(_userService.GetAll().Where(u => u.EmailAddressVerified).ToArray(), userName, comment);
+                _mailService.SendNewCommentPosted(_userService.GetAll().Where(u => u.EmailAddressVerified && u.EmailAlert && u.Authorized).ToArray(), userName, comment);
             }
             catch (Exception ex)
             {
@@ -42,6 +44,14 @@ namespace BigBallz.Controllers
             }
 
             return RedirectToAction("index");
+        }
+
+        [HttpPost, UserNameFilter]
+        public void UpdateEmailPreferences(string userName, bool sendEmail)
+        {
+            var user = _userService.Get(userName);
+            user.EmailAlert = sendEmail;
+            _userService.Save();
         }
     }
 }

@@ -10,9 +10,9 @@ namespace BigBallz.Core.Extension.Web.Mvc
 {
     public static class ContentHelper
     {
-        public static readonly string DefaultThemeName = ConfigurationManager.AppSettings["DefaultThemeName"] ?? "steel";
-        public static string DefaultCssPathFormat = ConfigurationManager.AppSettings["DefaultCssPathFormat"] ?? "~/Content/themes/{0}/css/{1}";
-        public static string DefaultJsPathFormat = ConfigurationManager.AppSettings["DefaultJsPathFormat"] ?? "~/Content/js/{0}";
+        private static readonly string DefaultThemeName = ConfigurationManager.AppSettings["DefaultThemeName"] ?? "steel";
+        private static readonly string DefaultCssPathFormat = ConfigurationManager.AppSettings["DefaultCssPathFormat"] ?? "~/Content/themes/{0}/css/{1}";
+        private static readonly string DefaultJsPathFormat = ConfigurationManager.AppSettings["DefaultJsPathFormat"] ?? "~/Content/js/{0}";
 
         private static string GetFileVersion(this HtmlHelper htmlHelper, string virtualFilePath)
         {
@@ -204,13 +204,15 @@ namespace BigBallz.Core.Extension.Web.Mvc
             var sb = new StringBuilder();
             foreach (var jsPath in jsPaths)
             {
-                var version = jsPath.StartsWith("http")
-                                     ? string.Empty
-                                     :  jsPath.StartsWith("~")
-                                         ? "?v=" + htmlHelper.GetFileVersion(jsPath)
-                                         : "?v=" + htmlHelper.GetFileVersion(string.Format(DefaultJsPathFormat, jsPath));
+                var path = jsPath.StartsWith("http") || jsPath.StartsWith("~")
+                    ? jsPath
+                    : string.Format(DefaultJsPathFormat, jsPath);
 
-                sb.AppendLine(MvcContrib.UI.Html.HtmlHelperExtensions.ScriptInclude(htmlHelper, string.Format("{0}{1}", jsPath, version)));
+                var version = path.StartsWith("http")
+                    ? string.Empty
+                    : "?v=" + htmlHelper.GetFileVersion(path);
+
+                sb.AppendLine(MvcContrib.UI.Html.HtmlHelperExtensions.ScriptInclude(htmlHelper, string.Format("{0}{1}", path, version)));
             }
             return sb.ToString();
         }

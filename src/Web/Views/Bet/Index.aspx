@@ -21,10 +21,10 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="Scripts" runat="server">
     <script src="//ajax.aspnetcdn.com/ajax/knockout/knockout-3.1.0.js" type="text/javascript"></script>
-    <%=Html.RegisterScriptAndDumpRegisteredScripts("Bet.js")%>
+    <%=Html.ScriptInclude("Bet.js")%>
     
     <%if(Model.ShowHelp) {%>
-    <%=Html.Script("chardinjs.min.js")%>
+    <%=Html.ScriptInclude("chardinjs.min.js")%>
     <script type="text/javascript">
         $('body').chardinJs('start');
     </script>

@@ -5,4 +5,4 @@
     </table>
     <div id="pager" class="scroll" style="text-align: center;">
     </div>
-<%=Html.Script("Team.js") %>
+<%=Html.ScriptInclude("Team.js") %>

@@ -61,6 +61,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -181,23 +182,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ControllerExtensions.cs" />
     <Compile Include="Helpers\FlashHelpers.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
-    <Compile Include="Helpers\IPagedList.cs" />
-    <Compile Include="Helpers\JqGridData.cs" />
-    <Compile Include="Helpers\JqGridExtensions.cs" />
     <Compile Include="Helpers\Lists.cs" />
-    <Compile Include="Helpers\PagedList.cs" />
-    <Compile Include="Helpers\PaginatedList.cs" />
-    <Compile Include="Helpers\PagingLinqExtensions.cs" />
-    <Compile Include="Helpers\PhoneValidator.cs" />
-    <Compile Include="Helpers\Routing.cs" />
-    <Compile Include="Helpers\ViewData.cs" />
-    <Compile Include="Helpers\XSSHelper.cs" />
-    <Compile Include="Infrastructure\Logging\EventLogLogger.cs" />
-    <Compile Include="Infrastructure\Logging\ILogger.cs" />
-    <Compile Include="Infrastructure\Logging\LogUtility.cs" />
     <Compile Include="Models\BigBallz.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -476,13 +463,6 @@
       <Project>{061AF39F-97F7-4D69-A054-6E0811641F6B}</Project>
       <Name>BigBallz.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DynamicQuery\DynamicQuery.csproj">
-      <Project>{16786802-9BB2-46E5-A9E2-C3DC7E4969FF}</Project>
-      <Name>DynamicQuery</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -5,7 +5,7 @@
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="Scripts" runat="server">
-	<%=Html.Script("Team.js") %>
+	<%=Html.ScriptInclude("Team.js") %>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">

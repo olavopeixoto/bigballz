@@ -1,4 +1,6 @@
-﻿namespace BigBallz.Helpers
+﻿using System.Linq;
+
+namespace BigBallz.Helpers
 {
     public class GravatarHelper
     {
@@ -31,7 +33,7 @@
         /// </summary>
         /// <param name="theEmail"></param>
         /// <returns>Hash of the email address passed.</returns>
-        public string MD5(string theEmail)
+        private string MD5(string theEmail)
         {
             var md5Obj = new System.Security.Cryptography.MD5CryptoServiceProvider();
 
@@ -39,14 +41,7 @@
 
             bytesToHash = md5Obj.ComputeHash(bytesToHash);
 
-            var strResult = "";
-
-            foreach (var b in bytesToHash)
-            {
-                strResult += b.ToString("x2");
-            }
-
-            return strResult;
+            return bytesToHash.Aggregate("", (current, b) => current + b.ToString("x2"));
         }
 
         /// <summary>
@@ -55,7 +50,7 @@
         public string GetGravatarUrl()
         {
             //hash the email address
-            string hE = MD5(Email);
+            var hE = MD5(Email);
             //format our url to the Gravatar
             return string.Format(BaseUrl, hE, Iconset, Size, Rating);
         }

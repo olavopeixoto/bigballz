@@ -2565,6 +2565,8 @@ namespace BigBallz.Models
 		
 		private bool _HelpShown;
 		
+		private bool _EmailAlert;
+		
 		private EntitySet<Bet> _Bets;
 		
 		private EntitySet<UserRole> _UserRoles;
@@ -2601,6 +2603,8 @@ namespace BigBallz.Models
     partial void OnPagSeguroChanged();
     partial void OnHelpShownChanging(bool value);
     partial void OnHelpShownChanged();
+    partial void OnEmailAlertChanging(bool value);
+    partial void OnEmailAlertChanged();
     #endregion
 		
 		public User()
@@ -2810,6 +2814,26 @@ namespace BigBallz.Models
 					this._HelpShown = value;
 					this.SendPropertyChanged("HelpShown");
 					this.OnHelpShownChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmailAlert", DbType="BIT NOT NULL")]
+		public bool EmailAlert
+		{
+			get
+			{
+				return this._EmailAlert;
+			}
+			set
+			{
+				if ((this._EmailAlert != value))
+				{
+					this.OnEmailAlertChanging(value);
+					this.SendPropertyChanging();
+					this._EmailAlert = value;
+					this.SendPropertyChanged("EmailAlert");
+					this.OnEmailAlertChanged();
 				}
 			}
 		}

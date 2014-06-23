@@ -6,7 +6,7 @@
 <div style="display:block;clear:both;padding-top:20px;padding-bottom:20px;">
 <%using(Html.BeginForm("post", "comments")){%>
     <span style="display:block"><%=Html.TextArea("comment", new {rows=3, style="width:95%"})%></span>
-    <input type="submit" value="Comentar" />
+    <input type="submit" value="Comentar" /><input type="checkbox" name="email" <%: ViewBag.EmailAlert ? "checked=checked" : "" %>/>&nbsp;desejo receber os comentários por e-mail
 <%}%>
 </div>
 <%foreach(var comment in Model) {%>
@@ -19,4 +19,12 @@
 </div>
 <%}%>
 </asp:Content>
-<asp:Content runat="server" ID="Content2" ContentPlaceHolderID="Scripts"></asp:Content>
+<asp:Content runat="server" ID="Content2" ContentPlaceHolderID="Scripts">
+    <script type="text/javascript">
+        $(function () {
+            $("input[name=email]").change(function (e) {
+                $.post("<%:Url.Action("UpdateEmailPreferences")%>", { sendEmail: $(this).attr("checked") ? true : false });
+        });
+    });
+</script>
+</asp:Content>

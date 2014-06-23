@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "src\Web\Web.csproj",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.Tests", "tests\Web.Tests\Web.Tests.csproj", "{BFAB61DC-2898-412C-8CA9-A8C75566346E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicQuery", "src\DynamicQuery\DynamicQuery.csproj", "{16786802-9BB2-46E5-A9E2-C3DC7E4969FF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigBallz.Core", "src\BigBallz.Core\BigBallz.Core.csproj", "{061AF39F-97F7-4D69-A054-6E0811641F6B}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{BFAB61DC-2898-412C-8CA9-A8C75566346E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFAB61DC-2898-412C-8CA9-A8C75566346E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFAB61DC-2898-412C-8CA9-A8C75566346E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{16786802-9BB2-46E5-A9E2-C3DC7E4969FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{16786802-9BB2-46E5-A9E2-C3DC7E4969FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{16786802-9BB2-46E5-A9E2-C3DC7E4969FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{16786802-9BB2-46E5-A9E2-C3DC7E4969FF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{061AF39F-97F7-4D69-A054-6E0811641F6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{061AF39F-97F7-4D69-A054-6E0811641F6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{061AF39F-97F7-4D69-A054-6E0811641F6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
