@@ -148,6 +148,7 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Team" Type="System.String" DbType="Char(3)" CanBeNull="true" />
       <Column Name="[Group]" Member="Group" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LastModified" Type="System.DateTime" DbType="DateTime NOT NULL" IsReadOnly="true" CanBeNull="false" UpdateCheck="Always" />
       <Association Name="Bonus_BonusBet" Member="BonusBets" ThisKey="BonusId" OtherKey="Bonus" Type="BonusBet" />
       <Association Name="Group_Bonus" Member="Group1" ThisKey="Group" OtherKey="GroupId" Type="Group" IsForeignKey="true" />
       <Association Name="Team_Bonus" Member="Team1" ThisKey="Team" OtherKey="TeamId" Type="Team" IsForeignKey="true" />

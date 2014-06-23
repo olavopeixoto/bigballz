@@ -3325,6 +3325,8 @@ namespace BigBallz.Models
 		
 		private System.Nullable<int> _Group;
 		
+		private System.DateTime _LastModified = default(System.DateTime);
+		
 		private EntitySet<BonusBet> _BonusBets;
 		
 		private EntityRef<Group> _Group1;
@@ -3434,6 +3436,15 @@ namespace BigBallz.Models
 					this.SendPropertyChanged("Group");
 					this.OnGroupChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastModified", DbType="DateTime NOT NULL", UpdateCheck=UpdateCheck.Never)]
+		public System.DateTime LastModified
+		{
+			get
+			{
+				return this._LastModified;
 			}
 		}
 		
