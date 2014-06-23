@@ -232,3 +232,20 @@ ol {
     font-weight: normal;
     font-size: 10px;
 }
+
+.up {
+	color: green;
+}
+
+.down {
+	color: #f00;
+}
+
+.namesmall {
+    word-break: break-all;
+    white-space: normal;
+}
+
+.odd a {
+    text-decoration: none;
+}

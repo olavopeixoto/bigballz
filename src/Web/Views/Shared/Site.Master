@@ -13,6 +13,7 @@
     <%=Html.Css("fifa/jquery-ui-1.8.1.custom")%>
     <%=Html.Css("ui.jqgrid")%>
     <%=Html.Css("screen")%>
+    <%=Html.Css("~/public/font-awesome/css/font-awesome.min.css")%>
     <%=Html.Css("site")%>
     <%=Html.Css("chardinjs")%>
     <% if (!Context.IsDebuggingEnabled) { %>

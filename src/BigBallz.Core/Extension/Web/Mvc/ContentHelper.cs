@@ -146,7 +146,7 @@ namespace BigBallz.Core.Extension.Web.Mvc
         {
             cssFilePath = cssFilePath.EndsWith(".css") ? cssFilePath : cssFilePath + ".css";
 
-            var virtualCssFilePath = string.Format(DefaultCssPathFormat, themeName, cssFilePath);
+            var virtualCssFilePath = cssFilePath.StartsWith("~") ? string.Format(cssFilePath, themeName) : string.Format(DefaultCssPathFormat, themeName, cssFilePath);
             var version = htmlHelper.GetFileVersion(virtualCssFilePath);
 
             var builder = new TagBuilder("link");

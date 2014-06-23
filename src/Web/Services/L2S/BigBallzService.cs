@@ -30,15 +30,18 @@ namespace BigBallz.Services.L2S
             _db.LoadOptions = options;
         }
 
-        private int GetTotalUserPoints(User user)
+        private int GetTotalUserPoints(User user, DateTime? untilDate = null)
         {
-            var totalPoints = user.Bets.Sum(bet => BetPoints(bet));
-            totalPoints += user.BonusBets.Sum(bet => BonusBetPoints(bet));
+            untilDate = untilDate ?? DateTime.Now.AddHours(-1).BrazilTimeZone();
+
+            var totalPoints = user.Bets.Where(b => b.Match1.StartTime <= untilDate).Sum(bet => BetPoints(bet));
+            totalPoints += user.BonusBets.Where(b => b.Bonus11.LastModified <= untilDate).Sum(bet => BonusBetPoints(bet));
             return totalPoints;
         }
 
         #region Points Rules
-        protected int BetPoints(Bet bet)
+
+        private int BetPoints(Bet bet)
         {
             if (!bet.Score1.HasValue || !bet.Score2.HasValue || !bet.Match1.Score1.HasValue || !bet.Match1.Score2.HasValue)
             {
@@ -139,13 +142,46 @@ namespace BigBallz.Services.L2S
         {
             var position = 1;
             var users = _db.Users.Where(x => x.Authorized).ToList();
+
+            var lastRoundDate =
+                _db.Matches.Where(
+                    m =>
+                        m.Score1.HasValue &&
+                        m.StartTime < _db.Matches.Where(lm => lm.Score1.HasValue).Max(lm => lm.StartTime))
+                    .OrderByDescending(m => m.StartTime)
+                    .Select(m => (DateTime?)m.StartTime)
+                    .FirstOrDefault();
+
+            var lastStandings = !lastRoundDate.HasValue ? new List<UserPoints>() : users.Select(user => new UserPoints
+            {
+                User = user,
+                TotalPoints = GetTotalUserPoints(user, lastRoundDate),
+                TotalExactScore = GetTotalUserExactScores(user, lastRoundDate),
+                TotalBonusPoints = GetTotalUserBonusPoints(user, lastRoundDate)
+            })
+            .GroupBy(x => new { x.TotalPoints, x.TotalExactScore, x.TotalBonusPoints })
+            .OrderByDescending(x => x.Key.TotalPoints)
+            .ThenByDescending(x => x.Key.TotalExactScore)
+            .ThenByDescending(x => x.Key.TotalBonusPoints)
+            .Select((x, i) =>
+            {
+                x.ForEach(u => u.Position = position);
+                position += x.Count();
+                return x;
+            })
+            .SelectMany((k, u) => k, (k, u) => u)
+            .ToList();
+
+            position = 1;
+
             return users.Select(user => new UserPoints
             {
                 User = user,
                 TotalPoints = GetTotalUserPoints(user),
                 TotalDayPoints = GetLastRoundPoints(user),
                 TotalExactScore = GetTotalUserExactScores(user),
-                TotalBonusPoints = GetTotalUserBonusPoints(user)
+                TotalBonusPoints = GetTotalUserBonusPoints(user),
+                LastPosition = lastStandings.Where(l => l.User.UserId == user.UserId).Select(l => (int?)l.Position).FirstOrDefault() ?? 1
             })
             .GroupBy(x => new { x.TotalPoints, x.TotalExactScore, x.TotalBonusPoints })
             .OrderByDescending(x => x.Key.TotalPoints)
@@ -161,9 +197,11 @@ namespace BigBallz.Services.L2S
             .ToList();
         }
 
-        private int GetTotalUserBonusPoints(User user)
+        private int GetTotalUserBonusPoints(User user, DateTime? untilDate = null)
         {
-            var totalBonusPoints = user.BonusBets.Sum(bet => BonusBetPoints(bet));
+            untilDate = untilDate ?? DateTime.Now.AddHours(-1).BrazilTimeZone();
+
+            var totalBonusPoints = user.BonusBets.Where(b => b.Bonus11.LastModified <= untilDate).Sum(bet => BonusBetPoints(bet));
             return totalBonusPoints;
         }
 
@@ -231,10 +269,14 @@ namespace BigBallz.Services.L2S
                 .Sum(x => x.PagSeguro ? ConfigurationHelper.Price - Math.Round((ConfigurationHelper.Price * (decimal)0.0499 + (decimal)0.4), 2) : ConfigurationHelper.Price);
         }
 
-        private int GetTotalUserExactScores(User user)
+        private int GetTotalUserExactScores(User user, DateTime? untilDate = null)
         {
+            untilDate = untilDate ?? DateTime.Now.AddHours(-1).BrazilTimeZone();
+
             var exactScores = user.Bets
-                                .Where(bet => bet.Score1.HasValue
+                                .Where(bet => 
+                                            bet.Match1.StartTime <= untilDate
+                                            && bet.Score1.HasValue
                                             && bet.Score2.HasValue
                                             && bet.Match1.Score1.HasValue
                                             && bet.Match1.Score2.HasValue)

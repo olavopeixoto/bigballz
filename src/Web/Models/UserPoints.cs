@@ -5,6 +5,7 @@ namespace BigBallz.Models
     public class UserPoints
     {
         public int Position { get; set; }
+        public int LastPosition { get; set; }
         public User User { get; set; }
         public int TotalPoints { get; set; }
         public int TotalExactScore { get; set; }
