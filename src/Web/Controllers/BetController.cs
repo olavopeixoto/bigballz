@@ -24,10 +24,9 @@ namespace BigBallz.Controllers
         private readonly ITeamService _teamService;
         private readonly IUserService _userService;
         private readonly IBigBallzService _bigBallzService;
-        private readonly IAccountService _accountService;
 
         public BetController(ITeamService teamService, IBonusService bonusService, IBonusBetService bonusBetService,
-                             IUserService userService, IMatchService matchService, IMatchBetService matchBetService, IBigBallzService bigBallzService, IAccountService accountService) : base(userService, matchService, bigBallzService)
+                             IUserService userService, IMatchService matchService, IMatchBetService matchBetService, IBigBallzService bigBallzService) : base(userService, matchService, bigBallzService)
         {
             _teamService = teamService;
             _bonusService = bonusService;
@@ -36,7 +35,6 @@ namespace BigBallz.Controllers
             _matchService = matchService;
             _matchBetService = matchBetService;
             _bigBallzService = bigBallzService;
-            _accountService = accountService;
         }
 
         private void ShowRemindMessage()
