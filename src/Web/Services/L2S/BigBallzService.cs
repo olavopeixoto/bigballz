@@ -32,10 +32,17 @@ namespace BigBallz.Services.L2S
 
         private int GetTotalUserPoints(User user, DateTime? untilDate = null)
         {
-            untilDate = untilDate ?? DateTime.Now.AddHours(-1).BrazilTimeZone();
+            var bets = user.Bets.AsEnumerable();
+            var bonusBets = user.BonusBets.AsEnumerable();
 
-            var totalPoints = user.Bets.Where(b => b.Match1.StartTime <= untilDate).Sum(bet => BetPoints(bet));
-            totalPoints += user.BonusBets.Where(b => b.Bonus11.LastModified <= untilDate).Sum(bet => BonusBetPoints(bet));
+            if (untilDate.HasValue)
+            {
+                bets = bets.Where(b => b.Match1.StartTime <= untilDate);
+                bonusBets = bonusBets.Where(b => b.Bonus11.LastModified <= untilDate);
+            }
+
+            var totalPoints = bets.Sum(bet => BetPoints(bet));
+            totalPoints += bonusBets.Sum(bet => BonusBetPoints(bet));
             return totalPoints;
         }
 
@@ -199,9 +206,12 @@ namespace BigBallz.Services.L2S
 
         private int GetTotalUserBonusPoints(User user, DateTime? untilDate = null)
         {
-            untilDate = untilDate ?? DateTime.Now.AddHours(-1).BrazilTimeZone();
+            var bonusBets = user.BonusBets.AsEnumerable();
 
-            var totalBonusPoints = user.BonusBets.Where(b => b.Bonus11.LastModified <= untilDate).Sum(bet => BonusBetPoints(bet));
+            if (untilDate.HasValue)
+                bonusBets = bonusBets.Where(b => b.Bonus11.LastModified <= untilDate);
+
+            var totalBonusPoints = bonusBets.Sum(bet => BonusBetPoints(bet));
             return totalBonusPoints;
         }
 
@@ -271,12 +281,13 @@ namespace BigBallz.Services.L2S
 
         private int GetTotalUserExactScores(User user, DateTime? untilDate = null)
         {
-            untilDate = untilDate ?? DateTime.Now.AddHours(-1).BrazilTimeZone();
+            var bets = user.Bets.AsEnumerable();
 
-            var exactScores = user.Bets
-                                .Where(bet => 
-                                            bet.Match1.StartTime <= untilDate
-                                            && bet.Score1.HasValue
+            if (untilDate.HasValue)
+                bets = bets.Where(bet => bet.Match1.StartTime <= untilDate);
+
+            var exactScores = bets
+                                .Where(bet => bet.Score1.HasValue
                                             && bet.Score2.HasValue
                                             && bet.Match1.Score1.HasValue
                                             && bet.Match1.Score2.HasValue)
