@@ -20,7 +20,7 @@
         <td class="c"><%if (string.IsNullOrEmpty(bonus.Bonus.Team)) {%>
             -
         <%} else {%>
-            <%:bonus.PointsEarned%> ponto<%:bonus.PointsEarned == 1 ? "" : "s"%>
+            <%:bonus.PointsEarned%>
         <%}%></td>
        <td class="l"><%:bonus.BonusBetStatistic.Team.NullSafe(x => x.Name)%> (<%:bonus.BonusBetStatistic.TeamPerc.ToPercent()%>)</td>
     </tr>
@@ -28,7 +28,8 @@
     <%var totalBonus = Model.BonusList.Sum(x => x.PointsEarned);%>
     <tr class="ui-widget-header">
         <td colspan="3" class="l">Total</td>
-        <td colspan="2"><%:totalBonus%> ponto<%:totalBonus == 1 ? "" : "s"%></td>
+        <td class="c"><%:totalBonus%></td>
+        <td></td>
     </tr>
 </tbody>
 </table>
