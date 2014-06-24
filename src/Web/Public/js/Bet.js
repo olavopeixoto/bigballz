@@ -9,7 +9,7 @@
                 dirty = true;
                 window.onbeforeunload = function () { return "Existem apostas modificadas que não foram salvas, deseja sair sem salvar?"; };
                 $("#apostar").removeClass("ui-helper-hidden");
-                $("input[type=submit]").click(function () { window.onbeforeunload = null; });
+                $("form").submit(function () { window.onbeforeunload = null; $("#apostar input").attr("disabled", "disabled").val("Aguarde...").attr("type", "button"); });
             }
         });
 
