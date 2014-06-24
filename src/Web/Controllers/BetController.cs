@@ -62,7 +62,11 @@ namespace BigBallz.Controllers
         {
             ShowRemindMessage();
 
-            var matches = _matchService.GetAll().OrderBy(x => x.StartTime).ToList();
+            var matches = _matchService
+                                .GetAll()
+                                .OrderBy(x => x.StartTime)
+                                .ToList();
+
             var endBonus = _bigBallzService.GetBonusBetExpireDate();
 
             var bonusEnded = DateTime.Now.BrazilTimeZone() > endBonus;
@@ -101,7 +105,7 @@ namespace BigBallz.Controllers
                                                                     }).ToList(),
 
                                             BetList = (from match in matches
-                                                       let matchBets = _matchBetService.GetAll(User.Identity.Name).ToList()
+                                                       let matchBets = user.Bets
                                                        let pointsEarned = _bigBallzService.GetUserPointsByMatch(user)
                                                        select new BetViewModel.BetMatches
                                                                     {

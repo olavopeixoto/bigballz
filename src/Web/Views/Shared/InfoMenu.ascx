@@ -113,7 +113,7 @@ foreach (var userPoints in topfiveStandings){%>
           <i class="fa fa-minus"></i>
           <%} %>
           <% var gain = Math.Abs(userPosition.LastPosition - userPosition.Position); %>
-          <small><%: gain > 0 ? gain.ToString() : "" %></small>
+          <small><%: gain > 0 ? gain.ToString(CultureInfo.InvariantCulture) : "" %></small>
       </td>
         <td class="l namesmall">
             <%= userPoints.User.UserName == Context.User.Identity.Name ? "<strong>" : string.Empty%>
