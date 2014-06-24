@@ -4,13 +4,13 @@ using BigBallz.Services;
 namespace BigBallz.Controllers
 {
     [Authorize(Roles = "admin")]
-    public class MoneyController : Controller
+    public class MoneyController : BaseController
     {
         private readonly IBigBallzService _bigBallzService;
         //
         // GET: /Money/
 
-        public MoneyController(IBigBallzService bigBallzService)
+        public MoneyController(IBigBallzService bigBallzService, IUserService userService, IMatchService matchService) : base(userService, matchService, bigBallzService)
         {
             _bigBallzService = bigBallzService;
         }

@@ -9,7 +9,7 @@ using BigBallz.ViewModels;
 namespace BigBallz.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class BonusController : Controller
+    public class BonusController : BaseController
     {
         private readonly ITeamService _teamService;
         private readonly IBonusService _bonusService;
@@ -19,7 +19,7 @@ namespace BigBallz.Controllers
         private readonly IMailService _mailService;
 
 
-        public BonusController(ITeamService teamService, IBonusService bonusService, IUserService userService, IAccountService accountService, IBonusBetService bonusBetService, IMailService mailService)
+        public BonusController(ITeamService teamService, IBonusService bonusService, IUserService userService, IAccountService accountService, IBonusBetService bonusBetService, IMailService mailService, IMatchService matchService, IBigBallzService bigBallzService) : base(userService, matchService, bigBallzService)
         {
             _teamService = teamService;
             _bonusService = bonusService;
@@ -66,8 +66,7 @@ namespace BigBallz.Controllers
             {
                 var user = _userService.Get(User.Identity.Name);
 
-                //Verifica se usuario tem papel de admin
-                if (user.UserRoles.Count > 1)
+                if (user.IsAdmin)
                 {
                     var dbBonus = _bonusService.Get(bonus.BonusId);
 

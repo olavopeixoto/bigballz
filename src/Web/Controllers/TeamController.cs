@@ -9,13 +9,13 @@ using BigBallz.ViewModels;
 namespace BigBallz.Controllers
 {
     [Authorize(Roles = "admin")]
-    public class TeamController : Controller
+    public class TeamController : BaseController
     {
         private readonly ITeamService _teamService;
         private readonly IGroupService _groupService;
         private readonly IUserService _userService;
 
-        public TeamController(ITeamService teamService, IGroupService groupService, IUserService userService)
+        public TeamController(ITeamService teamService, IGroupService groupService, IUserService userService, IMatchService matchService, IBigBallzService bigBallzService) : base(userService, matchService, bigBallzService)
         {
             _teamService = teamService;
             _groupService = groupService;

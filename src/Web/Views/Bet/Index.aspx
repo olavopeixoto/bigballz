@@ -14,7 +14,7 @@
             <%if (Model.BonusEnabled) {%>
                 <%Html.RenderPartial("_BonusIndex");%>
             <%} else {%>
-                <%Html.RenderPartial("_DisplayBonusIndex");%>    
+                <%Html.RenderPartial("_DisplayBonusExpired");%>    
             <%}%>
         </div>
     </div>    

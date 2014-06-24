@@ -65,25 +65,28 @@ namespace BigBallz.Controllers
             var matches = _matchService.GetAll().OrderBy(x => x.StartTime).ToList();
             var endBonus = _bigBallzService.GetBonusBetExpireDate();
 
+            var bonusEnded = DateTime.Now.BrazilTimeZone() > endBonus;
+
             var user = _userService.Get(userName);
 
             var bonusBetViewModel = new BetViewModel
                                         {
                                             ShowHelp = !user.HelpShown,
-                                            BonusEnabled = DateTime.Now.BrazilTimeZone() <= endBonus,
+                                            BonusEnabled = !bonusEnded,
                                             BonusList = (from bonus in _bonusService.GetAll().ToList()
                                                          let teams = _teamService.GetAll().ToList()
                                                          let bonusBets = _bonusBetService.GetAll(User.Identity.Name).ToList()
                                                          let pointsEarned = _bigBallzService.GetUserPointsByBonus(user)
+                                                         let bonusBetStatistic = bonusEnded ? _bigBallzService.GetBonusBetStatistics(bonus.BonusId) : new BonusBetStatistic()
                                                          select new BetViewModel.BonusTeams
                                                                     {
                                                                         BonusBetId = bonusBets.Where(x => x.Bonus == bonus.BonusId).Select(x => x.BonusBetId).FirstOrDefault(),
+                                                                        BonusBet = bonusBets.FirstOrDefault(x => x.Bonus == bonus.BonusId),
                                                                         Bonus = bonus,
                                                                         CupStartDate = _bigBallzService.GetFirstMatch().StartTime,
                                                                         PointsEarned = pointsEarned.FirstOrDefault(x => x.BonusBet.BonusBetId == bonus.BonusId).NullSafe(x => x.Points),
                                                                         Enabled = _bigBallzService.GetFirstMatch().StartTime.Subtract(new TimeSpan(0, 1, 0, 0)).Subtract(DateTime.Now.BrazilTimeZone()).TotalMilliseconds > 0,
-                                                                        Teams =
-                                                                            bonus.Group.HasValue
+                                                                        Teams = bonus.Group.HasValue
                                                                                 ? new SelectList(
                                                                                       teams.Where(x => x.GroupId == bonus.Group),
                                                                                       "TeamId", "Name",
@@ -93,7 +96,8 @@ namespace BigBallz.Controllers
                                                                                 : new SelectList(teams, "TeamId", "Name",
                                                                                                  bonusBets.Where(x => x.Bonus == bonus.BonusId)
                                                                                                     .Select(x => x.Team)
-                                                                                                    .FirstOrDefault())
+                                                                                                    .FirstOrDefault()),
+                                                                        BonusBetStatistic = bonusBetStatistic
                                                                     }).ToList(),
 
                                             BetList = (from match in matches
