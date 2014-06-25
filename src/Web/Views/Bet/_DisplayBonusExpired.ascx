@@ -11,7 +11,7 @@
     </tr>
 </thead>
 <tbody>
-<%var index = 0; var lineIndex = 0; %>
+<%var lineIndex = 0; %>
 <%foreach (var bonus in Model.BonusList){%>
     <tr class="<%= lineIndex%2==0 ? "ui-state-default": "odd"%>">
         <td class="l"><%:bonus.Bonus.Name%></td>
@@ -24,7 +24,7 @@
         <%}%></td>
        <td class="l"><%:bonus.BonusBetStatistic.Team.NullSafe(x => x.Name)%> (<%:bonus.BonusBetStatistic.TeamPerc.ToPercent()%>)</td>
     </tr>
-<%index++; lineIndex++;} %>
+<%lineIndex++;} %>
     <%var totalBonus = Model.BonusList.Sum(x => x.PointsEarned);%>
     <tr class="ui-widget-header">
         <td colspan="3" class="l">Total</td>

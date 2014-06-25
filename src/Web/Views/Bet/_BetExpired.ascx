@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<BigBallz.ViewModels.BetViewModel>" %>
-<%@ Import Namespace="BigBallz.Core" %>
 <%@ Import Namespace="System.Threading" %>
 <%@ Import Namespace="System.Globalization" %>
+<%@ Import Namespace="BigBallz.Core" %>
 <%Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR"); %>
 <%var i = 0; var lineIndex = 0;%>
 <%foreach (var date in Model.BetList.GroupBy(x => new DateTime(x.Match.StartTime.Year, x.Match.StartTime.Month, x.Match.StartTime.Day)).Select(x => x.Key)){%>
