@@ -5,11 +5,11 @@ namespace BigBallz.Core.IoC
 {
     public interface IDependencyResolver : IDisposable
     {
-        void Register<T>(T instance);
+        void Register<T>(T instance) where T : class;
 
         void Register<T>(Type type);
 
-        void Inject<T>(T existing);
+        void Inject<T>(T existing) where T : class;
 
         T Resolve<T>(Type type);
 

@@ -18,7 +18,7 @@ namespace BigBallz.Core.IoC
         }
 
         [DebuggerStepThrough]
-        public static void Register<T>(T instance)
+        public static void Register<T>(T instance) where T : class
         {
             Check.Argument.IsNotNull(instance, "instance");
 
@@ -34,7 +34,7 @@ namespace BigBallz.Core.IoC
         }
 
         [DebuggerStepThrough]
-        public static void Inject<T>(T existing)
+        public static void Inject<T>(T existing) where T : class
         {
             Check.Argument.IsNotNull(existing, "existing");
 

@@ -11,6 +11,7 @@ using BigBallz.Services;
 using StackExchange.Profiling;
 using StackExchange.Profiling.Mvc;
 using StructureMap.Pipeline;
+using StructureMap.Web.Pipeline;
 
 namespace BigBallz
 {
