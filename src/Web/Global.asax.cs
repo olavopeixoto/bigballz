@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Security.AccessControl;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -7,6 +7,7 @@ using System.Web.Security;
 using BigBallz.Core.Bootstrapper;
 using BigBallz.Core.Web.MVC.Filters;
 using BigBallz.Infrastructure;
+using BigBallz.Models;
 using BigBallz.Services;
 using StackExchange.Profiling;
 using StackExchange.Profiling.Mvc;
@@ -17,7 +18,7 @@ namespace BigBallz
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
 
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
@@ -206,13 +207,17 @@ namespace BigBallz
                 return AllowProfiler(request); // all requests are kosher
             };
         }
-
-#if DEBUG2
-        protected void FormsAuthentication_OnAuthenticate(object sender, FormsAuthenticationEventArgs args)
+        private void CreateDatabase()
         {
-            args.Context.SkipAuthorization = true;
-            args.User = new GenericPrincipal(new GenericIdentity("Olavo Castro"), new[] { BBRoles.Admin, BBRoles.Player });
+            var fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "bigballz.mdf");
+            var db = new BigBallzDataContext(fileName);
+            db.CreateDatabase();
         }
-#endif
+
+        //protected void FormsAuthentication_OnAuthenticate(object sender, FormsAuthenticationEventArgs args)
+        //{
+        //    args.Context.SkipAuthorization = true;
+        //    args.User = new GenericPrincipal(new GenericIdentity("Olavo Castro"), new[] { BBRoles.Admin, BBRoles.Player });
+        //}
     }
 }
