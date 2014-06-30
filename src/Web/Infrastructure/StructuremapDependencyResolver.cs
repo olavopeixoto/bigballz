@@ -5,6 +5,8 @@ using BigBallz.Core.Bootstrapper;
 using BigBallz.Core.Helper;
 using BigBallz.Core.IoC;
 using StructureMap;
+using StructureMap.Graph;
+using StructureMap.Web.Pipeline;
 
 namespace BigBallz.Infrastructure
 {
@@ -28,7 +30,7 @@ namespace BigBallz.Infrastructure
 
         public void Dispose()
         {
-            ObjectFactory.ReleaseAndDisposeAllHttpScopedObjects();
+            HttpContextLifecycle.DisposeAndClearAll();
 
             var disposable = (IDisposable)ObjectFactory.Container;
             if (disposable != null)
@@ -37,9 +39,10 @@ namespace BigBallz.Infrastructure
             }
         }
 
-        public void Register<T>(T instance)
+        public void Register<T>(T instance) where T : class
         {
             Check.Argument.IsNotNull(instance, "instance");
+
             ObjectFactory.Configure(x => x.For<T>().AddInstances(y => y.Object(instance)));
         }
 
@@ -50,9 +53,9 @@ namespace BigBallz.Infrastructure
             ObjectFactory.Configure(x => x.For(typeof(T)).Add(type));
         }
 
-        public void Inject<T>(T existing)
+        public void Inject<T>(T existing) where T : class
         {
-            ObjectFactory.Inject(existing);
+            ObjectFactory.Container.Inject(existing);
         }
 
         public T Resolve<T>(Type type)
@@ -67,7 +70,7 @@ namespace BigBallz.Infrastructure
             Check.Argument.IsNotNull(type, "type");
             Check.Argument.IsNotEmpty(name, "name");
 
-            return (T)ObjectFactory.TryGetInstance(type, name);
+            return (T)ObjectFactory.Container.TryGetInstance(type, name);
         }
 
         public T Resolve<T>()
@@ -79,7 +82,7 @@ namespace BigBallz.Infrastructure
         {
             Check.Argument.IsNotEmpty(name, "name");
 
-            return (T)ObjectFactory.TryGetInstance(typeof(T), name);
+            return (T)ObjectFactory.Container.TryGetInstance(typeof(T), name);
         }
 
         public IEnumerable<T> ResolveAll<T>()

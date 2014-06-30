@@ -10,6 +10,7 @@ using BigBallz.Services.L2S;
 using RPXLib;
 using RPXLib.Interfaces;
 using StructureMap.Configuration.DSL;
+using StructureMap.Web;
 
 namespace BigBallz.Infrastructure
 {
@@ -23,17 +24,17 @@ namespace BigBallz.Infrastructure
 
             For<IRPXService>()
                 .HttpContextScoped()
-                .Use(x =>
-                {
-                    var baseUrl = ConfigurationManager.AppSettings["rpxnow-baseurl"];
-                    var apiKey = ConfigurationManager.AppSettings["rpxnow-apikey"];
+                .Use("Configuring RPXService", x =>
+                    {
+                        var baseUrl = ConfigurationManager.AppSettings["rpxnow-baseurl"];
+                        var apiKey = ConfigurationManager.AppSettings["rpxnow-apikey"];
 
-                    //if you need to access the service via a web proxy set the proxy details here
-                    const IWebProxy webProxy = null;
+                        //if you need to access the service via a web proxy set the proxy details here
+                        const IWebProxy webProxy = null;
 
-                    var settings = new RPXApiSettings(baseUrl, apiKey, webProxy);
-                    return new RPXService(settings);
-                });
+                        var settings = new RPXApiSettings(baseUrl, apiKey, webProxy);
+                        return new RPXService(settings);
+                    });
 
             For<System.Web.Caching.Cache>()
                 .HttpContextScoped()
