@@ -141,6 +141,8 @@ namespace BigBallz.Core.Extension.Web.Mvc
         /// <param name="themeName"></param>
         /// <param name="cssFilePath">css fileName or full relative url</param>
         /// <param name="xhtml">indicates if should close the link tag</param>
+        /// <param name="alternate"></param>
+        /// <param name="media"></param>
         /// <returns></returns>
         public static string CssTheme(this HtmlHelper htmlHelper, string themeName, string cssFilePath, bool xhtml, bool alternate, string media)
         {
