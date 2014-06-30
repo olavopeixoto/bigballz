@@ -126,6 +126,7 @@ width:20%;
 td.mResult 
 {
     width:100px;
+    white-space: nowrap;
 }
 td.mResult .mResultSub
 {
