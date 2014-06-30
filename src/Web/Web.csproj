@@ -87,7 +87,7 @@
       <HintPath>..\..\lib\RPXLib.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
-      <HintPath>..\..\lib\StructureMap.dll</HintPath>
+      <HintPath>..\..\packages\structuremap.2.6.2\lib\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
