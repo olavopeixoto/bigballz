@@ -383,6 +383,9 @@
     <Content Include="Public\js\i18n\grid.locale-sv.js" />
     <Content Include="Public\js\i18n\grid.locale-tr.js" />
     <Content Include="Public\js\i18n\grid.locale-ua.js" />
+    <Content Include="parameters.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Public\js\jquery-1.4.1.min-vsdoc.js" />
     <Content Include="Public\js\jquery-1.4.1.min.js" />
     <Content Include="Public\js\jquery-ui-1.8.1.custom.min.js" />

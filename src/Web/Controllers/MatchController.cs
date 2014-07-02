@@ -26,7 +26,7 @@ namespace BigBallz.Controllers
 
         public ActionResult Index()
         {
-            var matches = _matchService.GetAll().OrderBy(x => x.StageId).ThenBy(x => x.Team1.GroupId).ThenBy(x => x.MatchId);
+            var matches = _matchService.GetAll().OrderBy(x => x.StageId).ThenBy(x => x.Team1.GroupId).ThenBy(x => x.StartTime);
             return View(matches);
         }
 

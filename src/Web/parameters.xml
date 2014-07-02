@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<parameters>
+  <parameter name="BigBallzConnectionString">
+    <parameterEntry kind="XmlFile" scope="\\web.config$" match="/configuration/connectionStrings/add[@name='BigBallzConnectionString']/@connectionString" />
+  </parameter>
+  <parameter name="EmailPassword">
+    <parameterEntry kind="XmlFile" scope="\\web.config$" match="/system.net/mailSettings/smtp/network/@password" />
+  </parameter>
+  <parameter name="pagseguro-token">
+    <parameterEntry kind="XmlFile" scope="\\web.config$" match="/appSettings/add[@key='pagseguro-token']/@value" />
+  </parameter>
+  <parameter name="pagseguro-email">
+    <parameterEntry kind="XmlFile" scope="\\web.config$" match="/appSettings/add[@key='pagseguro-email']/@value" />
+  </parameter>
+  <parameter name="google-tid">
+    <parameterEntry kind="XmlFile" scope="\\web.config$" match="/appSettings/add[@key='google-tid']/@value" />
+  </parameter>
+  <parameter name="fb-appid">
+    <parameterEntry kind="XmlFile" scope="\\web.config$" match="/appSettings/add[@key='fb-appid']/@value" />
+  </parameter>
+  <parameter name="rpxnow-apikey">
+    <parameterEntry kind="XmlFile" scope="\\web.config$" match="/appSettings/add[@key='rpxnow-apikey']/@value" />
+  </parameter>
+  <parameter name="crypto-key">
+    <parameterEntry kind="XmlFile" scope="\\web.config$" match="/appSettings/add[@key='crypto-key']/@value" />
+  </parameter>
+  <parameter name="freshdesk-ssokey">
+    <parameterEntry kind="XmlFile" scope="\\web.config$" match="/appSettings/add[@key='freshdesk-ssokey']/@value" />
+  </parameter>
+</parameters>
