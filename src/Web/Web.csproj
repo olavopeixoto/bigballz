@@ -420,6 +420,7 @@
     <Content Include="Views\Match\Create.aspx" />
     <Content Include="Views\Match\Edit.aspx" />
     <Content Include="Views\Match\Index.aspx" />
+    <Content Include="Views\Money\Details.aspx" />
     <Content Include="Views\Money\Index.aspx" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.ascx" />
     <Content Include="Views\Shared\InfoMenu.ascx" />

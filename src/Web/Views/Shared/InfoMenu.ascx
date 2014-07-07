@@ -53,6 +53,7 @@ if (pendingBets!=null && pendingBets.Any())
 <li><%=prizes[1].ToString("C")%></li>
 <li><%=prizes[2].ToString("C")%></li>
 </ol>
+<%=Html.ActionLink("ver detalhes", "details", "money") %>
 <%}%>
 
 

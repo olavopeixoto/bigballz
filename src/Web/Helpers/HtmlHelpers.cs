@@ -65,6 +65,11 @@ namespace System.Web.Mvc {
             return ConfigurationHelper.Price;
         }
 
+        public static decimal PriceNet(this HtmlHelper helper)
+        {
+            return Math.Round(ConfigurationHelper.Price - (ConfigurationHelper.Price * (decimal) 0.0499) - (decimal) 0.4, 2);
+        }
+
         public static IHtmlString MiniProfiler(this HtmlHelper helper)
         {
             return StackExchange.Profiling.MiniProfiler.RenderIncludes(RenderPosition.Left, showTrivial: false, showTimeWithChildren: false, useExistingjQuery: true, showControls: true);
