@@ -24,3 +24,5 @@
 /lib/PagSeguro.net/source/Examples/SearchTransactionByDate
 /packages
 /packages
+/.vs
+/src/Web/*.user

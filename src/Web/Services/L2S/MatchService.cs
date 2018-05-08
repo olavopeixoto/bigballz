@@ -113,7 +113,7 @@ namespace BigBallz.Services.L2S
         {
             using (var db = _provider.CreateContext())
             {
-                return db.Matches.Min(x => (DateTime?) x.StartTime) ?? DateTime.Now;
+                return db.Matches.Min(x => (DateTime?) x.StartTime) ?? DateTime.Now.BrazilTimeZone();
             }
         }
 

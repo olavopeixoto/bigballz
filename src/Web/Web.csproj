@@ -12,7 +12,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BigBallz</RootNamespace>
     <AssemblyName>BigBallz</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <MvcBuildViews>true</MvcBuildViews>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -32,6 +32,8 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -328,7 +330,9 @@
     <Content Include="Public\images\flags\col.png" />
     <Content Include="Public\images\flags\crc.png" />
     <Content Include="Public\images\flags\cro.png" />
+    <Content Include="Public\images\flags\den.png" />
     <Content Include="Public\images\flags\ecu.png" />
+    <Content Include="Public\images\flags\egy.png" />
     <Content Include="Public\images\flags\eng.png" />
     <Content Include="Public\images\flags\esp.png" />
     <Content Include="Public\images\flags\fra.png" />
@@ -337,15 +341,25 @@
     <Content Include="Public\images\flags\gre.png" />
     <Content Include="Public\images\flags\hon.png" />
     <Content Include="Public\images\flags\irn.png" />
+    <Content Include="Public\images\flags\isl.png" />
     <Content Include="Public\images\flags\ita.png" />
     <Content Include="Public\images\flags\jpn.png" />
     <Content Include="Public\images\flags\kor.png" />
+    <Content Include="Public\images\flags\ksa.png" />
+    <Content Include="Public\images\flags\mar.png" />
     <Content Include="Public\images\flags\mex.png" />
     <Content Include="Public\images\flags\ned.png" />
     <Content Include="Public\images\flags\nga.png" />
+    <Content Include="Public\images\flags\pan.png" />
+    <Content Include="Public\images\flags\per.png" />
+    <Content Include="Public\images\flags\pol.png" />
     <Content Include="Public\images\flags\por.png" />
     <Content Include="Public\images\flags\rus.png" />
+    <Content Include="Public\images\flags\sen.png" />
+    <Content Include="Public\images\flags\srb.png" />
     <Content Include="Public\images\flags\sui.png" />
+    <Content Include="Public\images\flags\swe.png" />
+    <Content Include="Public\images\flags\tun.png" />
     <Content Include="Public\images\flags\uru.png" />
     <Content Include="Public\images\flags\usa.png" />
     <Content Include="Public\images\grana.png" />
@@ -386,6 +400,7 @@
     <Content Include="parameters.xml">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Properties\PublishProfiles\BigBallz - Azure.pubxml" />
     <None Include="Public\js\jquery-1.4.1.min-vsdoc.js" />
     <Content Include="Public\js\jquery-1.4.1.min.js" />
     <Content Include="Public\js\jquery-ui-1.8.1.custom.min.js" />
@@ -395,6 +410,7 @@
     <Content Include="Public\js\jquery.validate.min.js" />
     <Content Include="Public\js\Site.Master.js" />
     <Content Include="Public\js\Team.js" />
+    <Content Include="Public\js\whatsapp-button.js" />
     <Content Include="Public\Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -474,6 +490,7 @@
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>

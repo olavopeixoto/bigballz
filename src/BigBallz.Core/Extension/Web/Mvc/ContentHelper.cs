@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.IO;
 using System.Text;
+using System.Web;
 using System.Web.Caching;
 using System.Web.Mvc;
 using MvcContrib.UI.Html;
@@ -17,6 +18,17 @@ namespace BigBallz.Core.Extension.Web.Mvc
         private static string GetFileVersion(this HtmlHelper htmlHelper, string virtualFilePath)
         {
             var context = htmlHelper.ViewContext.HttpContext;
+            return GetFileVersion(context, virtualFilePath);
+        }
+
+        private static string GetFileVersion(this UrlHelper urlHelper, string virtualFilePath)
+        {
+            var context = urlHelper.RequestContext.HttpContext;
+            return GetFileVersion(context, virtualFilePath);
+        }
+
+        private static string GetFileVersion(this HttpContextBase context, string virtualFilePath)
+        {
             var cacheKey = "fileVersion##" + virtualFilePath;
             var result = context.Cache[cacheKey] as string;
             if (result == null)
@@ -199,6 +211,19 @@ namespace BigBallz.Core.Extension.Web.Mvc
         public static string Favicon(this HtmlHelper htmlHelper, bool xhtml)
         {
             return xhtml ? htmlHelper.Favicon() : htmlHelper.Favicon().Replace("/>", ">");
+        }
+
+        public static string ScriptUrl(this UrlHelper urlHelper, string jsPath)
+        {
+            var path = jsPath.StartsWith("http") || jsPath.StartsWith("~")
+                ? jsPath
+                : string.Format(DefaultJsPathFormat, jsPath);
+
+            var version = path.StartsWith("http")
+                ? string.Empty
+                : "?v=" + urlHelper.GetFileVersion(path);
+
+            return urlHelper.Content(string.Format("{0}{1}", path, version));
         }
 
         public static string ScriptInclude(this HtmlHelper htmlHelper, params string[] jsPaths)

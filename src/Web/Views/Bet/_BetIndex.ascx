@@ -61,5 +61,8 @@
 	</div>
 </div>
 </div>
+<% if (Html.IsAuthorized())
+   { %>
 <input type="submit" value="Apostar" />
-<%} %>
+<% }
+   } %>

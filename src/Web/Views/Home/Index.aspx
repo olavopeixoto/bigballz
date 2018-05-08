@@ -3,12 +3,10 @@
 <asp:Content ID="indexTitle" ContentPlaceHolderID="TitleContent" runat="server">, o Bolão da Copa do Mundo</asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="Scripts" runat="server">
+    <script type="text/javascript">if(typeof wabtn4fg==="undefined"){wabtn4fg=1;h=document.head||document.getElementsByTagName("head")[0],s=document.createElement("script");s.type="text/javascript";s.src="<%=Url.ScriptUrl("whatsapp-button.js") %>";h.appendChild(s);}</script>
 </asp:Content>
 
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
-    <%
-        var returnUrl = Url.Encode(Url.Action("handleresponse", "auth", null, FormsAuthentication.RequireSSL ? "https" : "http"));
-    %>
     <div class="intro-header">
 
         <div class="container">
@@ -27,6 +25,7 @@
                                 <%}%>
                             </li>
                             <li><div class="fb-like" data-href="<%=Url.SiteRoot() %>" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></li>
+                            <li><a href="whatsapp://send" data-text="Estou participando do BigBallz, o bolão da Copa do Mundo. Venha participar também:" data-href="" class="wa_btn wa_btn_s" style="display:none">Compartilhar</a></li>
                         </ul>
                     </div>
                 </div>

@@ -275,8 +275,16 @@ namespace BigBallz.Services.L2S
 
         public decimal GetTotalPrize()
         {
-            return _db.Users.Where(x => x.Authorized && x.UserRoles.Any(y => y.Role.Name == BBRoles.Player))
-                .Sum(x => x.PagSeguro ? ConfigurationHelper.Price - Math.Round((ConfigurationHelper.Price * (decimal)0.0499 + (decimal)0.4), 2) : ConfigurationHelper.Price);
+            try
+            {
+                return _db.Users
+                    .Where(x => x.Authorized && x.UserRoles.Any(y => y.Role.Name == BBRoles.Player))
+                    .Sum(x => x.PagSeguro ? ConfigurationHelper.Price - Math.Round(ConfigurationHelper.Price * (decimal)0.0499 + (decimal)0.4, 2) : ConfigurationHelper.Price);
+            }
+            catch (Exception)
+            {
+                return (decimal)0.0;
+            }
         }
 
         private int GetTotalUserExactScores(User user, DateTime? untilDate = null)

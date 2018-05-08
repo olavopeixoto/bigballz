@@ -34,8 +34,8 @@ namespace BigBallz
 
             routes.MapRoute(
                 "confirmacaopagamento",
-                "confirmacaopagamento/{tid}",
-                new { controller = "Auth", action = "confirmacaopagamento", tid = "" }
+                "confirmacaopagamento",
+                new { controller = "Auth", action = "confirmacaopagamento" }
                 );
 
             routes.MapRoute(
@@ -112,6 +112,8 @@ namespace BigBallz
 
         protected void Application_Start()
         {
+//            CreateDatabase();
+
             Bootstrapper.Run();
 
             MvcHandler.DisableMvcResponseHeader = true; //Não incluir header de identificação do framework (Segurança)

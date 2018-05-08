@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
+<%@ Import Namespace="BigBallz.Core" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
    
@@ -11,21 +12,21 @@
                         
     <h3>1. CRITÉRIO DE PAGAMENTO</h3>
     <p>
-    A taxa de inscrição é de <strong>R$ 70,00</strong> e deverá ser paga através do PagSeguro. O Cadastro pode ser feito a qualquer momento, no entanto,
+    A taxa de inscrição é de <strong><%=ConfigurationHelper.Price.ToMoney()%></strong> e deverá ser paga através do PagSeguro. O Cadastro pode ser feito a qualquer momento, no entanto,
     é bom observar o prazo final das apostas Bonus que é até 1 (uma) hora antes do primeiro jogo. Após essa data suas chances se reduzem significativamente.
     </p>
 
     <h3>2. CRITÉRIO DE APOSTAS</h3>
     <p>
     Cada jogador poderá apostar ou fazer alteração no placar dos jogos até 1 (uma) hora antes do inicio de cada jogo.<br/>
-    <em>Ex.: Jogo 1: 11/06/2014 às 11:00. A partir das 10:00 do dia 11/06/2014 será impossível
+    <em>Ex.: Jogo 1: 14/06/2018 às 12:00. A partir das 11:00 do dia 14/06/2018 será impossível
     realizar ou alterar apostas para o jogo 1.</em>
     </p>
     <p>
     Cada jogador somente poderá visualizar as apostas de jogos de outros jogadores
     após o encerramento do período de apostas.<br/>
     <em>
-    Ex.: Jogo 1: 11/06/2014 às 11:00. A partir das 10:00 do dia 11/06/2014 será possível
+    Ex.: Jogo 1: 14/06/2018 às 12:00. A partir das 11:00 do dia 14/06/2018 será possível
     visualizar todas as apostas neste jogo.
     </em>
     </p>
