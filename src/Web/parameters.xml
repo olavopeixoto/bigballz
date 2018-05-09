@@ -3,6 +3,12 @@
   <parameter name="BigBallzConnectionString">
     <parameterEntry kind="XmlFile" scope="\\web.config$" match="/configuration/connectionStrings/add[@name='BigBallzConnectionString']/@connectionString" />
   </parameter>
+  <parameter name="EmailHost">
+    <parameterEntry kind="XmlFile" scope="\\web.config$" match="/system.net/mailSettings/smtp/network/@host" />
+  </parameter>
+  <parameter name="EmailUsername">
+    <parameterEntry kind="XmlFile" scope="\\web.config$" match="/system.net/mailSettings/smtp/network/@userName" />
+  </parameter>
   <parameter name="EmailPassword">
     <parameterEntry kind="XmlFile" scope="\\web.config$" match="/system.net/mailSettings/smtp/network/@password" />
   </parameter>
