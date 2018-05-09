@@ -20,5 +20,7 @@ namespace BigBallz.Core.IoC
         T Resolve<T>(string name);
 
         IEnumerable<T> ResolveAll<T>();
+
+        string Debug();
     }
 }

@@ -12,7 +12,7 @@ namespace BigBallz.Core.IoC
         [DebuggerStepThrough]
         public static void InitializeWith(IDependencyResolverFactory factory)
         {
-            Check.Argument.IsNotNull(factory, "factory");
+            Check.Argument.IsNotNull(factory, nameof(factory));
 
             _resolver = factory.CreateInstance();
         }
@@ -20,7 +20,7 @@ namespace BigBallz.Core.IoC
         [DebuggerStepThrough]
         public static void Register<T>(T instance) where T : class
         {
-            Check.Argument.IsNotNull(instance, "instance");
+            Check.Argument.IsNotNull(instance, nameof(instance));
 
             _resolver.Register(instance);
         }
@@ -28,7 +28,7 @@ namespace BigBallz.Core.IoC
         [DebuggerStepThrough]
         public static void Register<T>(Type concreteType)
         {
-            Check.Argument.IsNotNull(concreteType, "concreteType");
+            Check.Argument.IsNotNull(concreteType, nameof(concreteType));
 
             _resolver.Register<T>(concreteType);
         }
@@ -36,7 +36,7 @@ namespace BigBallz.Core.IoC
         [DebuggerStepThrough]
         public static void Inject<T>(T existing) where T : class
         {
-            Check.Argument.IsNotNull(existing, "existing");
+            Check.Argument.IsNotNull(existing, nameof(existing));
 
             _resolver.Inject(existing);
         }
@@ -44,7 +44,7 @@ namespace BigBallz.Core.IoC
         [DebuggerStepThrough]
         public static T Resolve<T>(Type type)
         {
-            Check.Argument.IsNotNull(type, "type");
+            Check.Argument.IsNotNull(type, nameof(type));
 
             return _resolver.Resolve<T>(type);
         }
@@ -52,8 +52,8 @@ namespace BigBallz.Core.IoC
         [DebuggerStepThrough]
         public static T Resolve<T>(Type type, string name)
         {
-            Check.Argument.IsNotNull(type, "type");
-            Check.Argument.IsNotEmpty(name, "name");
+            Check.Argument.IsNotNull(type, nameof(type));
+            Check.Argument.IsNotEmpty(name, nameof(name));
 
             return _resolver.Resolve<T>(type, name);
         }
@@ -67,7 +67,7 @@ namespace BigBallz.Core.IoC
         [DebuggerStepThrough]
         public static T Resolve<T>(string name)
         {
-            Check.Argument.IsNotEmpty(name, "name");
+            Check.Argument.IsNotEmpty(name, nameof(name));
 
             return _resolver.Resolve<T>(name);
         }
@@ -81,10 +81,13 @@ namespace BigBallz.Core.IoC
         [DebuggerStepThrough]
         public static void Reset()
         {
-            if (_resolver != null)
-            {
-                _resolver.Dispose();
-            }
+            _resolver?.Dispose();
+        }
+
+        [DebuggerStepThrough]
+        public static string Debug()
+        {
+            return _resolver.Debug();
         }
     }
 }

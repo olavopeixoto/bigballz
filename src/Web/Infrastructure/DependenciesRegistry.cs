@@ -9,7 +9,7 @@ using BigBallz.Services.Cache;
 using BigBallz.Services.L2S;
 using RPXLib;
 using RPXLib.Interfaces;
-using StructureMap.Configuration.DSL;
+using StructureMap;
 using StructureMap.Web;
 
 namespace BigBallz.Infrastructure

@@ -11,6 +11,7 @@ using BigBallz.Core;
 using BigBallz.Helpers;
 using BigBallz.Models;
 using System.Threading.Tasks;
+using BigBallz.MailTemplates;
 using Elmah;
 
 namespace BigBallz.Services.L2S
@@ -23,21 +24,20 @@ namespace BigBallz.Services.L2S
         public void SendRegistration(User user, string paymentUrl, string activationUrl)
         {
             if (user.EmailAddressVerified)
-                SendMail(user.UserName, user.EmailAddress, "Confirmação de Registro", PrepareMailBodyWith("RegistrationEmailVerified", new[] { "userName", user.UserName, "userEmail", user.EmailAddress, "paymentUrl", paymentUrl }));
+                SendMail(user.UserName, user.EmailAddress, "Confirmação de Registro", PrepareMailBodyWith(EmailTemplates.RegistrationEmailVerified, "userName", user.UserName, "userEmail", user.EmailAddress, "paymentUrl", paymentUrl));
             else
-                SendMail(user.UserName, user.EmailAddress, "Confirmação de Registro", PrepareMailBodyWith("RegistrationEmailNotVerified", new[] { "userName", user.UserName, "userEmail", user.EmailAddress, "paymentUrl", paymentUrl, "url", activationUrl, "price", ConfigurationHelper.Price.ToMoney() }));
+                SendMail(user.UserName, user.EmailAddress, "Confirmação de Registro", PrepareMailBodyWith(EmailTemplates.RegistrationEmailNotVerified, "userName", user.UserName, "userEmail", user.EmailAddress, "paymentUrl", paymentUrl, "url", activationUrl, "price", ConfigurationHelper.Price.ToMoney()));
         }
 
         public void SendPaymentConfirmation(User user)
         {
-            SendMail(user.UserName, user.EmailAddress, "Confirmação de Pagamento", PrepareMailBodyWith("PaymentConfirmation", new[] { "userName", user.UserName, "userEmail", user.EmailAddress}));
-            SendMail("Admin", "admin@bigballz.com.br", "BigBallz - Novo Usuário", string.Format("{0} <{1}> foi autorizado pelo {2} e já está participando do BigBallz.", user.UserName, user.EmailAddress, user.AuthorizedBy));
+            SendMail(user.UserName, user.EmailAddress, "Confirmação de Pagamento", PrepareMailBodyWith(EmailTemplates.PaymentConfirmation, "userName", user.UserName, "userEmail", user.EmailAddress));
+            SendMail("Admin", "admin@bigballz.com.br", "BigBallz - Novo Usuário", $"{user.UserName} <{user.EmailAddress}> foi autorizado pelo {user.AuthorizedBy} e já está participando do BigBallz.");
         }
 
         public void SendNewCommentPosted(User[] recipients, string userName, string comment)
         {
-            var messageBody = PrepareMailBodyWith("NewCommentPosted",
-                new[] { "userName", userName, "comments", comment, "date", DateTime.Now.BrazilTimeZone().FormatDateTime() });
+            var messageBody = PrepareMailBodyWith(EmailTemplates.NewCommentPosted, "userName", userName, "comments", comment, "date", DateTime.Now.BrazilTimeZone().FormatDateTime());
 
             var recipientsCollection = new MailAddressCollection();
             recipients.Where(u => u.EmailAddressVerified).ForEach(u => recipientsCollection.Add(u.EmailAddress));
@@ -65,7 +65,7 @@ namespace BigBallz.Services.L2S
             parameters.Add("bets");
             parameters.Add(sb.ToString());
 
-            SendMail(user.UserName, user.EmailAddress, "Aviso de fim das apostas", PrepareMailBodyWith("BetTimeWarning", parameters.ToArray()));
+            SendMail(user.UserName, user.EmailAddress, "Aviso de fim das apostas", PrepareMailBodyWith(EmailTemplates.BetTimeWarning, parameters.ToArray()));
         }
 
         public void SendEndBetAlert(User user, IList<Bet> bets)
@@ -78,14 +78,14 @@ namespace BigBallz.Services.L2S
             var sb = new StringBuilder("<table><thead><tr><th>Jogador</th><td>Aposta</td></thead><tbody>");
             foreach (var bet in bets)
             {
-                var matchString = string.Format("{0} {1} X {2} {3}", bet.Match1.Team1.Name, bet.Score1.HasValue ? bet.Score1.Value.ToString(CultureInfo.InvariantCulture) : "-", bet.Score2.HasValue ? bet.Score2.Value.ToString(CultureInfo.InvariantCulture) : "-", bet.Match1.Team2.Name);
+                var matchString = string.Format("{0} {1} X {2} {3}", bet.Match1.Team1.Name, bet.Score1?.ToString(CultureInfo.InvariantCulture) ?? "-", bet.Score2.HasValue ? bet.Score2.Value.ToString(CultureInfo.InvariantCulture) : "-", bet.Match1.Team2.Name);
                 sb.AppendFormat("<tr><td>{0}</td><td>{1}</td></tr>", bet.User1.UserName, matchString);
             }
             sb.Append("</tbody></table>");
             parameters.Add("bets");
             parameters.Add(sb.ToString());
 
-            SendMail(user.UserName, user.EmailAddress, "Apostas Encerradas", PrepareMailBodyWith("BetTimeAlert", parameters.ToArray()));
+            SendMail(user.UserName, user.EmailAddress, "Apostas Encerradas", PrepareMailBodyWith(EmailTemplates.BetTimeAlert, parameters.ToArray()));
         }
 
         public void SendEndBonusAlert(User user, IList<BonusBet> bonusBets)
@@ -103,7 +103,7 @@ namespace BigBallz.Services.L2S
             parameters.Add("bonusBets");
             parameters.Add(sb.ToString());
 
-            SendMail(user.UserName, user.EmailAddress, "Apostas BONUS Encerradas", PrepareMailBodyWith("BonusTimeAlert", parameters.ToArray()));
+            SendMail(user.UserName, user.EmailAddress, "Apostas BONUS Encerradas", PrepareMailBodyWith(EmailTemplates.BonusTimeAlert, parameters.ToArray()));
         }
 
         private string PrepareMailBodyWith(string templateName, params string[] pairs)
@@ -123,7 +123,7 @@ namespace BigBallz.Services.L2S
 
         private string GetMailBodyOfTemplate(string templateName)
         {
-            string body = ReadFileFrom(templateName);
+            var body = ReadFileFrom(templateName);
             return body;
         }
 

@@ -303,10 +303,8 @@ namespace BigBallz.Controllers
                         authenticationDetails.VerifiedEmail == user.EmailAddress,
                         authenticationDetails.PhotoUrl);
 
-                    var paymentUrl = Url.SiteRoot() + Url.Action("payment", "auth");
-                    var activationUrl = Url.SiteRoot() +
-                                        Url.Action("activate", "auth",
-                                            new {id = CryptHelper.EncryptAES256(user.UserName)});
+                    var paymentUrl = Url.Action("payment", "auth", new {}, Uri.UriSchemeHttps);
+                    var activationUrl = Url.Action("activate", "auth", new {id = CryptHelper.EncryptAES256(user.UserName)}, Uri.UriSchemeHttps);
 
                     _mailService.SendRegistration(user, paymentUrl, activationUrl);
 

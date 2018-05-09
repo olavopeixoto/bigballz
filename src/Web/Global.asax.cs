@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -7,7 +6,6 @@ using System.Web.Security;
 using BigBallz.Core.Bootstrapper;
 using BigBallz.Core.Web.MVC.Filters;
 using BigBallz.Infrastructure;
-using BigBallz.Models;
 using BigBallz.Services;
 using StackExchange.Profiling;
 using StackExchange.Profiling.Mvc;
@@ -112,8 +110,6 @@ namespace BigBallz
 
         protected void Application_Start()
         {
-//            CreateDatabase();
-
             Bootstrapper.Run();
 
             MvcHandler.DisableMvcResponseHeader = true; //Não incluir header de identificação do framework (Segurança)
@@ -196,24 +192,10 @@ namespace BigBallz
             // because profiler results can contain sensitive data (e.g. sql queries with parameter values displayed), we
             // can define a function that will authorize clients to see the json or full page results.
             // we use it on http://stackoverflow.com to check that the request cookies belong to a valid developer.
-            MiniProfiler.Settings.Results_Authorize = (request) =>
-            {
-                // you may implement this if you need to restrict visibility of profiling on a per request basis 
-                return AllowProfiler(request);//!DisableProfilingResults;
-            };
+            MiniProfiler.Settings.Results_Authorize = AllowProfiler;
 
             // the list of all sessions in the store is restricted by default, you must return true to alllow it
-            MiniProfiler.Settings.Results_List_Authorize = (request) =>
-            {
-                // you may implement this if you need to restrict visibility of profiling lists on a per request basis 
-                return AllowProfiler(request); // all requests are kosher
-            };
-        }
-        private void CreateDatabase()
-        {
-            var fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "bigballz.mdf");
-            var db = new BigBallzDataContext(fileName);
-            db.CreateDatabase();
+            MiniProfiler.Settings.Results_List_Authorize = AllowProfiler;
         }
 
         //protected void FormsAuthentication_OnAuthenticate(object sender, FormsAuthenticationEventArgs args)

@@ -19,7 +19,7 @@ namespace BigBallz.Infrastructure
             }
             catch (StructureMapException ex)
             {
-                var appex = new ApplicationException(ex.Message + Environment.NewLine + ObjectFactory.Container.WhatDoIHave(), ex);
+                var appex = new ApplicationException(ex.Message + Environment.NewLine + ServiceLocator.Debug(), ex);
                 Logger.Error(appex);
             }
             catch (Exception ex)

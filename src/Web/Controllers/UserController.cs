@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Routing;
 using BigBallz.Core.Extension.Web.Mvc;
 using BigBallz.Core.Log;
 using BigBallz.Helpers;
@@ -102,8 +103,8 @@ namespace BigBallz.Controllers
         {
             foreach (var player in _accountService.GetAllUnAuthorizedUsers())
             {
-                var paymentUrl = Url.SiteRoot() + Url.Action("payment", "auth");
-                var activationUrl = Url.SiteRoot() + Url.Action("activate", "auth", new { id = CryptHelper.EncryptAES256(player.UserName) });
+                var paymentUrl = Url.Action("payment", "auth", new {}, Uri.UriSchemeHttps);
+                var activationUrl = Url.Action("activate", "auth", new { id = CryptHelper.EncryptAES256(player.UserName) }, Uri.UriSchemeHttps);
                 _mailService.SendRegistration(player, paymentUrl, activationUrl);
             }
 
