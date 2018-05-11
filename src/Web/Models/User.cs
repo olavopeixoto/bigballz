@@ -24,7 +24,7 @@ namespace BigBallz.Models
             {
                 return (bool) (_isAdmin = _isAdmin ?? UserRoles.NullSafe(ur => ur.Any(x => x.Role.NullSafe(r => r.Name.NullSafe(n => n.ToLowerInvariant())) == BBRoles.Admin)));
             }
-            set => _isAdmin = value;
+            set { _isAdmin = value; }
         }
     }
 }
