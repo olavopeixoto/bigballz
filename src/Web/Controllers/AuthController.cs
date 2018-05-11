@@ -97,7 +97,8 @@ namespace BigBallz.Controllers
 
             try
             {
-                if (Session["UserDetails"] is RPXAuthenticationDetails newUserDetails)
+                var newUserDetails = Session["UserDetails"] as RPXAuthenticationDetails;
+                if (newUserDetails != null)
                 {
                     Session.Remove("UserDetails");
                     if (_accountService.FindUserByIdentifier(newUserDetails.Identifier) != null)
@@ -134,9 +135,10 @@ namespace BigBallz.Controllers
 
             var transaction = NotificationService.CheckTransaction(credentials, notificationCode);
 
+            int uid;
             var itemId = transaction.Items.First().Id;
             var user = int.TryParse(itemId, NumberStyles.Integer, CultureInfo.CurrentCulture.NumberFormat,
-                out var uid)
+                out uid)
                 ? _accountService.FindUserByLocalId(uid)
                 : _accountService.FindUserByUserName(itemId);
 
@@ -174,7 +176,8 @@ namespace BigBallz.Controllers
             var transaction = TransactionSearchService.SearchByCode(credentials, tid);
             var item = transaction.Items.Single();
 
-            if (!int.TryParse(item.Id, NumberStyles.Integer, CultureInfo.CurrentCulture.NumberFormat, out var uid))
+            int uid;
+            if (!int.TryParse(item.Id, NumberStyles.Integer, CultureInfo.CurrentCulture.NumberFormat, out uid))
             {
                 Logger.Error("Identificação de usuário inválida ({0})", item.Id);
                 return RedirectToAction("index", "home");
@@ -247,7 +250,9 @@ namespace BigBallz.Controllers
         [HttpGet]
         public ActionResult NewAccount()
         {
-            if (!(TempData.Peek("UserDetails") is RPXAuthenticationDetails authenticationDetails))
+            var authenticationDetails = TempData.Peek("UserDetails") as RPXAuthenticationDetails;
+            
+            if (authenticationDetails == null)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -268,7 +273,8 @@ namespace BigBallz.Controllers
         [HttpPost]
         public ActionResult NewAccount(User user)
         {
-            if (!(Session["UserDetails"] is RPXAuthenticationDetails authenticationDetails)) return RedirectToAction("Index", "Home");
+            var authenticationDetails = Session["UserDetails"] as RPXAuthenticationDetails;
+            if (authenticationDetails == null) return RedirectToAction("Index", "Home");
 
             if (!ModelState.IsValid) return View(user);
 
@@ -331,7 +337,9 @@ namespace BigBallz.Controllers
         [HttpGet]
         public ActionResult NewAccountSuccess()
         {
-            if (!(TempData["UserDetails"] is RPXAuthenticationDetails authenticationDetails)) return RedirectToAction("index", "home");
+            var authenticationDetails = TempData["UserDetails"] as RPXAuthenticationDetails;
+
+            if (authenticationDetails == null) return RedirectToAction("index", "home");
 
             ViewData["nomeProvedor"] = authenticationDetails.ProviderName;
             return View();
