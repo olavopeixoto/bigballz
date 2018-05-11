@@ -6,9 +6,8 @@ body {
 	min-width:600px;    	/* Minimum width of layout - remove line if not required */
 					/* The min-width property does not work in old versions of Internet Explorer */
 	text-align:center;
-	color: #ffffff;
 	background: url(../images/bb-sun.gif) no-repeat scroll 50% 0 #5599BB;
-	color:#333333;
+	color:#1f5b9c;
     font:13px/20px "lucida grande",lucida,tahoma,helvetica,arial,sans-serif;
 }
 #fixed

@@ -17,17 +17,16 @@
         <%if (standings != null && Html.IsAuthorized())
           {%>
         <%var currentUserStats = standings.FirstOrDefault(x => x.User.UserName == Page.User.Identity.Name);%>
-        <span style="display:block">(<%:currentUserStats.NullSafe(x => x.TotalPoints)%> pts - <%:currentUserStats.NullSafe(x => x.Position)%>º lugar)</span>
+        <span>(<%:currentUserStats.NullSafe(x => x.TotalPoints)%> pts - <%:currentUserStats.NullSafe(x => x.Position)%>º lugar)</span>
         <%} if (Page.User.Identity.IsAuthenticated && !Html.IsAuthorized())
           {%>
-            <span style="display:block"><%=Html.ActionLink("Pagamento não registrado. Clique aqui.", "payment", "auth")%></span>
+            <span><%=Html.ActionLink("Pagamento não registrado. Clique aqui.", "payment", "auth")%></span>
         <%}%>
-        <%--<span style="display:block"><span title="3 placares exatos (333) | 1 placar parcial (333) | 5 resultados corretos (333)">90 pontos (85%)</span></span>--%>
         <% if (Context.User.IsInRole("admin")) { 
                 if (Request.Cookies["x-profiler"] == null) { %>
-                    <span style="display:block"><span><%= Html.ActionLink("Enable Profiler", "EnableProfiler", "auth") %></span></span>
+                    <span><%= Html.ActionLink("Enable Profiler", "EnableProfiler", "auth") %></span>
             <% } else { %>
-                     <span style="display:block"><span><%= Html.ActionLink("Disable Profiler", "DisableProfiler", "auth") %></span></span>
+                     <span><%= Html.ActionLink("Disable Profiler", "DisableProfiler", "auth") %></span>
             <% }
          } %>
     </span>

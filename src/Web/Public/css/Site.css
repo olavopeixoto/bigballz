@@ -42,20 +42,21 @@
 }
 #profile
 {
-    padding-bottom:15px;
+/*    padding-bottom:15px;*/
     display:block;
-    height:48px;
+/*    height:48px;*/
     margin:10px 0 5px;
 }
 #profile .user_icon
 {
     clear:both;
     display:block;
-    height:48px;
+/*    height:48px;*/
 }
 #me_name
 {
-font-weight:bold;
+    font-weight:bold;
+    display: block;
 }
 
 .profile-pic {
@@ -67,10 +68,10 @@ font-weight:bold;
 }
 
 #profile .user_icon img {
-vertical-align:middle;
-float:left;
-margin:0;
-margin-right:10px;
+    float:left;
+    margin:0;
+    margin-right:10px;
+    margin-top: 5px;
 }
 
 #profile .user_icon .stats
