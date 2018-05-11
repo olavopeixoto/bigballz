@@ -78,6 +78,12 @@
 {
     height:48px;
 }
+
+#profile .admin {
+    display: block;
+    margin-left: 60px
+}
+
 .editor-field
 {
     margin-bottom:10px;

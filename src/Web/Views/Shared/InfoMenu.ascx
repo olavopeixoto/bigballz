@@ -24,9 +24,9 @@
         <%}%>
         <% if (Context.User.IsInRole("admin")) { 
                 if (Request.Cookies["x-profiler"] == null) { %>
-                    <span><%= Html.ActionLink("Enable Profiler", "EnableProfiler", "auth") %></span>
+                    <span class="admin"><%= Html.ActionLink("Enable Profiler", "EnableProfiler", "auth") %></span>
             <% } else { %>
-                     <span><%= Html.ActionLink("Disable Profiler", "DisableProfiler", "auth") %></span>
+                     <span class="admin"><%= Html.ActionLink("Disable Profiler", "DisableProfiler", "auth") %></span>
             <% }
          } %>
     </span>
