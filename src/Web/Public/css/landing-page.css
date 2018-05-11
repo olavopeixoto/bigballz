@@ -152,9 +152,13 @@ p.copyright {
 	margin: 15px 0 0;
 }
 
-.twitter-share-button {
+.fb-like {
+    vertical-align: super;
+}
+
+.fb-share-button {
     float: left;
-    padding-right: 10px;
+    padding-right: 3px;
 }
 
 .navbar-default {

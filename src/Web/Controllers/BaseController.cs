@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
-using BigBallz.Core;
 using BigBallz.Helpers;
 using BigBallz.Services;
 
@@ -54,12 +53,13 @@ namespace BigBallz.Controllers
                     }
                     Response.SetCookie(new HttpCookie("photoUrl", photoUrl)
                     {
-                        Expires = DateTime.Now.BrazilTimeZone().AddDays(30)
+                        Expires = DateTime.UtcNow.AddDays(30)
                     });
                 }
 
                 ViewData["UserId"] = user.UserId;
                 ViewData["UserName"] = user.UserName;
+                ViewData["UserEmail"] = user.EmailAddress;
 
                 ViewData["NextMatches"] = _matchService.GetNextMatches();
                 ViewData["LastMatches"] = _matchService.GetLastPlayedMatches();

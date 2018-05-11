@@ -8,9 +8,9 @@ using BigBallz.Models;
 
 namespace BigBallz.Services.L2S
 {
-    public class BigBallzService : IBigBallzService, IDisposable
+    public class BigBallzService : IBigBallzService
     {
-        readonly BigBallzDataContext _db;
+        private readonly BigBallzDataContext _db;
 
         public BigBallzService(BigBallzDataContext context)
         {
@@ -41,8 +41,8 @@ namespace BigBallz.Services.L2S
                 bonusBets = bonusBets.Where(b => b.Bonus11.LastModified <= untilDate);
             }
 
-            var totalPoints = bets.Sum(bet => BetPoints(bet));
-            totalPoints += bonusBets.Sum(bet => BonusBetPoints(bet));
+            var totalPoints = bets.Sum(BetPoints);
+            totalPoints += bonusBets.Sum(BonusBetPoints);
             return totalPoints;
         }
 
@@ -80,20 +80,24 @@ namespace BigBallz.Services.L2S
 
             return 0;
         }
+
         public bool PlacarExato(int betScore1, int betScore2, int matchScore1, int matchScore2)
         {
             return betScore1 == matchScore1 && betScore2 == matchScore2;
         }
+
         public bool PlacarParcial(int betScore1, int betScore2, int matchScore1, int matchScore2)
         {
             return betScore1 == matchScore1 || betScore2 == matchScore2;
         }
+
         public bool Resultado(int betScore1, int betScore2, int matchScore1, int matchScore2)
         {
-            return (betScore1 > betScore2 && matchScore1 > matchScore2)
-                   || (betScore1 < betScore2 && matchScore1 < matchScore2)
-                   || (betScore1 == betScore2 && matchScore1 == matchScore2);
+            return betScore1 > betScore2 && matchScore1 > matchScore2
+                   || betScore1 < betScore2 && matchScore1 < matchScore2
+                   || betScore1 == betScore2 && matchScore1 == matchScore2;
         }
+
         private int BonusBetPoints(BonusBet bet)
         {
             if (bet.Team != bet.Bonus11.Team) return 0;
@@ -137,7 +141,7 @@ namespace BigBallz.Services.L2S
                                 x.Match1.StartTime.DayOfYear == lastRoundTime.Value.DayOfYear &&
                                 x.Match1.StartTime.Year == lastRoundTime.Value.Year);
                 
-            return bets.Sum(bet => BetPoints(bet));
+            return bets.Sum(BetPoints);
         }
 
         public IList<Match> GetUserPendingBets(string userName)
@@ -211,7 +215,7 @@ namespace BigBallz.Services.L2S
             if (untilDate.HasValue)
                 bonusBets = bonusBets.Where(b => b.Bonus11.LastModified <= untilDate);
 
-            var totalBonusPoints = bonusBets.Sum(bet => BonusBetPoints(bet));
+            var totalBonusPoints = bonusBets.Sum(BonusBetPoints);
             return totalBonusPoints;
         }
 
@@ -330,7 +334,7 @@ namespace BigBallz.Services.L2S
         {
             var bets = _db.Bets.Where(x => x.Match == matchId).ToList();
 
-            double totalBets = bets.Count();
+            double totalBets = bets.Count;
 
             if (totalBets <= 0) return null;
 
@@ -358,7 +362,7 @@ namespace BigBallz.Services.L2S
         {
             var bets = _db.BonusBets.Where(x => x.Bonus == bonusId).ToList();
 
-            double totalBets = bets.Count();
+            double totalBets = bets.Count;
 
             var mostBetTeam =
                 bets.GroupBy(x => new { x.Team1 }).Select(x => new { x.Key, qtd = x.Count() }).OrderByDescending(

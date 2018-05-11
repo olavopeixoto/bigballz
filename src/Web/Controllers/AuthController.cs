@@ -3,7 +3,6 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
-using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Transactions;
@@ -11,7 +10,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using BigBallz.Core;
-using BigBallz.Core.Extension.Web.Mvc;
 using BigBallz.Core.Log;
 using BigBallz.Filters;
 using BigBallz.Helpers;
@@ -99,21 +97,19 @@ namespace BigBallz.Controllers
 
             try
             {
-                var newUserDetails = Session["UserDetails"] as RPXAuthenticationDetails;
-                if (newUserDetails != null)
+                if (Session["UserDetails"] is RPXAuthenticationDetails newUserDetails)
                 {
                     Session.Remove("UserDetails");
                     if (_accountService.FindUserByIdentifier(newUserDetails.Identifier) != null)
                     {
                         this.FlashError(
-                            string.Format("A conta do {0} não foi associada. Já existe uma associação com essa conta.",
-                                newUserDetails.ProviderName));
+                            $"A conta do {newUserDetails.ProviderName} não foi associada. Já existe uma associação com essa conta.");
                     }
                     else
                     {
                         _accountService.AssociateExistingUser(user.UserId, newUserDetails.Identifier,
                             newUserDetails.ProviderName);
-                        this.FlashInfo(string.Format("Conta do {0} associada com sucesso!", newUserDetails.ProviderName));
+                        this.FlashInfo($"Conta do {newUserDetails.ProviderName} associada com sucesso!");
                     }
                 }
             }
@@ -138,10 +134,9 @@ namespace BigBallz.Controllers
 
             var transaction = NotificationService.CheckTransaction(credentials, notificationCode);
 
-            int uid;
             var itemId = transaction.Items.First().Id;
             var user = int.TryParse(itemId, NumberStyles.Integer, CultureInfo.CurrentCulture.NumberFormat,
-                out uid)
+                out var uid)
                 ? _accountService.FindUserByLocalId(uid)
                 : _accountService.FindUserByUserName(itemId);
 
@@ -166,7 +161,7 @@ namespace BigBallz.Controllers
             }
             else
             {
-                throw new ApplicationException(string.Format("Usuário {0} não encontrado para autorização", itemId));
+                throw new ApplicationException($"Usuário {itemId} não encontrado para autorização");
             }
         }
 
@@ -179,8 +174,7 @@ namespace BigBallz.Controllers
             var transaction = TransactionSearchService.SearchByCode(credentials, tid);
             var item = transaction.Items.Single();
 
-            int uid;
-            if (!int.TryParse(item.Id, NumberStyles.Integer, CultureInfo.CurrentCulture.NumberFormat, out uid))
+            if (!int.TryParse(item.Id, NumberStyles.Integer, CultureInfo.CurrentCulture.NumberFormat, out var uid))
             {
                 Logger.Error("Identificação de usuário inválida ({0})", item.Id);
                 return RedirectToAction("index", "home");
@@ -253,9 +247,7 @@ namespace BigBallz.Controllers
         [HttpGet]
         public ActionResult NewAccount()
         {
-            var authenticationDetails = TempData.Peek("UserDetails") as RPXAuthenticationDetails;
-            
-            if (authenticationDetails == null)
+            if (!(TempData.Peek("UserDetails") is RPXAuthenticationDetails authenticationDetails))
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -276,8 +268,7 @@ namespace BigBallz.Controllers
         [HttpPost]
         public ActionResult NewAccount(User user)
         {
-            var authenticationDetails = Session["UserDetails"] as RPXAuthenticationDetails;
-            if (authenticationDetails == null) return RedirectToAction("Index", "Home");
+            if (!(Session["UserDetails"] is RPXAuthenticationDetails authenticationDetails)) return RedirectToAction("Index", "Home");
 
             if (!ModelState.IsValid) return View(user);
 
@@ -340,9 +331,7 @@ namespace BigBallz.Controllers
         [HttpGet]
         public ActionResult NewAccountSuccess()
         {
-            var authenticationDetails = TempData["UserDetails"] as RPXAuthenticationDetails;
-
-            if (authenticationDetails == null) return RedirectToAction("index", "home");
+            if (!(TempData["UserDetails"] is RPXAuthenticationDetails authenticationDetails)) return RedirectToAction("index", "home");
 
             ViewData["nomeProvedor"] = authenticationDetails.ProviderName;
             return View();
@@ -403,7 +392,7 @@ namespace BigBallz.Controllers
 
             var timems = DateTime.UtcNow.ToUnixTime().ToString(CultureInfo.InvariantCulture);
             var hash = GetHash(key, username, email, timems);
-            var path = String.Format(pathTemplate, Server.UrlEncode(username), Server.UrlEncode(email), timems, hash);
+            var path = string.Format(pathTemplate, Server.UrlEncode(username), Server.UrlEncode(email), timems, hash);
 
             return Redirect(path);
         }

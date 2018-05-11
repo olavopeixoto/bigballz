@@ -57,9 +57,7 @@
     </div>
     
     <input type="submit" value="Registrar" />
-<%
-    var returnUrl = Url.Encode(Url.Action("handleresponse", "auth", null, FormsAuthentication.RequireSSL ? "https" : "http"));
-%>
+
     <a class="janrainEngage" href="#">Associar a uma conta existente</a>
 
     <p><small>* ao registrar a sua conta você está de acordo com o nosso <%=Html.ActionLink("regulamento", "rules", "home") %></small></p>

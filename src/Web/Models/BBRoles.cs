@@ -2,7 +2,7 @@
 {
     public static class BBRoles
     {
-        public static string Admin { get { return "admin"; }}
-        public static string Player { get { return "player"; } }
+        public static string Admin => "admin";
+        public static string Player => "player";
     }
 }

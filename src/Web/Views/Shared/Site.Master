@@ -35,16 +35,29 @@
             ga('send', 'pageview');
     </script>
     <% } %>
+    <script src="https://wchat.freshchat.com/js/widget.js"></script>
 </head>
 <body>
     <div id="fb-root"></div>
-    <script>(function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=121207554580263&version=v2.0";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '<%= ConfigurationManager.AppSettings["fb-appid"]%>',
+                autoLogAppEvents : true,
+                xfbml      : true,
+                version    : 'v3.0'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/pt_BR/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
     <div id="fixed">
         <div id="flash" class="ui-widget ui-helper-hidden">
             <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
@@ -103,10 +116,27 @@
     <%=Html.MiniProfiler() %>
     <script type="text/javascript" src="https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js"></script>
     <script type="text/javascript">
-        FreshWidget.init("", { "queryString": "&widgetType=popup", "widgetType": "popup", "buttonType": "text", "buttonText": "Precisa de ajuda? Clique Aqui", "buttonColor": "black", "buttonBg": "#FFFFFF", "alignment": "4", "offset": "270px", "formHeight": "500px", "url": "https://bigballz.freshdesk.com" });
+        FreshWidget.init("", { "queryString": "&widgetType=popup", "widgetType": "popup", "buttonType": "text", "buttonText": "Precisa de ajuda? Clique Aqui", "buttonColor": "#1f5b9c", "buttonBg": "#FFFFFF", "alignment": "4", "offset": "270px", "formHeight": "500px", "url": "https://bigballz.freshdesk.com" });
     </script>
-    <%if (Context.User.Identity.IsAuthenticated) {%>
-    <script type='text/javascript'>if (new Date().getTime() > 1403138675000) { var fc_CSS = document.createElement('link'); fc_CSS.setAttribute('rel', 'stylesheet'); var isSecured = (window.location && window.location.protocol == 'https:'); fc_CSS.setAttribute('type', 'text/css'); fc_CSS.setAttribute('href', ((isSecured) ? 'https://d36mpcpuzc4ztk.cloudfront.net' : 'http://assets1.chat.freshdesk.com') + '/css/visitor.css'); document.getElementsByTagName('head')[0].appendChild(fc_CSS); var fc_JS = document.createElement('script'); fc_JS.type = 'text/javascript'; fc_JS.src = ((isSecured) ? 'https://d36mpcpuzc4ztk.cloudfront.net' : 'http://assets.chat.freshdesk.com') + '/js/visitor.js'; (document.body ? document.body : document.getElementsByTagName('head')[0]).appendChild(fc_JS); window.freshchat_setting = 'eyJmY19pZCI6ImJkMzY1YWM0YThkMjFiYjI0NTQ5NzIwYTRjODA0NDI2IiwiZmNfc2UiOiJjYWRjYjIyNzQ3OTlkZWVkMDVmMDRlN2VmYWE4YTIzYmY3MDUxMjdhNzdjNDhmYTliYThmYTRmZTc4ZTFiZWFlMjBlNWExMTM0ODkxNTMzYjdjMjY4N2QwZGJkMzYwNjFhOGVkNmJlZDVkNTQ5MTM2M2NkNzJjN2RhNjIyNTFjOSIsIm1pbmltaXplZF90aXRsZSI6IkNoYXQgT25saW5lIiwibWF4aW1pemVkX3RpdGxlIjoiQ2hhdCBlbSBwcm9ncmVzc28iLCJ3ZWxjb21lX21lc3NhZ2UiOiJPaSEgQ29tbyBwb3NzbyBhanVkYXI/IiwidGhhbmtfbWVzc2FnZSI6Ik9icmlnYWRvIHBlbGEgcGFydGljaXBhw6fDo28sIHF1YWxxdWVyIG91dHJhIHBlcmd1bnRhIGVzdGFyZW1vcyBhIGRpc3Bvc2nDp8Ojby4iLCJ3YWl0X21lc3NhZ2UiOiJOb3Nzb3MgYWdlbnRlcyBlc3TDo28gdG9kb3Mgb2N1cGFkb3MgbmVzdGUgbW9tZW50bywgcG9yIGZhdm9yIGFndWFyZGUgdW0gaW5zdGFudGUuIiwidHlwaW5nX21lc3NhZ2UiOiJkaWdpdGFuZG8uLi4iLCJwcmVjaGF0X21lc3NhZ2UiOiJXZSBjYW4ndCB3YWl0IHRvIHRhbGsgdG8geW91LiBCdXQgZmlyc3QsIHBsZWFzZSB0YWtlIGEgY291cGxlIG9mIG1vbWVudHMgdG8gdGVsbCB1cyBhIGJpdCBhYm91dCB5b3Vyc2VsZi4iLCJwcmVjaGF0X2Zvcm0iOjAsInByZWNoYXRfbWFpbCI6MCwicHJlY2hhdF9waG9uZSI6MCwicHJvYWN0aXZlX2NoYXQiOjAsInByb2FjdGl2ZV90aW1lIjoxNSwiYnVzaW5lc3NfY2FsZW5kYXIiOiJudWxsIiwic2hvd19vbl9wb3J0YWwiOmZhbHNlLCJwb3J0YWxfbG9naW5fcmVxdWlyZWQiOnRydWUsIndlYnVybCI6ImJpZ2JhbGx6LmZyZXNoZGVzay5jb20iLCJub2RldXJsIjoiY2hhdC5mcmVzaGRlc2suY29tIiwiZGVidWciOjEsImFnZW50X2pvaW5lZF9tc2ciOiIkIGhhcyBqb2luZWQgdGhlIGNoYXQiLCJhZ2VudF9sZWZ0X21zZyI6IiQgaGFzIGxlZnQgdGhlIGNoYXQiLCJjb25uZWN0aW5nX21zZyI6IldhaXRpbmcgZm9yIGFuIGFnZW50Iiwibm9uX2F2YWlsYWJpbGl0eV9tZXNzYWdlIjoiSW5mZWxpem1lbnRlIG7Do28gZXN0YW1vcyBkaXNwb27DrXZlbCBubyBtb21lbnRvLiBQZWRpbW9zIGRlc2N1bHBhcywgbWFzIHBvciBmYXZvciAjIGRlaXhlIGEgc3VhIG1lbnNhZ2VtICMgcXVlIHJldG9ybmFyZW1vcyIsIm1lIjoiTWUiLCJuYW1lX3BsYWNlIjoiTmFtZSIsIm1haWxfcGxhY2UiOiJFbWFpbCIsInBob25lX3BsYWNlIjoiUGhvbmUgTnVtYmVyIiwidGV4dF9wbGFjZSI6IllvdXIgTWVzc2FnZSIsImJlZ2luX2NoYXQiOiJCZWdpbiBjaGF0IiwiY29sb3IiOiIjNzc3Nzc3Iiwib2Zmc2V0IjoiMzAiLCJwb3NpdGlvbiI6IkJvdHRvbSBSaWdodCIsInRpY2tldF9saW5rX29wdGlvbiI6IjAiLCJleHBpcnkiOjE0MDMxMzg2NzUwMDAsImN1c3RvbV9saW5rX3VybCI6IiJ9'; }</script>
-    <%}%>
+    <script>
+        window.fcWidget.init({
+            token: "3f1a532d-af81-4b52-9cce-9e856fa1f126",
+            host: "https://wchat.freshchat.com"
+        });
+    </script>
+<%if (Context.User.Identity.IsAuthenticated) {%>
+    <script>
+        // Make sure fcWidget.init is included before setting these values
+
+        // To set unique user id in your system when it is available
+        window.fcWidget.setExternalId("<%=ViewData["UserId"]%>");
+
+        // To set user name
+        window.fcWidget.user.setFirstName("<%=ViewData["UserName"]%>");
+
+        // To set user email
+        window.fcWidget.user.setEmail("<%=ViewData["UserEmail"]%>");
+    </script>
+<%}%>
 </body>
 </html>

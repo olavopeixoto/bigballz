@@ -19,13 +19,22 @@
                         <%=Html.CountDown((DateTime) ViewData["StartDate"]) %>
                         <hr class="intro-divider">
                         <ul class="list-inline intro-social-buttons">
+                            <%if (!Request.IsAuthenticated) {%>
                             <li>
-                                <%if (!Request.IsAuthenticated) {%>
                                 <a class="btn btn-default btn-lg janrainEngage" href="#"><i class="fa fa-sign-in fa-fw"></i> <span class="network-name">Entrar</span></a>
-                                <%}%>
                             </li>
+                            <%}%>
                             <li><div class="fb-like" data-href="<%=Url.SiteRoot() %>" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></li>
                             <li><a href="whatsapp://send" data-text="Estou participando do BigBallz, o bolão da Copa do Mundo. Venha participar também:" data-href="" class="wa_btn wa_btn_s" style="display:none">Compartilhar</a></li>
+                            <li><a class="twitter-share-button"
+                                   href="https://twitter.com/share"
+                                   data-text="Estou participando do BigBallz, o bolão da Copa do Mundo. Venha participar também!"
+                                   data-url="<%=Url.SiteRoot() %>"
+                                   data-lang="pt-BR"
+                                   data-hashtags="bigballz2018"
+                                   data-via="bigballz2018">
+                                Tweet
+                            </a></li>
                         </ul>
                     </div>
                 </div>
@@ -170,8 +179,16 @@
                     <h2 class="section-heading">Espalhe a notícia</h2>
                     <p class="lead">
                         Convide os seus amigos, quanto mais gente participar maior a bolada do prêmio!
-                        <div class="fb-like twitter-share-button" data-href="<%=Url.SiteRoot() %>" data-layout="button_count" data-action="recommend" data-show-faces="true" data-share="true"></div>
-                        <a href="https://twitter.com/share" class="twitter-share-button" data-url="<%=Url.SiteRoot() %>" data-lang="pt-BR">Tweet</a>
+                        <div class="fb-like fb-share-button" data-href="<%=Url.SiteRoot() %>" data-layout="button_count" data-action="recommend" data-show-faces="true" data-share="true"></div>
+                        <a class="twitter-share-button"
+                           href="https://twitter.com/share"
+                           data-text="Estou participando do BigBallz, o bolão da Copa do Mundo. Venha participar também!"
+                           data-url="<%=Url.SiteRoot() %>"
+                           data-lang="pt-BR"
+                           data-hashtags="bigballz2018"
+                           data-via="bigballz2018">
+                            Tweet
+                        </a>
                         <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
                         <div class="g-plus" data-action="share" data-annotation="bubble"></div>
                         <script type="text/javascript">
@@ -183,6 +200,7 @@
                                 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
                             })();
                         </script>
+                        <a href="whatsapp://send" data-text="Estou participando do BigBallz, o bolão da Copa do Mundo. Venha participar também:" data-href="" class="wa_btn wa_btn_s" style="display:none">Compartilhar</a>
                     </p>
                 </div>
                 <div class="col-lg-5 col-sm-pull-6  col-sm-6">
