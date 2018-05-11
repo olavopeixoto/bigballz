@@ -25,7 +25,9 @@
                             </li>
                             <%}%>
                             <li><div class="fb-like" data-href="<%=Url.SiteRoot() %>" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></li>
+                            <% if (Request.Browser.IsMobileDevice) { %>
                             <li><a href="whatsapp://send" data-text="Estou participando do BigBallz, o bolão da Copa do Mundo. Venha participar também:" data-href="" class="wa_btn wa_btn_s" style="display:none">Compartilhar</a></li>
+                            <%}%>
                             <li><a class="twitter-share-button"
                                    href="https://twitter.com/share"
                                    data-text="Estou participando do BigBallz, o bolão da Copa do Mundo. Venha participar também!"
