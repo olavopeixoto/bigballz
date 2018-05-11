@@ -10,7 +10,7 @@
         <p>
         A arrecadação do BigBallz é feita através de pagamento pelo PagSeguro ou de depósito direto em conta.<br/>
         Para depósito direto em conta não há nenhum tipo de desconto e o dinheiro é revertido integralmente para o prêmio.<br/>
-        No caso do PagSeguro, o serviço cobra uma taxa de 4,99% + R$0,40 por transação. <a href="https://pagseguro.uol.com.br/taxas_e_tarifas.jhtml">Mais detalhes</a>.<br/>
+        No caso do PagSeguro, o serviço cobra uma taxa de 3,99% + R$0,40 por transação. <a href="https://pagseguro.uol.com.br/para-seu-negocio/online/">Mais detalhes</a>.<br/>
         Confira na tabela abaixo como está distribuída a arrecadação.
         </p>
         <table class="match-table">

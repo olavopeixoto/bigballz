@@ -324,7 +324,7 @@ namespace BigBallz.Services.L2S
                 .GroupBy(x => new { Holder = x.PagSeguro && x.AuthorizedBy != "PagSeguro" ? x.AuthorizedBy + " (PagSeguro)" : x.AuthorizedBy, x.PagSeguro })
                 .Select(x => new MoneyDistribution { 
                             Holder = x.Key.Holder,
-                            Amount = x.Sum(key => key.PagSeguro ? ConfigurationHelper.Price - Math.Round(ConfigurationHelper.Price * (decimal) 0.0499 + (decimal)0.4, 2) : ConfigurationHelper.Price),
+                            Amount = x.Sum(key => key.PagSeguro ? ConfigurationHelper.Price - Math.Round(ConfigurationHelper.Price * ConfigurationHelper.PagSeguroPercentageFee + ConfigurationHelper.PagSeguroFixedValueFee, 2) : ConfigurationHelper.Price),
                             TotalPlayers = x.Count()
                             })
                 .OrderBy(x => x.Holder);

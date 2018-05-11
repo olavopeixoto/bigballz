@@ -257,7 +257,7 @@
     <li>O segundo colocado do Bolão receberá 20% do total acumulado</li>
     <li>O terceiro colocado do Bolão receberá 10% do total acumulado</li>
     <li>O site receberá 5% do total acumulado</li>
-        <li>O total acumulado é igual ao total arrecadado bruto descontando as <a href="https://pagseguro.uol.com.br/taxas_e_tarifas.jhtml">taxas</a> cobradas pelo meio de pagamento (O PagSeguro cobra 4,99% + R$0,40 por transação)</li>
+        <li>O total acumulado é igual ao total arrecadado bruto descontando as <a href="https://pagseguro.uol.com.br/para-seu-negocio/online/">taxas</a> cobradas pelo meio de pagamento (O PagSeguro cobra 3,99% + R$0,40 por transação)</li>
     </ul>
     </div>
     </div>

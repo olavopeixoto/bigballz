@@ -67,7 +67,7 @@ namespace System.Web.Mvc {
 
         public static decimal PriceNet(this HtmlHelper helper)
         {
-            return Math.Round(ConfigurationHelper.Price - (ConfigurationHelper.Price * (decimal) 0.0499) - (decimal) 0.4, 2);
+            return ConfigurationHelper.Revenue(true);
         }
 
         public static IHtmlString MiniProfiler(this HtmlHelper helper)
