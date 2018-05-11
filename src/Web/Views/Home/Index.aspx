@@ -20,7 +20,7 @@
                         <hr class="intro-divider">
                         <ul class="list-inline intro-social-buttons">
                             <%if (!Request.IsAuthenticated) {%>
-                            <li>
+                            <li class="li-login">
                                 <a class="btn btn-default btn-lg janrainEngage" href="#"><i class="fa fa-sign-in fa-fw"></i> <span class="network-name">Entrar</span></a>
                             </li>
                             <%}%>

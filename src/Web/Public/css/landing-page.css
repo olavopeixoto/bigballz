@@ -161,6 +161,11 @@ p.copyright {
     padding-right: 3px;
 }
 
+.list-inline > li.li-login {
+    display: block;
+    padding-bottom: 20px;
+}
+
 .navbar-default {
     background-color: #000;
     border: none;
