@@ -17,10 +17,10 @@
         <%if (standings != null && Html.IsAuthorized())
           {%>
         <%var currentUserStats = standings.FirstOrDefault(x => x.User.UserName == Page.User.Identity.Name);%>
-        <span>(<%:currentUserStats.NullSafe(x => x.TotalPoints)%> pts - <%:currentUserStats.NullSafe(x => x.Position)%>º lugar)</span>
+        <span class="admin">(<%:currentUserStats.NullSafe(x => x.TotalPoints)%> pts - <%:currentUserStats.NullSafe(x => x.Position)%>º lugar)</span>
         <%} if (Page.User.Identity.IsAuthenticated && !Html.IsAuthorized())
           {%>
-            <span><%=Html.ActionLink("Pagamento não registrado. Clique aqui.", "payment", "auth")%></span>
+            <span class="admin"><%=Html.ActionLink("Pagamento não registrado. Clique aqui.", "payment", "auth")%></span>
         <%}%>
         <% if (Context.User.IsInRole("admin")) { 
                 if (Request.Cookies["x-profiler"] == null) { %>
