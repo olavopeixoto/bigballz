@@ -187,6 +187,7 @@ namespace BigBallz.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = BBRoles.Player)]
         [AcceptVerbs(HttpVerbs.Post), UserNameFilter]
         public ActionResult SaveBonus(string userName, IList<BonusBet> bonusBet)
         {

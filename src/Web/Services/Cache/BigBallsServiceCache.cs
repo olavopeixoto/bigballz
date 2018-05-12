@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using BigBallz.Core.Caching;
 using BigBallz.Models;
 
 namespace BigBallz.Services.Cache
 {
-    public class BigBallsServiceCache : IBigBallzService, IDisposable
+    public class BigBallsServiceCache : IBigBallzService
     {
         private readonly ICache _cache;
         private readonly IBigBallzService _service;
@@ -34,7 +33,7 @@ namespace BigBallz.Services.Cache
 
         public IList<UserPoints> GetStandings()
         {
-            var key = string.Format("BB-GetStandings");
+            var key = "BB-GetStandings";
 
             if (_cache.Contains(key))
             {
@@ -49,7 +48,7 @@ namespace BigBallz.Services.Cache
 
         public IList<UserPoints> GetLastRoundStandings()
         {
-            var key = string.Format("BB-GetLastRoundStandings");
+            var key = "BB-GetLastRoundStandings";
 
             if (_cache.Contains(key))
             {
@@ -140,7 +139,7 @@ namespace BigBallz.Services.Cache
 
         public Match GetFirstMatch()
         {
-            var key = string.Format("BB-GetFirstMatch");
+            var key = "BB-GetFirstMatch";
 
             if (_cache.Contains(key))
             {
@@ -153,16 +152,16 @@ namespace BigBallz.Services.Cache
             return results;
         }
 
-        public decimal GetTotalPrize()
+        public Prizes GetPrizes()
         {
-            var key = string.Format("BB-GetTotalPrize");
+            var key = "BB-GetPrizes";
 
             if (_cache.Contains(key))
             {
-                return _cache.Get<decimal>(key);
+                return _cache.Get<Prizes>(key);
             }
 
-            var results = _service.GetTotalPrize();
+            var results = _service.GetPrizes();
             _cache.Set(key, results);
 
             return results;
@@ -170,7 +169,7 @@ namespace BigBallz.Services.Cache
 
         public DateTime GetBonusBetExpireDate()
         {
-            var key = string.Format("BB-GetBonusBetExpireDate");
+            var key = "BB-GetBonusBetExpireDate";
 
             if (_cache.Contains(key))
             {
@@ -178,21 +177,6 @@ namespace BigBallz.Services.Cache
             }
 
             var results = _service.GetBonusBetExpireDate();
-            _cache.Set(key, results);
-
-            return results;
-        }
-
-        public IEnumerable<MoneyDistribution> GetMoneyDistribution()
-        {
-            var key = string.Format("BB-GetMoneyDistribution");
-
-            if (_cache.Contains(key))
-            {
-                return _cache.Get<IEnumerable<MoneyDistribution>>(key);
-            }
-
-            var results = _service.GetMoneyDistribution().ToList();
             _cache.Set(key, results);
 
             return results;

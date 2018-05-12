@@ -360,7 +360,7 @@ namespace BigBallz.Controllers
             return View(user);
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = BBRoles.Admin)]
         public ActionResult EnableProfiler()
         {
             Response.SetCookie(new HttpCookie("x-profiler", "true")
@@ -372,7 +372,7 @@ namespace BigBallz.Controllers
             return Redirect(Convert.ToString(Request.UrlReferrer));
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = BBRoles.Admin)]
         public ActionResult DisableProfiler()
         {
             if (Request.Cookies["x-profiler"] != null)

@@ -253,11 +253,11 @@
     </ol>
     <h3>5. CRITÉRIO DE PREMIAÇÃO</h3>
     <ul>
-    <li>O primeiro colocado do Bolão receberá 65% do total acumulado</li>
-    <li>O segundo colocado do Bolão receberá 20% do total acumulado</li>
-    <li>O terceiro colocado do Bolão receberá 10% do total acumulado</li>
-    <li>O site receberá 5% do total acumulado</li>
-        <li>O total acumulado é igual ao total arrecadado bruto descontando as <a href="https://pagseguro.uol.com.br/para-seu-negocio/online/">taxas</a> cobradas pelo meio de pagamento (O PagSeguro cobra 3,99% + R$0,40 por transação)</li>
+    <li>O primeiro colocado do Bolão receberá <%=ConfigurationHelper.PrizeFirstPercentage.ToPercent()%> do total acumulado</li>
+    <li>O segundo colocado do Bolão receberá <%=ConfigurationHelper.PrizeSecondPercentage.ToPercent()%> do total acumulado</li>
+    <li>O terceiro colocado do Bolão receberá <%=ConfigurationHelper.PrizeThirdPercentage.ToPercent()%> do total acumulado</li>
+    <li>O site receberá <%=(1.0M - ConfigurationHelper.PrizeFirstPercentage - ConfigurationHelper.PrizeSecondPercentage - ConfigurationHelper.PrizeThirdPercentage).ToPercent()%> do total acumulado</li>
+        <li>O total acumulado é igual ao total arrecadado bruto descontando as <a href="https://pagseguro.uol.com.br/para-seu-negocio/online/">taxas</a> cobradas pelo meio de pagamento (O PagSeguro cobra <%=ConfigurationHelper.PagSeguroPercentageFee.ToPercent() %> + <%=ConfigurationHelper.PagSeguroFixedValueFee.ToMoney() %> por transação)</li>
     </ul>
     </div>
     </div>

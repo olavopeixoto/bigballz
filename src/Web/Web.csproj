@@ -134,6 +134,7 @@
     <Compile Include="Infrastructure\StructuremapDependencyResolver.cs" />
     <Compile Include="Models\BonusBetStatistic.cs" />
     <Compile Include="Models\MatchBetStatistic.cs" />
+    <Compile Include="Models\Prizes.cs" />
     <Compile Include="Models\TransactionStatus.cs" />
     <Compile Include="Models\UserMatchPoints.cs" />
     <Compile Include="Services\BetExpirationWarningTask.cs" />
@@ -207,7 +208,6 @@
     <Compile Include="Services\L2S\TeamService.cs" />
     <Compile Include="Models\UserPoints.cs" />
     <Compile Include="Services\L2S\UserService.cs" />
-    <Compile Include="Models\MoneyDistribution.cs" />
     <Compile Include="ViewModels\BetViewModel.cs" />
     <Compile Include="ViewModels\BonusViewModel.cs" />
     <Compile Include="ViewModels\MatchBetsViewModel.cs" />
@@ -409,7 +409,6 @@
     <Content Include="Views\Match\Create.aspx" />
     <Content Include="Views\Match\Edit.aspx" />
     <Content Include="Views\Match\Index.aspx" />
-    <Content Include="Views\Money\Details.aspx" />
     <Content Include="Views\Money\Index.aspx" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.ascx" />
     <Content Include="Views\Shared\InfoMenu.ascx" />
@@ -494,7 +493,7 @@
   <Target Name="BeforeBuild">
   </Target> -->
   <Target Name="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
-    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)" />
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
   </Target>
   <Target Name="AfterBuild">
     <RemoveDir Directories="$(BaseIntermediateOutputPath)" />

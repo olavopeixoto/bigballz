@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using BigBallz.Helpers;
@@ -63,10 +62,8 @@ namespace BigBallz.Controllers
 
                 ViewData["NextMatches"] = _matchService.GetNextMatches();
                 ViewData["LastMatches"] = _matchService.GetLastPlayedMatches();
-
-                var totalprize = _bigBallzService.GetTotalPrize();
-                var prizes = new List<decimal> {totalprize*(decimal) 0.65, totalprize*(decimal) 0.20, totalprize*(decimal) 0.10};
-                ViewData["Prizes"] = prizes;
+                
+                ViewData["Prizes"] = _bigBallzService.GetPrizes();
 
                 ViewData["Standings"] = _bigBallzService.GetStandings();
                 ViewData["DayStandings"] = _bigBallzService.GetLastRoundStandings();

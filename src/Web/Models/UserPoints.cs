@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BigBallz.Models
+﻿namespace BigBallz.Models
 {
     public class UserPoints
     {

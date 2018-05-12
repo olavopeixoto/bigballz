@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.Routing;
-using BigBallz.Core.Extension.Web.Mvc;
 using BigBallz.Core.Log;
 using BigBallz.Helpers;
 using BigBallz.Models;
@@ -10,7 +8,7 @@ using BigBallz.Services;
 
 namespace BigBallz.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = BBRoles.Admin)]
     public class UserController : BaseController
     {
         private readonly IUserService _userService;

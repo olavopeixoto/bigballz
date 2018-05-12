@@ -15,12 +15,27 @@ namespace BigBallz.Helpers
 
         public static decimal PagSeguroPercentageFee
         {
-            get { return 0.0399M; }
+            get { return Convert.ToDecimal(ConfigurationManager.AppSettings["PagSeguroPercentageFee"]); }
         }
 
         public static decimal PagSeguroFixedValueFee
         {
-            get { return 0.4M; }
+            get { return Convert.ToDecimal(ConfigurationManager.AppSettings["PagSeguroFixedValueFee"]); }
+        }
+
+        public static decimal PrizeFirstPercentage
+        {
+            get { return Convert.ToDecimal(ConfigurationManager.AppSettings["PrizeFirstPercentage"]); }
+        }
+
+        public static decimal PrizeSecondPercentage
+        {
+            get { return Convert.ToDecimal(ConfigurationManager.AppSettings["PrizeSecondPercentage"]); }
+        }
+
+        public static decimal PrizeThirdPercentage
+        {
+            get { return Convert.ToDecimal(ConfigurationManager.AppSettings["PrizeThirdPercentage"]); }
         }
 
         public static decimal Revenue(bool pagSeguro)
@@ -30,7 +45,7 @@ namespace BigBallz.Helpers
 
         public static Version GetVersion(this HttpContext context)
         {
-            Check.Argument.IsNotNull(context, "context");
+            Check.Argument.IsNotNull(context, nameof(context));
 
             return Assembly.GetExecutingAssembly().GetName().Version;
         }

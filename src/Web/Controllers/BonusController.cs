@@ -8,7 +8,7 @@ using BigBallz.ViewModels;
 
 namespace BigBallz.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = BBRoles.Admin)]
     public class BonusController : BaseController
     {
         private readonly ITeamService _teamService;

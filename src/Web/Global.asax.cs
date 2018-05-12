@@ -6,6 +6,7 @@ using System.Web.Security;
 using BigBallz.Core.Bootstrapper;
 using BigBallz.Core.Web.MVC.Filters;
 using BigBallz.Infrastructure;
+using BigBallz.Models;
 using BigBallz.Services;
 using StackExchange.Profiling;
 using StackExchange.Profiling.Mvc;
@@ -160,7 +161,7 @@ namespace BigBallz
 
         private bool AllowProfiler(HttpRequest request)
         {
-            return request.Cookies["x-profiler"] != null && request.RequestContext.HttpContext.User.IsInRole("admin");
+            return request.Cookies["x-profiler"] != null && request.RequestContext.HttpContext.User.IsInRole(BBRoles.Admin);
         }
 
         private void InitializeMiniProfiler()

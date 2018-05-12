@@ -2,7 +2,7 @@
 {
     public static class BBRoles
     {
-        public static string Admin => "admin";
-        public static string Player => "player";
+        public const string Admin = "admin";
+        public const string Player = "player";
     }
 }

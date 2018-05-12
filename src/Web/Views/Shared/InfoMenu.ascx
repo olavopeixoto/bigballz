@@ -3,8 +3,9 @@
 <%@ Import Namespace="System.Globalization" %>
 <%@ Import Namespace="BigBallz.Core" %>
 <%@ Import Namespace="BigBallz.Helpers" %>
+<%@ Import Namespace="BigBallz.Models" %>
 
-<%var standings = ViewData["Standings"] as IList<BigBallz.Models.UserPoints>;%>
+<%var standings = ViewData["Standings"] as IList<UserPoints>;%>
 
 <div id="profile" class="section">
   <div class="user_icon">
@@ -22,7 +23,7 @@
           {%>
             <span class="admin"><%=Html.ActionLink("Pagamento não registrado. Clique aqui.", "payment", "auth")%></span>
         <%}%>
-        <% if (Context.User.IsInRole("admin")) { 
+        <% if (Context.User.IsInRole(BBRoles.Admin)) { 
                 if (Request.Cookies["x-profiler"] == null) { %>
                     <span class="admin"><%= Html.ActionLink("Enable Profiler", "EnableProfiler", "auth") %></span>
             <% } else { %>
@@ -36,23 +37,23 @@
 <%var pendingBets = ViewData["PendingBets"] as IList<BigBallz.Models.Match>;
 if (pendingBets!=null && pendingBets.Any())
 {
-    var pendingBetsCount = pendingBets.Count();
+    var pendingBetsCount = pendingBets.Count;
     var plural = pendingBetsCount > 1 ? "s" : string.Empty;
     %>
     <p><%=Html.ActionLink(string.Format("Você tem {0} aposta{1} pendente{1} para as próximas 24h", pendingBetsCount, plural), "index", "bet")%></p>
 <%}%>
 
-<%var prizes = ViewData["prizes"] as IList<decimal>;%>
+<%var prizes = ViewData["prizes"] as Prizes;%>
 <%if (prizes!=null) {%>
 <%Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");%>
 <hr />
 <h2>Prêmio Acumulado</h2>
 <ol>
-<li><%=prizes[0].ToString("C")%></li>
-<li><%=prizes[1].ToString("C")%></li>
-<li><%=prizes[2].ToString("C")%></li>
+<li><%=prizes.First.ToString("C")%></li>
+<li><%=prizes.Second.ToString("C")%></li>
+<li><%=prizes.Third.ToString("C")%></li>
 </ol>
-<%=Html.ActionLink("ver detalhes", "details", "money") %>
+<%=Html.ActionLink("ver detalhes", "index", "money") %>
 <%}%>
 
 
@@ -90,8 +91,8 @@ foreach (var userPoints in topfiveStandings){%>
     </table>
 <%} %>
 
-<%var dayStandings = ViewData["DayStandings"] as IList<BigBallz.Models.UserPoints>;%>
-<%if (dayStandings != null && dayStandings.Any(s => s.TotalDayPoints > 0))
+<%var dayStandings = ViewData["DayStandings"] as IList<UserPoints>;%>
+<%if (standings != null && dayStandings != null && dayStandings.Any(s => s.TotalDayPoints > 0))
   {%>
 <hr />
 <h2>Top 5 da Rodada</h2>
@@ -133,7 +134,7 @@ foreach (var userPoints in topfiveStandings){%>
 <hr />
 <h2>Últimas Partidas</h2>
 
-<%var i = 0; var lineIndex = 0;%>
+<%var lineIndex = 0;%>
     <table class="match-table">
        <tbody>
     <%foreach (var match in lastMatches)
@@ -142,7 +143,7 @@ foreach (var userPoints in topfiveStandings){%>
         <td class="c"><%= Html.TeamFlag(match.Team1Id, match.Team1.Name)%>&nbsp;<%= Html.Encode(match.Score1)%>&nbsp;X&nbsp;<%= Html.Encode(match.Score2)%>&nbsp;<%= Html.TeamFlag(match.Team2Id, match.Team2.Name)%>&nbsp;<%: Html.ActionLink("ver apostas", "matchbets", "bet", new { id = match.MatchId }, null)%>
          </td>
     </tr>
-    <%i++; lineIndex++; } %>
+    <%lineIndex++; } %>
     </tbody>
     </table>
 <%} %>
@@ -152,7 +153,7 @@ foreach (var userPoints in topfiveStandings){%>
 <%if (matches!=null && matches.Any()) {%>
 <hr />
 <h2>Próximas Partidas</h2>
-<%var i = 0; var lineIndex = 0;%>
+<%var lineIndex = 0;%>
     <table class="match-table">
        <tbody>
     <%foreach (var match in matches){%>
@@ -167,7 +168,7 @@ foreach (var userPoints in topfiveStandings){%>
         <td class="c mResult"> X </td>
         <td class="c"><%= Html.TeamFlag(match.Team2Id, match.Team2.Name)%>&nbsp;<%= Html.Encode(match.Team2Id)%></td>        
     </tr>
-    <%i++; lineIndex++; } %>
+    <%lineIndex++; } %>
     </tbody>
     </table>
 <%} %>

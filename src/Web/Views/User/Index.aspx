@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<BigBallz.Models.User>>" %>
+<%@ Import Namespace="BigBallz.Models" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server"></asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -42,7 +43,7 @@
                     <%: Html.CheckBox("autorizado", item.Authorized, new { disabled = "disabled" }) %>
                 </td>
                 <td class="c">
-                    <%: Html.CheckBox("administrador", item.UserRoles.Any(x => x.Role.Name.ToLower() == "admin"), new { disabled = "disabled" }) %>
+                    <%: Html.CheckBox("administrador", item.UserRoles.Any(x => x.Role.Name.ToLower() == BBRoles.Admin), new { disabled = "disabled" }) %>
                 </td>
                 <td class="c">
                     <%: Html.CheckBox("pagseguro", item.PagSeguro, new { disabled = "disabled" }) %>

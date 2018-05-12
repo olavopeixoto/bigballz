@@ -176,7 +176,8 @@ namespace BigBallz.Services.L2S
             .ThenByDescending(x => x.Key.TotalBonusPoints)
             .Select((x, i) =>
             {
-                x.ForEach(u => u.Position = position);
+                var position1 = position;
+                x.ForEach(u => u.Position = position1);
                 position += x.Count();
                 return x;
             })
@@ -200,7 +201,8 @@ namespace BigBallz.Services.L2S
             .ThenByDescending(x => x.Key.TotalBonusPoints)
             .Select((x, i) =>
             {
-                x.ForEach(u => u.Position = position);
+                var position1 = position;
+                x.ForEach(u => u.Position = position1);
                 position += x.Count();
                 return x;
             })
@@ -227,7 +229,8 @@ namespace BigBallz.Services.L2S
                 .OrderByDescending(x => x.Key)
                 .Select((x, i) =>
                 {
-                    x.ForEach(u => u.Position = position);
+                    var position1 = position;
+                    x.ForEach(u => u.Position = position1);
                     position += x.Count();
                     return x;
                 })
@@ -277,18 +280,23 @@ namespace BigBallz.Services.L2S
             return _db.Matches.OrderBy(x => x.StartTime).FirstOrDefault();
         }
 
-        public decimal GetTotalPrize()
+        public Prizes GetPrizes()
         {
-            try
+            var totalPrize = _db.Users
+                .Where(x => x.Authorized && x.UserRoles.Any(y => y.Role.Name == BBRoles.Player))
+                .Sum(x => x.PagSeguro
+                    ? ConfigurationHelper.Price -
+                      Math.Round(
+                          ConfigurationHelper.Price * ConfigurationHelper.PagSeguroPercentageFee +
+                          ConfigurationHelper.PagSeguroFixedValueFee, 2)
+                    : ConfigurationHelper.Price);
+
+            return new Prizes
             {
-                return _db.Users
-                    .Where(x => x.Authorized && x.UserRoles.Any(y => y.Role.Name == BBRoles.Player))
-                    .Sum(x => x.PagSeguro ? ConfigurationHelper.Price - Math.Round(ConfigurationHelper.Price * (decimal)0.0499 + (decimal)0.4, 2) : ConfigurationHelper.Price);
-            }
-            catch (Exception)
-            {
-                return (decimal)0.0;
-            }
+                First = totalPrize * ConfigurationHelper.PrizeFirstPercentage,
+                Second = totalPrize * ConfigurationHelper.PrizeSecondPercentage,
+                Third = totalPrize * ConfigurationHelper.PrizeThirdPercentage,
+            };
         }
 
         private int GetTotalUserExactScores(User user, DateTime? untilDate = null)
@@ -317,19 +325,6 @@ namespace BigBallz.Services.L2S
             return minDate;
         }
 
-        public IEnumerable<MoneyDistribution> GetMoneyDistribution()
-        {
-            return _db.Users
-                .Where(x => x.Authorized && x.UserRoles.Any(y => y.Role.Name == BBRoles.Player))
-                .GroupBy(x => new { Holder = x.PagSeguro && x.AuthorizedBy != "PagSeguro" ? x.AuthorizedBy + " (PagSeguro)" : x.AuthorizedBy, x.PagSeguro })
-                .Select(x => new MoneyDistribution { 
-                            Holder = x.Key.Holder,
-                            Amount = x.Sum(key => key.PagSeguro ? ConfigurationHelper.Price - Math.Round(ConfigurationHelper.Price * ConfigurationHelper.PagSeguroPercentageFee + ConfigurationHelper.PagSeguroFixedValueFee, 2) : ConfigurationHelper.Price),
-                            TotalPlayers = x.Count()
-                            })
-                .OrderBy(x => x.Holder);
-        }
-
         public MatchBetStatistic GetMatchBetStatistics(int matchId)
         {
             var bets = _db.Bets.Where(x => x.Match == matchId).ToList();
@@ -348,8 +343,8 @@ namespace BigBallz.Services.L2S
             return new MatchBetStatistic
                        {
                            Match = bets.First().Match1,
-                           AverageScore1 = bets.Average(x => x.Score1).Value,
-                           AverageScore2 = bets.Average(x => x.Score2).Value,
+                           AverageScore1 = bets.Average(x => x.Score1 ?? 0),
+                           AverageScore2 = bets.Average(x => x.Score2 ?? 0),
                            Score1MostBet = mostBetScore.Score1.Value,
                            Score2MostBet = mostBetScore.Score2.Value,
                            Team1Perc = bets.Count(x => x.Score1 > x.Score2) / totalBets,
@@ -360,13 +355,18 @@ namespace BigBallz.Services.L2S
 
         public BonusBetStatistic GetBonusBetStatistics(int bonusId)
         {
-            var bets = _db.BonusBets.Where(x => x.Bonus == bonusId).ToList();
+            var bets = _db.BonusBets
+                            .Where(x => x.Bonus == bonusId)
+                            .ToList();
 
             double totalBets = bets.Count;
 
-            var mostBetTeam =
-                bets.GroupBy(x => new { x.Team1 }).Select(x => new { x.Key, qtd = x.Count() }).OrderByDescending(
-                    x => x.qtd).Select(x => x.Key).First();
+            var mostBetTeam = bets
+                .GroupBy(x => new { x.Team1 })
+                .Select(x => new { x.Key, qtd = x.Count() })
+                .OrderByDescending(x => x.qtd)
+                .Select(x => x.Key)
+                .First();
             
             return new BonusBetStatistic
             {
