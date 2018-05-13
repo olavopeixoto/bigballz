@@ -163,9 +163,16 @@ namespace BigBallz.Services.L2S
                 Body = message,
             };
 
-            foreach (var address in addresses)
+            if (addresses.Count == 1)
             {
-                mailMessage.Bcc.Add(address);
+                mailMessage.To.Add(addresses.First());
+            }
+            else
+            {
+                foreach (var address in addresses)
+                {
+                    mailMessage.Bcc.Add(address);
+                }
             }
 
             Task.Factory.StartNew(() => JobHost.DoWork(() =>
