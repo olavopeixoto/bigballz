@@ -383,7 +383,6 @@
     <Content Include="Public\js\jquery.validate.min.js" />
     <Content Include="Public\js\Site.Master.js" />
     <Content Include="Public\js\Team.js" />
-    <Content Include="Public\js\whatsapp-button.js" />
     <Content Include="Public\Web.config">
       <SubType>Designer</SubType>
     </Content>
