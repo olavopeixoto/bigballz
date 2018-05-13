@@ -10,7 +10,6 @@ namespace BigBallz.Services
         void SendEndBetAlert(User user, IList<Bet> bets);
         void SendEndBonusAlert(User user, IList<BonusBet> bonusBets);
         void SendNewCommentPosted(User[] toArray, string userName, string comment);
-        void SendMail(string name, string address, string subject, string message);
         void SendBetWarning(User player, IList<Match> matches);
     }
 }
