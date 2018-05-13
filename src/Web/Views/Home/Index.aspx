@@ -1,9 +1,9 @@
 ﻿<%@ Page Language="C#" MasterPageFile="Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
+<%@ Import Namespace="BigBallz.Core.Extension.Web" %>
 
 <asp:Content ID="indexTitle" ContentPlaceHolderID="TitleContent" runat="server">, o Bolão da Copa do Mundo</asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="Scripts" runat="server">
-<%--    <script type="text/javascript">	if(typeof wabtn4fg==="undefined")	{wabtn4fg=1;h=document.head||document.getElementsByTagName("head")[0],s=document.createElement("script");s.type="text/javascript";s.src="<%=Url.ScriptUrl("whatsapp-button.js") %>";h.appendChild(s)}</script>--%>
 </asp:Content>
 
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
@@ -27,7 +27,7 @@
                             <li><div class="fb-like" data-href="<%=Url.SiteRoot() %>" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></li>
                             <% if (Request.Browser.IsMobileDevice) { %>
                             <li>
-                                <a href="whatsapp://send?text=Estou%20participando%20do%20BigBallz%2C%20o%20bol%C3%A3o%20da%20Copa%20do%20Mundo.%20Venha%20participar%20tamb%C3%A9m%3A%20https%3A%2F%2Flocalhost%3A44300%2F" data-text="Estou participando do BigBallz, o bolão da Copa do Mundo. Venha participar também:" data-href="" class="wa_btn wa_btn_s" target="_top">Compartilhar</a>
+                                <a href="whatsapp://send?text=Estou%20participando%20do%20BigBallz%2C%20o%20bol%C3%A3o%20da%20Copa%20do%20Mundo.%20Venha%20participar%20tamb%C3%A9m%3A%20<%=Url.SiteRoot().UrlEncode()%>" class="wa_btn wa_btn_s" target="_top">Compartilhar</a>
                             </li>
                             <%}%>
                             <li><a class="twitter-share-button"
@@ -205,7 +205,7 @@
                             })();
                         </script>
                         <% if (Request.Browser.IsMobileDevice) { %>
-                        <a href="whatsapp://send" data-text="Estou participando do BigBallz, o bolão da Copa do Mundo. Venha participar também:" data-href="" class="wa_btn wa_btn_s" style="display:none">Compartilhar</a>
+                            <a href="whatsapp://send?text=Estou%20participando%20do%20BigBallz%2C%20o%20bol%C3%A3o%20da%20Copa%20do%20Mundo.%20Venha%20participar%20tamb%C3%A9m%3A%20<%=Url.SiteRoot().UrlEncode()%>" class="wa_btn wa_btn_s" target="_top">Compartilhar</a>
                         <%} %>
                     </p>
                 </div>
