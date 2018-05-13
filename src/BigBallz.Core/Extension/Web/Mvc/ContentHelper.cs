@@ -346,29 +346,5 @@ namespace BigBallz.Core.Extension.Web.Mvc
             var scriptManager = new jQueryScriptHtmlHelper(helper);
             scriptManager.OnPageUnload(script);
         }
-
-        public static string GoogleAnalytics(this HtmlHelper helper)
-        {
-            var googleAnalyticsId = ConfigurationManager.AppSettings["GoogleAnalyticsId"];
-            if (string.IsNullOrEmpty(googleAnalyticsId)) return string.Empty;
-            return GoogleAnalytics(helper, googleAnalyticsId);
-        }
-
-        public static string GoogleAnalytics(this HtmlHelper helper, string googleAnalyticsId)
-        {
-            var builder = new TagBuilder("script");
-            builder.Attributes["type"] = "text/javascript";            
-            var sb = new StringBuilder("var _gaq = _gaq || [];");
-            sb.AppendLine(string.Format("_gaq.push(['_setAccount', '{0}']);", googleAnalyticsId));
-            sb.AppendLine("_gaq.push(['_trackPageview']);");
-            sb.AppendLine("(function() {");
-            sb.AppendLine("var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;");
-            sb.AppendLine("ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';");
-            sb.AppendLine("(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);");
-            sb.AppendLine("})();");
-            
-            builder.SetInnerText(sb.ToString());
-            return builder.ToString(TagRenderMode.Normal);
-        }
     }
 }
