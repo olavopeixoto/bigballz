@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using System.Web.Mvc;
 
 namespace BigBallz.Core.Extension.Web.Mvc
@@ -6,8 +7,8 @@ namespace BigBallz.Core.Extension.Web.Mvc
     public static class UrlHelperExtensions
     {
         public static string SiteRoot(this UrlHelper url)
-        {
-            var root = HttpContext.Current.Request.ApplicationPath;
+        {   
+            var root = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + HttpContext.Current.Request.ApplicationPath;
             return root.EndsWith("/") ? root.Substring(0, root.Length - 1) : root;
         }
 
