@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<BigBallz.Models.User>>" %>
 <%@ Import Namespace="BigBallz.Models" %>
+<%@ Import Namespace="BigBallz.Core" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server"></asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -30,7 +31,7 @@
         <tbody>
             <%
             var lineIndex = 0;
-            foreach (var item in Model)
+            foreach (var item in Model.OrderByDescending(x => x.Authorized).ThenBy(x => x.UserName))
             { %>
             <tr class="<%= lineIndex%2==0 ? "ui-state-default": "odd"%>">
                 <td class="l linebreak">
@@ -59,7 +60,7 @@
     </table>
 
     <div class="editor-label">
-    <%: Html.Label("Total de Jogadores Autorizados: " + ViewData["TotalUsuarios"])%> - <%=Html.ActionLink("Enviar notificação para os não autorizados", "sendnotification", "user") %>
+    <%: Html.Label("Total de Jogadores Autorizados: " + ViewData["TotalUsuarios"] + " / " + Model.Count() + " (" + (Convert.ToDecimal(ViewData["TotalUsuarios"])/Convert.ToDecimal(Model.Count())).ToPercent() + ")")%> - <%=Html.ActionLink("Enviar notificação para os não autorizados", "sendnotification", "user") %>
     </div>
 
 </asp:Content>

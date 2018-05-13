@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.IO;
 using System.Text;
 using System.Web;
@@ -15,19 +16,19 @@ namespace BigBallz.Core.Extension.Web.Mvc
         private static readonly string DefaultCssPathFormat = ConfigurationManager.AppSettings["DefaultCssPathFormat"] ?? "~/Content/themes/{0}/css/{1}";
         private static readonly string DefaultJsPathFormat = ConfigurationManager.AppSettings["DefaultJsPathFormat"] ?? "~/Content/js/{0}";
 
-        private static string GetFileVersion(this HtmlHelper htmlHelper, string virtualFilePath)
+        public static string GetFileVersion(this HtmlHelper htmlHelper, string virtualFilePath)
         {
             var context = htmlHelper.ViewContext.HttpContext;
             return GetFileVersion(context, virtualFilePath);
         }
 
-        private static string GetFileVersion(this UrlHelper urlHelper, string virtualFilePath)
+        public static string GetFileVersion(this UrlHelper urlHelper, string virtualFilePath)
         {
             var context = urlHelper.RequestContext.HttpContext;
             return GetFileVersion(context, virtualFilePath);
         }
 
-        private static string GetFileVersion(this HttpContextBase context, string virtualFilePath)
+        public static string GetFileVersion(this HttpContextBase context, string virtualFilePath)
         {
             var cacheKey = "fileVersion##" + virtualFilePath;
             var result = context.Cache[cacheKey] as string;
@@ -41,6 +42,13 @@ namespace BigBallz.Core.Extension.Web.Mvc
                                   Cache.NoAbsoluteExpiration, Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
             }
             return result;
+        }
+
+        public static string VersionedContent(this UrlHelper urlHelper, string contentPath)
+        {
+            var version = urlHelper.GetFileVersion(contentPath);
+            var url = new Uri(HttpContext.Current.Request.Url, $"{urlHelper.Content(contentPath)}?v={version}");
+            return url.AbsoluteUri;
         }
 
         /// <summary>
