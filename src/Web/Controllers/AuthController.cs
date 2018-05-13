@@ -205,7 +205,7 @@ namespace BigBallz.Controllers
                 return View("ConfirmacaoPagamentoPago");
             }
 
-            return View();
+            return View((PagSeguroTransactionStatus)transaction.TransactionStatus);
         }
 
         [HttpGet]

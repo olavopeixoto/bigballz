@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<BigBallz.Models.User>" %>
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl" %>
 <%@ Import Namespace="System.Globalization" %>
 <form method="post" target="pagseguro" action="<%=ConfigurationManager.AppSettings["pagseguro-paymentredirecturl"] %>">  
           

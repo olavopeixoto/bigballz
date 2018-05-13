@@ -164,6 +164,13 @@ namespace BigBallz.Core
             return lowered.Substring(0, 1).ToUpperInvariant() + lowered.Substring(1, lowered.Length - 1);
         }
 
+        public static string FromCamelCase(this string value)
+        {
+            if (string.IsNullOrEmpty(value)) return value;
+
+            return Regex.Replace(value, "(\\B[A-Z])", " $1");
+        }
+
         public static string PascalCaseToWord(this string pascalText)
         {
             if (string.IsNullOrEmpty(pascalText)) return pascalText;

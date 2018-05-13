@@ -21,7 +21,7 @@
         <span class="admin">(<%:currentUserStats.NullSafe(x => x.TotalPoints)%> pts - <%:currentUserStats.NullSafe(x => x.Position)%>º lugar)</span>
         <%} if (Page.User.Identity.IsAuthenticated && !Html.IsAuthorized())
           {%>
-            <span class="admin"><%=Html.ActionLink("Pagamento não registrado. Clique aqui.", "payment", "auth")%></span>
+            <%Html.RenderPartial("PagSeguro"); %>
         <%}%>
         <% if (Context.User.IsInRole(BBRoles.Admin)) { 
                 if (Request.Cookies["x-profiler"] == null) { %>
