@@ -1,8 +1,6 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
-
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=10;requiresActiveX=true">
     <meta charset="utf-8">
@@ -162,7 +160,6 @@
     <script type="text/javascript">
         FreshWidget.init("", { "queryString": "&widgetType=popup", "widgetType": "popup", "buttonType": "text", "buttonText": "Precisa de ajuda? Clique Aqui", "buttonColor": "black", "buttonBg": "#FFFFFF", "alignment": "<%=Request.Browser.IsMobileDevice ? "3" : "4"%>", "offset": "<%=Request.Browser.IsMobileDevice ? "10px" : "260px"%>", "formHeight": "500px", "url": "https://bigballz.freshdesk.com" });
     </script>
-    <asp:ContentPlaceHolder ID="Scripts" runat="server" />
     <script>
         window.fcWidget.init({
             token: "3f1a532d-af81-4b52-9cce-9e856fa1f126",
@@ -183,6 +180,6 @@
         window.fcWidget.user.setEmail("<%=ViewData["UserEmail"]%>");
     </script>
 <%}%>
+    <asp:ContentPlaceHolder ID="Scripts" runat="server" />
 </body>
-
 </html>
