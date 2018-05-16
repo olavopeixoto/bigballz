@@ -19,7 +19,7 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Custom Google Web Font -->
-    <link href="public/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <%=Html.Css("~/public/font-awesome/css/font-awesome.min.css") %>
     <link href='//fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
 
     <!-- Add custom CSS here -->
@@ -147,11 +147,15 @@
             <div class="row">
                 <div class="col-lg-12">
                     <p>
-                        <address>
+                    <address>
                       <strong>Dúvidas e Sugestões</strong><br>
                       <a href="mailto:suporte@bigballz.com.br">suporte@bigballz.com.br</a>
                     </address>
                     </p>
+                    <ul class="list-inline intro-social-buttons">
+                        <li><a target="_blank" href="https://www.facebook.com/bigballz2018/"><img alt="Facebook logo" style="height: 20px" src="<%=Url.VersionedContent("~/public/images/flogo_rgb_hex-brc-site-250.png") %>"></a></li>
+                        <li><a target="_blank" href="https://twitter.com/bigballz2018"><i style="font-size:24px" class="fa">&#xf099;</i></a></li>
+                    </ul>
                     <p class="copyright text-muted small">Copyright &copy; BigBallz <%=DateTime.Today.Year %>. Todos os direitos reservados</p>
                 </div>
             </div>

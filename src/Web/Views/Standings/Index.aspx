@@ -1,4 +1,6 @@
 <%@ Page Title="" Language="C#" Inherits="System.Web.Mvc.ViewPage<System.Collections.Generic.IList<BigBallz.Models.UserPoints>>" MasterPageFile="~/Views/Shared/Site.Master" %>
+<%@ Import Namespace="BigBallz.Core" %>
+<%@ Import Namespace="BigBallz.Core.Extension.Web" %>
 <asp:Content runat="server" ID="Content" ContentPlaceHolderID="TitleContent"></asp:Content>
 <asp:Content runat="server" ID="Content1" ContentPlaceHolderID="MainContent">
 <br />
@@ -18,8 +20,7 @@
 </thead>
 <tbody>
 <%var lineIndex = 0; foreach (var userPoint in Model) {%>
-  <%--<tr class="<%= lineIndex%2==0 ? "ui-state-default": "odd"%>">--%>
-  <tr class="<%= lineIndex == 0 || lineIndex == 1 || lineIndex == 2 ? "ui-state-default": "odd"%>">
+  <tr class="<%= userPoint.Position < 4 ? "ui-state-default": "odd"%>">
   <td class="c" style="width:50px;height:50px;"><%=Html.GetUserPhoto(userPoint.User)%></td>
   <% var classe = "";
        if (userPoint.Position < userPoint.LastPosition) classe = "up";
@@ -30,7 +31,7 @@
       <%} else if (userPoint.Position > userPoint.LastPosition) {%>
       <i class="fa fa-long-arrow-down"></i>
       <%} else {%>
-      <i class="fa fa-minus"></i>
+      <i class="fa fa-minus" style="visibility: hidden"></i>
       <%} %>
       <% var gain = Math.Abs(userPoint.LastPosition - userPoint.Position); %>
       <small><%: gain > 0 ? gain.ToString() : "" %></small>
@@ -45,6 +46,21 @@
 <%lineIndex++; } %>
 </tbody>
 </table>
-<div class="fb-comments" data-href="<%=Url.Action("index", "standings",null,FormsAuthentication.RequireSSL ? "https" : "http") %>" data-width="675" data-numposts="5" data-colorscheme="light"></div>
+<% var shareUrl = Url.Action("standings", "home", new {user = ViewData["UserId"], date = DateTime.UtcNow.BrazilTimeZone().ToString("yyyy-MM-ddTHH-mm")}, Request.IsSecureConnection ? "https" : "http"); %>
+<div class="fb-share-button" data-href="<%=shareUrl %>" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<%=shareUrl.UrlEncode()%>&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+<script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+<a class="twitter-share-button"
+   href="https://twitter.com/share"
+   data-text="Se liga na classificação do BigBallz deste momento!"
+   data-url="<%=shareUrl %>"
+   data-lang="pt-BR"
+   data-hashtags="bigballz2018"
+   data-via="bigballz2018">
+    Tweet
+</a>
+<div class="wabtn">
+    <a href="whatsapp://send?text=<%=("Se liga na classificação do BigBallz deste momento! " + shareUrl).UrlEncode()%>" class="wa_btn wa_btn_s" target="_top">Compartilhar</a>
+</div>
+<div class="fb-comments" data-href="<%=Url.Action("index", "standings",null, Request.IsSecureConnection ? "https" : "http") %>" data-width="675" data-numposts="5" data-colorscheme="light"></div>
 </asp:Content>
 <asp:Content runat="server" ID="Content2" ContentPlaceHolderID="Scripts"></asp:Content>

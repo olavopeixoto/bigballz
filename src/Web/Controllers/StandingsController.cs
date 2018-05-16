@@ -15,6 +15,7 @@ namespace BigBallz.Controllers
         public ActionResult Index()
         {
             var standings = _bigBallzService.GetStandings();
+
             return View(standings);
         }
     }

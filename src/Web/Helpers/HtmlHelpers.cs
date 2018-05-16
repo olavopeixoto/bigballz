@@ -56,7 +56,7 @@ namespace System.Web.Mvc {
                 photoUrl = gravatar.GetGravatarUrl();
             }
 
-            return "<img class=\"profile-pic\" style=\"margin:5px 0 0;padding:0;\" width=\"50\" height=\"50\" src=" + photoUrl.Replace("https:", "").Replace("http:", "") +
+            return "<img class=\"profile-pic img-responsive img-circle\" style=\"margin:5px 0 0;padding:0;\" width=\"50\" height=\"50\" src=" + photoUrl.Replace("https:", "").Replace("http:", "") +
                    " alt=\"\" />";
         }
 

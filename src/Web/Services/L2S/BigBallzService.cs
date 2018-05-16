@@ -149,19 +149,22 @@ namespace BigBallz.Services.L2S
             return _db.Matches.Where(x => x.Bets.All(y => y.User1.UserName != userName) && x.StartTime <= DateTime.Now.BrazilTimeZone().AddHours(24)).ToList();
         }
 
-        public IList<UserPoints> GetStandings()
+        public IList<UserPoints> GetStandings(DateTime? lastRoundDate = null)
         {
             var position = 1;
             var users = _db.Users.Where(x => x.Authorized).ToList();
 
-            var lastRoundDate =
-                _db.Matches.Where(
-                    m =>
-                        m.Score1.HasValue &&
-                        m.StartTime < _db.Matches.Where(lm => lm.Score1.HasValue).Max(lm => lm.StartTime))
-                    .OrderByDescending(m => m.StartTime)
-                    .Select(m => (DateTime?)m.StartTime)
-                    .FirstOrDefault();
+            if (!lastRoundDate.HasValue)
+            {
+                lastRoundDate =
+                    _db.Matches.Where(
+                            m =>
+                                m.Score1.HasValue &&
+                                m.StartTime < _db.Matches.Where(lm => lm.Score1.HasValue).Max(lm => lm.StartTime))
+                        .OrderByDescending(m => m.StartTime)
+                        .Select(m => (DateTime?) m.StartTime)
+                        .FirstOrDefault();
+            }
 
             var lastStandings = !lastRoundDate.HasValue ? new List<UserPoints>() : users.Select(user => new UserPoints
             {

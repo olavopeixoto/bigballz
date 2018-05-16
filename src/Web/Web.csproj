@@ -126,6 +126,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\MoneyController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
+    <Compile Include="Filters\DateTimeModelBinder.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\JobHost.cs" />
     <Compile Include="Infrastructure\DataContextProvider.cs" />
@@ -335,6 +336,7 @@
     <Content Include="Public\images\flags\tun.png" />
     <Content Include="Public\images\flags\uru.png" />
     <Content Include="Public\images\flags\usa.png" />
+    <Content Include="Public\images\flogo_rgb_hex-brc-site-250.png" />
     <Content Include="Public\images\grana.png" />
     <Content Include="Public\images\intro-bg.jpg" />
     <Content Include="Public\images\ranking.png" />
@@ -413,6 +415,7 @@
     <Content Include="Views\Shared\InfoMenu.ascx" />
     <Content Include="Views\Shared\Menu.ascx" />
     <Content Include="Views\Shared\PagSeguro.ascx" />
+    <Content Include="Views\Home\Standings.aspx" />
     <Content Include="Views\Standings\Index.aspx" />
     <Content Include="Views\Team\_Index.ascx" />
     <Content Include="Views\Team\Create.aspx" />

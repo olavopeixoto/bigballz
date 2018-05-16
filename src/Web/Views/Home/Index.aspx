@@ -202,7 +202,9 @@
                                 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
                             })();
                         </script>
+                        <div class="wabtn">
                         <a href="whatsapp://send?text=<%=("Estou participando do BigBallz, o bolão da Copa do Mundo. Venha participar também: " + Url.SiteRoot()).UrlEncode()%>" class="wa_btn wa_btn_s" target="_top">Compartilhar</a>
+                        </div>
                     </p>
                 </div>
                 <div class="col-lg-5 col-sm-pull-6  col-sm-6">

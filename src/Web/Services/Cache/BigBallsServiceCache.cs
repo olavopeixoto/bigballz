@@ -31,16 +31,17 @@ namespace BigBallz.Services.Cache
             return results;
         }
 
-        public IList<UserPoints> GetStandings()
+        public IList<UserPoints> GetStandings(DateTime? lastRoundDate)
         {
-            var key = "BB-GetStandings";
+            var dateString = lastRoundDate.HasValue ? lastRoundDate.Value.ToString("yyyy-M-dd-HH-mm") : "latest";
+            var key = $"BB-GetStandings-{dateString}";
 
             if (_cache.Contains(key))
             {
                 return _cache.Get<IList<UserPoints>>(key);
             }
 
-            var results = _service.GetStandings();
+            var results = _service.GetStandings(lastRoundDate);
             _cache.Set(key, results);
 
             return results;

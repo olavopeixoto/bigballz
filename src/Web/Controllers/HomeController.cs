@@ -11,11 +11,13 @@ namespace BigBallz.Controllers
     {
         private readonly IMatchService _matchService;
         private readonly IUserService _userService;
+        private readonly IBigBallzService _bigBallzService;
 
-        public HomeController(IMatchService matchService, IUserService userService)
+        public HomeController(IMatchService matchService, IUserService userService, IBigBallzService bigBallzService)
         {
             _matchService = matchService;
             _userService = userService;
+            _bigBallzService = bigBallzService;
         }
 
         [Authorize, AllowAnonymous]
@@ -30,6 +32,18 @@ namespace BigBallz.Controllers
         {
             ViewData["StartDate"] = _matchService.GetStartDate().FormatDate();
             return View();
+        }
+
+        [Authorize, AllowAnonymous]
+        public ActionResult Standings(DateTime date, int? user = null)
+        {
+            ViewData["StartDate"] = _matchService.GetStartDate();
+            ViewData["RequestDate"] = date;
+            ViewData["User"] = user;
+
+            var standings = _bigBallzService.GetStandings(date);
+
+            return View(standings);
         }
 
         protected override void OnResultExecuting(ResultExecutingContext filterContext)

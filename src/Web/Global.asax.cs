@@ -5,6 +5,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using BigBallz.Core.Bootstrapper;
 using BigBallz.Core.Web.MVC.Filters;
+using BigBallz.Filters;
 using BigBallz.Infrastructure;
 using BigBallz.Models;
 using BigBallz.Services;
@@ -76,7 +77,19 @@ namespace BigBallz
             routes.MapRoute(
                 "classificacao",
                 "classificacao",
-                new { controller = "standings", action = "index", id = "" }
+                new { controller = "standings", action = "index" }
+                );
+
+            routes.MapRoute(
+                    "classificacao_data",
+                    "classificacao/{user}/{date}",
+                    new { controller = "home", action = "standings" }
+                );
+
+            routes.MapRoute(
+                    "classificacao_data_usuario",
+                    "classificacao/{date}",
+                    new { controller = "home", action = "standings" }
                 );
 
             routes.MapRoute(
@@ -103,6 +116,12 @@ namespace BigBallz
                 new {controller = "auth", action = "newaccountsuccess"});
 
             routes.MapRoute(
+                "arrecadacao",
+                "arrecadacao",
+                new { controller = "money", action = "index", id = "" }
+            );
+
+            routes.MapRoute(
                 "Default",                                              // Route name
                 "{controller}/{action}/{id}",                           // URL with parameters
                 new { controller = "Home", action = "Index", id = "" }  // Parameter defaults
@@ -119,6 +138,8 @@ namespace BigBallz
 
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new ProfilingViewEngine(new WebFormViewEngine()));
+
+            ModelBinders.Binders.Add(typeof(DateTime), new DateTimeModelBinder());
 
             ControllerBuilder.Current.SetControllerFactory(new StructureMapControllerFactory());
 
