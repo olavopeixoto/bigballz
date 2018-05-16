@@ -7,11 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Bolão da Copa do Mundo">
     <meta property="fb:app_id" content="<%=ConfigurationManager.AppSettings["fb-appid"]%>"/>
-    <meta property="og:url"           content="<%=Url.SiteRoot() %>" />
-    <meta property="og:type"          content="website" />
-    <meta property="og:title"         content="BigBallz" />
-    <meta property="og:description"   content="O Bolão da Copa do Mundo" />
-    <meta property="og:image"         content="<%=Url.VersionedContent("~/public/images/grana.png") %>" />
+    
+    <asp:ContentPlaceHolder ID="FacebookMetadata" runat="server" />
     
     <title>BigBallz<asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
 

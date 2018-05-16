@@ -1,9 +1,18 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
 <%@ Import Namespace="BigBallz.Core" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
+<asp:Content ID="TitleContent" ContentPlaceHolderID="TitleContent" runat="server">
    
 </asp:Content>
+
+<asp:Content ID="FacebookMetadata" ContentPlaceHolderID="FacebookMetadata" runat="server">
+    <meta property="og:url"           content="<%=Url.SiteRoot() %>" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="BigBallz" />
+    <meta property="og:description"   content="O Bolão da Copa do Mundo" />
+    <meta property="og:image"         content="<%=Url.VersionedContent("~/public/images/grana.png") %>" />
+</asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
      <div class="content-section-a">
 

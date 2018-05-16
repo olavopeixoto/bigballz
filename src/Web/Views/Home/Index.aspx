@@ -3,7 +3,12 @@
 
 <asp:Content ID="indexTitle" ContentPlaceHolderID="TitleContent" runat="server">, o Bolão da Copa do Mundo</asp:Content>
 
-<asp:Content ID="Content3" ContentPlaceHolderID="Scripts" runat="server">
+<asp:Content ID="FacebookMetadata" ContentPlaceHolderID="FacebookMetadata" runat="server">
+    <meta property="og:url"           content="<%=Url.SiteRoot() %>" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="BigBallz" />
+    <meta property="og:description"   content="O Bolão da Copa do Mundo" />
+    <meta property="og:image"         content="<%=Url.VersionedContent("~/public/images/grana.png") %>" />
 </asp:Content>
 
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">

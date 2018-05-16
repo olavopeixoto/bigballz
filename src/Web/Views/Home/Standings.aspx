@@ -1,9 +1,14 @@
 <%@ Page Language="C#" MasterPageFile="Site.Master" Inherits="System.Web.Mvc.ViewPage<System.Collections.Generic.IList<BigBallz.Models.UserPoints>>" %>
 
-<asp:Content ID="indexTitle" ContentPlaceHolderID="TitleContent" runat="server">, o Bolão da Copa do Mundo</asp:Content>
-
-<asp:Content ID="Content3" ContentPlaceHolderID="Scripts" runat="server">
+<asp:Content ID="FacebookMetadata" ContentPlaceHolderID="FacebookMetadata" runat="server">
+    <meta property="og:url"           content="<%=Request.Url.AbsoluteUri %>" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="Classificação BigBallz 2018" />
+    <meta property="og:description"   content="<%=((DateTime)ViewData["RequestDate"]).ToString("dddd, dd 'de' MMMM 'de' yyyy 'às' HH:mm") %>" />
+    <meta property="og:image"         content="<%=Url.VersionedContent("~/public/images/ranking.png") %>" />
 </asp:Content>
+
+<asp:Content ID="indexTitle" ContentPlaceHolderID="TitleContent" runat="server">, o Bolão da Copa do Mundo</asp:Content>
 
 <asp:Content ID="indexContent" ContentPlaceHolderID="MainContent" runat="server">
     
