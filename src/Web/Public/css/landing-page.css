@@ -241,3 +241,18 @@ p.copyright {
 .bronze {
     color: rgba(223, 182, 103, 1);
 }
+
+.badge-top {
+    position: absolute;
+    right: -20px;
+    top: 0px;
+}
+
+.badge-container {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-pic {
+    width: 80px;
+}

@@ -44,7 +44,7 @@ namespace System.Web.Mvc {
             return secondsLeft > 0 ? string.Format("<h4>Falta{0} {1} {2}{3}</h4>", plural ? "m" : "", unit, unitName, plural ? "s" : "") : string.Empty;
         }
 
-        public static string GetUserPhoto(this HtmlHelper htmlHelper, User user)
+        public static string GetUserPhotoUrl(this HtmlHelper htmlHelper, User user)
         {
             string photoUrl;
 
@@ -56,8 +56,14 @@ namespace System.Web.Mvc {
                 photoUrl = gravatar.GetGravatarUrl();
             }
 
-            return "<img class=\"profile-pic img-responsive img-circle\" style=\"margin:5px 0 0;padding:0;\" width=\"50\" height=\"50\" src=" + photoUrl.Replace("https:", "").Replace("http:", "") +
-                   " alt=\"\" />";
+            return photoUrl.Replace("https:", "").Replace("http:", "");
+        }
+
+        public static string GetUserPhoto(this HtmlHelper htmlHelper, User user)
+        {
+            var photoUrl = GetUserPhotoUrl(htmlHelper, user);
+
+            return $"<img class=\"profile-pic img-responsive img-circle\" style=\"margin:5px 0 0;padding:0;\" width=\"50\" height=\"50\" src=\"{photoUrl}\" alt=\"\" />";
         }
 
         public static decimal Price(this HtmlHelper helper)
