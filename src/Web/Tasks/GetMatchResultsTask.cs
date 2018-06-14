@@ -116,7 +116,7 @@ namespace BigBallz.Tasks
 
                             context.LoadOptions = options;
 
-                            var now = DateTime.UtcNow.BrazilTimeZone();
+                            var now = DateTime.UtcNow.AddHours(-4).BrazilTimeZone();
 
                             var matches = context.Matches
                                                     .Where(m => m.Stage.FifaId == matchdayId
