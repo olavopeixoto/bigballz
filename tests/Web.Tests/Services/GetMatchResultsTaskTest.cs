@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BigBallz.Core;
+using BigBallz.Core.Caching;
 using BigBallz.Infrastructure;
 using BigBallz.Services;
 using BigBallz.Services.L2S;
@@ -18,8 +19,9 @@ namespace BigBall.Tests.Services
         public GetMatchResultsTaskTest()
         {
             var provider = new DataContextProvider();
+            var cache = new Mock<ICache>();
 
-            _task = new GetMatchResultsTask(provider);
+            _task = new GetMatchResultsTask(provider, cache.Object);
         }
 
         [TestMethod]
@@ -57,9 +59,8 @@ namespace BigBall.Tests.Services
         public BonusExpirationWarningTaskTest()
         {
             var provider = new DataContextProvider();
-            var bbService = new BigBallzService(provider.CreateContext());
 
-            _task = new BonusExpirationWarningTask(_mailMock.Object, DateTime.UtcNow.AddHours(3).BrazilTimeZone(), bbService, provider);
+            _task = new BonusExpirationWarningTask(_mailMock.Object, DateTime.UtcNow.AddHours(3).BrazilTimeZone(), provider);
         }
 
         [TestMethod]

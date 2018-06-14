@@ -19,10 +19,12 @@ namespace BigBallz.Tasks
     public class GetMatchResultsTask : ICronJobTask
     {
         private readonly DataContextProvider _provider;
+        private readonly ICache _cache;
 
-        public GetMatchResultsTask(DataContextProvider provider)
+        public GetMatchResultsTask(DataContextProvider provider, ICache cache)
         {
             _provider = provider;
+            _cache = cache;
         }
 
         public string Name
@@ -109,6 +111,8 @@ namespace BigBallz.Tasks
 
                         var results = JsonConvert.DeserializeObject<KickoffResult>(json);
 
+                        var clearCache = false;
+
                         using (var context = _provider.CreateContext())
                         {
                             var options = new DataLoadOptions();
@@ -139,14 +143,16 @@ namespace BigBallz.Tasks
                                                 && x.Team1.FifaId == match.TeamHome.IdInternal
                                                 && x.Team2.FifaId == match.TeamAway.IdInternal);
 
-                                            if (match.ScoreHome >= 0)
+                                            if (match.ScoreHome >= 0 && bbMatch.Score1 != match.ScoreHome)
                                             {
                                                 bbMatch.Score1 = match.ScoreHome;
+                                                clearCache = true;
                                             }
 
-                                            if (match.ScoreAway >= 0)
+                                            if (match.ScoreAway >= 0 && bbMatch.Score2 != match.ScoreAway)
                                             {
                                                 bbMatch.Score2 = match.ScoreAway;
+                                                clearCache = true;
                                             }
                                         }
                                     }
@@ -154,8 +160,9 @@ namespace BigBallz.Tasks
                             }
 
                             context.SubmitChanges();
-                            Cache.Clear();
                         }
+
+                        if (clearCache) _cache.Clear();
                     }
                 }
             }
@@ -163,7 +170,7 @@ namespace BigBallz.Tasks
 
         public static void AddTask()
         {
-            CronJob.AddTask(new GetMatchResultsTask(ServiceLocator.Resolve<DataContextProvider>()));
+            CronJob.AddTask(new GetMatchResultsTask(ServiceLocator.Resolve<DataContextProvider>(), ServiceLocator.Resolve<ICache>()));
         }
 
         public void Dispose()
