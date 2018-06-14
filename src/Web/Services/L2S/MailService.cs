@@ -35,6 +35,19 @@ namespace BigBallz.Services.L2S
             SendMail("Admin", "admin@bigballz.com.br", "BigBallz - Novo Usuário", $"{user.UserName} <{user.EmailAddress}> foi autorizado pelo {user.AuthorizedBy} e já está participando do BigBallz.");
         }
 
+        public void SendBonusExpirationWarning(User user, DateTime startTime)
+        {
+            Debug.Write("Enviando email de aviso de fim do bonus proximo");
+
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");
+
+            var hoursLeft = Math.Round(startTime.AddHours(-1).Subtract(DateTime.Now.BrazilTimeZone()).TotalHours, 2);
+
+            var parameters = new List<string>(new[] { "userName", user.UserName, "endBetTime", hoursLeft + " hora" + (hoursLeft > 1 ? "s" : "") });
+
+            SendMail(user.UserName, user.EmailAddress, "Aviso de fim do Bonus", PrepareMailBodyWith(EmailTemplates.BonusExpirationWarning, parameters.ToArray()));
+        }
+
         public void SendNewCommentPosted(User[] recipients, string userName, string comment)
         {
             var messageBody = PrepareMailBodyWith(EmailTemplates.NewCommentPosted, "userName", userName, "comments", comment, "date", DateTime.Now.BrazilTimeZone().FormatDateTime());

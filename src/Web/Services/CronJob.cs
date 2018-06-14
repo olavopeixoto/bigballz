@@ -50,8 +50,14 @@ namespace BigBallz.Services
             {
                 if (r == CacheItemRemovedReason.Expired)
                 {
-                    task.Run();
-                    if (task.Recurring) AddTask(task);
+                    try
+                    {
+                        task.Run();
+                    }
+                    catch (Exception)
+                    {
+                        if (task.Recurring) AddTask(task);
+                    }
                 }
                 else
                 {

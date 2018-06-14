@@ -6,8 +6,9 @@ using BigBallz.Core;
 using BigBallz.Core.IoC;
 using BigBallz.Infrastructure;
 using BigBallz.Models;
+using BigBallz.Services;
 
-namespace BigBallz.Services
+namespace BigBallz.Tasks
 {
     public class AlertEndBetTask : ICronJobTask
     {
@@ -57,9 +58,7 @@ namespace BigBallz.Services
                 loadOptions.LoadWith<Match>(x => x.Team1);
                 loadOptions.LoadWith<Match>(x => x.Team2);
                 context.LoadOptions = loadOptions;
-                bets =
-                    context.Bets.Where(x => x.Match1.StartTime.AddHours(-1) == AbsoluteExpiration).OrderBy(
-                        x => x.Match).ThenBy(x => x.User1.UserName).ToList();
+                bets = context.Bets.Where(x => x.Match1.StartTime.AddHours(-1) == AbsoluteExpiration).OrderBy(x => x.Match).ThenBy(x => x.User1.UserName).ToList();
                 players = context.Users.Where(x => x.UserRoles.Any(y => y.Role.Name == BBRoles.Player)).ToList();
             }
 

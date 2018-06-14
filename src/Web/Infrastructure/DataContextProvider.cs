@@ -17,7 +17,7 @@ namespace BigBallz.Infrastructure
 
         private static DbConnection GetConnection()
         {
-            if (HttpContext.Current.IsDebuggingEnabled)
+            if (HttpContext.Current==null || HttpContext.Current.IsDebuggingEnabled)
             {
                 var context = new BigBallzDataContext();
                 if (!context.DatabaseExists())
