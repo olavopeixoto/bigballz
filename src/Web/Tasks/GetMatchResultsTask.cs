@@ -6,6 +6,7 @@ using System.Net.Cache;
 using System.Net.Http;
 using System.Threading.Tasks;
 using BigBallz.Core;
+using BigBallz.Core.Caching;
 using BigBallz.Core.IoC;
 using BigBallz.Infrastructure;
 using BigBallz.Models;
@@ -153,6 +154,7 @@ namespace BigBallz.Tasks
                             }
 
                             context.SubmitChanges();
+                            Cache.Clear();
                         }
                     }
                 }
