@@ -8,6 +8,7 @@
         public static readonly string BetTimeAlert = "BetTimeAlert";
         public static readonly string BetTimeWarning = "BetTimeWarning";
         public static readonly string BonusTimeAlert = "BonusTimeAlert";
+        public static readonly string BonusExpirationWarning = "BonusExpirationWarning";
         public static readonly string NewCommentPosted = "NewCommentPosted";
     }
 }

@@ -5,8 +5,9 @@ using BigBallz.Core;
 using BigBallz.Core.IoC;
 using BigBallz.Infrastructure;
 using BigBallz.Models;
+using BigBallz.Services;
 
-namespace BigBallz.Services
+namespace BigBallz.Tasks
 {
     public class BetExpirationWarningTask : ICronJobTask
     {

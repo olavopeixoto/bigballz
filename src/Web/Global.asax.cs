@@ -8,7 +8,7 @@ using BigBallz.Core.Web.MVC.Filters;
 using BigBallz.Filters;
 using BigBallz.Infrastructure;
 using BigBallz.Models;
-using BigBallz.Services;
+using BigBallz.Tasks;
 using StackExchange.Profiling;
 using StackExchange.Profiling.Mvc;
 using StructureMap.Web.Pipeline;
@@ -150,6 +150,10 @@ namespace BigBallz
             {
                 AlertEndBetTask.AddAllMatches();
                 BetExpirationWarningTask.AddAllMatches();
+                AlertEndBonusTask.AddTask();
+                BonusExpirationWarningTask.AddTask(5);
+                AddMatchesTask.AddTask();
+                GetMatchResultsTask.AddTask();
             }
 
             InitializeMiniProfiler();

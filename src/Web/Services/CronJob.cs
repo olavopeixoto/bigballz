@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Web;
 using System.Web.Caching;
+using Elmah;
 
 namespace BigBallz.Services
 {
@@ -50,8 +52,29 @@ namespace BigBallz.Services
             {
                 if (r == CacheItemRemovedReason.Expired)
                 {
-                    task.Run();
-                    if (task.Recurring) AddTask(task);
+                    try
+                    {
+                        task.Run();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.Write("Task Error: " + ex.Message);
+
+                        ErrorLog.GetDefault(null).Log(new Error(ex));
+                    }
+                    finally
+                    {
+                        try
+                        {
+                            if (task.Recurring) AddTask(task);
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.Write("Add Recurring Task Error: " + ex.Message);
+
+                            ErrorLog.GetDefault(null).Log(new Error(ex));
+                        }
+                    }
                 }
                 else
                 {

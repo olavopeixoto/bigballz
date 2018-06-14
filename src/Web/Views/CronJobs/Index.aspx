@@ -10,6 +10,7 @@
 <tr>
     <th>Nome</th>
     <th>Horário</th>
+    <th>Recorrente</th>
 </tr>
 </thead>
 <tbody>
@@ -18,6 +19,7 @@
     <tr class="<%= i%2==0 ? "ui-state-default": "odd"%>">
         <td class="c"><%=task.Name%></td>
         <td class="c"><%=task.AbsoluteExpiration.HasValue ? task.AbsoluteExpiration.Value.FormatDateTime() : task.SlidingExpiration.HasValue ? "em " + task.SlidingExpiration.Value.TotalSeconds + " segundos" : string.Empty%></td>
+        <td class="c"><%=task.Recurring ? "Sim" : "Não" %></td>
     </tr>
 <%i++;}%>
 </tbody>

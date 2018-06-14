@@ -51,10 +51,8 @@ namespace BigBallz.Controllers
         {
             try
             {
-                var user = _userService.Get(User.Identity.Name);
-
                 //Verifica se usuario tem papel de admin
-                if (user.UserRoles.Count > 1)
+                if (User.IsInRole(BBRoles.Admin))
                 {
                     _matchService.Add(match);
                     return RedirectToAction("Index");
@@ -77,7 +75,6 @@ namespace BigBallz.Controllers
 
                 return View(model);
             }
-
         }
 
         public ActionResult Edit(int id)
