@@ -44,7 +44,7 @@ namespace BigBallz.Tasks
 
         public TimeSpan? SlidingExpiration
         {
-            get { return TimeSpan.FromMinutes(10); }
+            get { return TimeSpan.FromMinutes(5); }
         }
 
         public void Run()
