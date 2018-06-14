@@ -94,11 +94,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BetExpirationWarningTaskTest.cs" />
     <Compile Include="Services\BigBallzServiceTest.cs" />
+    <Compile Include="Services\GetMatchResultsTaskTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App.config" />
+    <Content Include="App.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\BigBallz.Core\BigBallz.Core.csproj">
+      <Project>{061AF39F-97F7-4D69-A054-6E0811641F6B}</Project>
+      <Name>BigBallz.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Web\Web.csproj">
       <Project>{E1B97A68-6916-4026-87B2-0CFD80FE4FE8}</Project>
       <Name>Web</Name>

@@ -4,8 +4,10 @@
    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>Jogos</h2>
-    <h3>Fase de grupos</h3>
+    <h2>
+        Jogos</h2>
+    <h3>
+        Fase de grupos</h3>
     <div id="group-stage">
         <%foreach (var group in Model.Select(x => x.Team1.Group).Distinct())
           {%>
@@ -28,7 +30,7 @@
             </thead>
             <tbody>
                 <%var i = 0;
-                  foreach (var match in Model.Where(x => x.StageId <= 3 && x.Team1.GroupId == group.GroupId))
+                  foreach (var match in Model.Where(x => x.StageId == 1 && x.Team1.GroupId == group.GroupId))
                   {%>
                 <tr class="<%= i%2==0 ? "ui-state-default": "odd"%>">
                     <td>
@@ -64,7 +66,8 @@
         </table>
         <%} %>
     </div>
-    <h3>2ª Fase</h3>
+    <h3>
+        2ª Fase</h3>
     <div id="stage-2">
         <table class="match-table" summary="2ª Fase">
             <thead class="ui-widget-header">
@@ -86,7 +89,7 @@
             </thead>
             <tbody>
                 <%var j = 0;
-                  foreach (var match in Model.Where(x => x.StageId > 3))
+                  foreach (var match in Model.Where(x => x.StageId != 1))
                   {%>
                 <tr class="<%= j%2==0 ? "ui-state-default": "odd"%>">
                     <td>

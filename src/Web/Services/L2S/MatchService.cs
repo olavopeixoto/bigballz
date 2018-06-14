@@ -5,11 +5,10 @@ using System.Linq;
 using BigBallz.Core;
 using BigBallz.Infrastructure;
 using BigBallz.Models;
-using BigBallz.Tasks;
 
 namespace BigBallz.Services.L2S
 {
-    public class MatchService : IMatchService
+    public class MatchService : IMatchService, IDisposable
     {
         private readonly DataContextProvider _provider;
         private BigBallzDataContext _context;

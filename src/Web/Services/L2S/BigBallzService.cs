@@ -62,20 +62,20 @@ namespace BigBallz.Services.L2S
 
             if (PlacarExato(betScore1, betScore2, matchScore1, matchScore2))
             {
-                return bet.Match1.StageId <= 3 ? 7 : 10;
+                return bet.Match1.StageId == 1 ? 7 : 10;
             }
             if (PlacarParcial(betScore1, betScore2, matchScore1, matchScore2)
                 && Resultado(betScore1, betScore2, matchScore1, matchScore2))
             {
-                return bet.Match1.StageId <= 3 ? 3 : 5;
+                return bet.Match1.StageId == 1 ? 3 : 5;
             }
             if (Resultado(betScore1, betScore2, matchScore1, matchScore2))
             {
-                return bet.Match1.StageId <= 3 ? 2 : 3;
+                return bet.Match1.StageId == 1 ? 2 : 3;
             }
             if (PlacarParcial(betScore1, betScore2, matchScore1, matchScore2))
             {
-                return bet.Match1.StageId <= 3 ? 1 : 2;
+                return bet.Match1.StageId == 1 ? 1 : 2;
             }
 
             return 0;

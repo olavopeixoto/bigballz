@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BigBallz" EntityNamespace="BigBallz.Models" Class="BigBallzDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=bigballz-br.database.windows.net;Initial Catalog=bigballz;Persist Security Info=False;User ID=bigballz@bigballz-br;MultipleActiveResultSets=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="BigBallzConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=bigballz.com.br;Initial Catalog=BigBallz;Persist Security Info=True;User ID=bigballz" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="BigBallzConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Bet" Member="Bets">
     <Type Name="Bet">
       <Column Name="BetId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -75,7 +75,6 @@
     <Type Name="Stage">
       <Column Name="StageId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Member="FifaId" Type="System.Int32" CanBeNull="false" />
       <Association Name="Stage_Match" Member="Matches" ThisKey="StageId" OtherKey="StageId" Type="Match" />
     </Type>
   </Table>
