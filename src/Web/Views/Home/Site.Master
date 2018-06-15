@@ -37,12 +37,14 @@
     </script>
     <% } %>
     
+    <% if (ViewData["RequestDate"] == null)
+       { %>
     <script type="text/javascript">
         (function () {
             if (typeof window.janrain !== 'object') window.janrain = {};
             if (typeof window.janrain.settings !== 'object') window.janrain.settings = {};
 
-            janrain.settings.tokenUrl = '<%=Url.Action("handleresponse", "auth", null, FormsAuthentication.RequireSSL ? "https" : "http") %>';
+            janrain.settings.tokenUrl = '<%= Url.Action("handleresponse", "auth", null, FormsAuthentication.RequireSSL ? "https" : "http") %>';
             janrain.settings.showAttribution = false;
             janrain.settings.language = "pt-BR";
 
@@ -68,15 +70,18 @@
         })();
     </script>
     <script src="https://wchat.freshchat.com/js/widget.js"></script>
+    <% } %>
 </head>
 
 <body>
     
+<% if (ViewData["RequestDate"] == null)
+   { %>
     <div id="fb-root"></div>
     <script>
         window.fbAsyncInit = function() {
             FB.init({
-                appId      : '<%= ConfigurationManager.AppSettings["fb-appid"]%>',
+                appId      : '<%= ConfigurationManager.AppSettings["fb-appid"] %>',
                 autoLogAppEvents : true,
                 xfbml      : true,
                 version    : 'v3.0'
@@ -136,6 +141,8 @@
         </div>
         <!-- /.container -->
     </nav>
+    
+<% } %>
 
     <asp:ContentPlaceHolder ID="MainContent" runat="server" />
 
@@ -152,6 +159,7 @@
                     <ul class="list-inline intro-social-buttons">
                         <li><a target="_blank" href="https://www.facebook.com/bigballz2018/"><img alt="Facebook logo" style="height: 20px" src="<%=Url.VersionedContent("~/public/images/flogo_rgb_hex-brc-site-250.png") %>"></a></li>
                         <li><a target="_blank" href="https://twitter.com/bigballz2018"><i style="font-size:24px" class="fa">&#xf099;</i></a></li>
+                        <li><a target="_blank" href="<%=Url.SiteRoot() %>"><i style="font-size:24px" class="fa">&#xf0c1;</i></a></li>
                     </ul>
                     <p class="copyright text-muted small">Copyright &copy; BigBallz <%=DateTime.Today.Year %>. Todos os direitos reservados</p>
                 </div>
@@ -162,9 +170,12 @@
     <!-- JavaScript -->
     <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+<% if (ViewData["RequestDate"] == null)
+   { %>
     <script type="text/javascript" src="https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js"></script>
     <script type="text/javascript">
-        FreshWidget.init("", { "queryString": "&widgetType=popup", "widgetType": "popup", "buttonType": "text", "buttonText": "Precisa de ajuda? Clique Aqui", "buttonColor": "black", "buttonBg": "#FFFFFF", "alignment": "<%=Request.Browser.IsMobileDevice ? "3" : "4"%>", "offset": "<%=Request.Browser.IsMobileDevice ? "10px" : "260px"%>", "formHeight": "500px", "url": "https://bigballz.freshdesk.com" });
+        FreshWidget.init("", { "queryString": "&widgetType=popup", "widgetType": "popup", "buttonType": "text", "buttonText": "Precisa de ajuda? Clique Aqui", "buttonColor": "black", "buttonBg": "#FFFFFF", "alignment": "<%= Request.Browser.IsMobileDevice ? "3" : "4" %>", "offset": "<%= Request.Browser.IsMobileDevice ? "10px" : "260px" %>", "formHeight": "500px", "url": "https://bigballz.freshdesk.com" });
     </script>
     <script>
         window.fcWidget.init({
@@ -172,20 +183,23 @@
             host: "https://wchat.freshchat.com"
         });
     </script>
-<%if (Context.User.Identity.IsAuthenticated) {%>
+
+<% if (Context.User.Identity.IsAuthenticated)
+   { %>
     <script>
         // Make sure fcWidget.init is included before setting these values
 
         // To set unique user id in your system when it is available
-        window.fcWidget.setExternalId("<%=ViewData["UserId"]%>");
+        window.fcWidget.setExternalId("<%= ViewData["UserId"] %>");
 
         // To set user name
-        window.fcWidget.user.setFirstName("<%=ViewData["UserName"]%>");
+        window.fcWidget.user.setFirstName("<%= ViewData["UserName"] %>");
 
         // To set user email
-        window.fcWidget.user.setEmail("<%=ViewData["UserEmail"]%>");
+        window.fcWidget.user.setEmail("<%= ViewData["UserEmail"] %>");
     </script>
-<%}%>
+<% }
+   } %>
     <asp:ContentPlaceHolder ID="Scripts" runat="server" />
 </body>
 </html>

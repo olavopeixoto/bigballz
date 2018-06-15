@@ -61,6 +61,9 @@
 <div class="wabtn">
     <a href="whatsapp://send?text=<%=("Se liga na classificação do BigBallz deste momento! " + shareUrl).UrlEncode()%>" class="wa_btn wa_btn_s" target="_top">Compartilhar</a>
 </div>
+<div class="wabtn">
+    <a class="label label-primary" target="_blank" href="<%=shareUrl%>"><i class="fa">&#xf0c1;</i> Permalink</a>
+</div>
 <div class="fb-comments" data-href="<%=Url.Action("index", "standings",null, Request.IsSecureConnection ? "https" : "http") %>" data-width="675" data-numposts="5" data-colorscheme="light"></div>
 </asp:Content>
 <asp:Content runat="server" ID="Content2" ContentPlaceHolderID="Scripts"></asp:Content>

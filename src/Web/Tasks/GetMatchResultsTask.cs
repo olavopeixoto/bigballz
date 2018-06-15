@@ -121,7 +121,9 @@ namespace BigBallz.Tasks
 
                             context.LoadOptions = options;
 
-                            var now = DateTime.UtcNow.AddHours(-4).BrazilTimeZone();
+                            const int matchDurationOffset = -4;
+
+                            var now = DateTime.UtcNow.AddHours(matchDurationOffset).BrazilTimeZone();
 
                             var matches = context.Matches
                                                     .Where(m => m.Stage.FifaId == matchdayId
@@ -133,7 +135,7 @@ namespace BigBallz.Tasks
 
                             foreach (var kickoff in results.Kickoffs)
                             {
-                                if (kickoff.Kickoff < DateTime.UtcNow)
+                                if (kickoff.Kickoff >= DateTime.UtcNow.AddHours(matchDurationOffset))
                                 {
                                     foreach (var group in kickoff.Groups)
                                     {

@@ -15,10 +15,10 @@
 </thead>
 <tbody>
 <%var i = 0;
-  foreach (var task in Model) {%>
+  foreach (var task in Model.OrderBy(x => x.AbsoluteExpiration)) {%>
     <tr class="<%= i%2==0 ? "ui-state-default": "odd"%>">
         <td class="c"><%=task.Name%></td>
-        <td class="c"><%=task.AbsoluteExpiration.HasValue ? task.AbsoluteExpiration.Value.FormatDateTime() : task.SlidingExpiration.HasValue ? "em " + task.SlidingExpiration.Value.TotalSeconds + " segundos" : string.Empty%></td>
+        <td class="c"><%=task.AbsoluteExpiration.HasValue ? task.AbsoluteExpiration.Value.FormatDateTime() : task.SlidingExpiration.HasValue ? "A cada " + task.SlidingExpiration.Value.TotalSeconds + " segundos" : string.Empty%></td>
         <td class="c"><%=task.Recurring ? "Sim" : "Não" %></td>
     </tr>
 <%i++;}%>

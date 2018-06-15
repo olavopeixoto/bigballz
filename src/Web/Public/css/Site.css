@@ -300,3 +300,29 @@ ol {
 .fb-share-button {
     vertical-align: top;
 }
+
+.label-success {
+    background-color: #5cb85c;
+}
+
+.label-primary {
+    background-color: #337ab7;
+}
+
+.label {
+    display: inline-block !important;
+    position: relative;
+    font-family: Helvetica, Arial, sans-serif;
+    letter-spacing: .4px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: none;
+    color: #fff;
+    border-radius: 4px;
+    background-repeat: no-repeat;
+    line-height: 1.2;
+    text-decoration: none;
+    text-align: left;
+    height: 15px;
+    padding: 3px;
+}
