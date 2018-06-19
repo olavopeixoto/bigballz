@@ -138,7 +138,6 @@ td.mResult
 td.mResult .mResultSub
 {
     font-size: 0.7em;
-    color:#333;
 }
 .mResultSubBet
 {
@@ -307,6 +306,10 @@ ol {
 
 .label-primary {
     background-color: #337ab7;
+}
+
+.danger {
+    color: red
 }
 
 .label {

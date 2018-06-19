@@ -39,8 +39,9 @@ if (pendingBets!=null && pendingBets.Any())
 {
     var pendingBetsCount = pendingBets.Count;
     var plural = pendingBetsCount > 1 ? "s" : string.Empty;
+    var minDate = pendingBets.Min(x => x.StartTime);
     %>
-    <p><%=Html.ActionLink(string.Format("Você tem {0} aposta{1} pendente{1} para as próximas 24h", pendingBetsCount, plural), "index", "bet")%></p>
+    <p><%=Html.ActionLink(string.Format("Você tem {0} aposta{1} pendente{1} para as próximas 24h", pendingBetsCount, plural), "index", "bet", null, null, "match-table-" + minDate.ToString("yyyy-MM-dd"), null, new { @class = "danger"})%></p>
 <%}%>
 
 <%var prizes = ViewData["prizes"] as Prizes;%>

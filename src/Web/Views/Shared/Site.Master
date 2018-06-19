@@ -6,7 +6,7 @@
     <title>BigBallz<asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
     <meta name="description" content="BigBallz, o Bolão da Copa do Mundo" />
-    <meta name="keywords" content="Bolão, Copa do Mundo, Fifa, World Cup, Football, Soccer, Futebol, Aposta, Bet, Amigos, Diversão" />
+    <meta name="keywords" content="BigBallz, BigBallz 2018, Bolão, Copa do Mundo, Fifa, World Cup, Football, Soccer, Futebol, Aposta, Bet, Amigos, Diversão, Zoação" />
     <meta name="robots" content="index, follow" />
     <meta property="fb:app_id" content="<%=ConfigurationManager.AppSettings["fb-appid"]%>"/>
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />

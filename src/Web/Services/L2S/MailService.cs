@@ -173,7 +173,7 @@ namespace BigBallz.Services.L2S
             {
                 IsBodyHtml = true,
                 Subject = subject,
-                Body = message,
+                Body = message
             };
 
             if (addresses.Count == 1)

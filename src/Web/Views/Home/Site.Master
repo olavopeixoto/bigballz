@@ -5,16 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=10;requiresActiveX=true">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Bolão da Copa do Mundo">
+    <meta name="description" content="BigBallz, o Bolão da Copa do Mundo" />
+    <meta name="keywords" content="BigBallz, BigBallz 2018, Bolão, Copa do Mundo, Fifa, World Cup, Football, Soccer, Futebol, Aposta, Bet, Amigos, Diversão, Zoação" />
+    <meta name="robots" content="index, follow" />
+
     <meta property="fb:app_id" content="<%=ConfigurationManager.AppSettings["fb-appid"]%>"/>
     
     <asp:ContentPlaceHolder ID="FacebookMetadata" runat="server" />
     
     <title>BigBallz<asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+    
+    <link href="<%=Url.SiteRoot() %>" rel="canonical" />
 
     <!-- Bootstrap core CSS -->
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" />
-
+    
     <!-- Custom Google Web Font -->
     <%=Html.Css("~/public/font-awesome/css/font-awesome.min.css") %>
     <link href='//fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
@@ -69,7 +74,7 @@
             s.parentNode.insertBefore(e, s);
         })();
     </script>
-    <script src="https://wchat.freshchat.com/js/widget.js"></script>
+    <script async src="https://wchat.freshchat.com/js/widget.js"></script>
     <% } %>
 </head>
 
@@ -156,10 +161,10 @@
                       <a href="mailto:suporte@bigballz.com.br">suporte@bigballz.com.br</a>
                     </address>
                     </p>
-                    <ul class="list-inline intro-social-buttons">
-                        <li><a target="_blank" href="https://www.facebook.com/bigballz2018/"><img alt="Facebook logo" style="height: 20px" src="<%=Url.VersionedContent("~/public/images/flogo_rgb_hex-brc-site-250.png") %>"></a></li>
-                        <li><a target="_blank" href="https://twitter.com/bigballz2018"><i style="font-size:24px" class="fa">&#xf099;</i></a></li>
-                        <li><a target="_blank" href="<%=Url.SiteRoot() %>"><i style="font-size:24px" class="fa">&#xf0c1;</i></a></li>
+                    <ul class="list-inline footer-social-buttons" itemscope itemtype="http://schema.org/Organization">
+                        <li><a itemprop="sameAs" target="_blank" href="https://www.facebook.com/bigballz2018/"><img alt="Facebook logo" style="height: 20px" src="<%=Url.VersionedContent("~/public/images/flogo_rgb_hex-brc-site-250.png") %>"></a></li>
+                        <li><a itemprop="sameAs" target="_blank" href="https://twitter.com/bigballz2018"><i style="font-size:24px" class="fa">&#xf099;</i></a></li>
+                        <li><a itemprop="url" target="_blank" href="<%=Url.SiteRoot() %>"><i style="font-size:24px" class="fa">&#xf0c1;</i></a></li>
                     </ul>
                     <p class="copyright text-muted small">Copyright &copy; BigBallz <%=DateTime.Today.Year %>. Todos os direitos reservados</p>
                 </div>
@@ -173,7 +178,7 @@
 
 <% if (ViewData["RequestDate"] == null)
    { %>
-    <script type="text/javascript" src="https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js"></script>
+    <script async type="text/javascript" src="https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js"></script>
     <script type="text/javascript">
         FreshWidget.init("", { "queryString": "&widgetType=popup", "widgetType": "popup", "buttonType": "text", "buttonText": "Precisa de ajuda? Clique Aqui", "buttonColor": "black", "buttonBg": "#FFFFFF", "alignment": "<%= Request.Browser.IsMobileDevice ? "3" : "4" %>", "offset": "<%= Request.Browser.IsMobileDevice ? "10px" : "260px" %>", "formHeight": "500px", "url": "https://bigballz.freshdesk.com" });
     </script>
@@ -200,6 +205,14 @@
     </script>
 <% }
    } %>
+    <script type="application/ld+json">
+      {
+      "@context": "http://schema.org/",
+      "@type": "Organization",
+      "url": "<%=Url.SiteRoot() %>",
+      "logo": "<%=Url.VersionedContent("~/public/images/grana.png") %>"
+      }
+    </script>
     <asp:ContentPlaceHolder ID="Scripts" runat="server" />
 </body>
 </html>

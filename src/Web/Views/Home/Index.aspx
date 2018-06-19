@@ -53,7 +53,7 @@
     </div>
     <!-- /.intro-header -->
 
-    <div class="content-section-a">
+    <div class="content-section-a" id="login-social">
 
         <div class="container">
 
@@ -86,7 +86,7 @@
     </div>
     <!-- /.content-section-a -->
 
-    <div class="content-section-b">
+    <div class="content-section-b" id="interatividade">
 
         <div class="container">
 
@@ -109,7 +109,7 @@
     </div>
     <!-- /.content-section-b -->
 
-    <div class="content-section-a">
+    <div class="content-section-a" id="tempo-real">
 
         <div class="container">
 
@@ -131,7 +131,7 @@
     </div>
     <!-- /.content-section-a -->
 
-    <div class="content-section-b">
+    <div class="content-section-b" id="mais-chances">
 
         <div class="container">
 
@@ -153,7 +153,7 @@
     </div>
     <!-- /.content-section-b -->
 
-    <div class="content-section-a">
+    <div class="content-section-a" id="bonus">
 
         <div class="container">
 
@@ -175,7 +175,7 @@
     </div>
     <!-- /.content-section-a -->
     
-    <div class="content-section-b">
+    <div class="content-section-b" id="espalhe-noticia">
 
         <div class="container">
 

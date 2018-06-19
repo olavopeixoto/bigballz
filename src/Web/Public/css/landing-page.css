@@ -66,6 +66,12 @@ body, h1, h2, h3, h4, h5, h6 {
 	.intro-divider {
 		width: 100%;
 	}
+
+    h1 small {
+        display: block;
+        font-size: 55%;
+        padding-left: 2px;
+    }
 }
 
 .network-name {
@@ -169,6 +175,10 @@ p.copyright {
     vertical-align: top;
 }
 
+.footer-social-buttons > li {
+    vertical-align: top;
+}
+
 .wabtn {
     display: inline-block;
     vertical-align: top;
@@ -235,7 +245,7 @@ p.copyright {
 }
 
 .silver {
-    color: rgba(160,160,160,1);
+    color: #D3D3D3;
 }
 
 .bronze {
@@ -255,4 +265,9 @@ p.copyright {
 
 .profile-pic {
     width: 80px;
+}
+
+td.min {
+    width: 1%;
+    white-space: nowrap;
 }
