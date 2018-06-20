@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BigBallz.Core;
 using BigBallz.Core.Caching;
+using BigBallz.Core.Social;
 using BigBallz.Infrastructure;
 using BigBallz.Services;
 using BigBallz.Tasks;
@@ -28,6 +29,12 @@ namespace BigBall.Tests.Services
         {
             await _task.RunAsync();
         }
+
+        [TestMethod]
+        public void Tweet()
+        {
+            Twitter.PostTweet("twitter@bigballz.com.br", "bb2018#$", "Já começou a segunda rodada do bolão, esse ano está ainda mais emocionante!");
+        }
     }
 
     [TestClass]
@@ -38,8 +45,9 @@ namespace BigBall.Tests.Services
         public AddMatchesTaskTest()
         {
             var provider = new DataContextProvider();
+            var cache = new Mock<ICache>();
 
-            _task = new AddMatchesTask(provider);
+            _task = new AddMatchesTask(provider, cache.Object);
         }
 
         [TestMethod]

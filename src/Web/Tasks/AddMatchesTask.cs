@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
 using System.Net;
@@ -6,6 +7,7 @@ using System.Net.Cache;
 using System.Net.Http;
 using System.Threading.Tasks;
 using BigBallz.Core;
+using BigBallz.Core.Caching;
 using BigBallz.Core.IoC;
 using BigBallz.Infrastructure;
 using BigBallz.Models;
@@ -18,10 +20,12 @@ namespace BigBallz.Tasks
     public class AddMatchesTask : ICronJobTask
     {
         private readonly DataContextProvider _provider;
+        private readonly ICache _cache;
 
-        public AddMatchesTask(DataContextProvider provider)
+        public AddMatchesTask(DataContextProvider provider, ICache cache)
         {
             _provider = provider;
+            _cache = cache;
         }
 
         public string Name
@@ -54,6 +58,9 @@ namespace BigBallz.Tasks
 
         public async Task RunAsync()
         {
+            var matchCreated = false;
+            var kickoffs = new List<DateTime>();
+
             using (var context = _provider.CreateContext())
             {
                 var options = new DataLoadOptions();
@@ -89,7 +96,7 @@ namespace BigBallz.Tasks
 
                             foreach (var matchDay in matchdaysResult.MatchDays)
                             {
-                                if (!matchDay.IsCurrentMatchday || !matchDay.HasMatchdayFeed || matchDay.KickoffLast < DateTime.UtcNow)
+                                if (matchDay.KickoffLast < DateTime.UtcNow)
                                     continue;
 
                                 var matchDayResultsUrl = string.Format(matchDayResultsUrlFormat, matchDay.Id);
@@ -110,11 +117,11 @@ namespace BigBallz.Tasks
 
                                         var dbMatches = context.Matches.Where(m => m.Stage.FifaId == matchDay.Id).ToList();
 
-                                        foreach (var kickoff in matchdayResult.Kickoffs)
+                                        foreach (var kickoff in matchdayResult.Kickoffs.Where(k => k.Kickoff > DateTime.UtcNow))
                                         {
                                             foreach (var group in kickoff.Groups)
                                             {
-                                                foreach (var match in group.Matches)
+                                                foreach (var match in group.Matches.Where(m => m.Period == "PreMatch"))
                                                 {
                                                     if (dbMatches.Any(m =>
                                                         m.StartTime == kickoff.Kickoff.BrazilTimeZone()
@@ -140,6 +147,10 @@ namespace BigBallz.Tasks
                                                     };
 
                                                     context.Matches.InsertOnSubmit(matchToAdd);
+                                                    matchCreated = true;
+
+                                                    if (kickoffs.All(x => x != matchToAdd.StartTime))
+                                                        kickoffs.Add(matchToAdd.StartTime);
                                                 }
                                             }   
                                         }
@@ -147,7 +158,17 @@ namespace BigBallz.Tasks
                                 }
                             }
 
-                            context.SubmitChanges();
+                            if (matchCreated)
+                            {
+                                context.SubmitChanges();
+                                _cache.Clear();
+
+                                foreach (var kickoff in kickoffs)
+                                {
+                                    AlertEndBetTask.AddTask(kickoff.AddHours(-1));
+                                    BetExpirationWarningTask.AddTask(kickoff);
+                                }
+                            }
                         }
                     }
                 }
@@ -156,7 +177,7 @@ namespace BigBallz.Tasks
 
         public static void AddTask()
         {
-            CronJob.AddTask(new AddMatchesTask(ServiceLocator.Resolve<DataContextProvider>()));
+            CronJob.AddTask(new AddMatchesTask(ServiceLocator.Resolve<DataContextProvider>(), ServiceLocator.Resolve<ICache>()));
         }
 
         public void Dispose()

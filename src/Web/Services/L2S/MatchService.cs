@@ -87,6 +87,9 @@ namespace BigBallz.Services.L2S
 
         public void Add(Match match)
         {
+            if (match.StartTime < DateTime.Now.BrazilTimeZone())
+                throw new ArgumentException("Não é possível inserir uma partida que já tenha iniciado");
+
             using (var db = _provider.CreateContext())
             {
                 db.Matches.InsertOnSubmit(match);
