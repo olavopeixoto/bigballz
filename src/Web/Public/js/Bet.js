@@ -30,6 +30,18 @@
         $(".reminder").each(function (index, e) {
             ko.applyBindings(new model(e), e);
         });
+
+        var oldBets = $("table.collapse");
+        oldBets.hide();
+
+        var moreBtn = $("button.btn-showhide");
+        moreBtn.click(function() {
+            moreBtn.hide();
+            oldBets.show('blind', 500);
+        });
+        if (oldBets.length > 0) {
+            moreBtn.show();
+        }
     }
 };
 

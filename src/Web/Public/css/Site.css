@@ -329,3 +329,27 @@ ol {
     height: 15px;
     padding: 3px;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.info-panel img {
+    margin: 0;
+}
+
+.info-panel td {
+    vertical-align: middle;
+    height: 36px;
+}
+
+button.btn-showhide {
+    height: 36px;
+    color: #1f5b9c;
+    width: 100%;
+    margin-bottom: 20px;
+    display: none;
+}

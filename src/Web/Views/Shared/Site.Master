@@ -4,12 +4,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-BR">
 <head>
     <title>BigBallz<asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
     <meta name="description" content="BigBallz, o Bolão da Copa do Mundo" />
     <meta name="keywords" content="BigBallz, BigBallz 2018, Bolão, Copa do Mundo, Fifa, World Cup, Football, Soccer, Futebol, Aposta, Bet, Amigos, Diversão, Zoação" />
     <meta name="robots" content="index, follow" />
     <meta property="fb:app_id" content="<%=ConfigurationManager.AppSettings["fb-appid"]%>"/>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <meta property="og:url"           content="<%=Url.RequestContext.HttpContext.Request.Url.AbsoluteUri %>" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="BigBallz" />
+    <meta property="og:description"   content="O Bolão da Copa do Mundo" />
+    <meta property="og:image"         content="<%=Url.VersionedContent("~/public/images/grana.png") %>" />
+    <% Html.RenderPartial("iOSapp"); %>
     <%=Html.Css("fifa/jquery-ui-1.8.1.custom")%>
     <%=Html.Css("ui.jqgrid")%>
     <%=Html.Css("screen")%>
@@ -96,6 +102,8 @@
                 <p>
                     <%=Html.ActionLink("BigBallz", "index", "home")%> |
                     <%=Html.ActionLink("Regulamento", "Rules", "Home") %> |
+                    <a href="https://www.facebook.com/bigballz2018/">Facebook</a> |
+                    <a href="https://twitter.com/bigballz2018">Twitter</a> |
                     v<%=Context.GetVersion()%></p>
             </div>
         </div>
@@ -111,7 +119,7 @@
     <%=Html.MiniProfiler() %>
     <script type="text/javascript" src="https://s3.amazonaws.com/assets.freshdesk.com/widget/freshwidget.js"></script>
     <script type="text/javascript">
-        FreshWidget.init("", { "queryString": "&widgetType=popup", "widgetType": "popup", "buttonType": "text", "buttonText": "Precisa de ajuda? Clique Aqui", "buttonColor": "#1f5b9c", "buttonBg": "#FFFFFF", "alignment": "4", "offset": "270px", "formHeight": "500px", "url": "https://bigballz.freshdesk.com" });
+        FreshWidget.init("", { "queryString": "&widgetType=popup", "widgetType": "popup", "buttonType": "text", "buttonText": "Precisa de ajuda? Clique Aqui", "buttonColor": "#1f5b9c", "buttonBg": "#FFFFFF", "alignment": "<%= Request.Browser.IsMobileDevice ? "3" : "4" %>", "offset": "<%= Request.Browser.IsMobileDevice ? "620px" : "270px" %>", "formHeight": "500px", "url": "https://bigballz.freshdesk.com" });
     </script>
     <script>
         window.fcWidget.init({
@@ -133,5 +141,6 @@
         window.fcWidget.user.setEmail("<%=ViewData["UserEmail"]%>");
     </script>
 <%}%>
+    <script>(function(a,b,c){if(c in b&&b[c]){var d,e=a.location,f=/^(a|html)$/i;a.addEventListener("click",function(a){d=a.target;while(!f.test(d.nodeName))d=d.parentNode;"href"in d&&(d.href.indexOf("http")||~d.href.indexOf(e.host))&&(a.preventDefault(),e.href=d.href)},!1)}})(document,window.navigator,"standalone")</script>
 </body>
 </html>

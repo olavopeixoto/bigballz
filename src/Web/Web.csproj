@@ -241,6 +241,7 @@
     <Content Include="MailTemplates\RegistrationEmailNotVerified.txt" />
     <Content Include="MailTemplates\RegistrationEmailVerified.txt" />
     <Content Include="favicon.ico" />
+    <Content Include="Public\css\admin-tab.css" />
     <Content Include="Public\css\chardinjs.css" />
     <Content Include="Public\css\ellipsis-xbl.xml" />
     <Content Include="Public\css\fifa\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -427,6 +428,7 @@
     <Content Include="Views\Money\Index.aspx" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.ascx" />
     <Content Include="Views\Shared\InfoMenu.ascx" />
+    <Content Include="Views\Shared\iOSapp.ascx" />
     <Content Include="Views\Shared\Menu.ascx" />
     <Content Include="Views\Shared\PagSeguro.ascx" />
     <Content Include="Views\Home\Standings.aspx" />

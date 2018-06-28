@@ -61,7 +61,7 @@ if (pendingBets!=null && pendingBets.Any())
 <%if (standings!=null && standings.Any(s => s.TotalPoints > 0)) {%>
 <hr />
 <h2>Top 5 Geral</h2>
-    <table class="match-table">
+    <table class="match-table info-panel">
        <tbody>
    <%var lineIndex = 0; var topfiveStandings = standings.Take(5).Union(standings.Where(s => s.User.UserName == Context.User.Identity.Name)).Distinct().ToList();
 foreach (var userPoints in topfiveStandings){%>
@@ -97,7 +97,7 @@ foreach (var userPoints in topfiveStandings){%>
   {%>
 <hr />
 <h2>Top 5 da Rodada</h2>
-<table class="match-table">
+<table class="match-table info-panel">
        <tbody>
    <%var lineIndex = 0; var topfiveDayStandings = dayStandings.Take(5).Union(dayStandings.Where(s => s.User.UserName == Context.User.Identity.Name)).Distinct().ToList(); %>
 <%foreach (var userPoints in topfiveDayStandings) {%>
@@ -136,13 +136,13 @@ foreach (var userPoints in topfiveStandings){%>
 <h2>Últimas Partidas</h2>
 
 <%var lineIndex = 0;%>
-    <table class="match-table">
+    <table class="match-table info-panel">
        <tbody>
     <%foreach (var match in lastMatches)
       {%>
     <tr class="<%= lineIndex%2==0 ? "ui-state-default": "odd"%>">
-        <td class="c"><%= Html.TeamFlag(match.Team1Id, match.Team1.Name)%>&nbsp;<%= Html.Encode(match.Score1)%>&nbsp;X&nbsp;<%= Html.Encode(match.Score2)%>&nbsp;<%= Html.TeamFlag(match.Team2Id, match.Team2.Name)%>&nbsp;<%: Html.ActionLink("ver apostas", "matchbets", "bet", new { id = match.MatchId }, null)%>
-         </td>
+        <td class="c"><%= Html.TeamFlag(match.Team1Id, match.Team1.Name)%>&nbsp;<%= Html.Encode(match.Score1)%>&nbsp;X&nbsp;<%= Html.Encode(match.Score2)%>&nbsp;<%= Html.TeamFlag(match.Team2Id, match.Team2.Name)%></td>
+        <td class="c"><%: Html.ActionLink("ver apostas", "matchbets", "bet", new { id = match.MatchId }, null)%></td>
     </tr>
     <%lineIndex++; } %>
     </tbody>
@@ -155,7 +155,7 @@ foreach (var userPoints in topfiveStandings){%>
 <hr />
 <h2>Próximas Partidas</h2>
 <%var lineIndex = 0;%>
-    <table class="match-table">
+    <table class="match-table info-panel">
        <tbody>
     <%foreach (var match in matches){%>
     <tr class="<%= lineIndex%2==0 ? "ui-state-default": "odd"%>">
@@ -166,7 +166,7 @@ foreach (var userPoints in topfiveStandings){%>
                <%} %>
         </td>
         <td class="c"><%= Html.TeamFlag(match.Team1Id, match.Team1.Name)%>&nbsp;<%= Html.Encode(match.Team1Id)%></td>
-        <td class="c mResult"> X </td>
+        <td class="c mResult">&nbsp;X&nbsp;</td>
         <td class="c"><%= Html.TeamFlag(match.Team2Id, match.Team2.Name)%>&nbsp;<%= Html.Encode(match.Team2Id)%></td>        
     </tr>
     <%lineIndex++; } %>

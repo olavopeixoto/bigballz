@@ -31,7 +31,7 @@
       <%} else if (userPoint.Position > userPoint.LastPosition) {%>
       <i class="fa fa-long-arrow-down"></i>
       <%} else {%>
-      <i class="fa fa-minus" style="visibility: hidden"></i>
+      <i class="fa fa-minus"></i>
       <%} %>
       <% var gain = Math.Abs(userPoint.LastPosition - userPoint.Position); %>
       <small><%: gain > 0 ? gain.ToString() : "" %></small>
