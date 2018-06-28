@@ -104,21 +104,21 @@ namespace BigBallz.Services.L2S
 
             switch (bet.Bonus)
             {
-                case 1: //Campeao Copa
+                case 14: //Campeao Copa
                     return 10;
-                case 2: //Vice Copa
+                case 15: //Vice Copa
                     return 7;
-                case 3: //Terceiro Copa
-                case 4: //Quarto Copa
+                case 16: //Terceiro Copa
+                case 17: //Quarto Copa
                     return 5;
-                case 5:
+                case 4:
                 case 6:
                 case 7:
                 case 8: 
                 case 9: 
-                case 10: 
                 case 11:
-                case 12: //Campeao Grupo
+                case 12:
+                case 13: //Campeao Grupo
                     return 5;
                 default:
                     return 0;
